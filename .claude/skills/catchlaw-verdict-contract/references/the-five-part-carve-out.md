@@ -131,3 +131,19 @@ else on this page:
    live instruments it has performed the advisory act.
 
 Everything else on this page is a defence in depth around those three.
+
+## The conclusion: a printed regulations booklet with a ruler on the back cover
+
+That is the whole product, and it is the shape every one of the five parts is cut to. A booklet
+quotes an instrument and prints the article number beside it (parts 1 and 2). A booklet that
+transcribes two conflicting provisions prints both, because a printed page cannot pick (part 3). A
+booklet contains only what was transcribed into it — it does not reason about a species that was
+never entered, and a blank page is obviously not a permit (part 4). And the cover carries the
+publisher's name and the body to check with, printed, not on a card the reader can throw away
+(part 5). The ruler on the back cover is the only active thing about it: it helps Khalid take a
+measurement, and the booklet states what the published number is. It does not tell him what to do
+with the fish.
+
+The test for any new screen, string, dialog or field is that sentence. If it could be printed in a
+booklet and handed to an inspector as a faithful copy of what the Ministry published, it ships. If
+it only makes sense as something the app is telling Khalid, it does not.

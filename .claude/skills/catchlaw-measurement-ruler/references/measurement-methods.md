@@ -21,6 +21,25 @@ TL and FL differ by the whole caudal fork: on *Scomberomorus commerson* the rati
 TL ≈ 1.09 × FL, and it varies by individual. That ratio is documented here as a reason NOT to
 convert, never as a conversion table shipped in code.
 
+## What each method's diagram must draw
+
+One plate per method, never a photograph: line art in ink `#16201C` on paper `#E6E4DC`, the measured
+span drawn as a harbour `#1B4D5E` bar with a caret at each endpoint, and the span the fisher is
+likely to take by mistake ghosted at 40% and struck through. The plate is captioned with the method
+name and code in the active locale, and it never mirrors — see `ruler-and-calibration.md`.
+
+| Method | The plate draws | Ghosted and struck through |
+|---|---|---|
+| TL | grouper in side profile, head at the origin edge, caudal lobes pinched onto the midline; bar from the snout caret to the lobe tip | the tail fanned open, 10-20 mm short on a Hamour |
+| FL | kingfish in side profile; bar from the snout caret to the caret in the notch of the fork | a dashed run-on out to the lobe tips |
+| SL | side profile with the caudal fin flexed up to expose the hypural crease; bar snout to crease | the bar continuing onto the visible fin base |
+| CW | crab from above; bar spine tip to spine tip, plus a second bar across the shell notches inside the spines | whichever of the two the rule row does not name |
+| SHL | one valve seen from the side, hinge uppermost; bar along the longest antero-posterior axis | the perpendicular umbo-to-ventral span, which is HEIGHT |
+| ML | squid from above with the mantle shaded; bar over the shaded mantle only | arms and tentacles counted in, roughly doubling the figure |
+
+The CW plate is the only one drawn twice, because whether the lateral spines count is a property of
+the rule row and not of the crab. A row that does not say is incomplete content, not a default.
+
 ## The method is a column of the rule row
 
 `rules.measurement_method TEXT NOT NULL` in the read-only reference DB. `species` has no method

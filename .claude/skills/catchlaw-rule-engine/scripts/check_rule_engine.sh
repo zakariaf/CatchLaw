@@ -36,17 +36,23 @@ if [ -z "$DOMAIN_FILES" ]; then
   echo "  note: no domain files matched /$DOMAIN_RE/ under '$TARGET' — checks 1-4 had nothing to read."
 fi
 
-# Whole-line // comments are prose or a deliberate WRONG illustration, not executing code.
-COMMENT_RE='^.*:[0-9]+:[[:space:]]*(//|///|\*)'
+# Matches on CODE only: a // comment tail is stripped before the test, so prose and deliberate
+# WRONG illustrations never trip the gate, while the escape hatch is read from the original line.
 dgrep() { # dgrep <pattern> [path-regex-to-exclude]
-  local pattern="$1" skip="${2:-}"
+  local pattern="$1" skip="${2:-}" f
   [ -z "$DOMAIN_FILES" ] && return 0
   local files="$DOMAIN_FILES"
   if [ -n "$skip" ]; then files="$(echo "$files" | grep -vE "$skip" || true)"; fi
   [ -z "$files" ] && return 0
-  # -H so a single-file match still prints its path and COMMENT_RE can anchor on it.
-  echo "$files" | tr '\n' '\0' | xargs -0 grep -nHE "$pattern" 2>/dev/null \
-    | grep -vE "$COMMENT_RE" | grep -v "$OK_RE" || true
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    pat="$pattern" ok="$OK_RE" path="$f" awk '
+      BEGIN { pat = ENVIRON["pat"]; ok = ENVIRON["ok"]; path = ENVIRON["path"] }
+      { code = $0; sub(/\/\/.*/, "", code)
+        if (code ~ pat && $0 !~ ok) printf "%s:%d:%s\n", path, NR, $0 }' "$f"
+  done <<EOF
+$files
+EOF
 }
 
 # 1. The package has no Flutter dependency, so this must be a compile error, never a live import.

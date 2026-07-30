@@ -251,7 +251,7 @@ String normaliseSpeciesTerm(String input) {
 // Indexed BOTH with and without a leading ال, so هامور and الهامور hit the same species id.
 ```
 
-Full worked file: `examples/rule_resolution.dart`.
+Full worked file: `examples/species_normalisation.dart`.
 
 ## Anti-patterns
 

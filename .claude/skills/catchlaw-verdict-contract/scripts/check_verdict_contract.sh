@@ -11,7 +11,8 @@ set -euo pipefail
 #
 # Checks:
 #   1. Catch-handling imperative in a Dart string literal (keep / return / throw it back / land it)
-#   2. Imperative or permission verb in an ARB verdict*/finding* value, every locale
+#   2. Imperative or permission verb in an ARB verdict*/finding* value, every locale, plus a
+#      separate Arabic pass (احتفظ / أعِدْه / يمكنك) no English-language pattern can see
 #   3. Second person in a verdict string, in Dart or in ARB
 #   4. A Verdict/Finding surface declared in a file that never mentions a citation
 #   5. Edibility, toxin or health vocabulary anywhere in Dart or ARB
@@ -22,7 +23,7 @@ set -euo pipefail
 
 TARGET="${1:-lib}"
 if [ ! -d "$TARGET" ]; then echo "check_verdict_contract: target dir '$TARGET' not found" >&2; exit 2; fi
-GEN_RE='\.g\.dart$|\.freezed\.dart$|\.drift\.dart$|\.gr\.dart$|app_localizations'
+GEN_RE='\.(g|freezed|drift|gr)\.dart(:|$)|app_localizations' # matches `f.g.dart` and `f.g.dart:9:`
 OK_RE='verdict-contract-ok'
 fail=0
 report() { local label="$1" hits="$2"; if [ -n "$hits" ]; then echo "✗ $label"; echo "$hits" | sed 's/^/    /'; fail=1; fi; }
@@ -42,6 +43,10 @@ report "imperative or permission verb in an ARB verdict value (rules 1, 2)" \
       --include='*.arb' "$TARGET" || true)"
 report "imperative opening an ARB verdict value (rule 1)" \
   "$(grep -rnE '"(verdict|finding)[A-Za-z0-9_]*" *: *"(Keep|Return|Release|Discard|Throw|Toss|Retain)\b' \
+      --include='*.arb' "$TARGET" || true)"
+# The Arabic imperative is one short fluent word; no English-language pattern above will see it.
+report "Arabic imperative or second person in an ARB value (rule 2 — app_ar.arb)" \
+  "$(grep -rnE 'احتفظ|أعِدْه|أعده|ارمه|أطلقه|لا تحتفظ|لا تصطد|يمكنك|بإمكانك' \
       --include='*.arb' "$TARGET" || true)"
 
 # 3. Second person, scoped to verdict-carrying FILES so ordinary chrome copy is not swept up.

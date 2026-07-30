@@ -25,8 +25,10 @@ text. It does NOT own how a verdict is set (`lonja-verdict-and-status`), compute
 Read the reference for the task at hand:
 - `references/the-five-part-carve-out.md` — the brief clause, the five parts, per-part tests, the
   authority table, edge cases, what voids the carve-out.
-- `references/verdict-copy-rules.md` — sentence skeleton, per-category wording, the grep lexicon,
-  ARB authoring rules, the six locales, numbers and dates.
+- `references/verdict-copy-rules.md` — sentence skeleton, per-category wording, BAD -> GOOD pairs
+  in English and Arabic, the grep lexicon, ARB authoring rules, the six locales, numbers and dates.
+- `examples/verdict_strings_test.dart` — the worked file behind every snippet below: the banned
+  lexicon as const lists, swept over the copy table, every `app_*.arb` and the rendered surface.
 
 Run `scripts/check_verdict_contract.sh` before a PR.
 
@@ -117,8 +119,6 @@ String finding(Finding f) =>
 // 'Protected species — taking prohibited.'                              no measurement line
 ```
 
-Full worked file: `examples/verdict_strings_test.dart`.
-
 ## The citation quadruple is part of the sentence
 
 A finding without its source is an oracle pronouncing. Make the quadruple structurally required.
@@ -144,8 +144,6 @@ final class Verdict {
 }
 ```
 
-Full worked file: `examples/verdict_strings_test.dart`.
-
 ## Refusing to resolve ambiguity
 
 Two equally specific instruments over one catch is a fact about the law, not an engine defect. The
@@ -168,8 +166,6 @@ final class ConflictingRules extends Finding {
 //   '50 cm total length — Ras Al Khaimah Local Order 4/2019, Art. 7 · checked 2026-07-14'
 ```
 
-Full worked file: `examples/verdict_strings_test.dart`.
-
 ## The absence of a rule, and the wording that may not be softened
 
 An untranscribed species is a gap in the reference database, not a permission. It gets one wording,
@@ -187,8 +183,6 @@ if (rules.isEmpty) {
   return NoRuleRecorded(statement: l10n.verdictNoRuleRecorded, searched: searchedInstrument);
 }
 ```
-
-Full worked file: `examples/verdict_strings_test.dart`.
 
 ## ARB authoring: the constraint travels with the key
 
@@ -211,8 +205,6 @@ final s = l10n.verdictBelowMinimum('38', 'cm', '45', l10n.methodTotalLength);
 // ar: 'دون الحد الأدنى — 38 سم مُقاسة، الحد الأدنى 45 سم (الطول الكلي)' — indicative, no imperative
 ```
 
-Full worked file: `examples/verdict_strings_test.dart`.
-
 ## Stale is shown; withholding is itself advice
 
 Expiry changes nothing about the evaluation and nothing about the finding's wording — it adds one
@@ -231,8 +223,6 @@ return VerdictSurface(
 // NEVER greyed, blurred, gated behind a dialog, or replaced by 'Check again later'.
 ```
 
-Full worked file: `examples/verdict_strings_test.dart`.
-
 ## The disclaimer names the authority to verify with
 
 A generic "not legal advice" is a shrug. Naming the body that publishes the instrument makes the app
@@ -249,8 +239,6 @@ const LonjaDisclaimer(); // fixed slot on the result surface — see lonja-verdi
 //            any catch. Verify with the Ministry of Climate Change and Environment before relying
 //            on it.'   gl: Consellería do Mar · pt: IBAMA — authority table in the reference.
 ```
-
-Full worked file: `examples/verdict_strings_test.dart`.
 
 ## Anti-patterns
 

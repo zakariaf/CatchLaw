@@ -19,7 +19,6 @@ enum ZoneScope {
 }
 
 enum FindingKind { protected, closedSeason, maxSize, minSize, bagLimit, vesselLimit }
-
 const _precedence = <FindingKind, int>{
   FindingKind.protected: 60, FindingKind.closedSeason: 50, FindingKind.maxSize: 40,
   FindingKind.minSize: 30, FindingKind.bagLimit: 20, FindingKind.vesselLimit: 10,
@@ -40,7 +39,6 @@ typedef Request = ({String speciesId, String jurisdiction, WaterType waterType,
 // `statement` is a STATEMENT OF FACT; never an instruction.
 typedef Finding = ({FindingKind kind, Citation citation, bool fails, bool isExpired,
   DateTime? expiredOn, String? statement});
-
 /// A plain row, deliberately NOT a drift data class: the CLI must build fixtures without SQLite.
 class RuleRow {
   const RuleRow(this.speciesId, this.zoneId, this.scope, this.kind, this.lineageId, this.citation,
@@ -60,22 +58,20 @@ class RuleRow {
   bool outcomeEquals(RuleRow o) =>
       kind == o.kind && threshold == o.threshold && unit == o.unit && method == o.method;
 }
-
 sealed class Resolution { const Resolution(); }
-
 final class Decided extends Resolution {
   const Decided(this.headline, this.secondary);
   final Finding headline;
   final List<Finding> secondary; // non-deciding rules still print in the rule table
 }
-// Equal specificity, differing outcomes: the engine refuses to choose and BOTH citations print.
+// Equal specificity, differing outcomes: refuse to choose; BOTH citations print.
 final class Ambiguous extends Resolution { const Ambiguous(this.rules); final List<RuleRow> rules; }
 // The instrument WAS searched and positively records no limit: a statement, and it is cited.
 final class NoLimitInInstrument extends Resolution {
   const NoLimitInInstrument(this.citation);
   final Citation citation;
 }
-// No rule for this species in this zone. NOT permission, and never rendered as one.
+// No rule for this species in this zone. NOT permission, never rendered as one.
 final class NoRuleFound extends Resolution {
   const NoRuleFound(this.searched, this.checkedOn);
   final List<Citation> searched;
@@ -87,7 +83,6 @@ final class MethodMismatch extends Resolution {
   final MeasurementMethod read, wanted;
   final Citation citation;
 }
-
 Resolution resolve(Request req, List<RuleRow> rows) {
   // 1. Select. valid_to is deliberately absent: expiry never removes a row.
   final applicable = rows.where((r) => r.jurisdiction == req.jurisdiction &&
@@ -113,12 +108,12 @@ Resolution resolve(Request req, List<RuleRow> rows) {
   }
   final findings = ranked.map((r) => _finding(r, req.on, read)).toList();
   final failures = findings.where((f) => f.fails).toList()
-    ..sort((a, b) => _precedence[b.kind]!.compareTo(_precedence[a.kind]!));
+    ..sort((a, b) => _precedence[b.kind]!.compareTo(_precedence[a.kind]!)); // fixed precedence
   final headline = failures.isNotEmpty ? failures.first : findings.first;
   return Decided(headline, findings.where((f) => f != headline).toList());
 }
 
-/// Expiry becomes a FLAG computed from the injected date. Nothing is ever dropped.
+/// Expiry becomes a FLAG from the injected date. Nothing is ever dropped.
 Finding _finding(RuleRow r, DateTime on, Measurement? read) {
   final fails = switch (r.kind) {
     FindingKind.protected => true,
@@ -134,24 +129,20 @@ Finding _finding(RuleRow r, DateTime on, Measurement? read) {
   return (kind: r.kind, citation: r.citation, fails: fails, expiredOn: r.validTo,
       isExpired: r.validTo != null && r.validTo!.isBefore(on), statement: statement);
 }
-
 String _d(DateTime d) => d.toIso8601String().substring(0, 10);
 final _md580 = Citation('Ministerial Decision 580/2015', 'Art. 3', DateTime.utc(2015, 11, 3),
     DateTime.utc(2026, 7, 14));
-
 /// Hamour, Ras Al Khaimah, minimum 45 cm total length, on a ruleset that lapsed on 2026-06-30.
 final hamourMinSize = RuleRow('epinephelus-coioides', 'AE-RK', ZoneScope.region,
     FindingKind.minSize, 'ae-md-580-2015', _md580, DateTime.utc(2015, 11, 3),
     validTo: DateTime.utc(2026, 6, 30), // LAPSED — still resolved, tagged isExpired
     threshold: 45, unit: 'cm', method: MeasurementMethod.tl);
-
 void main() {
-  final req = (
-    speciesId: 'epinephelus-coioides', jurisdiction: 'AE', waterType: WaterType.marine,
-    zonePath: const ['AE', 'AE-RK'], on: DateTime.utc(2026, 7, 30), // injected, never .now()
-    searched: [_md580], checkedOn: DateTime.utc(2026, 7, 14),
-    reading: (value: 38.0, unit: 'cm', method: MeasurementMethod.tl),
-  );
+  final req = (speciesId: 'epinephelus-coioides', jurisdiction: 'AE',
+      waterType: WaterType.marine, zonePath: const ['AE', 'AE-RK'],
+      on: DateTime.utc(2026, 7, 30), // injected, never DateTime.now()
+      searched: [_md580], checkedOn: DateTime.utc(2026, 7, 14),
+      reading: (value: 38.0, unit: 'cm', method: MeasurementMethod.tl));
   // Prints: Below the minimum — 38 cm, minimum 45 cm (total length) | stale since 2026-06-30 | ...
   switch (resolve(req, [hamourMinSize])) {
     case Decided(:final headline):
