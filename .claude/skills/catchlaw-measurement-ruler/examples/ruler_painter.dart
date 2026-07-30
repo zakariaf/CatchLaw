@@ -93,13 +93,10 @@ class RulerPainter extends CustomPainter {
   final List<Offset> _origins = <Offset>[];
 
   static const List<String> _ar = <String>['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-
-  static String _digits(int v, NumeralSystem n) {
-    if (n == NumeralSystem.latin) return '$v';
-    final out = StringBuffer();
-    for (final u in '$v'.codeUnits) out.write(_ar[u - 0x30]);
-    return out.toString();
-  }
+  // Called only from the constructor. Nothing in paint() ever builds a string.
+  static String _digits(int v, NumeralSystem n) => n == NumeralSystem.latin
+      ? '$v'
+      : '$v'.codeUnits.map((u) => _ar[u - 0x30]).join();
 
   static Float32List _tickVertices(RulerScene s) {
     final count = (s.spanPx / s.pxPerMm).floor() + 1; // one tick per millimetre

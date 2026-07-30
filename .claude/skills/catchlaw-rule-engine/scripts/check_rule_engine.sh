@@ -25,8 +25,9 @@ GEN_RE='\.g\.dart$|\.freezed\.dart$|\.drift\.dart$|\.gr\.dart$'
 OK_RE='rule-engine-ok'
 # The pure domain core, by convention: a rule_engine package or a domain/ layer.
 DOMAIN_RE='rule_engine|/domain/'
-# The single sanctioned home of the normalisation contract.
-NORM_RE='normalise\.dart$|normalize\.dart$'
+# The single sanctioned home of the normalisation contract. Anchored to a path separator so that a
+# drifting second copy named species_normalise.dart is caught rather than exempted.
+NORM_RE='(^|/)normalise\.dart$|(^|/)normalize\.dart$'
 fail=0
 report() { local label="$1" hits="$2"; if [ -n "$hits" ]; then echo "✗ $label"; echo "$hits" | sed 's/^/    /'; fail=1; fi; }
 echo "== check_rule_engine @ $TARGET =="
