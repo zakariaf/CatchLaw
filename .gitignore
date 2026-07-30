@@ -1,0 +1,41 @@
+# ---- scratch / research artefacts -------------------------------------------
+# Large upstream dumps pulled during research. Regenerate from the source API;
+# they are not part of the deliverable.
+t21.json
+*.tmp
+*.bak
+
+# ---- OS ----------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# ---- editors -----------------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*~
+
+# ---- Flutter / Dart (for when the app lands here) -----------------------------
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+coverage/
+*.iml
+.pub-cache/
+.pub/
+
+# Generated code is COMMITTED in this project — see FLUTTER_GUIDE.md Part 7.4.
+# Do not add *.g.dart / *.freezed.dart here.
+
+# Golden-test failure output
+**/failures/
+
+# ---- secrets -----------------------------------------------------------------
+*.p8
+*.pem
+*.key
+.env
+.env.*
+!.env.example

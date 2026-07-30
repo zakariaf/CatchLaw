@@ -1,0 +1,113 @@
+# The Lonja Type Ramp
+
+Scope: every step in the CATCHLAW ramp — its family role, size, weight, line-height, tracking, the
+surfaces it is mandatory on, and the real content it was measured against.
+
+## The four faces
+
+Declared once as `fontFamilyFallback` lists in `lib/theme/lonja_faces.dart`. The app bundles no
+webfont; these are system stacks, resolved offline, on device, every time.
+
+| Role     | Stack                                                                                            |
+|----------|--------------------------------------------------------------------------------------------------|
+| `serif`  | Iowan Old Style, Palatino Linotype, Palatino, Book Antiqua, Georgia, Times New Roman, serif        |
+| `sans`   | ui-sans-serif, -apple-system, Helvetica Neue, Segoe UI, Roboto, Arial, sans-serif                  |
+| `mono`   | ui-monospace, SF Mono, Menlo, Consolas, DejaVu Sans Mono, monospace                                |
+| `arabic` | Geeza Pro, Al Bayan, Damascus, Noto Naskh Arabic, Traditional Arabic, serif                        |
+
+## The ramp
+
+Sizes are logical pixels at textScaler 1.0. `height` is a multiple of `fontSize` (it scales).
+`letterSpacing` is absolute logical px and does NOT scale — the em column is the design intent, the
+px column is what you type. All mono steps carry `FontFeature.tabularFigures()`.
+
+| Step            | Face  | Size | Weight | Height | Tracking (em) | Tracking (px) | Where it is mandatory                                   |
+|-----------------|-------|------|--------|--------|---------------|---------------|---------------------------------------------------------|
+| `verdict`       | serif | 40   | w700   | 1.02   | -0.020        | -0.80         | The verdict stamp, and nothing else                      |
+| `display`       | serif | 30   | w600   | 1.10   | -0.005        | -0.15         | Species vernacular name on the account screen            |
+| `title`         | serif | 23   | w600   | 1.15   |  0.000        |  0.00         | Screen headings, section heads in a species account      |
+| `subtitle`      | serif | 19   | w600   | 1.25   |  0.000        |  0.00         | Sub-heads, zone name on the result screen                |
+| `legal`         | serif | 16   | w400   | 1.62   |  0.005        |  0.08         | Article text, the reason line, the disclaimer            |
+| `legalSmall`    | serif | 14   | w400   | 1.55   |  0.010        |  0.14         | Footnotes, source note, secondary legal prose            |
+| `binomial`      | serif | 15   | w400   | 1.45   |  0.010        |  0.15         | Scientific names ONLY — italic, the app's only italic    |
+| `uiLarge`       | sans  | 17   | w600   | 1.20   |  0.010        |  0.17         | Primary button labels in glove mode                      |
+| `ui`            | sans  | 15   | w500   | 1.35   |  0.010        |  0.15         | Buttons, nav labels, chips                               |
+| `uiSmall`       | sans  | 13   | w500   | 1.40   |  0.020        |  0.26         | Helper text, secondary chrome, zone chips                |
+| `eyebrow`       | sans  | 10.5 | w600   | 1.10   |  0.140        |  1.47         | Tracked uppercase block labels: VERDICT, SPECIES, ZONE   |
+| `microLabel`    | sans  |  9.5 | w600   | 1.10   |  0.200        |  1.90         | Gazette margin rubrics, table column heads               |
+| `measure`       | mono  | 34   | w600   | 1.00   | -0.010        | -0.34         | The single large measurement readout (`38 cm`)           |
+| `datum`         | mono  | 15   | w500   | 1.30   |  0.010        |  0.15         | Limits, table cells, `min 45 cm total length`            |
+| `citation`      | mono  | 12   | w400   | 1.50   |  0.020        |  0.24         | Instrument, article, published date, checked date        |
+| `articleNumber` | mono  | 11   | w600   | 1.00   |  0.060        |  0.66         | Margin rail article numbers (`Art. 3`)                   |
+
+Sixteen steps. If a design needs a seventeenth, it is added here and to
+`lib/theme/lonja_typography.dart` in the same commit — never invented at a call site.
+
+## Worked content per step
+
+- `verdict` — `Below the minimum` · `Closed season` · `Meets the rule`
+- `display` — `Hamour` · `Sha'ri` · `Ameixa babosa`
+- `title` — `Orange-spotted grouper` · `Minimum size` · `Closed season`
+- `subtitle` — `Ras Al Khaimah` · `Rias Baixas - Banco de Cambados` · `Represa de Jurumirim`
+- `legal` — `38 cm, minimum 45 cm (total length)` · the non-dismissable disclaimer paragraph
+- `legalSmall` — `Rule data last checked 2026-07-14. Verify against the published instrument.`
+- `binomial` — `Epinephelus coioides` · `Lethrinus nebulosus` · `Scomberomorus commerson`
+- `uiLarge` / `ui` / `uiSmall` — `Measure again` · `Species` · `Zone`
+- `eyebrow` — `VERDICT` · `SPECIES` · `ZONE` · `CITATION`
+- `microLabel` — `MINIMUM` · `SEASON` · `SOURCE`
+- `measure` — `38 cm` · `65 cm` · `38 mm`
+- `datum` — `min 45 cm total length` · `min 65 cm fork length` · `closed 1 Mar - 30 Apr`
+- `citation` — `Ministerial Decision 580/2015, Art. 3` · `published 2015-11-03` · `checked 2026-07-14`
+- `articleNumber` — `Art. 3` · `Art. 12` · `Anexo II`
+
+## Measures
+
+Reading measure is a character count expressed as a pixel constant times the live scale factor.
+`LonjaMeasure` lives beside the ramp.
+
+| Constant                  | Value | Meaning                                                       |
+|---------------------------|-------|---------------------------------------------------------------|
+| `LonjaMeasure.legal`      | 500   | ~65 characters of 16px serif. Cap for all `legal` prose.       |
+| `LonjaMeasure.legalNarrow`| 380   | ~50 characters. Cards and dialogs.                             |
+| `LonjaMeasure.heading`    | 300   | ~24 characters of 23px serif. Keeps titles to two tight lines. |
+| `LonjaMeasure.marginRail` | 56    | Gazette margin column for `articleNumber`.                     |
+| `LonjaMeasure.digitColumn`| 92    | Pinned numeral column, required for `ar` (see arabic reference).|
+
+Always multiply by `MediaQuery.textScalerOf(context).scale(1)` at the use site. Never store a
+pre-scaled value.
+
+## Per-theme response
+
+The three themes change colour and weight, never size. Glove mode changes the chrome step and
+spacing, never the legal step.
+
+| Theme / mode | Serif legal | Verdict stamp | Chrome step | Notes                                        |
+|--------------|-------------|---------------|-------------|----------------------------------------------|
+| paper        | w400        | w700          | `ui`        | Baseline ramp exactly as tabled above.        |
+| night        | w400        | w700          | `ui`        | Ink lightens; metrics identical to paper.     |
+| sunlight     | w500        | w700          | `ui`        | One weight step up on serif prose for glare.  |
+| glove mode   | unchanged   | unchanged     | `uiLarge`   | Density switch: targets 56dp, gaps 8dp.       |
+
+Sunlight never goes below w500 on any step. Glove mode NEVER shrinks or grows `legal`, `verdict`
+or `citation` — enlarging the legal column to make room for fat targets is how a citation gets
+pushed off screen.
+
+## Line breaking
+
+- Flutter has no `text-wrap: balance`. Approximate it by bounding headings with
+  `LonjaMeasure.heading`, not by inserting `\n`.
+- Glue value and unit with a non-breaking space in the ARB: `45 cm`, `38 mm`,
+  `1 Mar`. A measurement split across lines is unreadable at a glance.
+- Glue the instrument to its article: `Art. 3`.
+- Never hyphenate. `Scomberomorus commerson` breaks between words or not at all.
+
+## Common conversion errors
+
+1. Copying `letter-spacing: .14em` as `letterSpacing: 0.14` — off by a factor of 10.5.
+2. Copying `line-height: 26px` as `height: 26` — `height` is a ratio; 26 means 26× the font size.
+3. Setting `height` on a single-line mono readout to something other than 1.0 — it re-centres the
+   digits and the big `measure` step stops sitting on the rule.
+4. Using `fontWeight: FontWeight.bold` instead of the tabled numeric weight — `bold` is w700 and
+   over-sets every step that wanted w500 or w600.
+5. Applying tracking to `legal` above 0.01em — long serif prose with visible tracking reads as a
+   logo, not as an instrument.

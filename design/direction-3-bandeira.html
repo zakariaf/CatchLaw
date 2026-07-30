@@ -1,0 +1,2082 @@
+<title>CatchLaw — Direction 3: BANDEIRA</title>
+
+<style>
+/* =========================================================================
+   BANDEIRA — the app is signage.
+   Maritime signal flags · harbour enamel · stencilled hull numbers.
+   Zero radius. Zero shadow. Zero blend gradients. Bands, not cards.
+   ========================================================================= */
+
+*,*::before,*::after{box-sizing:border-box}
+
+:root{
+  /* ---- APP PALETTE (committed, does not invert) ---- */
+  --navy:#0B2A43;
+  --red:#C8102E;
+  --yellow:#F5B301;
+  --green:#0A7A3C;
+  --chrome:#E4E1D9;
+  --white:#FFFFFF;
+  --navy-70:rgba(11,42,67,.62);
+  --navy-25:rgba(11,42,67,.24);
+
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ar: "SF Arabic", "Geeza Pro", "Noto Naskh Arabic", "Segoe UI", Tahoma, "Arial", sans-serif;
+
+  /* ---- PAGE CHROME (theme aware) ---- */
+  --pg-bg:#E4E1D9;
+  --pg-fg:#0B2A43;
+  --pg-mut:#5C6E7C;
+  --pg-rule:#0B2A43;
+  --pg-panel:#FFFFFF;
+  --pg-hair:rgba(11,42,67,.22);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --pg-bg:#06121C;
+    --pg-fg:#F1EEE7;
+    --pg-mut:#93A6B4;
+    --pg-rule:#F1EEE7;
+    --pg-panel:#0C2032;
+    --pg-hair:rgba(241,238,231,.26);
+  }
+}
+:root[data-theme="dark"]{
+  --pg-bg:#06121C;
+  --pg-fg:#F1EEE7;
+  --pg-mut:#93A6B4;
+  --pg-rule:#F1EEE7;
+  --pg-panel:#0C2032;
+  --pg-hair:rgba(241,238,231,.26);
+}
+:root[data-theme="light"]{
+  --pg-bg:#E4E1D9;
+  --pg-fg:#0B2A43;
+  --pg-mut:#5C6E7C;
+  --pg-rule:#0B2A43;
+  --pg-panel:#FFFFFF;
+  --pg-hair:rgba(11,42,67,.22);
+}
+
+body,.page{
+  margin:0;
+  background:var(--pg-bg);
+  color:var(--pg-fg);
+  font-family:var(--sans);
+  font-variant-numeric:tabular-nums;
+  -webkit-text-size-adjust:100%;
+  overflow-x:hidden;
+}
+.page{padding:0 0 72px}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;text-align:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.page :focus-visible{outline:3px solid #C8102E;outline-offset:3px}
+svg{display:block}
+
+/* ---------- page structural furniture ---------- */
+.wrap{max-width:1680px;margin:0 auto;padding:0 24px}
+.masthead{border-bottom:6px solid var(--pg-rule);padding:40px 0 22px;margin-bottom:0}
+.masthead .kicker{font-size:11px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--pg-mut)}
+.masthead h1{
+  font-size:clamp(44px,9vw,104px);line-height:.84;letter-spacing:-.045em;font-weight:900;
+  text-transform:uppercase;margin:14px 0 12px;
+}
+.masthead .lede{max-width:62ch;font-size:15px;line-height:1.5;font-weight:600;color:var(--pg-fg)}
+.masthead .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{
+  border:3px solid var(--pg-rule);padding:5px 9px;font-size:10.5px;font-weight:800;
+  letter-spacing:.16em;text-transform:uppercase;
+}
+.tag--fill{background:var(--pg-rule);color:var(--pg-bg)}
+
+.sec{padding:44px 0 8px}
+.sec-head{display:flex;align-items:flex-end;gap:16px;border-bottom:5px solid var(--pg-rule);padding-bottom:10px;margin-bottom:26px;flex-wrap:wrap}
+.sec-head .num{
+  font-size:12px;font-weight:900;letter-spacing:.12em;background:var(--pg-rule);color:var(--pg-bg);
+  padding:5px 9px;text-transform:uppercase;
+}
+.sec-head h2{font-size:clamp(22px,3.4vw,34px);line-height:1;letter-spacing:-.03em;font-weight:900;text-transform:uppercase;margin:0}
+.sec-head p{margin:0 0 2px auto;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--pg-mut);max-width:44ch}
+
+.grid{display:flex;flex-wrap:wrap;gap:30px 26px;align-items:flex-start}
+.slot{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-bottom:4px}
+.cap{
+  display:block;width:390px;max-width:100%;margin-top:10px;padding-top:8px;border-top:3px solid var(--pg-rule);
+  font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pg-fg);
+}
+.cap b{background:var(--pg-rule);color:var(--pg-bg);padding:2px 6px;margin-right:7px;font-weight:900;letter-spacing:.1em}
+.cap i{display:block;font-style:normal;color:var(--pg-mut);font-weight:600;letter-spacing:.02em;text-transform:none;font-size:11.5px;margin-top:4px;line-height:1.35}
+
+/* ---------- design system panel ---------- */
+.ds{border-bottom:6px solid var(--pg-rule);padding:34px 0 40px}
+.ds-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:0;border:4px solid var(--pg-rule);border-right-width:0;border-bottom-width:0}
+.ds-cell{border-right:4px solid var(--pg-rule);border-bottom:4px solid var(--pg-rule);padding:16px;min-width:0}
+.ds-cell *{min-width:0}
+.spec > span,.sw span,.sw b,.sw em{overflow-wrap:anywhere}
+.ds-cell h3{margin:0 0 12px;font-size:10.5px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--pg-mut)}
+.sw{display:flex;align-items:stretch;border:3px solid var(--pg-rule);margin-bottom:8px;min-height:52px}
+.sw i{width:64px;flex:0 0 64px;display:block;border-right:3px solid var(--pg-rule)}
+.sw span{padding:8px 10px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.sw b{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.sw em{font-style:normal;font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--pg-mut)}
+.spec{border-bottom:2px solid var(--pg-hair);padding:8px 0;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.spec small{font-size:9.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--pg-mut);flex:0 0 auto}
+.sp-row{display:flex;align-items:flex-end;gap:6px;margin-top:6px}
+.sp-row div{background:var(--pg-rule)}
+.sp-row div span{display:block}
+.sp-lab{display:flex;gap:6px;margin-top:6px;font-size:9.5px;font-weight:800;letter-spacing:.08em;color:var(--pg-mut)}
+.icodemo{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.icodemo svg{width:30px;height:30px;stroke:var(--pg-fg);fill:none;stroke-width:2.5;stroke-linecap:square;stroke-linejoin:miter}
+.motif{height:22px;border:3px solid var(--pg-rule);margin-bottom:8px}
+.m-check{background-image:repeating-linear-gradient(90deg,var(--navy) 0 11px,#fff 11px 22px)}
+.m-hazard{background-image:repeating-linear-gradient(45deg,var(--yellow) 0 12px,var(--navy) 12px 24px)}
+.m-split{background:linear-gradient(90deg,var(--red) 0 50%,var(--white) 50% 100%)}
+.m-band{background:linear-gradient(180deg,var(--navy) 0 33.33%,var(--white) 33.33% 66.66%,var(--yellow) 66.66% 100%)}
+
+/* =========================================================================
+   PHONE
+   ========================================================================= */
+.phone{
+  width:390px;height:844px;flex:0 0 390px;
+  background:var(--white);color:var(--navy);
+  border:4px solid var(--navy);
+  overflow:hidden;position:relative;
+  font-family:var(--sans);font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+.scr{display:flex;flex-direction:column;height:100%;width:100%}
+.grow{flex:1 1 auto;min-height:0}
+.body{flex:1 1 auto;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+.body.scrolly{overflow-y:auto}
+.body > *{flex:0 0 auto}
+
+/* status bar */
+.sb{
+  flex:0 0 auto;height:34px;display:flex;align-items:center;gap:8px;padding:0 12px;
+  background:var(--navy);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+}
+.sb .t{font-size:12px;letter-spacing:.06em}
+.sb .sp{flex:1}
+.sb .bat{width:22px;height:11px;border:2px solid currentColor;position:relative}
+.sb .bat::after{content:"";position:absolute;left:1px;top:1px;bottom:1px;width:12px;background:currentColor}
+.sb .bat::before{content:"";position:absolute;right:-4px;top:3px;width:2px;height:3px;background:currentColor}
+.sb--flood{background:transparent;color:#fff}
+.sb--onlight{background:transparent;color:var(--navy);border-bottom:3px solid var(--navy)}
+
+/* top app bar */
+.bar{
+  flex:0 0 auto;min-height:54px;display:flex;align-items:center;gap:10px;padding:0 12px;
+  background:var(--navy);color:#fff;border-bottom:4px solid var(--navy);
+}
+.bar h2{margin:0;font-size:15px;font-weight:900;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.bar .sp{flex:1}
+.bar button{display:flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;color:#fff}
+.ico{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:square;stroke-linejoin:miter}
+.ico.s20{width:20px;height:20px}
+.ico.s28{width:28px;height:28px}
+.ico.s34{width:34px;height:34px}
+.ico.s56{width:56px;height:56px;stroke-width:2.2}
+.fish{fill:currentColor;stroke:none;width:64px;height:31px}
+[dir="rtl"] .fish{transform:scaleX(-1)}
+[dir="rtl"] .flip{transform:scaleX(-1)}
+
+/* bands */
+.band{padding:12px 14px;border-bottom:3px solid var(--navy)}
+.band--tight{padding:9px 14px}
+.band--navy{background:var(--navy);color:#fff;border-bottom-color:var(--navy)}
+.band--chrome{background:var(--chrome)}
+.band--yellow{background:var(--yellow);color:var(--navy)}
+.lab{font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase}
+.lab--mut{color:var(--navy-70)}
+.band--navy .lab--mut{color:rgba(255,255,255,.7)}
+.big{font-size:26px;font-weight:900;letter-spacing:-.02em;line-height:1;text-transform:uppercase}
+.mid{font-size:17px;font-weight:800;letter-spacing:-.01em;line-height:1.12}
+.txt{font-size:13px;font-weight:600;line-height:1.4}
+.ar{font-family:var(--ar)}
+
+/* chips */
+.chiprow{display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;background:var(--yellow);color:var(--navy);
+  padding:6px 9px;font-size:10.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+}
+.chip--out{background:transparent;border:3px solid var(--navy);color:var(--navy)}
+.chip--navy{background:var(--navy);color:#fff}
+.chip--w{background:#fff;color:var(--navy)}
+
+/* buttons */
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:60px;
+  background:var(--navy);color:#fff;border:4px solid var(--navy);
+  font-size:15px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;
+}
+.btn--y{background:var(--yellow);color:var(--navy)}
+.btn--o{background:#fff;color:var(--navy)}
+.btn--big{min-height:82px;font-size:19px}
+.btn2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* generic list row */
+.row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:3px solid var(--navy);min-height:60px;width:100%;background:#fff}
+.row .sp{flex:1;min-width:0}
+.row .n{
+  flex:0 0 auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+  background:var(--navy);color:#fff;font-size:12px;font-weight:900;letter-spacing:.02em;
+}
+.row .t1{font-size:15px;font-weight:900;letter-spacing:.01em;text-transform:uppercase;line-height:1.1}
+.row .t2{font-size:11.5px;font-weight:600;color:var(--navy-70);line-height:1.25;margin-top:3px}
+.hair{border-bottom-width:2px;border-bottom-color:var(--navy-25)}
+
+/* pips (bag-limit counters) */
+.pips{display:flex;gap:4px}
+.pip{width:22px;height:22px;border:3px solid var(--navy);background:#fff}
+.pip.on{background:var(--navy)}
+.pip.blocked{background-image:repeating-linear-gradient(45deg,var(--navy) 0 4px,#fff 4px 8px)}
+
+/* bottom nav */
+.nav{flex:0 0 auto;display:grid;grid-template-columns:repeat(5,1fr);background:var(--navy);border-top:4px solid var(--navy)}
+.nav button{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  height:74px;color:#fff;border-right:2px solid rgba(255,255,255,.2);
+  font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+}
+.nav button:last-child{border-right:0}
+[dir="rtl"] .nav button{border-right:0;border-left:2px solid rgba(255,255,255,.2)}
+[dir="rtl"] .nav button:last-child{border-left:0}
+.nav button.on{background:var(--yellow);color:var(--navy)}
+.nav .ar{font-size:11px;letter-spacing:0}
+
+/* flag motif rules */
+.flagrule{flex:0 0 auto;height:10px;background:#fff;background-image:repeating-linear-gradient(90deg,var(--navy) 0 12px,#fff 12px 24px);border-bottom:3px solid var(--navy)}
+.hazard{flex:0 0 auto;height:14px;background-image:repeating-linear-gradient(45deg,var(--yellow) 0 12px,var(--navy) 12px 24px)}
+
+/* =========================================================================
+   VERDICT SCREENS — edge to edge colour field
+   ========================================================================= */
+.flood{background:var(--red);color:#fff}
+.flood--green{background:var(--green)}
+.flood--red{background:var(--red)}
+.flood--navy{background:var(--navy);color:var(--yellow)}
+.vback{display:flex;align-items:center;gap:8px;padding:8px 12px 4px;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:inherit}
+.vmain{flex:1 1 auto;min-height:0;padding:10px 16px 14px;display:flex;flex-direction:column}
+.vmark{margin-bottom:10px}
+.verdict{
+  font-size:54px;line-height:.86;letter-spacing:-.04em;font-weight:900;text-transform:uppercase;margin:0;
+}
+.verdict.sm{font-size:46px}
+.vsub{margin-top:12px;font-size:15px;font-weight:800;letter-spacing:.02em;line-height:1.25;text-transform:uppercase}
+.vsub em{display:block;font-style:normal;font-weight:600;font-size:12px;letter-spacing:.06em;opacity:.85;margin-top:4px;text-transform:none}
+.vnums{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;border-top:4px solid currentColor}
+.vnums > div{padding:12px 0 4px}
+.vnums > div + div{border-left:4px solid currentColor;padding-left:14px}
+[dir="rtl"] .vnums > div + div{border-left:0;border-right:4px solid currentColor;padding-left:0;padding-right:14px}
+.vnums b{display:block;font-size:64px;line-height:.82;font-weight:900;letter-spacing:-.055em}
+.vnums b i{font-style:normal;font-size:24px;letter-spacing:-.02em}
+.vnums span{display:block;margin-top:8px;font-size:10.5px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;opacity:.9}
+
+/* the disciplined stack */
+.stack{flex:0 0 auto;background:#fff;color:var(--navy);border-top:6px solid var(--navy)}
+.stack .srow{display:flex;gap:12px;align-items:center;padding:10px 14px;border-bottom:2px solid var(--navy-25)}
+.stack .srow:last-child{border-bottom:0}
+.stack .sl{font-size:9.5px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--navy-70)}
+.stack .sv{font-size:13px;font-weight:800;letter-spacing:.01em;line-height:1.25;margin-top:3px;text-transform:uppercase}
+.cite{font-size:11.5px;font-weight:600;line-height:1.35;letter-spacing:.01em;margin-top:3px;text-transform:none}
+.disc{background:var(--yellow);color:var(--navy);padding:10px 14px;display:flex;gap:10px;align-items:flex-start;border-top:3px solid var(--navy)}
+.disc .dtxt{font-size:12.5px;font-weight:700;line-height:1.3}
+.disc .dlab{font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:3px}
+.acts{padding:10px 12px 12px;display:grid;grid-template-columns:1fr;gap:8px;border-top:3px solid var(--navy)}
+
+/* amber expiry bar */
+.expiry{
+  flex:0 0 auto;display:flex;gap:10px;align-items:center;background:var(--yellow);color:var(--navy);
+  padding:9px 12px;border-top:3px solid var(--navy);border-bottom:3px solid var(--navy);
+}
+.expiry b{display:block;font-size:9.5px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+.expiry span{display:block;font-size:12px;font-weight:700;line-height:1.28;margin-top:2px}
+
+/* diagram */
+.dia{width:100%;height:auto;color:var(--navy)}
+.dia text{font-family:var(--sans);font-size:11px;font-weight:900;letter-spacing:.12em;fill:currentColor}
+.dia .dim{stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:square}
+
+/* ruler */
+.rul{position:relative;background:#fff}
+.rul .ticks{
+  height:78px;
+  background-image:
+    repeating-linear-gradient(90deg,var(--navy) 0 3px,transparent 3px 35.4px),
+    repeating-linear-gradient(90deg,var(--navy) 0 2px,transparent 2px 17.7px),
+    repeating-linear-gradient(90deg,var(--navy) 0 1px,transparent 1px 3.54px);
+  background-size:100% 78px,100% 44px,100% 22px;
+  background-repeat:repeat-x;background-position:0 0,0 0,0 0;
+}
+.rul .nums{display:flex;border-top:3px solid var(--navy)}
+.rul .nums span{flex:0 0 35.4px;text-align:left;font-size:11px;font-weight:900;padding:5px 0 5px 5px;border-right:2px solid var(--navy-25)}
+.rul .nums span:last-child{flex:1 1 auto;border-right:0}
+.cursor{position:absolute;top:0;bottom:0;width:5px;background:var(--red)}
+.cursor::after{content:"";position:absolute;top:0;left:-9px;border-left:11px solid transparent;border-right:11px solid transparent;border-top:14px solid var(--red)}
+
+/* toggles / switches — square, no radius */
+.tg{flex:0 0 auto;width:62px;height:34px;border:3px solid var(--navy);background:#fff;display:flex;padding:0}
+.tg i{display:block;width:50%;height:100%;background:var(--navy)}
+.tg.on{background:var(--yellow)}
+.tg.on i{margin-left:50%}
+.seg{display:flex;border:3px solid var(--navy)}
+.seg span{padding:8px 10px;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;border-right:3px solid var(--navy)}
+.seg span:last-child{border-right:0}
+.seg span.on{background:var(--navy);color:#fff}
+
+/* search field */
+.field{display:flex;align-items:center;gap:10px;border:4px solid var(--navy);min-height:70px;padding:0 12px;background:#fff}
+.field .ph{flex:1;font-size:18px;font-weight:900;letter-spacing:.02em;text-transform:uppercase;color:var(--navy-70)}
+.field .qv{flex:1;font-size:22px;font-weight:900;letter-spacing:0}
+.caret{display:inline-block;width:3px;height:22px;background:var(--red);vertical-align:-4px;animation:bk 1.05s steps(1,end) infinite}
+@keyframes bk{50%{opacity:0}}
+
+/* progress */
+.prog{display:flex;gap:4px}
+.prog i{flex:1;height:26px;border:3px solid #fff;background:transparent}
+.prog i.on{background:#fff}
+
+/* dialog */
+.scrim{position:absolute;inset:0;background:rgba(11,42,67,.88);display:flex;align-items:center;justify-content:center;padding:16px}
+.dlg{width:100%;background:#fff;border:5px solid var(--navy);color:var(--navy)}
+
+/* ---------- GLOVE MODE ---------- */
+.glove .btn{min-height:76px;font-size:17px}
+.glove .btn--big{min-height:104px;font-size:22px}
+.glove .field{min-height:88px}
+.glove .row{min-height:76px;padding:16px}
+.glove .nav button{height:96px;font-size:10.5px;gap:8px}
+.glove .chip{padding:9px 12px;font-size:11.5px}
+.glove .band{padding:16px 16px}
+.dp{position:absolute;right:-1px;background:var(--yellow);color:var(--navy);font-size:8.5px;font-weight:900;letter-spacing:.1em;padding:2px 4px;border:2px solid var(--navy)}
+
+/* ---------- SUNLIGHT MODE — third theme, monochrome + result colour ---------- */
+.sun{--navy:#000000;--chrome:#FFFFFF;--yellow:#FFFFFF;--navy-70:#000000;--navy-25:#000000;background:#fff}
+.sun .sb{background:#000;color:#fff}
+.sun .flood{background:#C8102E;color:#fff}
+.sun .stack{border-top-width:8px}
+.sun .stack .srow{border-bottom:3px solid #000}
+.sun .verdict{font-size:60px;letter-spacing:-.045em}
+.sun .disc{background:#fff;color:#000;border-top:8px solid #000;border-bottom:5px solid #000}
+.sun .btn{border-width:5px}
+.sun .vnums b{font-size:70px}
+.sun .expiry{background:#fff;color:#000;border-top:5px solid #000;border-bottom:5px solid #000}
+.sun .sl,.sun .cite{color:#000}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+}
+
+/* ---------- footer note ---------- */
+.why{border-top:6px solid var(--pg-rule);margin-top:48px;padding-top:26px}
+.why h2{font-size:clamp(22px,3.2vw,34px);letter-spacing:-.03em;font-weight:900;text-transform:uppercase;margin:0 0 14px}
+.why .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px}
+.why p{margin:0 0 12px;font-size:14.5px;line-height:1.55;font-weight:600;max-width:70ch}
+.why .note{border-left:5px solid var(--pg-rule);padding-left:14px;font-size:13px;color:var(--pg-mut);font-weight:700}
+</style>
+
+<!-- ===================== SPRITE (all artwork authored inline) ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <!-- ICONS: 24 grid, 2.5 stroke, square caps, mitre joins, no curves except eyes -->
+  <symbol id="i-search" viewBox="0 0 24 24"><path d="M3 3h13v13H3z"/><path d="M16 16l5 5"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 4L7 12l8 8"/></symbol>
+  <symbol id="i-fwd" viewBox="0 0 24 24"><path d="M9 4l8 8-8 8"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+  <symbol id="i-tick" viewBox="0 0 24 24"><path d="M3 12l6 6L21 5"/></symbol>
+  <symbol id="i-tickbox" viewBox="0 0 24 24"><path d="M2 2h20v20H2z"/><path d="M6 12l4 5 8-10"/></symbol>
+  <symbol id="i-xbox" viewBox="0 0 24 24"><path d="M2 2h20v20H2z"/><path d="M7 7l10 10M17 7L7 17"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><path d="M2 4h20v18H2z"/><path d="M2 10h20M7 1v5M17 1v5"/><path d="M5 20L20 12"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 1L3 5v7c0 6 9 11 9 11s9-5 9-11V5z"/><path d="M7 12h10"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 2L1 22h22z"/><path d="M12 9v7M12 18.5v1.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><path d="M4 10h16v12H4z"/><path d="M8 10V6a4 4 0 018 0v4"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M5 2h14v20H5z"/><path d="M8 7h8M8 11h8M8 15h5"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M2 8h20v8H2z"/><path d="M6 8v4M10 8v6M14 8v4M18 8v6"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><path d="M2 5h20v14H2z"/><path d="M2 9h20M5 14h5"/></symbol>
+  <symbol id="i-anchor" viewBox="0 0 24 24"><path d="M12 6v16M6 11H3c0 6 4 11 9 11s9-5 9-11h-3"/><path d="M9 6h6"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><path d="M2 2h20v20H2z"/><path d="M12 2v20M2 12h20M6 2c-2 6-2 14 0 20M18 2c2 6 2 14 0 20"/></symbol>
+  <symbol id="i-slider" viewBox="0 0 24 24"><path d="M2 6h20M2 12h20M2 18h20"/><path d="M7 3v6M15 9v6M10 15v6"/></symbol>
+  <symbol id="i-tally" viewBox="0 0 24 24"><path d="M5 5v14M9 5v14M13 5v14M17 5v14M3 19L19 5"/></symbol>
+  <symbol id="i-track" viewBox="0 0 24 24"><path d="M3 20l6-7 4 3 8-11"/><path d="M1 18h4v4H1zM19 3h4v4h-4z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 6h.01"/><path d="M6 6h12v12H6z"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4 4l2 2M18 18l2 2M20 4l-2 2M6 18l-2 2"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 2l7 10a7 7 0 11-14 0z"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M6 12V6h4v6M10 12V4h4v8M14 12V6h4v10a6 6 0 01-6 6H9l-5-6 2-2 2 2"/></symbol>
+  <symbol id="i-export" viewBox="0 0 24 24"><path d="M12 17V3M6 9l6-6 6 6"/><path d="M3 21h18"/></symbol>
+  <symbol id="i-fishnav" viewBox="0 0 24 24"><path d="M2 12l5-4h8l4 4-4 4H7z"/><path d="M19 12l3-4v8z"/><path d="M9 11h.01"/></symbol>
+
+  <!-- FISH SILHOUETTES: 100 x 48, filled, ~10 points each -->
+  <symbol id="f-hamour" viewBox="0 0 100 48"><path d="M3 25L14 15 34 9h24l16 5 10 7 12-13-5 16 5 17-12-13-10 7-16 5H34L14 34z"/></symbol>
+  <symbol id="f-shari" viewBox="0 0 100 48"><path d="M2 26L12 14 28 6h24l20 6 12 9L97 9l-5 16 5 17-13-13-20 8-24 6-24-1-12-7z"/></symbol>
+  <symbol id="f-safi" viewBox="0 0 100 48"><path d="M4 25L14 14 34 8h22l18 8 10 6 11-10-3 13 3 14-11-10-10 6-18 8H34L14 35z"/></symbol>
+  <symbol id="f-badh" viewBox="0 0 100 48"><path d="M5 25L16 12 32 5h22l18 7 11 9 12-12-5 14 5 15-12-12-11 9-18 7H32L16 38z"/></symbol>
+  <symbol id="f-kanaad" viewBox="0 0 100 48"><path d="M2 24L16 18 44 13l24 3 14 5L98 6 88 24l10 18-16-15-14 5-24 3-28-5z"/></symbol>
+  <symbol id="f-zubaidi" viewBox="0 0 100 48"><path d="M4 24L20 8 44 2l22 6 14 12 12-14-4 16 4 16-12-14-14 12-22 6-24-6z"/></symbol>
+  <symbol id="f-meed" viewBox="0 0 100 48"><path d="M3 22L10 16 36 12l26 2 18 6 16-11-6 15 6 15-16-11-18 6-26 2-26-4z"/></symbol>
+  <symbol id="f-sawfish" viewBox="0 0 100 48">
+    <path d="M38 21l26-3 18 4 14-10-8 12 8 12-14-10-18 4-26-3z"/>
+    <path d="M2 22h36v5H2z"/>
+    <path d="M6 22l2-6 2 6zM13 22l2-6 2 6zM20 22l2-6 2 6zM27 22l2-6 2 6zM10 27l2 6 2-6zM17 27l2 6 2-6zM24 27l2 6 2-6z"/>
+  </symbol>
+  <symbol id="f-centola" viewBox="0 0 100 48">
+    <path d="M50 6l20 9 4 15-24 12-24-12 4-15z"/>
+    <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><path d="M30 16L12 8M28 26L8 24M32 36L14 42M70 16l18-8M72 26l20-2M68 36l18 6"/></g>
+  </symbol>
+  <symbol id="f-navalla" viewBox="0 0 100 48"><path d="M6 18l86-6 4 8-4 14-86-4z"/><path d="M6 24h86v2H6z" fill="#fff"/></symbol>
+  <symbol id="f-ameixa" viewBox="0 0 100 48"><path d="M50 4l24 9 8 16-16 15H34L18 29l8-16z"/><g fill="none" stroke="#fff" stroke-width="2"><path d="M50 8v36M36 12L30 40M64 12l6 28"/></g></symbol>
+  <symbol id="f-percebe" viewBox="0 0 100 48">
+    <path d="M34 46l4-20h10l4 20zM36 26l6-14 10 5-2 9zM52 46l3-16h9l3 16zM55 30l5-12 8 5-2 7z"/>
+  </symbol>
+
+  <!-- DICHOTOMOUS-KEY HEADS -->
+  <symbol id="h-jaw-past" viewBox="0 0 120 72">
+    <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M6 40L22 16 54 6h64v60H54L22 56z"/>
+      <path d="M8 46h52"/>
+      <path d="M60 24v30"/>
+      <path d="M10 40l14-2"/>
+    </g>
+    <path d="M32 28h11v11H32z" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="h-jaw-before" viewBox="0 0 120 72">
+    <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M6 40L22 16 54 6h64v60H54L22 56z"/>
+      <path d="M8 46h30"/>
+      <path d="M38 26v28"/>
+      <path d="M10 40l14-2"/>
+    </g>
+    <path d="M46 28h11v11H46z" fill="currentColor" stroke="none"/>
+  </symbol>
+</svg>
+
+<div class="page">
+
+<!-- ============================== MASTHEAD ============================== -->
+<header class="wrap masthead">
+  <div class="kicker">CatchLaw · “Is this legal?” · Offline · Direction 3 of 3</div>
+  <h1>Bandeira</h1>
+  <p class="lede">The app is signage. Maritime signal flags, harbour enamel plates, stencilled hull numbers. At 05:40 with wet hands and a live fish in the bin, the answer is the entire screen — read at arm’s length, in glare, through spray, in half a second. Flat colour fields, hard edges, thick rules. No cards. Bands. Everything that is not the verdict is subordinate to it, but nothing is hidden: citation, method and disclaimer sit in a disciplined stack at the foot of every result.</p>
+  <div class="meta">
+    <span class="tag tag--fill">Zero radius</span>
+    <span class="tag">Zero shadow</span>
+    <span class="tag">Zero blend gradients</span>
+    <span class="tag">Signal flag palette</span>
+    <span class="tag">3 themes: light · dark · sunlight</span>
+    <span class="tag">6 locales · Arabic RTL</span>
+    <span class="tag">100% offline — no account, no sync</span>
+  </div>
+</header>
+
+<!-- ============================== DESIGN SYSTEM ============================== -->
+<section class="wrap ds">
+  <div class="sec-head" style="border-bottom-width:4px">
+    <span class="num">DS</span>
+    <h2>Design system</h2>
+    <p>Semantic colour is the loudest thing on screen. The chrome — navy and yellow — stays quiet so the verdict can shout.</p>
+  </div>
+
+  <div class="ds-grid">
+    <!-- colours -->
+    <div class="ds-cell">
+      <h3>Chrome tokens</h3>
+      <div class="sw"><i style="background:#0B2A43"></i><span><b>Navy — structure</b><em>#0B2A43 · rules, nav, type</em></span></div>
+      <div class="sw"><i style="background:#F5B301"></i><span><b>Flag yellow — marker</b><em>#F5B301 · active state, notices</em></span></div>
+      <div class="sw"><i style="background:#E4E1D9"></i><span><b>Chrome neutral</b><em>#E4E1D9 · secondary ground</em></span></div>
+      <div class="sw"><i style="background:#FFFFFF;border-right-color:#0B2A43"></i><span><b>Stark white</b><em>#FFFFFF · primary ground</em></span></div>
+    </div>
+
+    <!-- semantic -->
+    <div class="ds-cell">
+      <h3>Semantic result colours (never the only signal)</h3>
+      <div class="sw"><i style="background:#0A7A3C;display:flex;align-items:center;justify-content:center"><svg class="ico" style="stroke:#fff;margin:auto"><use href="#i-tickbox"></use></svg></i><span><b>Meets</b><em>#0A7A3C + tick-in-square + the word</em></span></div>
+      <div class="sw"><i style="background:#C8102E;display:flex;align-items:center;justify-content:center"><svg class="ico" style="stroke:#fff;margin:auto"><use href="#i-xbox"></use></svg></i><span><b>Fails / closed</b><em>#C8102E + cross-in-square + the word</em></span></div>
+      <div class="sw"><i style="background:#0B2A43;display:flex;align-items:center;justify-content:center"><svg class="ico" style="stroke:#F5B301;margin:auto"><use href="#i-shield"></use></svg></i><span><b>Protected</b><em>#0B2A43 ground + #F5B301 type + shield</em></span></div>
+      <div class="sw"><i style="background:#F5B301;display:flex;align-items:center;justify-content:center"><svg class="ico" style="stroke:#0B2A43;margin:auto"><use href="#i-warn"></use></svg></i><span><b>Data stale — non-blocking</b><em>#F5B301 · advisory bar only, never a verdict</em></span></div>
+    </div>
+
+    <!-- type -->
+    <div class="ds-cell">
+      <h3>Type scale — system sans, extreme weight, tight track</h3>
+      <div class="spec"><small>D1 54/.86/−.04</small><span style="font-size:34px;font-weight:900;letter-spacing:-.04em;line-height:.86;text-transform:uppercase">Below the minimum</span></div>
+      <div class="spec"><small>D2 38/.9/−.03</small><span style="font-size:26px;font-weight:900;letter-spacing:-.03em;text-transform:uppercase">Closed season</span></div>
+      <div class="spec"><small>D3 26/.95/−.02</small><span style="font-size:20px;font-weight:900;letter-spacing:-.02em;text-transform:uppercase">45 cm minimum</span></div>
+      <div class="spec"><small>T1 17/1.1</small><span style="font-size:15px;font-weight:800">هامور · Hamour · Orange-spotted grouper</span></div>
+      <div class="spec"><small>B1 13/1.4</small><span style="font-size:13px;font-weight:600">Ministerial Decision 580/2015, Art. 3 · published 2015-11-03</span></div>
+      <div class="spec" style="border-bottom:0"><small>L1 10/.2em</small><span style="font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase">Total length · checked 2026-07-14</span></div>
+      <p style="margin:10px 0 0;font-size:11px;font-weight:700;letter-spacing:.02em;color:var(--pg-mut)">Stack: system-ui, -apple-system, “Segoe UI”, Roboto, “Helvetica Neue”, Arial. Arabic: SF Arabic / Geeza Pro / Noto Naskh Arabic. Digits always tabular.</p>
+    </div>
+
+    <!-- spacing -->
+    <div class="ds-cell">
+      <h3>Spacing — 4pt, hard steps</h3>
+      <div class="sp-row">
+        <div style="width:4px;height:22px"></div><div style="width:8px;height:32px"></div><div style="width:12px;height:42px"></div><div style="width:16px;height:52px"></div><div style="width:24px;height:62px"></div><div style="width:32px;height:72px"></div><div style="width:48px;height:82px"></div>
+      </div>
+      <div class="sp-lab"><span style="width:4px">4</span><span style="width:8px">8</span><span style="width:12px">12</span><span style="width:16px">16</span><span style="width:24px">24</span><span style="width:32px">32</span><span style="width:48px">48</span></div>
+      <h3 style="margin-top:18px">Rules</h3>
+      <div style="border-top:2px solid var(--pg-rule);margin-bottom:5px"></div>
+      <div style="border-top:3px solid var(--pg-rule);margin-bottom:5px"></div>
+      <div style="border-top:4px solid var(--pg-rule);margin-bottom:5px"></div>
+      <div style="border-top:6px solid var(--pg-rule)"></div>
+      <p style="margin:8px 0 0;font-size:11px;font-weight:700;color:var(--pg-mut)">2px hair · 3px band · 4px frame · 6px verdict/stack division. Radius: 0 everywhere, no exceptions.</p>
+    </div>
+
+    <!-- icons -->
+    <div class="ds-cell">
+      <h3>Icon and stroke treatment</h3>
+      <div class="icodemo">
+        <svg><use href="#i-fishnav"></use></svg><svg><use href="#i-tally"></use></svg><svg><use href="#i-track"></use></svg><svg><use href="#i-doc"></use></svg><svg><use href="#i-slider"></use></svg>
+        <svg><use href="#i-search"></use></svg><svg><use href="#i-ruler"></use></svg><svg><use href="#i-card"></use></svg><svg><use href="#i-warn"></use></svg><svg><use href="#i-lock"></use></svg>
+      </div>
+      <p style="margin:12px 0 0;font-size:11.5px;font-weight:700;line-height:1.45;color:var(--pg-mut)">24 grid · 2.5 stroke · square caps · mitre joins · no rounded terminals, no filled blobs. Silhouettes are ~10-point polygons so they survive at 22 px on a wet screen.</p>
+      <div style="display:flex;gap:10px;margin-top:12px;color:var(--pg-fg)">
+        <svg class="fish" style="width:88px;height:42px"><use href="#f-hamour"></use></svg>
+        <svg class="fish" style="width:88px;height:42px"><use href="#f-kanaad"></use></svg>
+        <svg class="fish" style="width:88px;height:42px"><use href="#f-zubaidi"></use></svg>
+      </div>
+    </div>
+
+    <!-- motifs -->
+    <div class="ds-cell" style="grid-column:1 / -1">
+      <h3>Flag motifs — functional, not decorative</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 20px">
+        <div>
+          <div class="motif m-check"></div>
+          <p style="margin:0 0 12px;font-size:11px;font-weight:700;color:var(--pg-mut)">Checker rule = section division inside a screen.</p>
+        </div>
+        <div>
+          <div class="motif m-hazard"></div>
+          <p style="margin:0 0 12px;font-size:11px;font-weight:700;color:var(--pg-mut)">Hazard rule = protected species, absolute prohibition.</p>
+        </div>
+        <div>
+          <div class="motif m-split"></div>
+          <p style="margin:0 0 12px;font-size:11px;font-weight:700;color:var(--pg-mut)">Split field = two rules apply, neither ranked.</p>
+        </div>
+        <div>
+          <div class="motif m-band"></div>
+          <p style="margin:0 0 12px;font-size:11px;font-weight:700;color:var(--pg-mut)">Tricolour = content currency band (checked / valid / expired).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SECTION A ============================== -->
+<section class="wrap sec">
+  <div class="sec-head">
+    <span class="num">A</span>
+    <h2>The core loop</h2>
+    <p>Search → verdict → log. The verdict floods the screen; the evidence stacks beneath it.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- ============ S1 CHECK HOME ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">05:40</span><span class="sp"></span><span>No network needed</span><span class="bat"></span></div>
+
+          <div class="band band--navy" style="display:flex;align-items:center;gap:10px">
+            <div>
+              <div class="lab lab--mut">CatchLaw</div>
+              <div style="font-size:23px;font-weight:900;letter-spacing:-.03em;text-transform:uppercase;line-height:1;margin-top:4px">Is this legal?</div>
+            </div>
+            <span class="sp" style="flex:1"></span>
+            <span class="chip">Ras Al Khaimah</span>
+          </div>
+
+          <div class="band band--chrome band--tight" style="display:flex;align-items:center;gap:8px">
+            <span style="width:14px;height:14px;background:var(--green);flex:0 0 auto"></span>
+            <div class="lab" style="letter-spacing:.14em">Rules checked 2026-07-14</div>
+            <span style="flex:1"></span>
+            <div class="lab lab--mut">Valid to 2026-12-31</div>
+          </div>
+
+          <div style="padding:16px 14px 2px">
+            <button class="field" type="button" style="min-height:84px">
+              <svg class="ico s34"><use href="#i-search"></use></svg>
+              <span class="ph" style="font-size:20px">Search species</span>
+              <span class="chip chip--out" style="border-width:2px">ع / EN</span>
+            </button>
+          </div>
+
+          <div class="band" style="border-bottom:0;padding-bottom:6px">
+            <div class="lab lab--mut">Recent — tap to check again</div>
+          </div>
+          <div style="display:flex;gap:0;overflow-x:auto;border-top:3px solid var(--navy);border-bottom:3px solid var(--navy)">
+            <button type="button" style="flex:0 0 108px;padding:10px 8px;border-right:3px solid var(--navy);text-align:left">
+              <svg class="fish" style="width:84px;height:34px"><use href="#f-hamour"></use></svg>
+              <div class="ar" style="font-size:20px;font-weight:800;margin-top:6px">هامور</div>
+              <div class="lab lab--mut" style="margin-top:2px">Hamour</div>
+              <div class="lab" style="margin-top:5px;color:var(--navy)">45 cm TL</div>
+            </button>
+            <button type="button" style="flex:0 0 108px;padding:10px 8px;border-right:3px solid var(--navy);text-align:left">
+              <svg class="fish" style="width:84px;height:34px"><use href="#f-shari"></use></svg>
+              <div class="ar" style="font-size:20px;font-weight:800;margin-top:6px">شعري</div>
+              <div class="lab lab--mut" style="margin-top:2px">Sha’ri</div>
+              <div class="lab" style="margin-top:5px;color:var(--red)">Season</div>
+            </button>
+            <button type="button" style="flex:0 0 108px;padding:10px 8px;border-right:3px solid var(--navy);text-align:left">
+              <svg class="fish" style="width:84px;height:34px"><use href="#f-kanaad"></use></svg>
+              <div class="ar" style="font-size:20px;font-weight:800;margin-top:6px">كنعد</div>
+              <div class="lab lab--mut" style="margin-top:2px">Kanaad</div>
+              <div class="lab" style="margin-top:5px">65 cm FL</div>
+            </button>
+            <button type="button" style="flex:0 0 108px;padding:10px 8px;border-right:3px solid var(--navy);text-align:left">
+              <svg class="fish" style="width:84px;height:34px"><use href="#f-zubaidi"></use></svg>
+              <div class="ar" style="font-size:20px;font-weight:800;margin-top:6px">زبيدي</div>
+              <div class="lab lab--mut" style="margin-top:2px">Zubaidi</div>
+              <div class="lab" style="margin-top:5px">23 cm TL</div>
+            </button>
+            <button type="button" style="flex:0 0 108px;padding:10px 8px;border-right:3px solid var(--navy);text-align:left">
+              <svg class="fish" style="width:84px;height:34px"><use href="#f-safi"></use></svg>
+              <div class="ar" style="font-size:20px;font-weight:800;margin-top:6px">صافي</div>
+              <div class="lab lab--mut" style="margin-top:2px">Safi</div>
+              <div class="lab" style="margin-top:5px;color:var(--red)">Season</div>
+            </button>
+            <button type="button" style="flex:0 0 108px;padding:10px 8px;text-align:left">
+              <svg class="fish" style="width:84px;height:34px"><use href="#f-badh"></use></svg>
+              <div class="ar" style="font-size:20px;font-weight:800;margin-top:6px">بدح</div>
+              <div class="lab lab--mut" style="margin-top:2px">Badh</div>
+              <div class="lab" style="margin-top:5px;color:var(--red)">Season</div>
+            </button>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:3px solid var(--navy)">
+            <button class="btn btn--o" type="button" style="border:0;border-right:3px solid var(--navy);min-height:124px;flex-direction:column;gap:10px;font-size:14px">
+              <svg class="fish" style="width:86px;height:32px"><use href="#f-meed"></use></svg>
+              Browse by shape
+            </button>
+            <button class="btn btn--y" type="button" style="border:0;min-height:124px;flex-direction:column;gap:10px;font-size:14px">
+              <svg class="ico s34"><use href="#i-search"></use></svg>
+              Identify this fish
+            </button>
+          </div>
+
+          <div class="band band--tight" style="display:flex;align-items:center;gap:10px">
+            <svg class="ico s20"><use href="#i-doc"></use></svg>
+            <div class="txt" style="font-size:12px">Changed 2026-07-14 — Zubaidi minimum 23 cm restated</div>
+            <span style="flex:1"></span>
+            <svg class="ico s20 flip"><use href="#i-fwd"></use></svg>
+          </div>
+
+          <div class="grow" style="background:var(--chrome);border-bottom:3px solid var(--navy);padding:12px 14px;display:flex;align-items:flex-end;gap:12px">
+            <svg class="ico s28" style="flex:0 0 28px"><use href="#i-anchor"></use></svg>
+            <div>
+              <div class="lab lab--mut">Rules in force where you are standing</div>
+              <div class="mid" style="margin-top:5px">Ras Al Khaimah (Gulf, salt) — federal rules, no emirate order on file</div>
+            </div>
+          </div>
+
+          <div class="band band--tight" style="border-top:3px solid var(--navy);border-bottom:0">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="lab lab--mut">Today · trip open 04:55</div>
+              <span style="flex:1"></span>
+              <div class="lab">4 logged</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:10px">
+              <div class="ar" style="font-size:19px;font-weight:800">هامور</div>
+              <div class="mid" style="font-size:14px">Hamour</div>
+              <span style="flex:1"></span>
+              <div class="pips"><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip"></i><i class="pip"></i></div>
+              <div class="lab" style="letter-spacing:.1em">3 of 5</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:10px">
+              <div class="ar" style="font-size:19px;font-weight:800">كنعد</div>
+              <div class="mid" style="font-size:14px">Kanaad</div>
+              <span style="flex:1"></span>
+              <div class="pips"><i class="pip on"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></div>
+              <div class="lab" style="letter-spacing:.1em">1 of 4</div>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <button type="button" class="on"><svg class="ico s20"><use href="#i-fishnav"></use></svg>Check</button>
+            <button type="button"><svg class="ico s20"><use href="#i-tally"></use></svg>Today</button>
+            <button type="button"><svg class="ico s20"><use href="#i-track"></use></svg>Trips</button>
+            <button type="button"><svg class="ico s20"><use href="#i-doc"></use></svg>Reference</button>
+            <button type="button"><svg class="ico s20"><use href="#i-slider"></use></svg>Settings</button>
+          </nav>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S1</b>Check — home<i>Zone chip and content-currency band sit above everything. The tally bar is pinned to the bottom edge of the content so the thumb finds it without looking.</i></figcaption>
+    </figure>
+
+    <!-- ============ S2 MEETS ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr flood flood--green">
+          <div class="sb sb--flood"><span class="t">05:41</span><span class="sp"></span><span>Ras Al Khaimah</span><span class="bat"></span></div>
+          <button class="vback" type="button"><svg class="ico s20 flip"><use href="#i-back"></use></svg> Check another</button>
+
+          <div class="vmain">
+            <svg class="ico s56 vmark"><use href="#i-tickbox"></use></svg>
+            <h2 class="verdict">Meets the minimum</h2>
+            <div class="vsub">هامور · Hamour · Orange-spotted grouper<em>Epinephelus coioides</em></div>
+            <div class="vnums">
+              <div><b>47<i> cm</i></b><span>Measured</span></div>
+              <div><b>45<i> cm</i></b><span>Minimum</span></div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="srow">
+              <svg class="ico s28"><use href="#i-ruler"></use></svg>
+              <div style="flex:1">
+                <div class="sl">Measured as</div>
+                <div class="sv">Total length (TL) — snout to tip of tail</div>
+              </div>
+              <svg class="dia" viewBox="0 0 200 60" style="width:96px;flex:0 0 96px">
+                <use href="#f-hamour" x="6" y="2" width="180" height="42"></use>
+                <g class="dim"><path d="M8 52h178"/><path d="M8 46v12M186 46v12"/></g>
+              </svg>
+            </div>
+            <div class="srow">
+              <div>
+                <div class="sl">Rule source</div>
+                <div class="cite">UAE — Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked 2026-07-14</div>
+              </div>
+            </div>
+            <div class="disc">
+              <svg class="ico s20" style="flex:0 0 20px;margin-top:2px"><use href="#i-lock"></use></svg>
+              <div class="dtxt"><span class="dlab">Permanent notice — cannot be dismissed</span>Reference only — not legal advice. Verify with the Ministry of Climate Change &amp; Environment.</div>
+            </div>
+            <div class="acts">
+              <button class="btn" type="button"><svg class="ico s20"><use href="#i-plus"></use></svg> Add to today</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S2</b>Result — meets<i>The words state a fact. No “keep”, no imperative anywhere. Result screens are takeovers: the bottom nav returns the moment you leave.</i></figcaption>
+    </figure>
+
+    <!-- ============ S2 FAILS ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr flood flood--red">
+          <div class="sb sb--flood"><span class="t">05:41</span><span class="sp"></span><span>Ras Al Khaimah</span><span class="bat"></span></div>
+          <button class="vback" type="button"><svg class="ico s20 flip"><use href="#i-back"></use></svg> Check another</button>
+
+          <div class="vmain">
+            <svg class="ico s56 vmark"><use href="#i-xbox"></use></svg>
+            <h2 class="verdict">Below the minimum</h2>
+            <div class="vsub">هامور · Hamour · Orange-spotted grouper<em>Epinephelus coioides</em></div>
+            <div class="vnums">
+              <div><b>38<i> cm</i></b><span>Measured</span></div>
+              <div><b>45<i> cm</i></b><span>Minimum</span></div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="srow">
+              <svg class="ico s28"><use href="#i-ruler"></use></svg>
+              <div style="flex:1">
+                <div class="sl">Measured as</div>
+                <div class="sv">Total length (TL) — snout to tip of tail, mouth closed</div>
+              </div>
+              <svg class="dia" viewBox="0 0 200 60" style="width:96px;flex:0 0 96px">
+                <use href="#f-hamour" x="6" y="2" width="180" height="42"></use>
+                <g class="dim"><path d="M8 52h178"/><path d="M8 46v12M186 46v12"/></g>
+                <text x="88" y="30" style="fill:#fff">TL</text>
+              </svg>
+            </div>
+            <div class="srow">
+              <div>
+                <div class="sl">Rule source</div>
+                <div class="cite">UAE — Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked 2026-07-14</div>
+              </div>
+              <svg class="ico s20 flip" style="flex:0 0 20px"><use href="#i-fwd"></use></svg>
+            </div>
+            <div class="disc">
+              <svg class="ico s20" style="flex:0 0 20px;margin-top:2px"><use href="#i-lock"></use></svg>
+              <div class="dtxt"><span class="dlab">Permanent notice — cannot be dismissed</span>Reference only — not legal advice. Verify with the Ministry of Climate Change &amp; Environment.</div>
+            </div>
+            <div class="acts" style="grid-template-columns:1fr 1fr">
+              <button class="btn" type="button"><svg class="ico s20"><use href="#i-plus"></use></svg> Add to today</button>
+              <button class="btn btn--o" type="button">Measure again</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S2</b>Result — fails<i>Method diagram, citation and the permanent disclaimer are a fixed stack — same order, same place, every single time.</i></figcaption>
+    </figure>
+
+    <!-- ============ S2 CLOSED SEASON + EXPIRY ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr flood flood--red">
+          <div class="sb sb--flood"><span class="t">05:42</span><span class="sp"></span><span>Ras Al Khaimah</span><span class="bat"></span></div>
+
+          <div class="expiry">
+            <svg class="ico s28" style="flex:0 0 28px"><use href="#i-warn"></use></svg>
+            <div>
+              <b>Rule data expired</b>
+              <span>Rule data expired 2026-06-30 — still shown, verify before relying on it.</span>
+            </div>
+          </div>
+
+          <button class="vback" type="button"><svg class="ico s20 flip"><use href="#i-back"></use></svg> Check another</button>
+
+          <div class="vmain">
+            <svg class="ico s56 vmark"><use href="#i-cal"></use></svg>
+            <h2 class="verdict">Closed season</h2>
+            <div class="vsub">شعري · Sha’ri · Spangled emperor<em>Lethrinus nebulosus</em></div>
+            <div class="vnums" style="grid-template-columns:1fr">
+              <div>
+                <b style="font-size:40px;letter-spacing:-.035em">1 March to<br>30 April</b>
+                <span>Closed season — annual</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="srow">
+              <svg class="ico s28"><use href="#i-cal"></use></svg>
+              <div>
+                <div class="sl">Also applies</div>
+                <div class="sv">صافي Safi · 1 Mar – 30 Apr · بدح Badh · 1 Apr – 1 Jun</div>
+              </div>
+            </div>
+            <div class="srow">
+              <div>
+                <div class="sl">Rule source</div>
+                <div class="cite">UAE — Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked 2026-07-14</div>
+              </div>
+            </div>
+            <div class="disc">
+              <svg class="ico s20" style="flex:0 0 20px;margin-top:2px"><use href="#i-lock"></use></svg>
+              <div class="dtxt"><span class="dlab">Permanent notice — cannot be dismissed</span>Reference only — not legal advice. Verify with the Ministry of Climate Change &amp; Environment.</div>
+            </div>
+            <div class="acts" style="grid-template-columns:1fr 1fr">
+              <button class="btn" type="button"><svg class="ico s20"><use href="#i-plus"></use></svg> Add to today</button>
+              <button class="btn btn--o" type="button">Read the rule</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S2</b>Result — closed season + amber expiry bar<i>The stale-data bar is amber, non-blocking, above the verdict — never red, never a modal. A stale rule beats no rule at sea.</i></figcaption>
+    </figure>
+
+    <!-- ============ S2 PROTECTED ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr flood flood--navy">
+          <div class="sb sb--flood"><span class="t">05:44</span><span class="sp"></span><span>Ras Al Khaimah</span><span class="bat"></span></div>
+          <div class="hazard"></div>
+          <button class="vback" type="button" style="color:var(--yellow)"><svg class="ico s20 flip"><use href="#i-back"></use></svg> Check another</button>
+
+          <div class="vmain">
+            <svg class="ico s56 vmark"><use href="#i-shield"></use></svg>
+            <h2 class="verdict">Protected species</h2>
+            <div class="vsub" style="color:#fff">سمك المنشار · Samak al-Minshar · Green sawfish<em>Pristis zijsron</em></div>
+            <div style="margin-top:10px;color:#fff">
+              <svg class="fish" style="width:100%;height:40px;color:var(--yellow)"><use href="#f-sawfish"></use></svg>
+            </div>
+            <div class="vnums" style="grid-template-columns:1fr;border-top-color:var(--yellow)">
+              <div>
+                <b style="font-size:28px;line-height:1.02;letter-spacing:-.03em;color:#fff">No take · no sale<br>no possession</b>
+                <span style="color:var(--yellow)">Any size · any season · any gear</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="srow">
+              <svg class="ico s28"><use href="#i-warn"></use></svg>
+              <div>
+                <div class="sl">If already in the net</div>
+                <div class="sv">Released alive · record the encounter · report to the Ministry</div>
+              </div>
+            </div>
+            <div class="srow">
+              <div>
+                <div class="sl">Rule source</div>
+                <div class="cite">UAE — Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked 2026-07-14</div>
+              </div>
+            </div>
+            <div class="srow">
+              <div>
+                <div class="sl">Penalty stated in the instrument</div>
+                <div class="sv">First offence AED 3,000 + 6-month licence suspension</div>
+              </div>
+              <svg class="ico s20 flip" style="flex:0 0 20px"><use href="#i-fwd"></use></svg>
+            </div>
+            <div class="disc">
+              <svg class="ico s20" style="flex:0 0 20px;margin-top:2px"><use href="#i-lock"></use></svg>
+              <div class="dtxt"><span class="dlab">Permanent notice — cannot be dismissed</span>Reference only — not legal advice. Verify with the Ministry of Climate Change &amp; Environment.</div>
+            </div>
+            <div class="acts"><button class="btn btn--y" type="button">Open the protected list</button></div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S2</b>Result — protected<i>A different category of “no”, so a different flag: navy ground, yellow type, hazard rule. Colour, icon and words all say it independently.</i></figcaption>
+    </figure>
+
+    <!-- ============ S3 RULER ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">05:39</span><span class="sp"></span><span>Ruler · calibrated 2026-07-02</span><span class="bat"></span></div>
+          <div class="bar">
+            <button type="button"><svg class="ico flip"><use href="#i-back"></use></svg></button>
+            <h2>Measure — كنعد Kanaad</h2>
+          </div>
+
+          <div class="band band--yellow" style="display:flex;gap:12px;align-items:center">
+            <svg class="dia" viewBox="0 0 200 60" style="width:110px;flex:0 0 110px">
+              <use href="#f-kanaad" x="6" y="2" width="180" height="42"></use>
+              <g class="dim"><path d="M8 52h158"/><path d="M8 46v12M166 46v12"/></g>
+              <text x="70" y="30">FL</text>
+            </svg>
+            <div>
+              <div class="lab">Measured as</div>
+              <div class="mid" style="margin-top:4px">Fork length — snout to the fork of the tail, <b>not</b> the tip</div>
+            </div>
+          </div>
+
+          <div class="band band--tight" style="display:flex;align-items:center;gap:10px">
+            <div class="lab lab--mut">Mark</div>
+            <div class="pips"><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i></div>
+            <span style="flex:1"></span>
+            <div class="lab">Step 5 of 5 · 52.0 cm carried</div>
+          </div>
+
+          <div style="background:var(--chrome);border-bottom:3px solid var(--navy);padding:10px 0 8px">
+            <div style="position:relative">
+              <svg class="fish" style="width:100%;height:62px"><use href="#f-kanaad"></use></svg>
+              <div style="position:absolute;left:372px;top:-10px;bottom:-4px;width:5px;background:var(--red)"></div>
+            </div>
+            <div class="lab lab--mut" style="padding:8px 12px 0">Snout at the last mark · fork at the cursor</div>
+          </div>
+
+          <div class="rul" style="border-bottom:3px solid var(--navy)">
+            <div class="ticks"></div>
+            <div class="cursor" style="left:372px" aria-hidden="true"></div>
+            <div class="nums"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+          </div>
+
+          <div class="band" style="display:flex;align-items:flex-end;gap:14px">
+            <div>
+              <div class="lab lab--mut">Reading · 52.0 + 10.5</div>
+              <div style="font-size:60px;font-weight:900;letter-spacing:-.05em;line-height:.9;margin-top:4px;white-space:nowrap">62.5<span style="font-size:22px"> cm</span></div>
+            </div>
+            <span style="flex:1"></span>
+            <div style="text-align:right">
+              <div class="lab lab--mut">Minimum</div>
+              <div style="font-size:30px;font-weight:900;letter-spacing:-.04em;line-height:1;margin-top:4px;white-space:nowrap">65.0<span style="font-size:14px"> cm</span></div>
+            </div>
+          </div>
+
+          <div class="band band--tight" style="background:var(--red);color:#fff;border-bottom:3px solid var(--navy);display:flex;gap:10px;align-items:center">
+            <svg class="ico s20"><use href="#i-xbox"></use></svg>
+            <div class="lab" style="letter-spacing:.14em">2.5 cm below the minimum at this mark</div>
+          </div>
+
+          <div class="band band--tight" style="display:flex;gap:10px;align-items:center">
+            <svg class="ico s20"><use href="#i-card"></use></svg>
+            <div class="txt" style="font-size:12px">Screen scale 3.318 px / mm · a reading is only as good as the calibration</div>
+          </div>
+
+          <div class="grow"></div>
+
+          <div style="padding:12px;display:grid;gap:8px">
+            <button class="btn btn--big" type="button">Step and mark</button>
+            <div class="btn2">
+              <button class="btn btn--o" type="button">Type instead</button>
+              <button class="btn btn--y" type="button">Recalibrate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S3</b>On-screen ruler<i>The phone is shorter than the fish, so you step it along and the app carries the total. The method reminder is yellow and permanent — fork length, not total.</i></figcaption>
+    </figure>
+
+    <!-- ============ S4 CALIBRATION ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">05:38</span><span class="sp"></span><span>One-time setup</span><span class="bat"></span></div>
+          <div class="bar">
+            <button type="button"><svg class="ico flip"><use href="#i-back"></use></svg></button>
+            <h2>Calibrate the ruler</h2>
+          </div>
+
+          <div class="band">
+            <div class="lab lab--mut">Step 1 of 2</div>
+            <div class="big" style="margin-top:6px;font-size:24px;line-height:1.05">Lay a bank card on the screen and fit the outline to it</div>
+            <div class="txt" style="margin-top:8px;color:var(--navy-70)">Any ID-1 card works: bank card, Emirates ID, licence. All are 85.60 × 53.98 mm by standard.</div>
+          </div>
+
+          <div class="band band--chrome" style="padding:22px 14px;display:flex;justify-content:center">
+            <div style="width:284px;height:179px;border:5px solid var(--navy);background:#fff;position:relative;display:flex;align-items:flex-end;padding:10px">
+              <div style="position:absolute;top:-3px;left:-3px;width:26px;height:26px;background:var(--red)"></div>
+              <div style="position:absolute;bottom:-3px;right:-3px;width:26px;height:26px;background:var(--red)"></div>
+              <div style="position:absolute;top:44px;left:22px;width:54px;height:40px;border:4px solid var(--navy)"></div>
+              <div style="position:absolute;top:44px;left:22px;width:54px;height:40px;background-image:repeating-linear-gradient(0deg,var(--navy) 0 3px,transparent 3px 13px)"></div>
+              <div>
+                <div class="lab lab--mut">ISO/IEC 7810 ID-1</div>
+                <div class="mid" style="margin-top:4px">85.60 × 53.98 mm</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="band">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div class="lab lab--mut">Fit</div>
+              <span style="flex:1"></span>
+              <div class="mid">3.318 px / mm</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0;margin-top:12px;border:4px solid var(--navy);height:56px">
+              <button type="button" style="width:66px;height:100%;display:flex;align-items:center;justify-content:center;border-right:4px solid var(--navy)"><svg class="ico s28"><use href="#i-x"></use></svg></button>
+              <div style="flex:1;height:100%;position:relative;background-image:repeating-linear-gradient(90deg,var(--navy) 0 2px,transparent 2px 12px);background-size:100% 14px;background-repeat:repeat-x;background-position:0 50%">
+                <div style="position:absolute;left:58%;top:-4px;bottom:-4px;width:22px;background:var(--red)"></div>
+              </div>
+              <button type="button" style="width:66px;height:100%;display:flex;align-items:center;justify-content:center;border-left:4px solid var(--navy)"><svg class="ico s28"><use href="#i-plus"></use></svg></button>
+            </div>
+          </div>
+
+          <div class="grow"></div>
+
+          <div class="band band--tight" style="display:flex;gap:10px;align-items:center;border-bottom:0;border-top:3px solid var(--navy)">
+            <svg class="ico s20"><use href="#i-card"></use></svg>
+            <div class="txt" style="font-size:12px">Last calibration 2026-07-02 · stored on this device only</div>
+          </div>
+
+          <div style="padding:12px;display:grid;gap:8px">
+            <button class="btn btn--big" type="button">Save calibration</button>
+            <button class="btn btn--o" type="button">Skip — type lengths by hand</button>
+          </div>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S4</b>Ruler calibration<i>Physical constants only. Nothing is fetched, nothing is verified against a server — the card in your wallet is the reference standard.</i></figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- ============================== SECTION B ============================== -->
+<section class="wrap sec">
+  <div class="sec-head">
+    <span class="num">B</span>
+    <h2>Finding the fish</h2>
+    <p>Local names first, always. Latin binomials are evidence, not labels.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- ============ S5 ARABIC RTL SEARCH ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone" dir="rtl" lang="ar">
+        <div class="scr ar">
+          <div class="sb"><span class="t">٠٥:٤٥</span><span class="sp"></span><span style="font-family:var(--ar)">لا حاجة إلى شبكة</span><span class="bat"></span></div>
+
+          <div class="bar">
+            <button type="button"><svg class="ico flip"><use href="#i-back"></use></svg></button>
+            <h2 style="font-family:var(--ar);font-size:17px">بحث عن نوع</h2>
+            <span class="sp"></span>
+            <span class="chip" style="font-family:var(--ar);font-size:12px;letter-spacing:0">رأس الخيمة</span>
+          </div>
+
+          <div style="padding:12px 12px 0">
+            <div class="field">
+              <svg class="ico s28"><use href="#i-search"></use></svg>
+              <span class="qv ar">هامور<span class="caret"></span></span>
+              <button type="button" style="display:flex"><svg class="ico s28"><use href="#i-x"></use></svg></button>
+            </div>
+          </div>
+
+          <div class="band band--tight" style="border-bottom:3px solid var(--navy)">
+            <div class="chiprow">
+              <span class="chip chip--navy ar" style="letter-spacing:0;font-size:12px">الكل</span>
+              <span class="chip chip--out ar" style="letter-spacing:0;font-size:12px">الحد الأدنى</span>
+              <span class="chip chip--out ar" style="letter-spacing:0;font-size:12px">موسم مغلق</span>
+              <span class="chip chip--out ar" style="letter-spacing:0;font-size:12px">محمي</span>
+            </div>
+          </div>
+
+          <div class="band band--chrome band--tight">
+            <div class="lab lab--mut ar" style="letter-spacing:0;font-size:12px">نتيجة مطابقة واحدة · القواعد محدّثة حتى ٢٠٢٦-٠٧-١٤</div>
+          </div>
+
+          <button class="row" type="button" style="min-height:92px">
+            <svg class="fish" style="width:74px;height:34px;flex:0 0 74px"><use href="#f-hamour"></use></svg>
+            <div class="sp">
+              <div class="t1 ar" style="font-size:26px;letter-spacing:0">هامور</div>
+              <div class="t2 ar" style="font-size:12.5px">الهامور المرقّط البرتقالي · Epinephelus coioides</div>
+            </div>
+            <span class="chip" style="flex-direction:column;align-items:flex-start;gap:2px;padding:8px 9px">
+              <span class="ar" style="font-size:17px;letter-spacing:0;line-height:1">٤٥ سم</span>
+              <span class="ar" style="font-size:10px;font-weight:700;letter-spacing:0">الطول الكلي</span>
+            </span>
+            <svg class="ico s20 flip" style="flex:0 0 20px"><use href="#i-fwd"></use></svg>
+          </button>
+
+          <div class="band band--navy band--tight">
+            <div class="lab lab--mut ar" style="letter-spacing:0;font-size:12.5px">أنواع أخرى مُنظّمة في منطقتك</div>
+          </div>
+
+          <button class="row hair" type="button">
+            <svg class="fish" style="width:64px;height:30px;flex:0 0 64px"><use href="#f-shari"></use></svg>
+            <div class="sp">
+              <div class="t1 ar" style="font-size:21px;letter-spacing:0">شعري</div>
+              <div class="t2 ar">Lethrinus nebulosus</div>
+            </div>
+            <span class="chip" style="background:var(--red);color:#fff;font-family:var(--ar);letter-spacing:0;font-size:12px">مغلق ١ مارس – ٣٠ أبريل</span>
+          </button>
+
+          <button class="row hair" type="button">
+            <svg class="fish" style="width:64px;height:30px;flex:0 0 64px"><use href="#f-safi"></use></svg>
+            <div class="sp">
+              <div class="t1 ar" style="font-size:21px;letter-spacing:0">صافي</div>
+              <div class="t2 ar">Siganus canaliculatus</div>
+            </div>
+            <span class="chip" style="background:var(--red);color:#fff;font-family:var(--ar);letter-spacing:0;font-size:12px">مغلق ١ مارس – ٣٠ أبريل</span>
+          </button>
+
+          <button class="row hair" type="button">
+            <svg class="fish" style="width:64px;height:30px;flex:0 0 64px"><use href="#f-badh"></use></svg>
+            <div class="sp">
+              <div class="t1 ar" style="font-size:21px;letter-spacing:0">بدح</div>
+              <div class="t2 ar">Acanthopagrus arabicus</div>
+            </div>
+            <span class="chip" style="background:var(--red);color:#fff;font-family:var(--ar);letter-spacing:0;font-size:12px">مغلق ١ أبريل – ١ يونيو</span>
+          </button>
+
+          <button class="row hair" type="button">
+            <svg class="fish" style="width:64px;height:30px;flex:0 0 64px"><use href="#f-kanaad"></use></svg>
+            <div class="sp">
+              <div class="t1 ar" style="font-size:21px;letter-spacing:0">كنعد</div>
+              <div class="t2 ar">Scomberomorus commerson</div>
+            </div>
+            <span class="chip ar" style="letter-spacing:0;font-size:12px">٦٥ سم · طول الشوكة</span>
+          </button>
+
+          <button class="row" type="button">
+            <svg class="fish" style="width:64px;height:30px;flex:0 0 64px"><use href="#f-zubaidi"></use></svg>
+            <div class="sp">
+              <div class="t1 ar" style="font-size:21px;letter-spacing:0">زبيدي</div>
+              <div class="t2 ar">Pampus argenteus</div>
+            </div>
+            <span class="chip ar" style="letter-spacing:0;font-size:12px">٢٣ سم · الطول الكلي</span>
+          </button>
+
+          <div class="grow"></div>
+
+          <nav class="nav">
+            <button type="button" class="on"><svg class="ico s20"><use href="#i-fishnav"></use></svg><span class="ar">تحقّق</span></button>
+            <button type="button"><svg class="ico s20"><use href="#i-tally"></use></svg><span class="ar">اليوم</span></button>
+            <button type="button"><svg class="ico s20"><use href="#i-track"></use></svg><span class="ar">الرحلات</span></button>
+            <button type="button"><svg class="ico s20"><use href="#i-doc"></use></svg><span class="ar">المرجع</span></button>
+            <button type="button"><svg class="ico s20"><use href="#i-slider"></use></svg><span class="ar">الإعدادات</span></button>
+          </nav>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S5</b>Species search — العربية, RTL<i>Genuinely mirrored: nav order, back chevron, row structure, badge edge, chip flow. Arabic-Indic numerals ٤٥ / ٦٥ / ٢٣ follow the numerals setting, not the language.</i></figcaption>
+    </figure>
+
+    <!-- ============ S6 BROWSE BY SHAPE ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">05:46</span><span class="sp"></span><span>Browse</span><span class="bat"></span></div>
+          <div class="bar">
+            <button type="button"><svg class="ico flip"><use href="#i-back"></use></svg></button>
+            <h2>Browse by shape</h2>
+            <span class="sp"></span>
+            <span class="chip">7 families</span>
+          </div>
+
+          <div class="body scrolly">
+            <div class="band band--navy band--tight"><div class="lab lab--mut">Groupers · هامور</div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:3px solid var(--navy)">
+              <button type="button" style="padding:10px 8px;border-right:3px solid var(--navy)">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-hamour"></use></svg>
+                <div class="ar" style="font-size:18px;font-weight:800;margin-top:6px">هامور</div>
+                <div class="lab lab--mut" style="margin-top:3px">45 cm TL</div>
+              </button>
+              <button type="button" style="padding:10px 8px;border-right:3px solid var(--navy)">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-safi"></use></svg>
+                <div class="ar" style="font-size:18px;font-weight:800;margin-top:6px">صافي</div>
+                <div class="lab lab--mut" style="margin-top:3px">Season</div>
+              </button>
+              <button type="button" style="padding:10px 8px">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-meed"></use></svg>
+                <div class="ar" style="font-size:18px;font-weight:800;margin-top:6px">ميد</div>
+                <div class="lab lab--mut" style="margin-top:3px">No size rule</div>
+              </button>
+            </div>
+
+            <div class="band band--navy band--tight"><div class="lab lab--mut">Emperors and breams · شعري · بدح</div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:3px solid var(--navy)">
+              <button type="button" style="padding:10px 8px;border-right:3px solid var(--navy)">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-shari"></use></svg>
+                <div class="ar" style="font-size:18px;font-weight:800;margin-top:6px">شعري</div>
+                <div class="lab lab--mut" style="margin-top:3px">1 Mar – 30 Apr</div>
+              </button>
+              <button type="button" style="padding:10px 8px;border-right:3px solid var(--navy)">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-badh"></use></svg>
+                <div class="ar" style="font-size:18px;font-weight:800;margin-top:6px">بدح</div>
+                <div class="lab lab--mut" style="margin-top:3px">1 Apr – 1 Jun</div>
+              </button>
+              <button type="button" style="padding:10px 8px">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-zubaidi"></use></svg>
+                <div class="ar" style="font-size:18px;font-weight:800;margin-top:6px">زبيدي</div>
+                <div class="lab lab--mut" style="margin-top:3px">23 cm TL</div>
+              </button>
+            </div>
+
+            <div class="band band--navy band--tight"><div class="lab lab--mut">Mackerels and pelagics · كنعد</div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:3px solid var(--navy)">
+              <button type="button" style="padding:10px 8px;border-right:3px solid var(--navy)">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-kanaad"></use></svg>
+                <div class="ar" style="font-size:18px;font-weight:800;margin-top:6px">كنعد</div>
+                <div class="lab lab--mut" style="margin-top:3px">65 cm FL</div>
+              </button>
+              <button type="button" style="padding:10px 8px;border-right:3px solid var(--navy);color:var(--red)">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-sawfish"></use></svg>
+                <div class="ar" style="font-size:16px;font-weight:800;margin-top:6px">سمك المنشار</div>
+                <div class="lab" style="margin-top:3px">Protected</div>
+              </button>
+              <button type="button" style="padding:10px 8px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px">
+                <svg class="ico s28"><use href="#i-search"></use></svg>
+                <div class="lab lab--mut">All 128</div>
+              </button>
+            </div>
+
+            <div class="flagrule"></div>
+
+            <div class="band band--chrome band--tight" style="display:flex;align-items:center;gap:8px">
+              <svg class="ico s20"><use href="#i-globe"></use></svg>
+              <div class="lab">Also installed · Rías Baixas — Banco de Cambados</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:3px solid var(--navy)">
+              <button type="button" style="padding:10px 8px;border-right:3px solid var(--navy);border-bottom:3px solid var(--navy)">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-ameixa"></use></svg>
+                <div class="mid" style="margin-top:6px;font-size:15px">Ameixa babosa</div>
+                <div class="t2" style="font-size:11px;color:var(--navy-70)">Venerupis corrugata</div>
+                <div class="lab" style="margin-top:4px">38 mm SHL</div>
+              </button>
+              <button type="button" style="padding:10px 8px;border-bottom:3px solid var(--navy)">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-centola"></use></svg>
+                <div class="mid" style="margin-top:6px;font-size:15px">Centola</div>
+                <div class="t2" style="font-size:11px;color:var(--navy-70)">Maja squinado</div>
+                <div class="lab" style="margin-top:4px">120 mm CW</div>
+              </button>
+              <button type="button" style="padding:10px 8px;border-right:3px solid var(--navy)">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-navalla"></use></svg>
+                <div class="mid" style="margin-top:6px;font-size:15px">Navalla</div>
+                <div class="t2" style="font-size:11px;color:var(--navy-70)">Ensis arcuatus</div>
+                <div class="lab" style="margin-top:4px">100 mm</div>
+              </button>
+              <button type="button" style="padding:10px 8px">
+                <svg class="fish" style="width:100%;height:34px"><use href="#f-percebe"></use></svg>
+                <div class="mid" style="margin-top:6px;font-size:15px">Percebe</div>
+                <div class="t2" style="font-size:11px;color:var(--navy-70)">Pollicipes pollicipes</div>
+                <div class="lab" style="margin-top:4px">Plan de explotación</div>
+              </button>
+            </div>
+            <div class="band band--tight">
+              <div class="cite">Galicia — Orde do 27 de xullo de 2012, Anexo II · DOG núm. 226 · checked 2026-06-02</div>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <button type="button" class="on"><svg class="ico s20"><use href="#i-fishnav"></use></svg>Check</button>
+            <button type="button"><svg class="ico s20"><use href="#i-tally"></use></svg>Today</button>
+            <button type="button"><svg class="ico s20"><use href="#i-track"></use></svg>Trips</button>
+            <button type="button"><svg class="ico s20"><use href="#i-doc"></use></svg>Reference</button>
+            <button type="button"><svg class="ico s20"><use href="#i-slider"></use></svg>Settings</button>
+          </nav>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S6</b>Browse by shape<i>Silhouette first, name second, rule third. The checker rule divides your zone from other installed zones — and each zone carries its own citation.</i></figcaption>
+    </figure>
+
+    <!-- ============ S7 IDENTIFY ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">05:47</span><span class="sp"></span><span>Identify · offline key</span><span class="bat"></span></div>
+          <div class="bar">
+            <button type="button"><svg class="ico flip"><use href="#i-back"></use></svg></button>
+            <h2>Identify this fish</h2>
+          </div>
+
+          <div class="band band--chrome band--tight">
+            <div class="lab lab--mut">Answers so far</div>
+            <div class="chiprow" style="margin-top:7px">
+              <span class="chip chip--w" style="border:3px solid var(--navy)">Body: deep <svg class="ico s20" style="width:14px;height:14px"><use href="#i-x"></use></svg></span>
+              <span class="chip chip--w" style="border:3px solid var(--navy)">Tail: forked <svg class="ico s20" style="width:14px;height:14px"><use href="#i-x"></use></svg></span>
+              <span class="chip chip--w" style="border:3px solid var(--navy)">Scales: large <svg class="ico s20" style="width:14px;height:14px"><use href="#i-x"></use></svg></span>
+            </div>
+          </div>
+
+          <div class="band band--navy" style="display:flex;align-items:center;gap:12px">
+            <div>
+              <div class="lab lab--mut">Couplet 4 of 6</div>
+              <div style="font-size:22px;font-weight:900;letter-spacing:-.02em;text-transform:uppercase;line-height:1.05;margin-top:6px">The jaw and the eye</div>
+            </div>
+            <span style="flex:1"></span>
+            <div style="text-align:right">
+              <div style="font-size:34px;font-weight:900;letter-spacing:-.04em;line-height:1">14</div>
+              <div class="lab lab--mut" style="margin-top:3px">Remain</div>
+            </div>
+          </div>
+
+          <button type="button" style="display:block;width:100%;background:var(--navy);color:#fff;padding:14px;border-bottom:5px solid var(--yellow);text-align:left">
+            <svg style="width:100%;height:96px;fill:currentColor" viewBox="0 0 120 72" aria-hidden="true"><use href="#h-jaw-past"></use></svg>
+            <div style="font-size:19px;font-weight:900;letter-spacing:-.01em;text-transform:uppercase;line-height:1.1;margin-top:10px">Upper jaw reaches past the rear of the eye</div>
+            <div class="lab lab--mut" style="margin-top:6px">Groupers · 6 candidates</div>
+          </button>
+
+          <button type="button" style="display:block;width:100%;background:var(--chrome);color:var(--navy);padding:14px;border-bottom:3px solid var(--navy);text-align:left">
+            <svg style="width:100%;height:96px;fill:currentColor;color:var(--navy)" viewBox="0 0 120 72" aria-hidden="true"><use href="#h-jaw-before"></use></svg>
+            <div style="font-size:19px;font-weight:900;letter-spacing:-.01em;text-transform:uppercase;line-height:1.1;margin-top:10px">Upper jaw stops before the eye</div>
+            <div class="lab lab--mut" style="margin-top:6px">Emperors, breams · 8 candidates</div>
+          </button>
+
+          <div class="grow"></div>
+
+          <div style="padding:12px;display:grid;gap:8px">
+            <div class="btn2">
+              <button class="btn btn--o" type="button"><svg class="ico s20 flip"><use href="#i-back"></use></svg> Back one step</button>
+              <button class="btn btn--y" type="button">Show all 14</button>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <button type="button" class="on"><svg class="ico s20"><use href="#i-fishnav"></use></svg>Check</button>
+            <button type="button"><svg class="ico s20"><use href="#i-tally"></use></svg>Today</button>
+            <button type="button"><svg class="ico s20"><use href="#i-track"></use></svg>Trips</button>
+            <button type="button"><svg class="ico s20"><use href="#i-doc"></use></svg>Reference</button>
+            <button type="button"><svg class="ico s20"><use href="#i-slider"></use></svg>Settings</button>
+          </nav>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S7</b>Identify — dichotomous key<i>One couplet, two enormous options, a live candidate count and a breadcrumb you can unpick chip by chip. Never more than two choices on screen.</i></figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- ============================== SECTION C ============================== -->
+<section class="wrap sec">
+  <div class="sec-head">
+    <span class="num">C</span>
+    <h2>Log and reference</h2>
+    <p>Proof that the system carries dense information, not only verdicts.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- ============ S8 TODAY ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">09:12</span><span class="sp"></span><span>Trip open · 04:55</span><span class="bat"></span></div>
+          <div class="bar">
+            <h2>Today</h2>
+            <span class="sp"></span>
+            <span class="chip">Ras Al Khaimah</span>
+          </div>
+
+          <div class="band band--navy" style="display:flex;align-items:flex-end;gap:14px">
+            <div>
+              <div style="font-size:52px;font-weight:900;letter-spacing:-.05em;line-height:.9">12</div>
+              <div class="lab lab--mut" style="margin-top:6px">Fish logged</div>
+            </div>
+            <span style="flex:1"></span>
+            <div style="text-align:right">
+              <div style="font-size:30px;font-weight:900;letter-spacing:-.04em;line-height:1">18.4<span style="font-size:15px"> kg</span></div>
+              <div class="lab lab--mut" style="margin-top:6px">Recorded weight</div>
+            </div>
+          </div>
+
+          <div class="row hair" style="min-height:74px">
+            <svg class="fish" style="width:58px;height:28px;flex:0 0 58px"><use href="#f-hamour"></use></svg>
+            <div class="sp">
+              <div class="t1"><span class="ar" style="font-size:19px">هامور</span> Hamour</div>
+              <div class="t2">Bag limit 5 per person</div>
+            </div>
+            <div style="text-align:right">
+              <div class="pips" style="justify-content:flex-end"><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip"></i><i class="pip"></i></div>
+              <div class="lab" style="margin-top:6px">2 of 5 remaining</div>
+            </div>
+          </div>
+
+          <div class="row hair" style="min-height:74px">
+            <svg class="fish" style="width:58px;height:28px;flex:0 0 58px"><use href="#f-kanaad"></use></svg>
+            <div class="sp">
+              <div class="t1"><span class="ar" style="font-size:19px">كنعد</span> Kanaad</div>
+              <div class="t2">Bag limit 4 per person</div>
+            </div>
+            <div style="text-align:right">
+              <div class="pips" style="justify-content:flex-end"><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i></div>
+              <div class="lab" style="margin-top:6px;color:var(--red)">0 of 4 remaining</div>
+            </div>
+          </div>
+
+          <div class="row hair" style="min-height:74px">
+            <svg class="fish" style="width:58px;height:28px;flex:0 0 58px"><use href="#f-zubaidi"></use></svg>
+            <div class="sp">
+              <div class="t1"><span class="ar" style="font-size:19px">زبيدي</span> Zubaidi</div>
+              <div class="t2">Bag limit 10 per person</div>
+            </div>
+            <div style="text-align:right">
+              <div class="pips" style="justify-content:flex-end"><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i></div>
+              <div class="lab" style="margin-top:6px">5 of 10 remaining</div>
+            </div>
+          </div>
+
+          <div class="row" style="min-height:74px;background:var(--chrome)">
+            <svg class="fish" style="width:58px;height:28px;flex:0 0 58px"><use href="#f-shari"></use></svg>
+            <div class="sp">
+              <div class="t1"><span class="ar" style="font-size:19px">شعري</span> Sha’ri</div>
+              <div class="t2">Closed season 1 Mar – 30 Apr</div>
+            </div>
+            <div style="text-align:right">
+              <div class="pips" style="justify-content:flex-end"><i class="pip blocked"></i><i class="pip blocked"></i><i class="pip blocked"></i></div>
+              <div class="lab" style="margin-top:6px">Not in season</div>
+            </div>
+          </div>
+
+          <div class="band band--yellow" style="display:flex;align-items:center;gap:12px">
+            <svg class="ico s28" style="flex:0 0 28px"><use href="#i-anchor"></use></svg>
+            <div style="flex:1">
+              <div class="lab">Vessel limit — 3 crew aboard</div>
+              <div class="mid" style="margin-top:4px">18.4 kg of 60.0 kg recorded</div>
+              <div class="pips" style="margin-top:8px">
+                <i class="pip on" style="width:18px;height:14px"></i><i class="pip on" style="width:18px;height:14px"></i><i class="pip on" style="width:18px;height:14px"></i><i class="pip" style="width:18px;height:14px"></i><i class="pip" style="width:18px;height:14px"></i><i class="pip" style="width:18px;height:14px"></i><i class="pip" style="width:18px;height:14px"></i><i class="pip" style="width:18px;height:14px"></i><i class="pip" style="width:18px;height:14px"></i><i class="pip" style="width:18px;height:14px"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="band band--tight" style="display:flex;align-items:center;gap:14px">
+            <div><div class="lab lab--mut">Checks</div><div class="mid" style="margin-top:4px">21</div></div>
+            <div style="width:3px;align-self:stretch;background:var(--navy-25)"></div>
+            <div><div class="lab lab--mut">Below minimum</div><div class="mid" style="margin-top:4px;color:var(--red)">3</div></div>
+            <div style="width:3px;align-self:stretch;background:var(--navy-25)"></div>
+            <div><div class="lab lab--mut">Closed season</div><div class="mid" style="margin-top:4px;color:var(--red)">1</div></div>
+          </div>
+
+          <div class="grow"></div>
+
+          <div style="padding:12px;display:grid;gap:8px">
+            <div class="btn2">
+              <button class="btn btn--o" type="button">Add by hand</button>
+              <button class="btn" type="button">End trip</button>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <button type="button"><svg class="ico s20"><use href="#i-fishnav"></use></svg>Check</button>
+            <button type="button" class="on"><svg class="ico s20"><use href="#i-tally"></use></svg>Today</button>
+            <button type="button"><svg class="ico s20"><use href="#i-track"></use></svg>Trips</button>
+            <button type="button"><svg class="ico s20"><use href="#i-doc"></use></svg>Reference</button>
+            <button type="button"><svg class="ico s20"><use href="#i-slider"></use></svg>Settings</button>
+          </nav>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S8</b>Today — counts against limits<i>Pips are countable at a glance and at arm’s length; a hatched pip means the species is closed, not merely full. Vessel limit gets its own yellow band.</i></figcaption>
+    </figure>
+
+    <!-- ============ S10 TRIPS ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">19:04</span><span class="sp"></span><span>Stored on this device</span><span class="bat"></span></div>
+          <div class="bar">
+            <h2>Trips</h2>
+            <span class="sp"></span>
+            <button type="button"><svg class="ico"><use href="#i-export"></use></svg></button>
+          </div>
+
+          <div class="band band--tight">
+            <div class="chiprow">
+              <span class="chip chip--navy">All</span>
+              <span class="chip chip--out">July 2026</span>
+              <span class="chip chip--out">Ras Al Khaimah</span>
+              <span class="chip chip--out">Has failures</span>
+            </div>
+          </div>
+
+          <div class="band band--navy" style="display:flex;gap:0;padding:0">
+            <div style="flex:1;padding:12px 14px;border-right:3px solid rgba(255,255,255,.35)">
+              <div style="font-size:28px;font-weight:900;letter-spacing:-.04em;line-height:1">9</div>
+              <div class="lab lab--mut" style="margin-top:5px">Trips</div>
+            </div>
+            <div style="flex:1;padding:12px 14px;border-right:3px solid rgba(255,255,255,.35)">
+              <div style="font-size:28px;font-weight:900;letter-spacing:-.04em;line-height:1">147</div>
+              <div class="lab lab--mut" style="margin-top:5px">Checks</div>
+            </div>
+            <div style="flex:1;padding:12px 14px">
+              <div style="font-size:28px;font-weight:900;letter-spacing:-.04em;line-height:1">162<span style="font-size:13px"> kg</span></div>
+              <div class="lab lab--mut" style="margin-top:5px">Recorded</div>
+            </div>
+          </div>
+
+          <div class="body scrolly">
+            <div class="row hair" style="min-height:84px;align-items:flex-start">
+              <div class="n" style="background:var(--navy)">26</div>
+              <div class="sp">
+                <div class="t1">2026-07-26 · 04:55 – 10:20</div>
+                <div class="t2">Ras Al Khaimah (Gulf, salt) · gargoor + hand-line</div>
+                <div class="chiprow" style="margin-top:7px">
+                  <span class="chip chip--out" style="padding:4px 7px;font-size:9.5px">12 logged</span>
+                  <span class="chip" style="background:var(--red);color:#fff;padding:4px 7px;font-size:9.5px">3 below minimum</span>
+                  <span class="chip chip--out" style="padding:4px 7px;font-size:9.5px">18.4 kg</span>
+                </div>
+              </div>
+            </div>
+            <div class="row hair" style="min-height:84px;align-items:flex-start">
+              <div class="n">24</div>
+              <div class="sp">
+                <div class="t1">2026-07-24 · 05:10 – 11:02</div>
+                <div class="t2">Ras Al Khaimah (Gulf, salt) · hand-line</div>
+                <div class="chiprow" style="margin-top:7px">
+                  <span class="chip chip--out" style="padding:4px 7px;font-size:9.5px">17 logged</span>
+                  <span class="chip chip--out" style="padding:4px 7px;font-size:9.5px">22.1 kg</span>
+                </div>
+              </div>
+            </div>
+            <div class="row hair" style="min-height:84px;align-items:flex-start">
+              <div class="n">21</div>
+              <div class="sp">
+                <div class="t1">2026-07-21 · 04:40 – 09:55</div>
+                <div class="t2">Ras Al Khaimah (Gulf, salt) · gargoor</div>
+                <div class="chiprow" style="margin-top:7px">
+                  <span class="chip chip--out" style="padding:4px 7px;font-size:9.5px">9 logged</span>
+                  <span class="chip" style="background:var(--red);color:#fff;padding:4px 7px;font-size:9.5px">1 protected — released</span>
+                </div>
+              </div>
+            </div>
+            <div class="row hair" style="min-height:84px;align-items:flex-start">
+              <div class="n">18</div>
+              <div class="sp">
+                <div class="t1">2026-07-18 · 05:02 – 12:30</div>
+                <div class="t2">Ras Al Khaimah (Gulf, salt) · hand-line</div>
+                <div class="chiprow" style="margin-top:7px">
+                  <span class="chip chip--out" style="padding:4px 7px;font-size:9.5px">21 logged</span>
+                  <span class="chip chip--out" style="padding:4px 7px;font-size:9.5px">31.8 kg</span>
+                </div>
+              </div>
+            </div>
+            <div class="row hair" style="min-height:84px;align-items:flex-start">
+              <div class="n">14</div>
+              <div class="sp">
+                <div class="t1">2026-07-14 · 05:20 – 09:40</div>
+                <div class="t2">Ras Al Khaimah (Gulf, salt) · gargoor</div>
+                <div class="chiprow" style="margin-top:7px">
+                  <span class="chip chip--out" style="padding:4px 7px;font-size:9.5px">8 logged</span>
+                  <span class="chip chip--out" style="padding:4px 7px;font-size:9.5px">11.2 kg</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <button type="button"><svg class="ico s20"><use href="#i-fishnav"></use></svg>Check</button>
+            <button type="button"><svg class="ico s20"><use href="#i-tally"></use></svg>Today</button>
+            <button type="button" class="on"><svg class="ico s20"><use href="#i-track"></use></svg>Trips</button>
+            <button type="button"><svg class="ico s20"><use href="#i-doc"></use></svg>Reference</button>
+            <button type="button"><svg class="ico s20"><use href="#i-slider"></use></svg>Settings</button>
+          </nav>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S10</b>Trips — history<i>Totals band is a hard three-column ledger. Failure counts are stated, never scored or judged — the log is a record, not a report card.</i></figcaption>
+    </figure>
+
+    <!-- ============ S12 REFERENCE HUB ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">20:15</span><span class="sp"></span><span>Bundled 5.8 MB</span><span class="bat"></span></div>
+          <div class="bar"><h2>Reference</h2><span class="sp"></span><span class="chip">Offline</span></div>
+
+          <div class="body scrolly">
+            <button class="row" type="button" style="min-height:70px"><div class="n">01</div><div class="sp"><div class="t1">Rule text</div><div class="t2">MD 580/2015 · full Arabic text, 14 articles</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+            <button class="row" type="button" style="min-height:70px"><div class="n">02</div><div class="sp"><div class="t1">Protected species</div><div class="t2">31 species · no take, no sale, no possession</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+            <button class="row" type="button" style="min-height:70px"><div class="n">03</div><div class="sp"><div class="t1">Gear and methods</div><div class="t2">Gargoor mesh, hand-line, net bans, closed areas</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+            <button class="row" type="button" style="min-height:70px;background:var(--yellow)"><div class="n">04</div><div class="sp"><div class="t1">Penalties</div><div class="t2">Fines, suspension, revocation</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+            <button class="row" type="button" style="min-height:70px"><div class="n">05</div><div class="sp"><div class="t1">Licences</div><div class="t2">Vessel and crew documents, renewal windows</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+            <button class="row" type="button" style="min-height:70px"><div class="n">06</div><div class="sp"><div class="t1">Glossary</div><div class="t2">TL · FL · SL · CW · SHL · ML explained</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+            <button class="row" type="button" style="min-height:70px"><div class="n">07</div><div class="sp"><div class="t1">Changelog</div><div class="t2">What changed in the bundled data, and when</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+
+            <div class="flagrule"></div>
+
+            <div class="band band--navy band--tight"><div class="lab lab--mut">Installed rule sets</div></div>
+            <div class="row hair" style="align-items:flex-start;min-height:auto;padding:12px 14px">
+              <div class="sp">
+                <div class="t1">Ras Al Khaimah (Gulf, salt)</div>
+                <div class="cite" style="color:var(--navy-70)">UAE — Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked 2026-07-14</div>
+              </div>
+              <span class="chip" style="background:var(--green);color:#fff">Active</span>
+            </div>
+            <div class="row hair" style="align-items:flex-start;min-height:auto;padding:12px 14px">
+              <div class="sp">
+                <div class="t1">Rías Baixas — Banco de Cambados (salt)</div>
+                <div class="cite" style="color:var(--navy-70)">Galicia — Orde do 27 de xullo de 2012, Anexo II · DOG núm. 226 · checked 2026-06-02</div>
+                <div class="t2">Ameixa babosa 38 mm · Centola 120 mm CW · Navalla 100 mm</div>
+              </div>
+            </div>
+            <div class="row" style="align-items:flex-start;min-height:auto;padding:12px 14px">
+              <div class="sp">
+                <div class="t1">Represa de Jurumirim (fresh)</div>
+                <div class="t2">Piracema closed season · daily quota 10 kg + 1 exemplar · 1,500 m exclusion zone around dams and rapids · Tambaqui, Pintado, Dourado</div>
+              </div>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <button type="button"><svg class="ico s20"><use href="#i-fishnav"></use></svg>Check</button>
+            <button type="button"><svg class="ico s20"><use href="#i-tally"></use></svg>Today</button>
+            <button type="button"><svg class="ico s20"><use href="#i-track"></use></svg>Trips</button>
+            <button type="button" class="on"><svg class="ico s20"><use href="#i-doc"></use></svg>Reference</button>
+            <button type="button"><svg class="ico s20"><use href="#i-slider"></use></svg>Settings</button>
+          </nav>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S12</b>Reference hub<i>Stencilled numbers, not cards. Every installed zone carries its own instrument and check date on the same row as its name.</i></figcaption>
+    </figure>
+
+    <!-- ============ S13 RULE TEXT READER ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">20:18</span><span class="sp"></span><span>Rule text</span><span class="bat"></span></div>
+          <div class="bar">
+            <button type="button"><svg class="ico flip"><use href="#i-back"></use></svg></button>
+            <h2>MD 580/2015</h2>
+            <span class="sp"></span>
+            <button type="button"><svg class="ico"><use href="#i-search"></use></svg></button>
+          </div>
+
+          <div class="band band--tight" style="display:flex;align-items:center;gap:8px;border-bottom:3px solid var(--navy)">
+            <div class="field" style="min-height:46px;border-width:3px;flex:1">
+              <svg class="ico s20"><use href="#i-search"></use></svg>
+              <span class="ph" style="font-size:13px;letter-spacing:.06em">Search the full text</span>
+            </div>
+          </div>
+
+          <div style="display:flex;overflow-x:auto;border-bottom:3px solid var(--navy)">
+            <button type="button" class="chip chip--out ar" style="border-width:0;border-right:3px solid var(--navy);padding:10px 14px;font-size:14px;letter-spacing:0">المادة ١</button>
+            <button type="button" class="chip chip--out ar" style="border-width:0;border-right:3px solid var(--navy);padding:10px 14px;font-size:14px;letter-spacing:0">المادة ٢</button>
+            <button type="button" class="chip chip--navy ar" style="padding:10px 14px;font-size:14px;letter-spacing:0;border-right:3px solid var(--navy)">المادة ٣</button>
+            <button type="button" class="chip chip--out ar" style="border-width:0;border-right:3px solid var(--navy);padding:10px 14px;font-size:14px;letter-spacing:0">المادة ٤</button>
+            <button type="button" class="chip chip--out ar" style="border-width:0;padding:10px 14px;font-size:14px;letter-spacing:0">المادة ٥</button>
+          </div>
+
+          <div class="body scrolly" dir="rtl" lang="ar" style="padding:14px 16px;font-family:var(--ar);text-align:right">
+            <div style="font-size:24px;font-weight:900;line-height:1.3">المادة (٣) — الأطوال الدنيا المسموح بصيدها</div>
+            <div style="height:4px;background:var(--navy);margin:12px 0"></div>
+            <p style="font-size:16px;line-height:1.95;font-weight:600;margin:0 0 14px">
+              يُحظر صيد أو تداول أو عرض أو بيع أنواع الأسماك المبيّنة في الجدول المرفق بهذا القرار إذا قلّ طولها عن الحد الأدنى المقرّر لكل نوع، ويُقاس الطول وفقاً للطريقة المحدّدة قرين كل نوع في الجدول ذاته.
+            </p>
+            <p style="font-size:16px;line-height:1.95;font-weight:600;margin:0 0 10px;background:var(--yellow);padding:8px 10px">
+              ١ — الهامور (Epinephelus coioides): الحد الأدنى ٤٥ سم، يُقاس بالطول الكلي من مقدمة الفم إلى نهاية الزعنفة الذيلية.
+            </p>
+            <p style="font-size:16px;line-height:1.95;font-weight:600;margin:0 0 10px">
+              ٢ — الكنعد (Scomberomorus commerson): الحد الأدنى ٦٥ سم، يُقاس بطول الشوكة من مقدمة الفم إلى تفرّع الزعنفة الذيلية.
+            </p>
+            <p style="font-size:16px;line-height:1.95;font-weight:600;margin:0 0 10px">
+              ٣ — الزبيدي (Pampus argenteus): الحد الأدنى ٢٣ سم، يُقاس بالطول الكلي.
+            </p>
+            <p style="font-size:16px;line-height:1.95;font-weight:600;margin:0 0 10px">
+              ٤ — يُحظر صيد الشعري والصافي خلال الفترة من ١ مارس إلى ٣٠ أبريل من كل عام، ويُحظر صيد البدح خلال الفترة من ١ أبريل إلى ١ يونيو.
+            </p>
+            <p style="font-size:16px;line-height:1.95;font-weight:600;margin:0">
+              ٥ — على كل مخالف لأحكام هذه المادة العقوبات المنصوص عليها في المادة (١١) من هذا القرار.
+            </p>
+          </div>
+
+          <div class="band band--chrome band--tight" style="border-top:4px solid var(--navy);border-bottom:0">
+            <div class="lab lab--mut">As checked on</div>
+            <div class="cite" style="margin-top:4px">UAE — Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked 2026-07-14</div>
+          </div>
+          <div class="disc" style="border-bottom:0">
+            <svg class="ico s20" style="flex:0 0 20px;margin-top:2px"><use href="#i-lock"></use></svg>
+            <div class="dtxt"><span class="dlab">Permanent notice</span>Reference only — not legal advice. Verify with the Ministry of Climate Change &amp; Environment.</div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S13</b>Rule text reader<i>The actual Arabic instrument, article by article, search hit highlighted in flag yellow. The date it was last checked never leaves the screen.</i></figcaption>
+    </figure>
+
+    <!-- ============ S20 PENALTIES ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">20:21</span><span class="sp"></span><span>Reference · 04</span><span class="bat"></span></div>
+          <div class="bar">
+            <button type="button"><svg class="ico flip"><use href="#i-back"></use></svg></button>
+            <h2>Penalties</h2>
+          </div>
+
+          <div class="band band--navy">
+            <div class="lab lab--mut">United Arab Emirates</div>
+            <div style="font-size:34px;font-weight:900;letter-spacing:-.035em;line-height:1;margin-top:8px;text-transform:uppercase">What it costs to get it wrong</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.05fr 1fr 1.25fr;border-bottom:4px solid var(--navy)">
+            <div style="padding:9px 10px;border-right:3px solid var(--navy);background:var(--chrome)"><div class="lab lab--mut">Offence</div></div>
+            <div style="padding:9px 10px;border-right:3px solid var(--navy);background:var(--chrome)"><div class="lab lab--mut">Fine</div></div>
+            <div style="padding:9px 10px;background:var(--chrome)"><div class="lab lab--mut">Licence</div></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.05fr 1fr 1.25fr;border-bottom:3px solid var(--navy)">
+            <div style="padding:14px 10px;border-right:3px solid var(--navy)"><div class="mid">First offence</div></div>
+            <div style="padding:14px 10px;border-right:3px solid var(--navy)"><div style="font-size:24px;font-weight:900;letter-spacing:-.03em;line-height:1">AED<br>3,000</div></div>
+            <div style="padding:14px 10px"><div class="mid" style="font-size:15px">6-month suspension</div></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.05fr 1fr 1.25fr;border-bottom:4px solid var(--navy);background:var(--red);color:#fff">
+            <div style="padding:14px 10px;border-right:3px solid #fff"><div class="mid">Second offence</div></div>
+            <div style="padding:14px 10px;border-right:3px solid #fff"><div style="font-size:24px;font-weight:900;letter-spacing:-.03em;line-height:1">AED<br>5,000</div></div>
+            <div style="padding:14px 10px"><div class="mid" style="font-size:15px">Revocation</div></div>
+          </div>
+
+          <div class="band">
+            <div class="lab lab--mut">Also stated</div>
+            <div class="txt" style="margin-top:7px">Confiscation of the catch and of the gear used. Amounts are as stated in the instrument; assessment and enforcement are matters for the Ministry.</div>
+          </div>
+
+          <div class="band" style="display:flex;gap:12px;align-items:flex-start">
+            <svg class="ico s28" style="flex:0 0 28px"><use href="#i-shield"></use></svg>
+            <div>
+              <div class="lab lab--mut">Protected species</div>
+              <div class="mid" style="margin-top:5px;font-size:15px">Same fines, plus confiscation — no take, no sale, no possession, at any size and in any season</div>
+            </div>
+          </div>
+
+          <div class="band band--tight" style="display:flex;gap:10px;align-items:center">
+            <svg class="ico s20"><use href="#i-doc"></use></svg>
+            <div class="cite">UAE — Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked 2026-07-14</div>
+          </div>
+
+          <div class="grow"></div>
+
+          <div class="disc" style="border-bottom:3px solid var(--navy)">
+            <svg class="ico s20" style="flex:0 0 20px;margin-top:2px"><use href="#i-lock"></use></svg>
+            <div class="dtxt"><span class="dlab">Permanent notice — cannot be dismissed</span>Reference only — not legal advice. Verify with the Ministry of Climate Change &amp; Environment.</div>
+          </div>
+
+          <nav class="nav">
+            <button type="button"><svg class="ico s20"><use href="#i-fishnav"></use></svg>Check</button>
+            <button type="button"><svg class="ico s20"><use href="#i-tally"></use></svg>Today</button>
+            <button type="button"><svg class="ico s20"><use href="#i-track"></use></svg>Trips</button>
+            <button type="button" class="on"><svg class="ico s20"><use href="#i-doc"></use></svg>Reference</button>
+            <button type="button"><svg class="ico s20"><use href="#i-slider"></use></svg>Settings</button>
+          </nav>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S20</b>Penalties<i>A ledger, not a scare. The second-offence row floods red because that is where the licence goes — the only colour on the screen.</i></figcaption>
+    </figure>
+
+    <!-- ============ S14 SETTINGS ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr">
+          <div class="sb"><span class="t">20:26</span><span class="sp"></span><span>No account · no sync</span><span class="bat"></span></div>
+          <div class="bar"><h2>Settings</h2></div>
+
+          <div class="body scrolly">
+            <div class="band band--navy band--tight"><div class="lab lab--mut">Language and figures</div></div>
+            <button class="row hair" type="button"><svg class="ico s28"><use href="#i-globe"></use></svg><div class="sp"><div class="t1">Language</div><div class="t2">6 installed · العربية · Galego · Português (BR) · English · Español · اردو</div></div><span class="chip ar" style="font-size:14px;letter-spacing:0">العربية</span></button>
+            <div class="row hair"><div class="sp"><div class="t1">Numerals</div><div class="t2">Affects every figure in the app</div></div><div class="seg"><span>1234</span><span class="on ar" style="font-size:13px">١٢٣٤</span></div></div>
+            <div class="row hair"><div class="sp"><div class="t1">Units</div><div class="t2">Lengths and weights</div></div><div class="seg"><span class="on">cm / kg</span><span>in / lb</span></div></div>
+
+            <div class="band band--navy band--tight"><div class="lab lab--mut">Where you are</div></div>
+            <button class="row hair" type="button"><svg class="ico s28"><use href="#i-anchor"></use></svg><div class="sp"><div class="t1">Zone</div><div class="t2">Ras Al Khaimah (Gulf, salt) · 3 zones installed</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+            <div class="row hair"><svg class="ico s28"><use href="#i-track"></use></svg><div class="sp"><div class="t1">Coordinate capture</div><div class="t2">Off — trips record zone only, never a position</div></div><button class="tg" type="button" aria-pressed="false"><i></i></button></div>
+
+            <div class="band band--navy band--tight"><div class="lab lab--mut">Reading in the field</div></div>
+            <div class="row hair"><svg class="ico s28"><use href="#i-sun"></use></svg><div class="sp"><div class="t1">Sunlight mode</div><div class="t2">Maximum contrast · monochrome plus the result colour</div></div><button class="tg on" type="button" aria-pressed="true"><i></i></button></div>
+            <div class="row hair"><svg class="ico s28"><use href="#i-hand"></use></svg><div class="sp"><div class="t1">Glove mode</div><div class="t2">Targets 56 dp and above, spacing 8 dp and above</div></div><button class="tg on" type="button" aria-pressed="true"><i></i></button></div>
+            <button class="row hair" type="button"><svg class="ico s28"><use href="#i-card"></use></svg><div class="sp"><div class="t1">Ruler calibration</div><div class="t2">3.318 px / mm · set 2026-07-02 with an ID-1 card</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+
+            <div class="band band--navy band--tight"><div class="lab lab--mut">Data on this device</div></div>
+            <div class="row hair"><div class="sp"><div class="t1">Storage used</div><div class="t2">Rules 5.8 MB · illustrations 12.4 MB · trips 0.3 MB</div></div><div class="mid">18.5 MB</div></div>
+            <button class="row hair" type="button"><svg class="ico s28"><use href="#i-export"></use></svg><div class="sp"><div class="t1">Export trips</div><div class="t2">CSV to a file you choose — nothing leaves by itself</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+            <button class="row hair" type="button"><svg class="ico s28" style="transform:rotate(180deg)"><use href="#i-export"></use></svg><div class="sp"><div class="t1">Import rule pack</div><div class="t2">From a file — sideload a newer bundle at the harbour</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+            <button class="row" type="button"><svg class="ico s28"><use href="#i-doc"></use></svg><div class="sp"><div class="t1">About</div><div class="t2">v2.4.0 · rules build 2026-07-14 · no account, no network</div></div><svg class="ico s20 flip"><use href="#i-fwd"></use></svg></button>
+
+            <div class="disc" style="border-bottom:3px solid var(--navy)">
+              <svg class="ico s20" style="flex:0 0 20px;margin-top:2px"><use href="#i-lock"></use></svg>
+              <div class="dtxt"><span class="dlab">Permanent notice</span>Reference only — not legal advice. Verify with the Ministry of Climate Change &amp; Environment.</div>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <button type="button"><svg class="ico s20"><use href="#i-fishnav"></use></svg>Check</button>
+            <button type="button"><svg class="ico s20"><use href="#i-tally"></use></svg>Today</button>
+            <button type="button"><svg class="ico s20"><use href="#i-track"></use></svg>Trips</button>
+            <button type="button"><svg class="ico s20"><use href="#i-doc"></use></svg>Reference</button>
+            <button type="button" class="on"><svg class="ico s20"><use href="#i-slider"></use></svg>Settings</button>
+          </nav>
+        </div>
+      </div>
+      <figcaption class="cap"><b>S14</b>Settings<i>Square switches, segmented pairs, no chrome for chrome’s sake. Coordinate capture is off by default and says what it does not do.</i></figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- ============================== SECTION D ============================== -->
+<section class="wrap sec">
+  <div class="sec-head">
+    <span class="num">D</span>
+    <h2>Modes and edge cases</h2>
+    <p>Where the direction earns its keep: conflict, glare, gloves, first launch.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- ============ D4 TWO RULES DIALOG ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone">
+        <div class="scr flood flood--red" style="position:relative">
+          <div class="sb sb--flood"><span class="t">05:52</span><span class="sp"></span><span>Ras Al Khaimah</span><span class="bat"></span></div>
+          <div class="vmain">
+            <svg class="ico s56 vmark"><use href="#i-warn"></use></svg>
+            <h2 class="verdict sm">Two rules apply</h2>
+            <div class="vsub">هامور · Hamour · Orange-spotted grouper</div>
+          </div>
+          <div class="stack" style="height:200px"></div>
+
+          <div class="scrim">
+            <div class="dlg">
+              <div style="height:16px;background:linear-gradient(90deg,var(--green) 0 50%,var(--red) 50% 100%)"></div>
+              <div class="band" style="border-bottom-width:4px">
+                <div class="lab lab--mut">Ras Al Khaimah · هامور Hamour · 47 cm</div>
+                <div style="font-size:30px;font-weight:900;letter-spacing:-.035em;line-height:1;margin-top:8px;text-transform:uppercase">Two rules apply here</div>
+                <div class="txt" style="margin-top:8px">Both are shown in full. This app does not rank them and does not choose between them.</div>
+              </div>
+
+              <div style="display:flex;gap:12px;padding:12px 14px;border-bottom:3px solid var(--navy)">
+                <span style="flex:0 0 12px;background:var(--green)"></span>
+                <div style="flex:1">
+                  <div class="lab lab--mut">Rule 1 — size</div>
+                  <div class="mid" style="margin-top:4px">Meets the minimum — 47 cm, minimum 45 cm (total length)</div>
+                  <div class="cite" style="color:var(--navy-70)">UAE — Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked 2026-07-14</div>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px;padding:12px 14px;border-bottom:3px solid var(--navy)">
+                <span style="flex:0 0 12px;background:var(--red)"></span>
+                <div style="flex:1">
+                  <div class="lab lab--mut">Rule 2 — daily limit</div>
+                  <div class="mid" style="margin-top:4px">Past the bag limit — 6 recorded, limit 5 per person</div>
+                  <div class="cite" style="color:var(--navy-70)">UAE — Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked 2026-07-14</div>
+                </div>
+              </div>
+
+              <div class="disc" style="border-top-width:0;border-bottom:3px solid var(--navy)">
+                <svg class="ico s20" style="flex:0 0 20px;margin-top:2px"><use href="#i-lock"></use></svg>
+                <div class="dtxt"><span class="dlab">Permanent notice</span>Reference only — not legal advice. Verify with the Ministry of Climate Change &amp; Environment.</div>
+              </div>
+
+              <div style="padding:12px;display:grid;gap:8px">
+                <button class="btn" type="button">Read both rules</button>
+                <button class="btn btn--o" type="button">Back</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="cap"><b>D4</b>Dialog — two rules apply<i>The split field is the whole argument: one rule passes, one fails, and the app refuses to average them into a single answer.</i></figcaption>
+    </figure>
+
+    <!-- ============ SUNLIGHT MODE ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone sun" style="border-color:#000">
+        <div class="scr flood">
+          <div class="sb sb--flood"><span class="t">12:40</span><span class="sp"></span><span>Sunlight mode</span><span class="bat"></span></div>
+          <button class="vback" type="button"><svg class="ico s20 flip"><use href="#i-back"></use></svg> Check another</button>
+
+          <div class="vmain">
+            <svg class="ico s56 vmark" style="stroke-width:3"><use href="#i-xbox"></use></svg>
+            <h2 class="verdict">Below the minimum</h2>
+            <div class="vsub" style="font-size:17px">هامور · Hamour · Orange-spotted grouper<em style="opacity:1">Epinephelus coioides</em></div>
+            <div class="vnums">
+              <div><b>38<i> cm</i></b><span>Measured</span></div>
+              <div><b>45<i> cm</i></b><span>Minimum</span></div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="srow">
+              <svg class="ico s28" style="stroke-width:3"><use href="#i-ruler"></use></svg>
+              <div style="flex:1">
+                <div class="sl">Measured as</div>
+                <div class="sv" style="font-size:14px">Total length (TL) — snout to tip of tail</div>
+              </div>
+              <svg class="dia" viewBox="0 0 200 60" style="width:88px;flex:0 0 88px;color:#000">
+                <use href="#f-hamour" x="6" y="2" width="180" height="42"></use>
+                <g class="dim" style="stroke-width:4"><path d="M8 52h178"/><path d="M8 44v14M186 44v14"/></g>
+              </svg>
+            </div>
+            <div class="srow">
+              <div>
+                <div class="sl">Rule source</div>
+                <div class="cite" style="font-weight:700">UAE — Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked 2026-07-14</div>
+              </div>
+            </div>
+            <div class="disc">
+              <svg class="ico s20" style="flex:0 0 20px;margin-top:2px;stroke-width:3"><use href="#i-lock"></use></svg>
+              <div class="dtxt" style="font-weight:800"><span class="dlab">Permanent notice — cannot be dismissed</span>Reference only — not legal advice. Verify with the Ministry of Climate Change &amp; Environment.</div>
+            </div>
+            <div class="acts" style="border-top-width:5px">
+              <button class="btn" type="button" style="background:#000;border-color:#000"><svg class="ico s20"><use href="#i-plus"></use></svg> Add to today</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="cap"><b>Mode</b>Sunlight — third theme<i>Not a dark-mode variant: pure black on pure white, rules thickened to 5–8 px, yellow and navy withdrawn entirely so the single result colour is the only hue on the glass.</i></figcaption>
+    </figure>
+
+    <!-- ============ GLOVE MODE ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone glove">
+        <div class="scr">
+          <div class="sb"><span class="t">05:40</span><span class="sp"></span><span>Glove mode on</span><span class="bat"></span></div>
+
+          <div class="band band--navy" style="display:flex;align-items:center;gap:10px">
+            <div>
+              <div class="lab lab--mut">CatchLaw</div>
+              <div style="font-size:24px;font-weight:900;letter-spacing:-.03em;text-transform:uppercase;line-height:1;margin-top:4px">Is this legal?</div>
+            </div>
+            <span style="flex:1"></span>
+            <span class="chip">Ras Al Khaimah</span>
+          </div>
+
+          <div class="band band--chrome band--tight" style="display:flex;align-items:center;gap:8px">
+            <span style="width:16px;height:16px;background:var(--green);flex:0 0 auto"></span>
+            <div class="lab" style="letter-spacing:.12em">Rules checked 2026-07-14</div>
+          </div>
+
+          <div style="padding:14px 14px 0;position:relative">
+            <button class="field" type="button" style="min-height:88px">
+              <svg class="ico s34"><use href="#i-search"></use></svg>
+              <span class="ph" style="font-size:21px">Search species</span>
+            </button>
+            <span class="dp" style="top:14px;right:14px">88 dp</span>
+          </div>
+
+          <div class="band" style="border-bottom:0;padding-bottom:6px"><div class="lab lab--mut">Recent</div></div>
+          <div style="display:flex;overflow-x:auto;border-top:3px solid var(--navy);border-bottom:3px solid var(--navy)">
+            <button type="button" style="flex:0 0 132px;min-height:132px;padding:12px;border-right:3px solid var(--navy);text-align:left">
+              <svg class="fish" style="width:100px;height:38px"><use href="#f-hamour"></use></svg>
+              <div class="ar" style="font-size:26px;font-weight:800;margin-top:8px">هامور</div>
+              <div class="lab" style="margin-top:5px">45 cm TL</div>
+            </button>
+            <button type="button" style="flex:0 0 132px;min-height:132px;padding:12px;border-right:3px solid var(--navy);text-align:left">
+              <svg class="fish" style="width:100px;height:38px"><use href="#f-kanaad"></use></svg>
+              <div class="ar" style="font-size:26px;font-weight:800;margin-top:8px">كنعد</div>
+              <div class="lab" style="margin-top:5px">65 cm FL</div>
+            </button>
+            <button type="button" style="flex:0 0 132px;min-height:132px;padding:12px;text-align:left">
+              <svg class="fish" style="width:100px;height:38px"><use href="#f-shari"></use></svg>
+              <div class="ar" style="font-size:26px;font-weight:800;margin-top:8px">شعري</div>
+              <div class="lab" style="margin-top:5px;color:var(--red)">Season</div>
+            </button>
+          </div>
+
+          <div style="padding:12px;display:grid;gap:12px;position:relative">
+            <button class="btn btn--big" type="button">Browse by shape</button>
+            <button class="btn btn--big btn--y" type="button">Identify this fish</button>
+            <span class="dp" style="top:12px;right:12px">104 dp</span>
+            <span class="dp" style="bottom:12px;right:12px">12 dp gap</span>
+          </div>
+
+          <div class="grow"></div>
+
+          <div class="band band--tight" style="border-top:3px solid var(--navy);border-bottom:0;display:flex;align-items:center;gap:10px">
+            <div class="ar" style="font-size:22px;font-weight:800">هامور</div>
+            <span style="flex:1"></span>
+            <div class="pips"><i class="pip on" style="width:26px;height:26px"></i><i class="pip on" style="width:26px;height:26px"></i><i class="pip on" style="width:26px;height:26px"></i><i class="pip" style="width:26px;height:26px"></i><i class="pip" style="width:26px;height:26px"></i></div>
+            <div class="lab">3 of 5</div>
+          </div>
+
+          <nav class="nav">
+            <button type="button" class="on"><svg class="ico s28"><use href="#i-fishnav"></use></svg>Check</button>
+            <button type="button"><svg class="ico s28"><use href="#i-tally"></use></svg>Today</button>
+            <button type="button"><svg class="ico s28"><use href="#i-track"></use></svg>Trips</button>
+            <button type="button"><svg class="ico s28"><use href="#i-doc"></use></svg>Ref.</button>
+            <button type="button"><svg class="ico s28"><use href="#i-slider"></use></svg>Set.</button>
+          </nav>
+        </div>
+      </div>
+      <figcaption class="cap"><b>Mode</b>Glove — S1 re-rendered<i>Every primary target 56 dp or more with 8 dp or more between them; the recents strip drops from six to three so nothing is a near-miss. Yellow tags are annotation, not UI.</i></figcaption>
+    </figure>
+
+    <!-- ============ FIRST LAUNCH ============ -->
+    <figure class="slot" style="margin:0">
+      <div class="phone" style="background:var(--navy)">
+        <div class="scr" style="background:var(--navy);color:#fff">
+          <div class="sb"><span class="t">05:30</span><span class="sp"></span><span>First launch</span><span class="bat"></span></div>
+
+          <div style="padding:24px 18px 0">
+            <div class="lab" style="color:var(--yellow)">CatchLaw · one time only</div>
+            <h2 style="font-size:46px;line-height:.9;letter-spacing:-.04em;font-weight:900;text-transform:uppercase;margin:16px 0 0">Unpacking the rule data</h2>
+            <p class="txt" style="margin-top:14px;font-size:15px;color:rgba(255,255,255,.86);max-width:30ch">Everything is already on the phone. Nothing is downloaded, now or later.</p>
+          </div>
+
+          <div style="padding:26px 18px 0">
+            <div class="prog" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+            <div style="display:flex;align-items:flex-end;margin-top:16px">
+              <div style="font-size:72px;font-weight:900;letter-spacing:-.055em;line-height:.85">71<span style="font-size:28px">%</span></div>
+              <span style="flex:1"></span>
+              <div style="text-align:right">
+                <div class="lab" style="color:var(--yellow)">4.1 of 5.8 MB</div>
+                <div class="lab lab--mut" style="margin-top:6px">About 3 seconds left</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:22px 18px 0">
+            <div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:2px solid rgba(255,255,255,.3)">
+              <svg class="ico s20" style="color:var(--yellow)"><use href="#i-tick"></use></svg><div class="txt">Species list · 128 entries · 6 languages</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:2px solid rgba(255,255,255,.3)">
+              <svg class="ico s20" style="color:var(--yellow)"><use href="#i-tick"></use></svg><div class="txt">Rule text · MD 580/2015 · Orde 27/07/2012</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:2px solid rgba(255,255,255,.3)">
+              <svg class="ico s20" style="color:var(--yellow)"><use href="#i-tick"></use></svg><div class="txt">Measurement diagrams · TL · FL · SL · CW · SHL · ML</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;padding:10px 0">
+              <span style="width:20px;height:20px;border:3px solid rgba(255,255,255,.5);flex:0 0 20px"></span><div class="txt" style="color:rgba(255,255,255,.7)">Silhouettes and identification key</div>
+            </div>
+          </div>
+
+          <div class="grow"></div>
+
+          <div class="hazard" style="height:12px"></div>
+          <div style="background:var(--yellow);color:var(--navy);padding:14px 18px">
+            <div class="lab">No account · no sign-in · no network permission</div>
+            <div class="txt" style="margin-top:6px;font-weight:700">The app has never asked for one and never will. Rule updates arrive with app updates, or by importing a file at the harbour.</div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="cap"><b>First launch</b>Content extraction<i>Determinate, itemised, under six seconds — and it uses the one moment we have the user’s full attention to state the offline promise in plain words.</i></figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- ============================== WHY ============================== -->
+<footer class="wrap why">
+  <h2>Why this direction</h2>
+  <div class="cols">
+    <div>
+      <p>Khalid is not reading an app; he is reading a sign. At 05:40 the fish is alive, his hands are wet, the deck is moving and he has perhaps ten seconds before returning the fish stops being worth it — so the verdict has to be legible the way a harbour board is legible, at arm’s length, at an angle, with salt on the glass. That is why the result floods edge to edge in a single flat colour with the fact set at 54 px and nothing else competing: <em>below the minimum — 38 cm, minimum 45 cm (total length)</em>, a statement, never an instruction.</p>
+      <p>Signal flags are the right reference because they are a real, tested vocabulary for saying one unambiguous thing across a gap of water: saturated but not neon, flat, hard-edged, meaningless without their shape. Rounded corners, shadows and gradients all exist to make a screen feel soft and near; this user needs the opposite, so they are gone entirely and the whole system is built from bands, thick rules and stencilled numbers instead of cards.</p>
+    </div>
+    <div>
+      <p>The risk is obvious — a screen that shouts can become a poster that cannot hold information — so the supporting screens carry the argument: the rule reader, the trips ledger, the penalties table and the settings list all use the same bands at a quieter volume and prove the grid handles density, Arabic and six locales without a single new component. Trust is the product, so the citation, the measurement method and the permanent disclaimer are a fixed stack in the same order at the foot of every verdict, and the amber staleness bar sits above the answer without ever blocking it, because a rule from June is still better than no rule at sea.</p>
+      <p class="note">One deliberate exception to the theme rule: this page’s chrome follows your light or dark preference, but the phone screens never invert. The app commits to a light ground with navy structure in all conditions — a signal flag that changed colour at dusk would not be a signal — and glare is handled by the separate sunlight theme, not by darkening the interface.</p>
+    </div>
+  </div>
+</footer>
+
+</div>

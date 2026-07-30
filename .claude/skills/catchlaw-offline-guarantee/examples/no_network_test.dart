@@ -1,0 +1,160 @@
+// no_network_test.dart — layer 4 of the CatchLaw offline guarantee, complete and runnable.
+// Demonstrates a source-scanning guard test (the technique the Flutter team uses in dev/bots) that
+// reads every .dart file under lib/ and fails if any of them could reach a socket. It bans the
+// NETWORKING HALF of dart:io — HttpClient, Socket, WebSocket, InternetAddress — while leaving File,
+// Directory and Platform alone, because drift's NativeDatabase.createInBackground and the PDF
+// export need them. It also asserts that pubspec.yaml declares no networking package and that no
+// SHIPPING AndroidManifest.xml grants android.permission.INTERNET (debug/ and profile/ keep it for
+// the Dart VM service, which is correct and must not be broken).
+// Copy to test/no_network_test.dart. Run: flutter test test/no_network_test.dart
+// Escape hatch: a trailing `// no-network-ok` on a line that is provably a false positive.
+
+import 'dart:io';
+
+import 'package:flutter_test/flutter_test.dart';
+
+const String _escapeHatch = 'no-network-ok';
+const List<String> _generatedSuffixes = <String>[
+  '.g.dart', '.freezed.dart', '.drift.dart', '.gr.dart',
+];
+
+/// The networking half of `dart:io` and of the framework. `File`, `Directory`, `Platform`,
+/// `FileMode` and `IOSink` are DELIBERATELY absent — the two drift databases and the PDF export
+/// depend on them, and a wholesale `dart:io` ban is unenforceable.
+final Map<RegExp, String> _bannedSymbols = <RegExp, String>{
+  RegExp(r'\bHttp(Client|Server|Overrides)\b'): 'HTTP client, server or plumbing',
+  RegExp(r'\b(Raw|Secure|Server)?Socket\b'): 'TCP socket',
+  RegExp(r'\bRawDatagramSocket\b'): 'UDP socket',
+  RegExp(r'\bWebSocket(Transformer)?\b'): 'web socket',
+  RegExp(r'\bInternetAddress\b'): 'DNS resolution',
+  RegExp(r'\bNetworkInterface\b'): 'interface enumeration',
+  RegExp(r'\bSecurityContext\b'): 'TLS client context',
+};
+
+/// Framework and package entry points that fetch. Every one has an asset-based replacement.
+final Map<RegExp, String> _bannedApis = <RegExp, String>{
+  RegExp(r'\bImage\.network\b'): 'use Image.asset with assets/plates/',
+  RegExp(r'\b(Cached)?NetworkImage\b|\bNetworkAssetBundle\b'): 'use AssetImage / rootBundle',
+  RegExp(r'\bFadeInImage\.assetNetwork\b'): 'use FadeInImage with two AssetImages',
+  RegExp(r'\bSvgPicture\.network\b'): 'use SvgPicture.asset',
+  RegExp(r'\bPdfGoogleFonts\b'): 'use pw.Font.ttf(rootBundle.load(assets/fonts/...))',
+  RegExp(r'\b(canL|l)aunchUrl(String)?\b'): 'print the citation as text, never as a link',
+  RegExp(r'\bConnectivityResult\b'): 'offline is the only state; show StaleRuleBar instead',
+};
+
+/// Packages that must never appear in `pubspec.yaml`. See references/four-layers.md.
+const List<String> _bannedPackages = <String>[
+  'http', 'dio', 'chopper', 'web_socket_channel', 'grpc',
+  'connectivity_plus', 'internet_connection_checker',
+  'url_launcher', 'webview_flutter', 'flutter_inappwebview',
+  'google_fonts', 'cached_network_image',
+  'firebase_core', 'googleapis', 'supabase_flutter', 'sentry_flutter',
+];
+
+typedef _Violation = ({String file, int line, String detail});
+
+String _render(List<_Violation> hits) =>
+    hits.map((_Violation v) => '  ${v.file}:${v.line} — ${v.detail}').join('\n');
+
+List<File> _dartFilesUnder(Directory dir) => dir.listSync(recursive: true).whereType<File>()
+    .where((File f) => f.path.endsWith('.dart') && !_generatedSuffixes.any(f.path.endsWith))
+    .toList()
+  ..sort((File a, File b) => a.path.compareTo(b.path));
+
+List<_Violation> _scan(List<File> files, Map<RegExp, String> patterns) {
+  final List<_Violation> hits = <_Violation>[];
+  for (final File file in files) {
+    final List<String> lines = file.readAsLinesSync();
+    for (int i = 0; i < lines.length; i++) {
+      final String line = lines[i];
+      if (line.contains(_escapeHatch)) continue;
+      if (line.trimLeft().startsWith('//')) continue;
+      patterns.forEach((RegExp re, String why) {
+        if (re.hasMatch(line)) {
+          hits.add((file: file.path, line: i + 1, detail: '${re.pattern} — $why'));
+        }
+      });
+    }
+  }
+  return hits;
+}
+
+void main() {
+  late List<File> libFiles;
+
+  setUpAll(() {
+    final Directory lib = Directory('lib');
+    expect(lib.existsSync(), isTrue,
+        reason: 'run from the package root: flutter test test/no_network_test.dart');
+    libFiles = _dartFilesUnder(lib);
+    expect(libFiles, isNotEmpty, reason: 'lib/ scanned but empty — the guard would pass vacuously');
+  });
+
+  test('lib/ uses no networking symbol from dart:io', () {
+    final List<_Violation> hits = _scan(libFiles, _bannedSymbols);
+    expect(hits, isEmpty,
+        reason: 'CatchLaw ships without android.permission.INTERNET; these lines cannot work:\n'
+            '${_render(hits)}');
+  });
+
+  test('lib/ calls no fetching API', () {
+    final List<_Violation> hits = _scan(libFiles, _bannedApis);
+    expect(hits, isEmpty, reason: 'every one has an assets/ replacement:\n${_render(hits)}');
+  });
+
+  test('lib/ imports no networking package', () {
+    final RegExp importRe = RegExp(r'''^\s*import\s+['"]package:([a-z0-9_]+)/''');
+    final List<_Violation> hits = <_Violation>[];
+    for (final File file in libFiles) {
+      final List<String> lines = file.readAsLinesSync();
+      for (int i = 0; i < lines.length; i++) {
+        if (lines[i].contains(_escapeHatch)) continue;
+        final RegExpMatch? m = importRe.firstMatch(lines[i]);
+        final String? pkg = m?.group(1);
+        if (pkg != null && _bannedPackages.contains(pkg)) {
+          hits.add((file: file.path, line: i + 1, detail: 'package:$pkg is banned'));
+        }
+      }
+    }
+    expect(hits, isEmpty, reason: 'banned package imported:\n${_render(hits)}');
+  });
+
+  test('pubspec.yaml declares no networking package', () {
+    final File pubspec = File('pubspec.yaml');
+    expect(pubspec.existsSync(), isTrue);
+    final List<String> lines = pubspec.readAsLinesSync();
+    final List<_Violation> hits = <_Violation>[];
+    for (int i = 0; i < lines.length; i++) {
+      final String line = lines[i];
+      if (line.trimLeft().startsWith('#')) continue;
+      final RegExpMatch? m = RegExp(r'^\s{2,}([a-z0-9_]+)\s*:').firstMatch(line);
+      final String? name = m?.group(1);
+      if (name != null && _bannedPackages.contains(name)) {
+        hits.add((file: 'pubspec.yaml', line: i + 1, detail: '$name is banned (layer 1)'));
+      }
+    }
+    expect(hits, isEmpty, reason: 'layer 1 breached — an import would now compile:\n${_render(hits)}');
+  });
+
+  test('no shipping AndroidManifest grants INTERNET', () {
+    final Directory src = Directory('android/app/src');
+    if (!src.existsSync()) return; // iOS-only checkout; layers 1 and 4 still applied above.
+    final List<_Violation> hits = <_Violation>[];
+    for (final File manifest in src
+        .listSync(recursive: true)
+        .whereType<File>()
+        .where((File f) => f.path.endsWith('AndroidManifest.xml'))) {
+      // debug/ and profile/ legitimately grant INTERNET for the Dart VM service (rule 4).
+      if (manifest.path.contains('/debug/') || manifest.path.contains('/profile/')) continue;
+      final List<String> lines = manifest.readAsLinesSync();
+      for (int i = 0; i < lines.length; i++) {
+        final String line = lines[i];
+        if (!line.contains('android.permission.INTERNET')) continue;
+        if (line.contains('tools:node="remove"')) continue; // the required stripping marker
+        if (line.trimLeft().startsWith('<!--')) continue;
+        hits.add((file: manifest.path, line: i + 1, detail: 'INTERNET granted in a shipping set'));
+      }
+    }
+    expect(hits, isEmpty, reason: 'layer 2 breached — the OS would allow sockets:\n${_render(hits)}');
+  });
+}

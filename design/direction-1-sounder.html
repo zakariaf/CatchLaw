@@ -1,0 +1,2279 @@
+<title>CATCHLAW — Direction 1: SOUNDER</title>
+
+<style>
+/* ============================================================
+   PAGE CHROME TOKENS — theme aware (media query + explicit toggle)
+   ============================================================ */
+:root{
+  --pw: 390px;
+  --pg-bg:#E9EEEF; --pg-panel:#FFFFFF; --pg-panel2:#F3F6F7;
+  --pg-fg:#08181E; --pg-mut:#55707A; --pg-line:#C4D2D6; --pg-line2:#DFE7E9;
+  --pg-accent:#A65C00; --pg-shadow:0 18px 40px rgba(6,19,26,.16);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --pg-bg:#040C10; --pg-panel:#09171D; --pg-panel2:#0C1F26;
+    --pg-fg:#DCEBEF; --pg-mut:#7E9AA3; --pg-line:#1B333D; --pg-line2:#132832;
+    --pg-accent:#FFA92E; --pg-shadow:0 22px 48px rgba(0,0,0,.55);
+  }
+}
+:root[data-theme="dark"]{
+  --pg-bg:#040C10; --pg-panel:#09171D; --pg-panel2:#0C1F26;
+  --pg-fg:#DCEBEF; --pg-mut:#7E9AA3; --pg-line:#1B333D; --pg-line2:#132832;
+  --pg-accent:#FFA92E; --pg-shadow:0 22px 48px rgba(0,0,0,.55);
+}
+:root[data-theme="light"]{
+  --pg-bg:#E9EEEF; --pg-panel:#FFFFFF; --pg-panel2:#F3F6F7;
+  --pg-fg:#08181E; --pg-mut:#55707A; --pg-line:#C4D2D6; --pg-line2:#DFE7E9;
+  --pg-accent:#A65C00; --pg-shadow:0 18px 40px rgba(6,19,26,.16);
+}
+
+/* ============================================================
+   TYPE STACKS — no webfonts. Personality from scale/weight/case.
+   ============================================================ */
+:root{
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, "Cascadia Mono", "Roboto Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --sans: "SF Compact Text", "SF Compact Display", "Avenir Next Condensed", "Roboto Condensed", "Helvetica Neue", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --ar: "SF Arabic", "Geeza Pro", "Noto Naskh Arabic", "Al Bayan", "Segoe UI", Tahoma, sans-serif;
+}
+
+.wrap{
+  background:var(--pg-bg); color:var(--pg-fg);
+  font-family:var(--sans); line-height:1.45;
+  padding:40px 20px 80px; overflow-x:hidden; max-width:100%;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap *{box-sizing:border-box;}
+.wrap :focus-visible{outline:2px solid var(--pg-accent); outline-offset:3px;}
+@media (prefers-reduced-motion: reduce){
+  .wrap *{animation:none !important; transition:none !important;}
+}
+
+/* ---------- page header ---------- */
+.pg-head{max-width:1180px; margin:0 auto 44px; border-bottom:1px solid var(--pg-line); padding-bottom:28px;}
+.pg-kicker{font-family:var(--mono); font-size:10px; letter-spacing:.24em; text-transform:uppercase; color:var(--pg-accent); margin-bottom:18px;}
+.pg-title{font-size:clamp(38px,7vw,68px); line-height:.94; font-weight:800; letter-spacing:-.03em; text-wrap:balance; margin:0 0 14px; text-transform:uppercase;}
+.pg-title em{font-style:normal; color:var(--pg-mut); font-weight:400;}
+.pg-sub{max-width:62ch; font-size:16px; color:var(--pg-mut); margin:0 0 22px;}
+.pg-meta{display:flex; flex-wrap:wrap; gap:0; font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--pg-mut); font-variant-numeric:tabular-nums; border-top:1px solid var(--pg-line2);}
+.pg-meta > div{padding:10px 18px 10px 0; margin-right:18px; border-right:1px solid var(--pg-line2);}
+.pg-meta b{color:var(--pg-fg); font-weight:600;}
+
+/* ---------- design system panel ---------- */
+.ds{max-width:1180px; margin:0 auto 64px; background:var(--pg-panel); border:1px solid var(--pg-line); }
+.ds-top{display:flex; flex-wrap:wrap; align-items:baseline; gap:14px; padding:14px 18px; border-bottom:1px solid var(--pg-line);}
+.ds-top h2{margin:0; font-size:13px; letter-spacing:.2em; text-transform:uppercase; font-family:var(--mono); font-weight:600;}
+.ds-top span{font-family:var(--mono); font-size:11px; color:var(--pg-mut); letter-spacing:.06em;}
+.ds-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(268px,1fr));}
+.ds-block{padding:18px; border-right:1px solid var(--pg-line); border-bottom:1px solid var(--pg-line);}
+.ds-h{font-family:var(--mono); font-size:9.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--pg-mut); margin:0 0 14px;}
+.sw{display:flex; align-items:center; gap:10px; padding:6px 0; border-bottom:1px solid var(--pg-line2);}
+.sw:last-child{border-bottom:0;}
+.sw-chip{width:30px; height:30px; flex:none; border:1px solid rgba(127,150,160,.45);}
+.sw-name{flex:1; font-size:12.5px; letter-spacing:.01em;}
+.sw-hex{font-family:var(--mono); font-size:11px; color:var(--pg-mut); font-variant-numeric:tabular-nums; letter-spacing:.02em;}
+.sem-item{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--pg-line2);}
+.sem-item:last-child{border-bottom:0;}
+.sem-key{width:34px; height:34px; flex:none; display:grid; place-items:center; color:#06131A;}
+.sem-txt{font-size:12px; color:var(--pg-mut); line-height:1.35;}
+.sem-txt b{display:block; color:var(--pg-fg); font-size:12.5px; font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; margin-bottom:2px;}
+.tspec{display:flex; flex-direction:column; gap:12px;}
+.tspec-row{display:flex; align-items:baseline; gap:12px; border-bottom:1px solid var(--pg-line2); padding-bottom:10px;}
+.tspec-row:last-child{border-bottom:0;}
+.tspec-tag{font-family:var(--mono); font-size:9px; letter-spacing:.16em; color:var(--pg-mut); width:82px; flex:none; text-transform:uppercase;}
+.tspec-ex{font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--pg-fg);}
+.space-row{display:flex; align-items:center; gap:10px; margin-bottom:7px;}
+.space-bar{height:11px; background:var(--pg-accent); opacity:.85;}
+.space-n{font-family:var(--mono); font-size:10.5px; color:var(--pg-mut); font-variant-numeric:tabular-nums;}
+.icspec{display:flex; gap:14px; flex-wrap:wrap; align-items:center; color:var(--pg-fg);}
+.icspec svg{width:26px; height:26px;}
+.ds-note{padding:12px 18px; font-size:12px; color:var(--pg-mut); font-family:var(--mono); letter-spacing:.02em;}
+
+/* ---------- sections ---------- */
+.sec{max-width:1180px; margin:0 auto 72px;}
+.sec-h{display:flex; align-items:baseline; gap:14px; border-bottom:2px solid var(--pg-fg); padding-bottom:8px; margin-bottom:8px;}
+.sec-n{font-family:var(--mono); font-size:11px; letter-spacing:.2em; color:var(--pg-accent); font-weight:600;}
+.sec-t{font-size:22px; font-weight:700; letter-spacing:-.01em; text-transform:uppercase; margin:0;}
+.sec-d{font-size:13.5px; color:var(--pg-mut); max-width:70ch; margin:0 0 30px;}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(414px,100%),1fr)); gap:40px 26px; justify-items:center; align-items:start;}
+
+/* ---------- phone frame: instrument bezel with fasteners ---------- */
+.frame{margin:0; display:flex; flex-direction:column; gap:12px; width:calc(var(--pw) + 24px);}
+.bezel{
+  padding:12px; border-radius:9px;
+  background:
+    radial-gradient(circle at 8px 8px, #5C7681 0 2px, #0E1A1F 2.4px 3.8px, transparent 4px),
+    radial-gradient(circle at calc(100% - 8px) 8px, #5C7681 0 2px, #0E1A1F 2.4px 3.8px, transparent 4px),
+    radial-gradient(circle at 8px calc(100% - 8px), #5C7681 0 2px, #0E1A1F 2.4px 3.8px, transparent 4px),
+    radial-gradient(circle at calc(100% - 8px) calc(100% - 8px), #5C7681 0 2px, #0E1A1F 2.4px 3.8px, transparent 4px),
+    linear-gradient(180deg,#22343B 0%,#141F25 42%,#0B1418 100%);
+  box-shadow:inset 0 1px 0 rgba(150,180,190,.22), inset 0 0 0 1px rgba(0,0,0,.6), var(--pg-shadow);
+}
+.frame figcaption{display:flex; align-items:baseline; gap:9px; font-size:12.5px; color:var(--pg-mut); letter-spacing:.01em;}
+.cap-code{font-family:var(--mono); font-size:10px; letter-spacing:.14em; color:var(--pg-fg); border:1px solid var(--pg-line); padding:2px 5px; flex:none;}
+
+/* ============================================================
+   APP TOKENS — committed dark instrument palette, scoped to .scr
+   ============================================================ */
+.scr{
+  --ink:#06131A; --panel:#0C1F27; --panel2:#12303A; --well:#081A21;
+  --hair:#1E434F; --hair2:#2C5B69;
+  --txt:#DCEBEF; --txt2:#8FACB4; --txt3:#5C7C87;
+  --sod:#FFA92E; --sod-dim:rgba(255,169,46,.14);
+  --meets:#3FA47D; --meets-t:#5FCB9F; --meets-bg:rgba(63,164,125,.13);
+  --fails:#F5443A; --fails-t:#FF8078; --fails-bg:rgba(245,68,58,.13);
+  --warn:#FFD866; --warn-bg:rgba(255,216,102,.11);
+  --tap:44px;
+  width:var(--pw); min-height:844px; border-radius:2px;
+  background:var(--ink); color:var(--txt);
+  display:flex; flex-direction:column; overflow:hidden; position:relative;
+  font-family:var(--sans); font-size:15px; line-height:1.4;
+}
+.scr :focus-visible{outline:2px solid var(--sod); outline-offset:2px;}
+/* :where() keeps this reset at zero-weight for the tag, so component classes
+   declared below (.btn, .rec, .row, .pnl, .search, .nav-i) still win on a button. */
+.scr :where(button){font:inherit; color:inherit; background:none; border:0; padding:0; text-align:inherit; cursor:pointer;}
+
+/* status bar */
+.sb{display:flex; justify-content:space-between; align-items:center; padding:9px 14px 7px; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--txt2); font-variant-numeric:tabular-nums;}
+.sb-r{display:flex; align-items:center; gap:8px;}
+.batt{width:20px; height:9px; border:1px solid var(--txt2); position:relative; display:inline-block;}
+.batt::after{content:""; position:absolute; inset:1.5px; right:auto; width:11px; background:var(--txt2);}
+.batt::before{content:""; position:absolute; top:2.5px; right:-3px; width:2px; height:4px; background:var(--txt2);}
+
+/* app bar */
+.ab{display:flex; align-items:center; gap:10px; padding:6px 14px 10px; border-bottom:1px solid var(--hair);}
+.ab-ic{width:26px; height:26px; flex:none; color:var(--sod);}
+.ab-t{font-family:var(--mono); font-size:13px; letter-spacing:.2em; font-weight:600; text-transform:uppercase;}
+.ab-s{font-family:var(--mono); font-size:9px; letter-spacing:.18em; color:var(--txt3); text-transform:uppercase; margin-top:1px;}
+.ab-sp{flex:1;}
+.ab-btn{width:34px; height:34px; display:grid; place-items:center; color:var(--txt2); border:1px solid var(--hair);}
+.ab-back{width:32px; height:32px; display:grid; place-items:center; color:var(--sod); flex:none;}
+
+.body{flex:1; display:flex; flex-direction:column; min-height:0;}
+.pad{padding:0 14px;}
+
+/* micro label — instrument silkscreen */
+.lbl{font-family:var(--mono); font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--txt3);}
+.lbl--sod{color:var(--sod);}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; letter-spacing:.01em;}
+
+/* chips */
+.chips{display:flex; gap:6px; flex-wrap:wrap; align-items:center;}
+.chip{display:inline-flex; align-items:center; gap:6px; padding:5px 9px; border:1px solid var(--hair); background:var(--panel); font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--txt2); font-variant-numeric:tabular-nums;}
+.chip svg{width:13px; height:13px; flex:none;}
+.chip--sod{border-color:rgba(255,169,46,.5); color:var(--sod); background:var(--sod-dim);}
+.chip--on{background:var(--sod); border-color:var(--sod); color:#0A1418; font-weight:700;}
+.chip--warn{border-color:rgba(255,216,102,.5); color:var(--warn); background:var(--warn-bg);}
+
+/* panel */
+.pnl{background:var(--panel); border:1px solid var(--hair);}
+.pnl-h{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:7px 10px; border-bottom:1px solid var(--hair); background:linear-gradient(180deg,rgba(44,91,105,.22),rgba(44,91,105,0));}
+.pnl-b{padding:10px;}
+.hr{height:1px; background:var(--hair); border:0; margin:0;}
+
+/* list rows */
+.row{display:flex; align-items:center; gap:10px; padding:10px; border-bottom:1px solid var(--hair); min-height:var(--tap);}
+.row:last-child{border-bottom:0;}
+.row-ic{width:44px; height:26px; flex:none; color:var(--txt2);}
+.row-m{flex:1; min-width:0;}
+.row-t{font-size:15px; font-weight:600; letter-spacing:-.005em;}
+.row-s{font-size:11.5px; color:var(--txt2); margin-top:2px;}
+.row-v{font-family:var(--mono); font-size:12px; color:var(--txt); font-variant-numeric:tabular-nums; text-align:end; flex:none;}
+.chev{width:16px; height:16px; color:var(--txt3); flex:none;}
+[dir="rtl"] .chev{transform:scaleX(-1);}
+
+/* buttons */
+.btn{display:flex; align-items:center; justify-content:center; gap:8px; min-height:52px; padding:0 14px; border:1px solid var(--hair2); background:var(--panel); color:var(--txt); font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; width:100%;}
+.btn svg{width:18px; height:18px; flex:none;}
+.btn--pri{background:var(--sod); border-color:var(--sod); color:#0A1418; font-weight:700;}
+.btn--gh{background:transparent;}
+.btn--wide{min-height:60px;}
+
+/* bottom nav */
+.nav{display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--hair2); background:var(--panel); margin-top:auto;}
+.nav-i{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; padding:9px 2px 12px; min-height:58px; color:var(--txt3); border-inline-end:1px solid var(--hair);}
+.nav-i:last-child{border-inline-end:0;}
+.nav-i svg{width:21px; height:21px;}
+.nav-i span{font-family:var(--mono); font-size:8.5px; letter-spacing:.12em; text-transform:uppercase;}
+.nav-i.on{color:var(--sod); background:var(--sod-dim); box-shadow:inset 0 2px 0 var(--sod);}
+[lang="ar"] .nav-i span{font-family:var(--ar); font-size:10px; letter-spacing:0;}
+
+/* ============================================================
+   RESULT READOUT — the risk: an instrument-scale numeral
+   ============================================================ */
+.verdict{padding:12px 14px; border-bottom:1px solid var(--hair); display:flex; gap:10px; align-items:flex-start;}
+.verdict svg{width:26px; height:26px; flex:none; margin-top:2px;}
+.verdict-t{font-family:var(--mono); font-size:17px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; line-height:1.15;}
+.verdict-s{font-size:12.5px; color:var(--txt2); margin-top:4px;}
+.v--meets{background:var(--meets-bg); box-shadow:inset 4px 0 0 var(--meets); color:var(--meets-t);}
+.v--fails{background:var(--fails-bg); box-shadow:inset 4px 0 0 var(--fails); color:var(--fails-t);}
+.v--prot{background:var(--fails-bg); box-shadow:inset 4px 0 0 var(--fails); color:var(--fails-t);
+  background-image:repeating-linear-gradient(135deg, rgba(245,68,58,.12) 0 6px, transparent 6px 12px);}
+[dir="rtl"] .v--meets{box-shadow:inset -4px 0 0 var(--meets);}
+[dir="rtl"] .v--fails, [dir="rtl"] .v--prot{box-shadow:inset -4px 0 0 var(--fails);}
+.verdict .verdict-s{color:var(--txt2);}
+
+.readout{padding:14px 14px 10px; display:flex; align-items:flex-start; gap:10px; border-bottom:1px solid var(--hair); background:var(--well);}
+.ro-num{font-family:var(--mono); font-size:106px; line-height:.82; font-weight:700; letter-spacing:-.05em; font-variant-numeric:tabular-nums;}
+.ro-side{display:flex; flex-direction:column; gap:3px; padding-top:6px;}
+.ro-unit{font-family:var(--mono); font-size:17px; font-weight:600; letter-spacing:.06em;}
+.ro-code{font-family:var(--mono); font-size:9px; letter-spacing:.16em; border:1px solid currentColor; padding:2px 4px; align-self:flex-start;}
+.ro-meta{margin-inline-start:auto; text-align:end; display:flex; flex-direction:column; gap:5px; align-items:flex-end; padding-top:6px;}
+.ro-lim{font-family:var(--mono); font-size:12px; color:var(--txt2); font-variant-numeric:tabular-nums;}
+.ro-delta{font-family:var(--mono); font-size:15px; font-weight:700; font-variant-numeric:tabular-nums;}
+
+/* amber expiry bar — non blocking, lemon-shifted so it is not the sodium chrome */
+.expiry{display:flex; gap:9px; align-items:flex-start; padding:9px 12px; background:var(--warn-bg); border-bottom:1px solid rgba(255,216,102,.4); box-shadow:inset 3px 0 0 var(--warn);}
+[dir="rtl"] .expiry{box-shadow:inset -3px 0 0 var(--warn);}
+.expiry svg{width:17px; height:17px; color:var(--warn); flex:none; margin-top:1px;}
+.expiry p{margin:0; font-size:11.5px; color:var(--warn); line-height:1.35;}
+.expiry b{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; display:block; margin-bottom:2px;}
+
+/* citation block */
+.cite{padding:10px 12px; border-top:1px solid var(--hair); display:flex; flex-direction:column; gap:5px;}
+.cite-row{display:flex; gap:8px; align-items:baseline;}
+.cite-k{font-family:var(--mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--txt3); width:70px; flex:none;}
+.cite-v{font-family:var(--mono); font-size:11.5px; color:var(--txt); line-height:1.35; font-variant-numeric:tabular-nums;}
+.cite-v.sm{font-size:10.5px; color:var(--txt2);}
+
+/* disclaimer — permanent, cannot be dismissed */
+.disc{display:flex; gap:8px; padding:9px 12px; background:var(--panel2); border-top:1px solid var(--hair2); border-bottom:1px solid var(--hair2);}
+.disc svg{width:15px; height:15px; color:var(--txt2); flex:none; margin-top:1px;}
+.disc p{margin:0; font-size:11px; color:var(--txt2); line-height:1.35;}
+.disc b{color:var(--txt); font-weight:600;}
+
+/* measurement diagram */
+.diag{background:var(--well); border:1px solid var(--hair); padding:8px;}
+.diag svg{width:100%; height:auto; display:block; color:var(--txt2);}
+
+/* search field */
+.search{display:flex; align-items:center; gap:9px; min-height:56px; padding:0 12px; background:var(--well); border:1px solid var(--hair2);}
+.search svg{width:19px; height:19px; color:var(--sod); flex:none;}
+.search-p{color:var(--txt3); font-size:16px;}
+.search-q{color:var(--txt); font-size:17px;}
+.caret{width:1.5px; height:19px; background:var(--sod); display:inline-block; vertical-align:-3px;}
+
+/* recents strip */
+.recents{display:grid; grid-template-columns:repeat(6,1fr); gap:5px;}
+.rec{border:1px solid var(--hair); background:var(--panel); padding:6px 3px 5px; display:flex; flex-direction:column; align-items:center; gap:3px; min-height:62px;}
+.rec svg{width:100%; height:20px; color:var(--txt2);}
+.rec-n{font-family:var(--ar); font-size:13px; color:var(--txt); line-height:1;}
+.rec-l{font-family:var(--mono); font-size:7.5px; letter-spacing:.08em; color:var(--txt3); text-transform:uppercase;}
+
+/* tally */
+.tally{display:flex; align-items:center; gap:10px; padding:9px 12px; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); background:var(--panel);}
+.bar{height:6px; background:var(--well); border:1px solid var(--hair); display:flex; flex:1;}
+.bar i{display:block; height:100%; background:var(--sod);}
+.bar i.g{background:var(--meets);}
+.bar i.r{background:var(--fails);}
+
+/* ruler */
+.rulerwrap{background:var(--well); border:1px solid var(--hair2); padding:10px 0 8px; position:relative; overflow:hidden;}
+.rk{height:22px; background-image:
+  repeating-linear-gradient(90deg, var(--hair2) 0 1px, transparent 1px 12.2px);
+  border-bottom:1px solid var(--hair2);}
+.rk-maj{height:12px; background-image:
+  repeating-linear-gradient(90deg, var(--txt2) 0 1.5px, transparent 1.5px 61px);}
+.rk-nums{display:flex; padding-top:4px;}
+.rk-nums span{width:61px; flex:none; font-family:var(--mono); font-size:9.5px; color:var(--txt3); text-align:start; padding-inline-start:2px; font-variant-numeric:tabular-nums;}
+.rulermark{position:absolute; top:0; bottom:0; width:1.5px; background:var(--sod);}
+.rulermark::after{content:""; position:absolute; top:0; left:-4px; border:5px solid transparent; border-top-color:var(--sod);}
+
+/* tables */
+.tbl{width:100%; border-collapse:collapse; font-size:12px;}
+.tbl th{font-family:var(--mono); font-size:8.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--txt3); text-align:start; padding:7px 8px; border-bottom:1px solid var(--hair2); font-weight:600;}
+.tbl td{padding:9px 8px; border-bottom:1px solid var(--hair); vertical-align:top; color:var(--txt2);}
+.tbl td.k{font-family:var(--mono); color:var(--txt); font-variant-numeric:tabular-nums; white-space:nowrap;}
+
+/* key-value grid */
+.kv{display:grid; grid-template-columns:1fr auto; gap:0;}
+.kv > div{padding:9px 10px; border-bottom:1px solid var(--hair); font-size:13px;}
+.kv > div:nth-child(even){font-family:var(--mono); font-size:12px; color:var(--txt2); text-align:end; font-variant-numeric:tabular-nums;}
+
+/* modal */
+.scrim{position:absolute; inset:0; background:rgba(3,10,13,.82); display:flex; align-items:center; padding:14px;}
+.modal{background:var(--panel); border:1px solid var(--hair2); width:100%; box-shadow:0 24px 60px rgba(0,0,0,.6);}
+
+/* progress */
+.prog{height:14px; background:var(--well); border:1px solid var(--hair2); display:flex; padding:2px;}
+.prog i{display:block; background:var(--sod); height:100%;}
+.ticks{display:flex; justify-content:space-between; font-family:var(--mono); font-size:9px; color:var(--txt3); padding-top:4px; font-variant-numeric:tabular-nums;}
+
+/* arabic */
+[lang="ar"]{font-family:var(--ar);}
+[lang="ar"] .row-t{font-size:17px; font-weight:500;}
+[lang="ar"] .row-s{font-size:12.5px;}
+[lang="ar"] .lbl{letter-spacing:0; font-size:11px; font-family:var(--ar);}
+.ar-num{font-family:var(--ar); font-variant-numeric:tabular-nums;}
+
+/* ============================================================
+   SUNLIGHT MODE — third theme. Monochrome + result colour only.
+   ============================================================ */
+.scr--sun{
+  --ink:#FFFFFF; --panel:#FFFFFF; --panel2:#FFFFFF; --well:#FFFFFF;
+  --hair:#000000; --hair2:#000000;
+  --txt:#000000; --txt2:#000000; --txt3:#000000;
+  --sod:#000000; --sod-dim:transparent;
+  --meets:#00662F; --meets-t:#00662F; --meets-bg:#FFFFFF;
+  --fails:#D50000; --fails-t:#D50000; --fails-bg:#FFFFFF;
+  --warn:#000000; --warn-bg:#FFFFFF;
+  font-weight:500;
+}
+.scr--sun .ab, .scr--sun .row, .scr--sun .cite, .scr--sun .disc, .scr--sun .readout, .scr--sun .verdict{border-color:#000;}
+.scr--sun .ab{border-bottom-width:2px;}
+.scr--sun .verdict{background:#fff; box-shadow:none; border-bottom:3px solid #000; color:var(--fails);}
+.scr--sun .v--fails{background:#fff;}
+.scr--sun .nav{border-top:3px solid #000; background:#fff;}
+.scr--sun .nav-i.on{background:#000; color:#fff; box-shadow:none;}
+.scr--sun .btn--pri{background:#000; color:#fff; border-color:#000;}
+.scr--sun .btn{border-width:2px; border-color:#000;}
+.scr--sun .disc{background:#fff; border-top:2px solid #000; border-bottom:2px solid #000;}
+.scr--sun .chip{background:#fff; border-color:#000; color:#000;}
+.scr--sun .diag{background:#fff; border-color:#000;}
+.scr--sun .ro-num{color:var(--fails);}
+
+/* ============================================================
+   GLOVE MODE — every primary target >= 56dp, >= 8dp apart
+   ============================================================ */
+.scr--glove{--tap:56px;}
+.scr--glove .btn{min-height:64px; font-size:13px;}
+.scr--glove .search{min-height:64px;}
+.scr--glove .nav-i{min-height:72px; padding:12px 2px 14px;}
+.scr--glove .nav-i svg{width:25px; height:25px;}
+.scr--glove .nav-i span{font-size:9px;}
+.scr--glove .rec{min-height:88px; padding:10px 4px;}
+.scr--glove .rec svg{height:28px;}
+.scr--glove .rec-n{font-size:17px;}
+.scr--glove .row{min-height:64px; padding:14px 12px;}
+.hit{position:relative; outline:1px dashed rgba(255,169,46,.55); outline-offset:3px;}
+.hit::after{content:attr(data-dp); position:absolute; top:-9px; inset-inline-end:2px; font-family:var(--mono); font-size:7.5px; letter-spacing:.1em; color:var(--sod); background:var(--ink); padding:0 3px;}
+
+/* ---------- footer ---------- */
+.why{max-width:1180px; margin:0 auto; border-top:2px solid var(--pg-fg); padding-top:24px;}
+.why h2{font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--pg-accent); margin:0 0 14px;}
+.why p{max-width:72ch; font-size:15px; color:var(--pg-fg); margin:0 0 12px;}
+.why p.small{font-size:12.5px; color:var(--pg-mut); font-family:var(--mono); line-height:1.6;}
+
+/* responsive: shrink the device, never the page */
+@media (max-width:560px){ :root{--pw:340px;} .wrap{padding:28px 12px 60px;} .ds-block{border-right:0;} }
+@media (max-width:420px){ :root{--pw:296px;} .ro-num{font-size:86px;} }
+</style>
+
+<!-- ============================================================
+     ARTWORK LIBRARY — every mark authored inline. No images.
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+
+<!-- ---- fish silhouettes: body path carries the eye as an even-odd hole ---- -->
+<symbol id="f-grouper" viewBox="0 0 100 48">
+  <path fill="currentColor" fill-rule="evenodd" d="M5 24C9 13 22 6 41 6c18 0 32 6 39 13v10c-7 7-21 13-39 13C22 42 9 35 5 24Zm10-3a2.6 2.6 0 1 0 5.2 0 2.6 2.6 0 1 0-5.2 0Z"/>
+  <path fill="currentColor" d="M80 15c9-1 15 3 15 9s-6 10-15 9Z"/>
+  <path fill="currentColor" d="M26 9c12-5 28-5 38-1l-3 4c-10-3-24-3-34 1Z"/>
+  <path fill="currentColor" d="M30 26c6 6 13 8 18 7-4-4-11-7-16-8Z"/>
+</symbol>
+<symbol id="f-emperor" viewBox="0 0 100 48">
+  <path fill="currentColor" fill-rule="evenodd" d="M3 22C10 12 24 5 43 5c17 0 30 6 37 14v6c-7 8-20 14-37 14-19 0-33-7-40-17Zm12-1a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0Z"/>
+  <path fill="currentColor" d="M80 17 98 5l-6 19 6 19-18-12Z"/>
+  <path fill="currentColor" d="M28 7c14-4 28-3 38 2l-4 4c-10-4-22-5-34-2Z"/>
+  <path fill="currentColor" d="M32 38c10 4 22 4 30 0l-4-3c-8 3-17 3-26 0Z"/>
+</symbol>
+<symbol id="f-rabbit" viewBox="0 0 100 48">
+  <path fill="currentColor" fill-rule="evenodd" d="M6 24c5-11 18-17 34-17s28 6 34 13v8c-6 7-18 13-34 13S11 35 6 24Zm11-2a2.4 2.4 0 1 0 4.8 0 2.4 2.4 0 1 0-4.8 0Z"/>
+  <path fill="currentColor" d="M75 17 94 9l-5 15 5 15-19-8Z"/>
+  <path fill="currentColor" d="M24 9c12-4 26-4 36 0l-3 4c-10-3-22-3-33 0Z"/>
+  <path fill="currentColor" d="M26 39c11 4 24 4 33 0l-4-3c-8 2-19 2-29 0Z"/>
+</symbol>
+<symbol id="f-bream" viewBox="0 0 100 48">
+  <path fill="currentColor" fill-rule="evenodd" d="M4 24C11 12 24 4 42 4s31 8 36 16v8c-5 8-18 16-36 16S11 36 4 24Zm12-2a2.5 2.5 0 1 0 5 0 2.5 2.5 0 1 0-5 0Z"/>
+  <path fill="currentColor" d="M78 17 97 6l-6 18 6 18-19-11Z"/>
+  <path fill="currentColor" d="M26 6c14-3 28-1 36 4l-4 4c-9-4-20-6-32-4Z"/>
+</symbol>
+<symbol id="f-mackerel" viewBox="0 0 100 48">
+  <path fill="currentColor" fill-rule="evenodd" d="M2 24c8-8 22-12 40-12 16 0 29 3 37 7v10c-8 4-21 7-37 7-18 0-32-4-40-12Zm11-1a2.2 2.2 0 1 0 4.4 0 2.2 2.2 0 1 0-4.4 0Z"/>
+  <path fill="currentColor" d="M79 20 98 3l-8 21 8 21-19-17Z"/>
+  <path fill="currentColor" d="M30 13c12-3 24-2 32 1l-3 3c-8-2-18-3-29-1Z"/>
+  <path fill="currentColor" d="M62 10c8 1 14 3 18 5l-2 3c-5-2-11-4-18-5Z"/>
+</symbol>
+<symbol id="f-pomfret" viewBox="0 0 100 48">
+  <path fill="currentColor" fill-rule="evenodd" d="M6 24c4-13 18-22 34-22 14 0 26 8 32 18v8c-6 10-18 18-32 18C24 46 10 37 6 24Zm12-2a2.4 2.4 0 1 0 4.8 0 2.4 2.4 0 1 0-4.8 0Z"/>
+  <path fill="currentColor" d="M72 18 96 6l-8 18 8 18-24-12Z"/>
+</symbol>
+<symbol id="f-mullet" viewBox="0 0 100 48">
+  <path fill="currentColor" fill-rule="evenodd" d="M4 24c7-9 20-13 37-13 16 0 29 4 37 9v8c-8 5-21 9-37 9C24 37 11 33 4 24Zm12-2a2.3 2.3 0 1 0 4.6 0 2.3 2.3 0 1 0-4.6 0Z"/>
+  <path fill="currentColor" d="M79 19 97 8l-7 16 7 16-18-11Z"/>
+  <path fill="currentColor" d="M34 12c10-3 21-2 28 1l-3 3c-7-2-15-3-25-1Z"/>
+</symbol>
+<symbol id="f-shark" viewBox="0 0 100 48">
+  <path fill="currentColor" fill-rule="evenodd" d="M4 19c1-4 6-6 13-7 17-3 46 0 63 6v9c-17 6-46 9-63 6-7-1-12-3-13-7Zm9 1a2.2 2.2 0 1 0 4.4 0 2.2 2.2 0 1 0-4.4 0Z"/>
+  <path fill="currentColor" d="M80 18 98 2l-8 22 7 21-17-14Z"/>
+  <path fill="currentColor" d="M40 12c4-7 9-11 13-12l6 13Z"/>
+  <path fill="currentColor" d="M30 30c-4 6-8 10-12 12l16-7Z"/>
+  <path fill="currentColor" d="M60 30c3 4 6 7 9 9l-12-6Z"/>
+</symbol>
+<symbol id="f-crab" viewBox="0 0 100 48">
+  <path fill="currentColor" fill-rule="evenodd" d="M28 23c0-9 10-15 22-15s22 6 22 15c0 8-10 14-22 14s-22-6-22-14Zm10-4a2.4 2.4 0 1 0 4.8 0 2.4 2.4 0 1 0-4.8 0Zm19 0a2.4 2.4 0 1 0 4.8 0 2.4 2.4 0 1 0-4.8 0Z"/>
+  <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+    <path d="M29 17 14 11M28 23 10 22M30 29 13 33M34 34 22 43M71 17 86 11M72 23 90 22M70 29 87 33M66 34 78 43"/>
+  </g>
+  <path fill="currentColor" d="M24 12 12 3 6 9l10 8Zm52 0 12-9 6 6-10 8Z"/>
+</symbol>
+<symbol id="f-clam" viewBox="0 0 100 48">
+  <path fill="currentColor" d="M50 6c17 0 32 11 32 21 0 8-14 15-32 15S18 35 18 27C18 17 33 6 50 6Z"/>
+  <g fill="none" stroke="#06131A" stroke-width="1.4" opacity=".55">
+    <path d="M28 26c8-8 14-11 22-11s14 3 22 11M31 33c8-7 12-9 19-9s11 2 19 9"/>
+  </g>
+</symbol>
+<symbol id="f-razor" viewBox="0 0 100 48">
+  <path fill="currentColor" d="M12 18h72a6 6 0 0 1 0 12H12a6 6 0 0 1 0-12Z"/>
+  <path fill="none" stroke="#06131A" stroke-width="1.4" opacity=".5" d="M16 24h68"/>
+</symbol>
+<symbol id="f-percebe" viewBox="0 0 100 48">
+  <path fill="currentColor" d="M42 46c-3-11-2-18 2-24h12c4 6 5 13 2 24Zm2-27 6-14 6 14Z"/>
+  <path fill="currentColor" d="M22 46c-2-8-1-13 2-17h8c3 4 4 9 2 17Zm2-19 4-10 4 10Z" opacity=".72"/>
+  <path fill="currentColor" d="M68 46c-2-8-1-13 2-17h8c3 4 4 9 2 17Zm2-19 4-10 4 10Z" opacity=".72"/>
+</symbol>
+
+<!-- ---- interface icons: 24 grid, 1.7 stroke, square joins ---- -->
+<symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h6M3 4v6M21 4h-6M21 4v6M3 20h6M3 20v-6M21 20h-6M21 20v-6"/><path d="M12 8v8M8 12h8"/></g></symbol>
+<symbol id="i-today" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v15H4z"/><path d="M4 9h16M8 13h4M8 16h8M15 12v5"/></g></symbol>
+<symbol id="i-trips" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 19c4 0 3-7 7-7s6-7 7-7"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M11 13h2"/></g></symbol>
+<symbol id="i-ref" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h7v16H4zM13 4h7v16h-7z"/><path d="M6 8h3M15 8h3M6 12h3M15 12h3"/></g></symbol>
+<symbol id="i-set" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h18M3 12h18M3 17h18"/><path d="M8 4v6M16 9v6M11 14v6"/></g></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></g></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-7 7-12a7 7 0 1 0-14 0c0 5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></g></symbol>
+<symbol id="i-ruler" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 9h20v6H2z"/><path d="M6 9v3M10 9v4M14 9v3M18 9v4"/></g></symbol>
+<symbol id="i-shape" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h7v7H3zM14 4h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></g></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v4M12 7 6 11v10M12 7l6 4v10"/><path d="M3 21h6M15 21h6"/></g></symbol>
+<symbol id="i-ok" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12 9 18 21 5"/></g></symbol>
+<symbol id="i-no" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6 18.4 18.4"/></g></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v16H4z"/><path d="M4 10h16M8 3v4M16 3v4"/><path d="m8 14 8 4M16 14l-8 4"/></g></symbol>
+<symbol id="i-warn" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 22 20H2Z"/><path d="M12 9v5M12 17v.01"/></g></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6v6c0 5 4 8 8 9 4-1 8-4 8-9V6Z"/><path d="M8.5 12.5 11 15l5-5.5"/></g></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></g></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="m9 5 7 7-7 7"/></g></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12H4M10 6 4 12l6 6"/></g></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M4 12h16"/></g></symbol>
+<symbol id="i-card" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 5h20v14H2z"/><path d="M2 9h20M5 15h5"/></g></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8h7l3 3 3-3h5M3 16h5l3-3 3 3h7"/><circle cx="12" cy="12" r="1.6"/></g></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M5 21h14"/><path d="M3 9h18M6 9l-3 6h6ZM18 9l-3 6h6Z"/></g></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></g></symbol>
+<symbol id="i-glossary" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M8 16 12 7l4 9M9.4 13h5.2"/></g></symbol>
+<symbol id="i-log" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/><path d="M18 15v6M15 18h6"/></g></symbol>
+</defs></svg>
+
+<div class="wrap">
+<header class="pg-head">
+  <div class="pg-kicker">Direction 1 of 3 · CATCHLAW · &ldquo;Is this legal?&rdquo;</div>
+  <h1 class="pg-title">Sounder <em>— the app is equipment</em></h1>
+  <p class="pg-sub">Not an app that happens to run at sea. An instrument that belongs on the console next to the
+  chartplotter and the echo sounder: bezelled panels, hairline rules, silkscreen labels, tabular numerals,
+  every value a readout. Dark-committed because it is used at 05:40 in the dark, and a white screen at that
+  hour costs you your night vision and ten seconds you do not have.</p>
+  <div class="pg-meta">
+    <div>ZONE <b>RAS AL KHAIMAH · GULF · SALT</b></div>
+    <div>RULE DATA <b>CHECKED 2026-07-14</b></div>
+    <div>OFFLINE <b>ALWAYS · NO ACCOUNT</b></div>
+    <div>SCREENS <b>20</b></div>
+  </div>
+</header>
+
+<section class="ds">
+  <div class="ds-top">
+    <h2>Design system — Sounder</h2>
+    <span>Instrument dark · sodium amber chrome · monospace numerals</span>
+  </div>
+  <div class="ds-grid">
+
+    <div class="ds-block">
+      <p class="ds-h">Ground &amp; chrome</p>
+      <div class="sw"><span class="sw-chip" style="background:#06131A"></span><span class="sw-name">Sea ink — ground</span><span class="sw-hex">#06131A</span></div>
+      <div class="sw"><span class="sw-chip" style="background:#0C1F27"></span><span class="sw-name">Panel</span><span class="sw-hex">#0C1F27</span></div>
+      <div class="sw"><span class="sw-chip" style="background:#12303A"></span><span class="sw-name">Panel raised</span><span class="sw-hex">#12303A</span></div>
+      <div class="sw"><span class="sw-chip" style="background:#081A21"></span><span class="sw-name">Well — inset readout</span><span class="sw-hex">#081A21</span></div>
+      <div class="sw"><span class="sw-chip" style="background:#1E434F"></span><span class="sw-name">Hairline</span><span class="sw-hex">#1E434F</span></div>
+      <div class="sw"><span class="sw-chip" style="background:#FFA92E"></span><span class="sw-name">Sodium amber — accent</span><span class="sw-hex">#FFA92E</span></div>
+      <div class="sw"><span class="sw-chip" style="background:#DCEBEF"></span><span class="sw-name">Text</span><span class="sw-hex">#DCEBEF</span></div>
+      <div class="sw"><span class="sw-chip" style="background:#8FACB4"></span><span class="sw-name">Text muted</span><span class="sw-hex">#8FACB4</span></div>
+      <p class="ds-h" style="margin:14px 0 0">Ground is blue-green-black, never neutral. Sodium amber is
+      harbour-lamp chrome: selection, focus, keylines. It never states a result.</p>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-h">Semantic — result only</p>
+      <div class="sem-item">
+        <span class="sem-key" style="background:#3FA47D"><svg width="17" height="17"><use href="#i-ok"/></svg></span>
+        <span class="sem-txt"><b>Meets #3FA47D</b>Muted marine green. Desaturated so it survives a wet screen
+        and does not glow at night.</span>
+      </div>
+      <div class="sem-item">
+        <span class="sem-key" style="background:#F5443A"><svg width="17" height="17"><use href="#i-no"/></svg></span>
+        <span class="sem-txt"><b>Fails #F5443A</b>Signal red. Below minimum, closed season and protected all
+        use it — the icon and the words separate them.</span>
+      </div>
+      <div class="sem-item">
+        <span class="sem-key" style="background:#FFD866"><svg width="17" height="17"><use href="#i-warn"/></svg></span>
+        <span class="sem-txt"><b>Stale data #FFD866</b>Lemon-shifted, lighter and cooler than the sodium accent
+        so an expiry warning can never be read as chrome.</span>
+      </div>
+      <div class="sem-item">
+        <span class="sem-key" style="background:#FFA92E"><svg width="17" height="17"><use href="#i-pin"/></svg></span>
+        <span class="sem-txt"><b>Accent #FFA92E</b>Shown here only for the comparison: side by side, warning
+        and chrome are two different colours at arm&rsquo;s length.</span>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-h">Type — mono does the measuring</p>
+      <div class="tspec">
+        <div class="tspec-row"><span class="tspec-tag">Readout 106</span><span class="tspec-ex" style="font-size:44px;font-weight:700;letter-spacing:-.05em;line-height:.9">38</span></div>
+        <div class="tspec-row"><span class="tspec-tag">Verdict 17</span><span class="tspec-ex" style="font-size:17px;font-weight:700;letter-spacing:.06em">BELOW THE MINIMUM</span></div>
+        <div class="tspec-row"><span class="tspec-tag">Value 12</span><span class="tspec-ex" style="font-size:12px">45 cm · 2026-07-14</span></div>
+        <div class="tspec-row"><span class="tspec-tag">Silkscreen 9</span><span class="tspec-ex" style="font-size:9px;letter-spacing:.22em">MEASURED · METHOD · SOURCE</span></div>
+        <div class="tspec-row"><span class="tspec-tag">Prose 15</span><span style="font-family:var(--sans);font-size:15px">Spangled emperor — Sha&rsquo;ri</span></div>
+        <div class="tspec-row"><span class="tspec-tag">Arabic 17</span><span style="font-family:var(--ar);font-size:19px" lang="ar" dir="rtl">هامور — الحد الأدنى ٤٥ سم</span></div>
+      </div>
+    </div>
+
+    <div class="ds-block">
+      <p class="ds-h">Spacing — 4pt, panels butt together</p>
+      <div class="space-row"><span class="space-bar" style="width:4px"></span><span class="space-n">04 · hairline gutter</span></div>
+      <div class="space-row"><span class="space-bar" style="width:8px"></span><span class="space-n">08 · target separation min</span></div>
+      <div class="space-row"><span class="space-bar" style="width:10px"></span><span class="space-n">10 · panel padding</span></div>
+      <div class="space-row"><span class="space-bar" style="width:14px"></span><span class="space-n">14 · screen margin</span></div>
+      <div class="space-row"><span class="space-bar" style="width:24px"></span><span class="space-n">24 · block break</span></div>
+      <p class="ds-h" style="margin:16px 0 10px">Icon &amp; stroke — 24 grid, 1.7 stroke, no fills, no rounded caps</p>
+      <div class="icspec">
+        <svg><use href="#i-check"/></svg><svg><use href="#i-today"/></svg><svg><use href="#i-trips"/></svg>
+        <svg><use href="#i-ref"/></svg><svg><use href="#i-set"/></svg><svg><use href="#i-ruler"/></svg>
+        <svg><use href="#i-warn"/></svg><svg><use href="#i-scale"/></svg>
+      </div>
+      <p class="ds-h" style="margin:14px 0 0">Silhouettes are solid; interface marks are stroked. You never
+      confuse a species with a control.</p>
+    </div>
+
+  </div>
+  <p class="ds-note">Targets: 44dp standard · 56dp glove mode · 8dp minimum separation everywhere &nbsp;·&nbsp; Numerals: tabular, always</p>
+</section>
+<section class="sec">
+  <div class="sec-h"><span class="sec-n">SECTION A</span><h2 class="sec-t">The core loop</h2></div>
+  <p class="sec-d">Fish in the bin, hands wet, no signal, ten seconds. Species in, statement of fact out —
+  with the number that decided it, how that number is measured, and where it comes from.</p>
+  <div class="grid">
+
+  <!-- ============ S1 CHECK (HOME) ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:40</span><span class="sb-r"><span>25.79°N 55.98°E</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <svg class="ab-ic"><use href="#i-check"/></svg>
+        <div><div class="ab-t">Catchlaw</div><div class="ab-s">Is this legal?</div></div>
+        <span class="ab-sp"></span>
+        <button type="button" class="ab-btn" aria-label="Ruler"><svg width="18" height="18"><use href="#i-ruler"/></svg></button>
+      </div>
+
+      <div class="body">
+        <div class="pad" style="padding-top:12px;">
+          <div class="chips">
+            <span class="chip chip--sod"><svg><use href="#i-pin"/></svg>Ras Al Khaimah · Gulf · Salt</span>
+            <span class="chip"><svg><use href="#i-shield"/></svg>Rules checked 2026-07-14</span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;">
+            <span class="lbl">Recent — this trip</span><span class="lbl num">06</span>
+          </div>
+          <div class="recents">
+            <button type="button" class="rec"><svg viewBox="0 0 100 48"><use href="#f-grouper"/></svg><span class="rec-n" lang="ar">هامور</span><span class="rec-l">Hamour</span></button>
+            <button type="button" class="rec"><svg viewBox="0 0 100 48"><use href="#f-emperor"/></svg><span class="rec-n" lang="ar">شعري</span><span class="rec-l">Sha&rsquo;ri</span></button>
+            <button type="button" class="rec"><svg viewBox="0 0 100 48"><use href="#f-rabbit"/></svg><span class="rec-n" lang="ar">صافي</span><span class="rec-l">Safi</span></button>
+            <button type="button" class="rec"><svg viewBox="0 0 100 48"><use href="#f-bream"/></svg><span class="rec-n" lang="ar">بدح</span><span class="rec-l">Badh</span></button>
+            <button type="button" class="rec"><svg viewBox="0 0 100 48"><use href="#f-mackerel"/></svg><span class="rec-n" lang="ar">كنعد</span><span class="rec-l">Kanaad</span></button>
+            <button type="button" class="rec"><svg viewBox="0 0 100 48"><use href="#f-pomfret"/></svg><span class="rec-n" lang="ar">زبيدي</span><span class="rec-l">Zubaidi</span></button>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:18px;">
+          <span class="lbl" style="display:block;margin-bottom:7px;">Find the species</span>
+          <button type="button" class="search" style="width:100%">
+            <svg><use href="#i-search"/></svg><span class="search-p">Search species</span>
+          </button>
+          <div style="display:flex;gap:8px;margin-top:8px;">
+            <button type="button" class="btn btn--gh" style="flex-direction:column;gap:5px;min-height:78px;padding:10px 6px;">
+              <svg style="width:24px;height:24px;color:var(--txt2)"><use href="#i-shape"/></svg>Browse by shape
+            </button>
+            <button type="button" class="btn btn--gh" style="flex-direction:column;gap:5px;min-height:78px;padding:10px 6px;">
+              <svg style="width:24px;height:24px;color:var(--txt2)"><use href="#i-key"/></svg>Identify this fish
+            </button>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:18px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">Today · 05:40 — 27 Jul</span><span class="lbl num" style="color:var(--txt2)">7 LANDED</span></div>
+            <div class="pnl-b" style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <span class="num" style="font-size:11px;color:var(--txt2);width:56px;">Hamour</span>
+                <span class="bar"><i class="g" style="width:60%"></i></span>
+                <span class="num" style="font-size:11px;width:42px;text-align:end;">3 / 5</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:9px;">
+                <span class="num" style="font-size:11px;color:var(--txt2);width:56px;">Kanaad</span>
+                <span class="bar"><i class="g" style="width:66%"></i></span>
+                <span class="num" style="font-size:11px;width:42px;text-align:end;">4 / 6</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:9px;">
+                <span class="num" style="font-size:11px;color:var(--txt2);width:56px;">Vessel</span>
+                <span class="bar"><i style="width:44%"></i></span>
+                <span class="num" style="font-size:11px;width:42px;text-align:end;">22 kg</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>Check</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+        </nav>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S1</span> Check — home. Zone, data currency, six recents, one search field.</figcaption>
+  </figure>
+
+  <!-- ============ S2 RESULT — MEETS ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:41</span><span class="sb-r"><span>25.79°N 55.98°E</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:12px;letter-spacing:.14em;">Hamour</div><div class="ab-s">Epinephelus coioides</div></div>
+        <span class="ab-sp"></span>
+        <svg style="width:44px;height:22px;color:var(--txt3)" viewBox="0 0 100 48"><use href="#f-grouper"/></svg>
+      </div>
+
+      <div class="body">
+        <div class="verdict v--meets">
+          <svg><use href="#i-ok"/></svg>
+          <div>
+            <div class="verdict-t">Meets the minimum</div>
+            <div class="verdict-s">47 cm measured · minimum 45 cm (total length)</div>
+          </div>
+        </div>
+
+        <div class="readout">
+          <span class="ro-num" style="color:var(--meets-t)">47</span>
+          <span class="ro-side" style="color:var(--meets-t)"><span class="ro-unit">cm</span><span class="ro-code">TL</span></span>
+          <span class="ro-meta">
+            <span class="lbl">Minimum</span>
+            <span class="ro-lim" style="font-size:19px;color:var(--txt)">45 cm</span>
+            <span class="ro-delta" style="color:var(--meets-t)">+2 cm</span>
+          </span>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">How this species is measured</span><span class="lbl lbl--sod">TL</span></div>
+            <div class="pnl-b">
+              <div class="diag">
+                <svg viewBox="0 0 300 92" role="img" aria-label="Total length: snout tip to the tip of the tail fin">
+                  <use href="#f-grouper" x="18" y="8" width="252" height="52"/>
+                  <g stroke="#FFA92E" stroke-width="1.4" fill="none" stroke-dasharray="3 3">
+                    <path d="M31 6v66M264 6v66"/>
+                  </g>
+                  <g stroke="#FFA92E" stroke-width="1.6" fill="none">
+                    <path d="M31 72h233M31 72l7-4M31 72l7 4M264 72l-7-4M264 72l-7 4"/>
+                  </g>
+                  <text x="148" y="88" fill="#FFA92E" font-family="ui-monospace,Menlo,monospace" font-size="10" letter-spacing="2" text-anchor="middle">TOTAL LENGTH</text>
+                </svg>
+              </div>
+              <p style="margin:8px 0 0;font-size:12px;color:var(--txt2);">Snout tip to the tip of the tail fin, fish flat, mouth closed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:10px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">Also on this species</span></div>
+            <div class="row"><span class="row-m"><span class="row-t" style="font-size:13.5px;">Closed season</span></span><span class="row-v">None listed</span></div>
+            <div class="row"><span class="row-m"><span class="row-t" style="font-size:13.5px;">Bag limit — today</span></span><span class="row-v">3 of 5 used</span></div>
+            <div class="row"><span class="row-m"><span class="row-t" style="font-size:13.5px;">Gear restriction</span></span><span class="row-v">None listed</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="cite">
+            <div class="cite-row"><span class="cite-k">Source</span><span class="cite-v">UAE · Ministerial Decision 580/2015, Art. 3</span></div>
+            <div class="cite-row"><span class="cite-k">Dates</span><span class="cite-v sm">published 2015-11-03 · checked 2026-07-14</span></div>
+          </div>
+          <div class="disc">
+            <svg><use href="#i-info"/></svg>
+            <p><b>Reference only — not legal advice.</b> Verify with the Ministry of Climate Change &amp; Environment.</p>
+          </div>
+          <div class="pad" style="padding-top:10px;padding-bottom:10px;">
+            <button type="button" class="btn btn--pri btn--wide"><svg><use href="#i-plus"/></svg>Add to today</button>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>Check</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S2</span> Result — meets. A fact, never &ldquo;keep it&rdquo;.</figcaption>
+  </figure>
+  <!-- ============ S2 RESULT — FAILS ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:43</span><span class="sb-r"><span>25.79°N 55.98°E</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:12px;letter-spacing:.14em;">Hamour</div><div class="ab-s">Epinephelus coioides</div></div>
+        <span class="ab-sp"></span>
+        <svg style="width:44px;height:22px;color:var(--txt3)" viewBox="0 0 100 48"><use href="#f-grouper"/></svg>
+      </div>
+
+      <div class="body">
+        <div class="verdict v--fails">
+          <svg><use href="#i-no"/></svg>
+          <div>
+            <div class="verdict-t">Below the minimum</div>
+            <div class="verdict-s">38 cm measured · minimum 45 cm (total length)</div>
+          </div>
+        </div>
+
+        <div class="readout">
+          <span class="ro-num" style="color:var(--fails-t)">38</span>
+          <span class="ro-side" style="color:var(--fails-t)"><span class="ro-unit">cm</span><span class="ro-code">TL</span></span>
+          <span class="ro-meta">
+            <span class="lbl">Minimum</span>
+            <span class="ro-lim" style="font-size:19px;color:var(--txt)">45 cm</span>
+            <span class="ro-delta" style="color:var(--fails-t)">&minus;7 cm</span>
+          </span>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">How this species is measured</span><span class="lbl lbl--sod">TL</span></div>
+            <div class="pnl-b">
+              <div class="diag">
+                <svg viewBox="0 0 300 92" role="img" aria-label="Total length: snout tip to the tip of the tail fin">
+                  <use href="#f-grouper" x="18" y="8" width="252" height="52"/>
+                  <g stroke="#FFA92E" stroke-width="1.4" fill="none" stroke-dasharray="3 3"><path d="M31 6v66M264 6v66"/></g>
+                  <g stroke="#FFA92E" stroke-width="1.6" fill="none">
+                    <path d="M31 72h233M31 72l7-4M31 72l7 4M264 72l-7-4M264 72l-7 4"/>
+                  </g>
+                  <text x="148" y="88" fill="#FFA92E" font-family="ui-monospace,Menlo,monospace" font-size="10" letter-spacing="2" text-anchor="middle">TOTAL LENGTH</text>
+                </svg>
+              </div>
+              <p style="margin:8px 0 0;font-size:12px;color:var(--txt2);">Snout tip to the tip of the tail fin, fish flat, mouth closed.
+              Not fork length — that would read 3 cm short on this species.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:10px;">
+          <div class="pnl">
+            <button type="button" class="row" style="width:100%">
+              <svg style="width:20px;height:20px;color:var(--fails-t);flex:none"><use href="#i-scale"/></svg>
+              <span class="row-m"><span class="row-t" style="font-size:13.5px;">Penalty on a first offence</span>
+              <span class="row-s">AED 3,000 + 6-month licence suspension</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="cite">
+            <div class="cite-row"><span class="cite-k">Source</span><span class="cite-v">UAE · Ministerial Decision 580/2015, Art. 3</span></div>
+            <div class="cite-row"><span class="cite-k">Dates</span><span class="cite-v sm">published 2015-11-03 · checked 2026-07-14</span></div>
+            <div class="cite-row"><span class="cite-k">Read</span><span class="cite-v sm" style="color:var(--sod)">Open the article text ›</span></div>
+          </div>
+          <div class="disc">
+            <svg><use href="#i-info"/></svg>
+            <p><b>Reference only — not legal advice.</b> Verify with the Ministry of Climate Change &amp; Environment.</p>
+          </div>
+          <div class="pad" style="padding-top:10px;padding-bottom:10px;display:flex;gap:8px;">
+            <button type="button" class="btn btn--gh btn--wide" style="flex:1"><svg><use href="#i-plus"/></svg>Add to today</button>
+            <button type="button" class="btn btn--gh btn--wide" style="flex:1"><svg><use href="#i-ruler"/></svg>Re-measure</button>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>Check</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S2</span> Result — fails. The deficit is stated; the decision stays with the fisher.</figcaption>
+  </figure>
+
+  <!-- ============ S2 RESULT — CLOSED SEASON + EXPIRY BAR ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:47</span><span class="sb-r"><span>25.79°N 55.98°E</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:12px;letter-spacing:.14em;">Sha&rsquo;ri</div><div class="ab-s">Lethrinus nebulosus</div></div>
+        <span class="ab-sp"></span>
+        <svg style="width:44px;height:22px;color:var(--txt3)" viewBox="0 0 100 48"><use href="#f-emperor"/></svg>
+      </div>
+
+      <div class="body">
+        <div class="expiry">
+          <svg><use href="#i-warn"/></svg>
+          <p><b>Rule data past its validity date</b>Rule data expired 2026-06-30 — still shown, verify before relying on it.</p>
+        </div>
+
+        <div class="verdict v--fails">
+          <svg><use href="#i-cal"/></svg>
+          <div>
+            <div class="verdict-t">Closed season</div>
+            <div class="verdict-s">1 March to 30 April · retention of this species is prohibited for the whole period, at any size</div>
+          </div>
+        </div>
+
+        <div class="readout" style="align-items:center;gap:14px;">
+          <span style="display:flex;flex-direction:column;gap:4px;">
+            <span class="lbl">Closed from</span>
+            <span class="num" style="font-size:34px;font-weight:700;line-height:1;color:var(--fails-t)">1 MAR</span>
+          </span>
+          <span class="num" style="font-size:22px;color:var(--txt3)">&rarr;</span>
+          <span style="display:flex;flex-direction:column;gap:4px;">
+            <span class="lbl">Until</span>
+            <span class="num" style="font-size:34px;font-weight:700;line-height:1;color:var(--fails-t)">30 APR</span>
+          </span>
+          <span class="ro-meta"><span class="lbl">Recurs</span><span class="ro-lim">Annual</span></span>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">Also on this species</span><span class="lbl lbl--sod">TL</span></div>
+            <div class="row"><span class="row-m"><span class="row-t" style="font-size:13.5px;">Minimum size</span></span><span class="row-v">None listed</span></div>
+            <div class="row"><span class="row-m"><span class="row-t" style="font-size:13.5px;">Measured as</span></span><span class="row-v">Total length</span></div>
+            <div class="row"><span class="row-m"><span class="row-t" style="font-size:13.5px;">Same closed period</span><span class="row-s">Safi — Siganus canaliculatus</span></span><svg class="chev"><use href="#i-chev"/></svg></div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:10px;">
+          <div class="pnl pnl-b" style="display:flex;gap:9px;align-items:flex-start;">
+            <svg style="width:16px;height:16px;color:var(--txt3);flex:none;margin-top:2px"><use href="#i-info"/></svg>
+            <p style="margin:0;font-size:11.5px;color:var(--txt2);">A closed season applies to the species, not to the individual fish.
+            Size does not lift it.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="cite">
+            <div class="cite-row"><span class="cite-k">Source</span><span class="cite-v">UAE · Ministerial Decision 580/2015, Art. 3</span></div>
+            <div class="cite-row"><span class="cite-k">Dates</span><span class="cite-v sm">published 2015-11-03 · checked 2026-07-14</span></div>
+            <div class="cite-row"><span class="cite-k">Validity</span><span class="cite-v sm" style="color:var(--warn)">expired 2026-06-30 · shown anyway</span></div>
+          </div>
+          <div class="disc">
+            <svg><use href="#i-info"/></svg>
+            <p><b>Reference only — not legal advice.</b> Verify with the Ministry of Climate Change &amp; Environment.</p>
+          </div>
+          <div class="pad" style="padding-top:10px;padding-bottom:10px;">
+            <button type="button" class="btn btn--gh btn--wide"><svg><use href="#i-plus"/></svg>Add to today</button>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>Check</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S2</span> Result — closed season, with the amber expiry bar. Stale beats silent.</figcaption>
+  </figure>
+  <!-- ============ S2 RESULT — PROTECTED ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:52</span><span class="sb-r"><span>25.79°N 55.98°E</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:12px;letter-spacing:.14em;">Qirsh al-hout</div><div class="ab-s">Rhincodon typus</div></div>
+        <span class="ab-sp"></span>
+        <svg style="width:44px;height:22px;color:var(--txt3)" viewBox="0 0 100 48"><use href="#f-shark"/></svg>
+      </div>
+
+      <div class="body">
+        <div class="verdict v--prot">
+          <svg><use href="#i-shield"/></svg>
+          <div>
+            <div class="verdict-t">Protected species</div>
+            <div class="verdict-s">Fishing, retention, transport and sale are prohibited at any size, in any season, by any gear</div>
+          </div>
+        </div>
+
+        <div class="readout" style="align-items:center;gap:12px;">
+          <span class="num" style="font-size:60px;font-weight:700;line-height:.9;color:var(--fails-t);letter-spacing:-.04em">NO<br>SIZE</span>
+          <span class="ro-side" style="color:var(--fails-t)"><span class="ro-unit" style="font-size:13px">applies</span><span class="ro-code">ALL</span></span>
+          <span class="ro-meta">
+            <span class="lbl">Local name</span>
+            <span lang="ar" dir="rtl" style="font-family:var(--ar);font-size:22px;color:var(--txt)">قرش الحوت</span>
+            <span class="lbl">Whale shark</span>
+          </span>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">What the listing covers</span></div>
+            <div class="row"><span class="row-m"><span class="row-t" style="font-size:13.5px;">Incidental capture</span><span class="row-s">Release at the point of capture; report to the Ministry</span></span></div>
+            <div class="row"><span class="row-m"><span class="row-t" style="font-size:13.5px;">Parts and products</span><span class="row-s">Fins, jaws and meat covered by the same prohibition</span></span></div>
+            <div class="row"><span class="row-m"><span class="row-t" style="font-size:13.5px;">Other protected species here</span><span class="row-s">Sea turtles · Dugong · Sawfish · Hammerhead sharks</span></span><svg class="chev"><use href="#i-chev"/></svg></div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:10px;">
+          <div class="pnl pnl-b" style="display:flex;gap:9px;align-items:flex-start;">
+            <svg style="width:16px;height:16px;color:var(--fails-t);flex:none;margin-top:2px"><use href="#i-scale"/></svg>
+            <p style="margin:0;font-size:11.5px;color:var(--txt2);">Penalties for protected species are set separately from the
+            size and season schedule. <span style="color:var(--sod)">Open penalties ›</span></p>
+          </div>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="cite">
+            <div class="cite-row"><span class="cite-k">Source</span><span class="cite-v">UAE · Ministerial Decision 580/2015, Art. 3</span></div>
+            <div class="cite-row"><span class="cite-k">Dates</span><span class="cite-v sm">published 2015-11-03 · checked 2026-07-14</span></div>
+          </div>
+          <div class="disc">
+            <svg><use href="#i-info"/></svg>
+            <p><b>Reference only — not legal advice.</b> Verify with the Ministry of Climate Change &amp; Environment.</p>
+          </div>
+          <div class="pad" style="padding-top:10px;padding-bottom:10px;">
+            <button type="button" class="btn btn--gh btn--wide"><svg><use href="#i-log"/></svg>Log an incidental capture</button>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>Check</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S2</span> Result — protected. Same red, different icon, different words, hatched ground.</figcaption>
+  </figure>
+
+  <!-- ============ S3 RULER ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:44</span><span class="sb-r"><span>CAL 3.78 px/mm</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:12px;letter-spacing:.14em;">Measure</div><div class="ab-s">Kanaad · Scomberomorus commerson</div></div>
+        <span class="ab-sp"></span>
+        <svg style="width:44px;height:22px;color:var(--txt3)" viewBox="0 0 100 48"><use href="#f-mackerel"/></svg>
+      </div>
+
+      <div class="body">
+        <div class="readout">
+          <span class="ro-num" style="color:var(--txt)">62</span>
+          <span class="ro-side" style="color:var(--sod)"><span class="ro-unit">cm</span><span class="ro-code">FL</span></span>
+          <span class="ro-meta">
+            <span class="lbl">Minimum</span>
+            <span class="ro-lim" style="font-size:19px;color:var(--txt)">65 cm</span>
+            <span class="lbl">Running total</span>
+          </span>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">Segment 3 of 3 · 40&ndash;62 cm</span><span class="lbl lbl--sod">Fork length</span></div>
+            <div class="rulerwrap">
+              <div class="rulermark" style="inset-inline-start:calc(50% + 44px)"></div>
+              <div class="rk rk-maj"></div>
+              <div class="rk" style="height:9px;border-bottom:0;"></div>
+              <div class="rk-nums">
+                <span>40</span><span>45</span><span>50</span><span>55</span><span>60</span><span>65</span>
+              </div>
+            </div>
+            <div class="pnl-b" style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <span class="lbl">Carried forward</span>
+              <span class="num" style="font-size:13px;">40.0 cm</span>
+              <span class="lbl">This segment</span>
+              <span class="num" style="font-size:13px;color:var(--sod)">22.0 cm</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:10px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">This species is measured to the fork</span><span class="lbl lbl--sod">FL</span></div>
+            <div class="pnl-b">
+              <div class="diag">
+                <svg viewBox="0 0 300 86" role="img" aria-label="Fork length: snout tip to the fork of the tail">
+                  <use href="#f-mackerel" x="18" y="6" width="252" height="52"/>
+                  <g stroke="#FFA92E" stroke-width="1.4" fill="none" stroke-dasharray="3 3"><path d="M23 4v62M247 4v62"/></g>
+                  <g stroke="#FFA92E" stroke-width="1.6" fill="none">
+                    <path d="M23 66h224M23 66l7-4M23 66l7 4M247 66l-7-4M247 66l-7 4"/>
+                  </g>
+                  <g stroke="#5C7C87" stroke-width="1.3" fill="none" stroke-dasharray="2 3"><path d="M283 4v62M247 74h36"/></g>
+                  <text x="132" y="82" fill="#FFA92E" font-family="ui-monospace,Menlo,monospace" font-size="10" letter-spacing="2" text-anchor="middle">FORK LENGTH</text>
+                  <text x="288" y="82" fill="#5C7C87" font-family="ui-monospace,Menlo,monospace" font-size="9" letter-spacing="1" text-anchor="end">NOT TL</text>
+                </svg>
+              </div>
+              <p style="margin:8px 0 0;font-size:12px;color:var(--txt2);">Snout tip to the notch in the middle of the tail — not to the tail tips.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="pad" style="padding-bottom:10px;display:flex;flex-direction:column;gap:8px;">
+            <button type="button" class="btn btn--pri btn--wide"><svg><use href="#i-ruler"/></svg>Step and mark</button>
+            <div style="display:flex;gap:8px;">
+              <button type="button" class="btn btn--gh" style="flex:1">Type instead</button>
+              <button type="button" class="btn btn--gh" style="flex:1">Undo segment</button>
+            </div>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>Check</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S3</span> Ruler. Walk the phone down the fish; the method is named at every step.</figcaption>
+  </figure>
+
+  <!-- ============ S4 CALIBRATION ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:38</span><span class="sb-r"><span>CAL PENDING</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:12px;letter-spacing:.14em;">Calibrate ruler</div><div class="ab-s">ISO/IEC 7810 ID-1</div></div>
+      </div>
+
+      <div class="body">
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl pnl-b" style="display:flex;gap:9px;align-items:flex-start;">
+            <svg style="width:16px;height:16px;color:var(--sod);flex:none;margin-top:2px"><use href="#i-card"/></svg>
+            <p style="margin:0;font-size:12.5px;color:var(--txt2);">Hold any bank card flat on the screen and size the outline
+            until the edges match. Every card in the world is the same 85.60 &times; 53.98 mm.</p>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <div style="background:var(--well);border:1px solid var(--hair);padding:18px 10px;display:grid;place-items:center;">
+            <svg viewBox="0 0 280 190" style="width:100%;height:auto" role="img" aria-label="Card outline to match">
+              <rect x="14" y="14" width="252" height="159" fill="none" stroke="#FFA92E" stroke-width="2" stroke-dasharray="7 5"/>
+              <g stroke="#FFA92E" stroke-width="2.6" fill="none">
+                <path d="M14 40V14h26M240 14h26v26M266 147v26h-26M40 173H14v-26"/>
+              </g>
+              <rect x="38" y="62" width="42" height="32" fill="none" stroke="#5C7C87" stroke-width="1.4"/>
+              <g stroke="#5C7C87" stroke-width="1.2"><path d="M38 78h42M59 62v32"/></g>
+              <g stroke="#5C7C87" stroke-width="1.4"><path d="M38 132h120M38 146h74"/></g>
+              <text x="140" y="188" fill="#8FACB4" font-family="ui-monospace,Menlo,monospace" font-size="11" letter-spacing="2" text-anchor="middle">85.60 × 53.98 mm</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <span class="lbl" style="display:block;margin-bottom:8px;">Size the outline</span>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span class="num" style="font-size:11px;color:var(--txt3)">&minus;</span>
+            <span style="flex:1;height:34px;display:flex;align-items:center;position:relative;">
+              <span style="position:absolute;inset-inline:0;height:2px;background:var(--hair2)"></span>
+              <span style="position:absolute;inset-inline-start:0;width:64%;height:2px;background:var(--sod)"></span>
+              <span style="position:absolute;inset-inline-start:calc(64% - 11px);width:22px;height:34px;background:var(--sod);border:1px solid #0A1418;"></span>
+            </span>
+            <span class="num" style="font-size:11px;color:var(--txt3)">+</span>
+          </div>
+          <div class="kv" style="margin-top:12px;border-top:1px solid var(--hair);">
+            <div>Scale factor</div><div>3.78 px / mm</div>
+            <div>Screen density reported</div><div>440 dpi</div>
+            <div>Last calibrated</div><div>2026-07-02</div>
+            <div>Maximum single span</div><div>13.9 cm</div>
+          </div>
+          <p style="margin:12px 0 0;font-size:11.5px;color:var(--txt3);">No camera. No network. The value is stored on this phone only.</p>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="pad" style="padding-bottom:10px;display:flex;gap:8px;">
+            <button type="button" class="btn btn--gh" style="flex:1">Skip for now</button>
+            <button type="button" class="btn btn--pri" style="flex:1.4"><svg><use href="#i-ok"/></svg>Save calibration</button>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i"><svg><use href="#i-check"/></svg><span>Check</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+            <button type="button" class="nav-i on"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S4</span> Calibration. A bank card is the one ruler every fisher already carries.</figcaption>
+  </figure>
+
+  </div>
+</section>
+<section class="sec">
+  <div class="sec-h"><span class="sec-n">SECTION B</span><h2 class="sec-t">Finding the fish</h2></div>
+  <p class="sec-d">Three ways in, because a name you cannot spell is no way in at all. Species live under their
+  local names — هامور, not <i>Epinephelus coioides</i>. The binomial is the small grey line underneath.</p>
+  <div class="grid">
+
+  <!-- ============ S5 SPECIES SEARCH — ARABIC, FULL RTL ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr" dir="rtl" lang="ar">
+      <div class="sb"><span class="ar-num">٠٥:٤٩</span><span class="sb-r"><span class="ar-num">٢٥.٧٩ ش · ٥٥.٩٨ ق</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="رجوع"><svg width="20" height="20" style="transform:scaleX(-1)"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-family:var(--ar);font-size:15px;letter-spacing:0;font-weight:600;">بحث عن نوع</div>
+        <div class="ab-s" style="font-family:var(--ar);font-size:11px;letter-spacing:0;">رأس الخيمة · الخليج · مياه مالحة</div></div>
+        <span class="ab-sp"></span>
+        <button type="button" class="ab-btn" aria-label="مسطرة"><svg width="18" height="18"><use href="#i-ruler"/></svg></button>
+      </div>
+
+      <div class="body">
+        <div class="pad" style="padding-top:12px;">
+          <div class="search">
+            <svg><use href="#i-search"/></svg>
+            <span class="search-q" style="font-family:var(--ar)">هامور<span class="caret"></span></span>
+            <span style="margin-inline-start:auto;color:var(--txt3);font-family:var(--mono);font-size:11px;">✕</span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:10px;">
+          <div class="chips">
+            <span class="chip chip--on" style="font-family:var(--ar);letter-spacing:0;font-size:12px;">الكل</span>
+            <span class="chip" style="font-family:var(--ar);letter-spacing:0;font-size:12px;">أسماك</span>
+            <span class="chip" style="font-family:var(--ar);letter-spacing:0;font-size:12px;">قشريات ورخويات</span>
+            <span class="chip" style="font-family:var(--ar);letter-spacing:0;font-size:12px;">أنواع محميّة</span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;">
+            <span class="lbl" style="font-family:var(--ar);">٣ نتائج</span>
+            <span class="lbl ar-num" style="font-family:var(--ar);">آخر تحقق ٢٠٢٦-٠٧-١٤</span>
+          </div>
+          <div class="pnl">
+            <button type="button" class="row" style="width:100%">
+              <svg class="row-ic" viewBox="0 0 100 48" style="transform:scaleX(-1)"><use href="#f-grouper"/></svg>
+              <span class="row-m">
+                <span class="row-t">هامور</span>
+                <span class="row-s">الهامور الأرقط · <i style="font-family:var(--sans);font-style:italic">Epinephelus coioides</i></span>
+              </span>
+              <span class="row-v" style="font-family:var(--ar);font-size:13px;">٤٥ سم<br><span style="font-size:10px;color:var(--txt3)">الطول الكلي</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-ic" style="display:grid;place-items:center;color:var(--txt3);font-family:var(--mono);font-size:15px;">≡</span>
+              <span class="row-m">
+                <span class="row-t" style="color:var(--txt2)">قروبر</span>
+                <span class="row-s">اسم شائع &larr; هامور</span>
+              </span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-ic" style="display:grid;place-items:center;color:var(--txt3);font-family:var(--mono);font-size:15px;">≡</span>
+              <span class="row-m">
+                <span class="row-t" style="color:var(--txt2)">هامور بلدي</span>
+                <span class="row-s">اسم محلي · رأس الخيمة &larr; هامور</span>
+              </span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:16px;">
+          <span class="lbl" style="font-family:var(--ar);display:block;margin-bottom:7px;">من رحلاتك الأخيرة</span>
+          <div class="pnl">
+            <button type="button" class="row" style="width:100%">
+              <svg class="row-ic" viewBox="0 0 100 48" style="transform:scaleX(-1)"><use href="#f-mackerel"/></svg>
+              <span class="row-m"><span class="row-t">كنعد</span><span class="row-s">الكنعد · <i style="font-family:var(--sans);font-style:italic">Scomberomorus commerson</i></span></span>
+              <span class="row-v" style="font-family:var(--ar);font-size:13px;">٦٥ سم<br><span style="font-size:10px;color:var(--txt3)">الطول الشوكي</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <svg class="row-ic" viewBox="0 0 100 48" style="transform:scaleX(-1)"><use href="#f-emperor"/></svg>
+              <span class="row-m"><span class="row-t">شعري</span><span class="row-s">الشعري · <i style="font-family:var(--sans);font-style:italic">Lethrinus nebulosus</i></span></span>
+              <span class="row-v" style="font-family:var(--ar);font-size:12px;color:var(--fails-t)">موسم حظر<br><span style="font-size:10px;">١ مارس – ٣٠ أبريل</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="disc">
+            <svg><use href="#i-info"/></svg>
+            <p style="font-family:var(--ar);font-size:11.5px;"><b>للاسترشاد فقط — ليست استشارة قانونية.</b> يُرجى التحقق من وزارة التغير المناخي والبيئة.</p>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>فحص</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>اليوم</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>الرحلات</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>المرجع</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>الإعدادات</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S5</span> Search, Arabic. Mirrored throughout — nav order, chevrons, silhouettes, Arabic-Indic numerals.</figcaption>
+  </figure>
+
+  <!-- ============ S6 BROWSE BY SHAPE ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:41</span><span class="sb-r"><span>25.79°N 55.98°E</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:12px;letter-spacing:.14em;">Browse by shape</div><div class="ab-s">61 species in this zone</div></div>
+      </div>
+
+      <div class="body" style="overflow:hidden;">
+        <div class="pad" style="padding-top:10px;">
+          <div class="chips">
+            <span class="chip chip--on">Ras Al Khaimah</span>
+            <span class="chip">Rías Baixas</span>
+            <span class="chip">Jurumirim</span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <div class="lbl" style="border-bottom:1px solid var(--hair);padding-bottom:5px;margin-bottom:8px;">Deep body · forked tail</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+            <button type="button" class="pnl" style="padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:26px;color:var(--txt2)"><use href="#f-emperor"/></svg>
+              <span lang="ar" style="font-family:var(--ar);font-size:15px;">شعري</span><span class="lbl">Sha&rsquo;ri</span></button>
+            <button type="button" class="pnl" style="padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:26px;color:var(--txt2)"><use href="#f-bream"/></svg>
+              <span lang="ar" style="font-family:var(--ar);font-size:15px;">بدح</span><span class="lbl">Badh</span></button>
+            <button type="button" class="pnl" style="padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:26px;color:var(--txt2)"><use href="#f-pomfret"/></svg>
+              <span lang="ar" style="font-family:var(--ar);font-size:15px;">زبيدي</span><span class="lbl">Zubaidi</span></button>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <div class="lbl" style="border-bottom:1px solid var(--hair);padding-bottom:5px;margin-bottom:8px;">Stout body · rounded tail</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+            <button type="button" class="pnl" style="padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:26px;color:var(--txt2)"><use href="#f-grouper"/></svg>
+              <span lang="ar" style="font-family:var(--ar);font-size:15px;">هامور</span><span class="lbl">Hamour</span></button>
+            <button type="button" class="pnl" style="padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:26px;color:var(--txt2)"><use href="#f-rabbit"/></svg>
+              <span lang="ar" style="font-family:var(--ar);font-size:15px;">صافي</span><span class="lbl">Safi</span></button>
+            <button type="button" class="pnl" style="padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:26px;color:var(--txt2)"><use href="#f-mullet"/></svg>
+              <span lang="ar" style="font-family:var(--ar);font-size:15px;">ميد</span><span class="lbl">Meed</span></button>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <div class="lbl" style="border-bottom:1px solid var(--hair);padding-bottom:5px;margin-bottom:8px;">Long body · crescent tail</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+            <button type="button" class="pnl" style="padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:26px;color:var(--txt2)"><use href="#f-mackerel"/></svg>
+              <span lang="ar" style="font-family:var(--ar);font-size:15px;">كنعد</span><span class="lbl">Kanaad</span></button>
+            <button type="button" class="pnl" style="padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;opacity:.55">
+              <svg viewBox="0 0 100 48" style="width:100%;height:26px;color:var(--fails-t)"><use href="#f-shark"/></svg>
+              <span style="font-size:12px;">Sharks</span><span class="lbl" style="color:var(--fails-t)">Protected</span></button>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <div class="lbl" style="border-bottom:1px solid var(--hair);padding-bottom:5px;margin-bottom:8px;">Shellfish — Rías Baixas pack</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+            <button type="button" class="pnl" style="padding:7px 3px;display:flex;flex-direction:column;align-items:center;gap:3px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:22px;color:var(--txt2)"><use href="#f-clam"/></svg>
+              <span style="font-size:10px;text-align:center;line-height:1.2">Ameixa<br>babosa</span><span class="lbl num">38 mm</span></button>
+            <button type="button" class="pnl" style="padding:7px 3px;display:flex;flex-direction:column;align-items:center;gap:3px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:22px;color:var(--txt2)"><use href="#f-crab"/></svg>
+              <span style="font-size:10px;text-align:center;line-height:1.2">Centola</span><span class="lbl num">120 mm</span></button>
+            <button type="button" class="pnl" style="padding:7px 3px;display:flex;flex-direction:column;align-items:center;gap:3px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:22px;color:var(--txt2)"><use href="#f-percebe"/></svg>
+              <span style="font-size:10px;text-align:center;line-height:1.2">Percebe</span><span class="lbl">Ban list</span></button>
+            <button type="button" class="pnl" style="padding:7px 3px;display:flex;flex-direction:column;align-items:center;gap:3px;">
+              <svg viewBox="0 0 100 48" style="width:100%;height:22px;color:var(--txt2)"><use href="#f-razor"/></svg>
+              <span style="font-size:10px;text-align:center;line-height:1.2">Navalla</span><span class="lbl num">100 mm</span></button>
+          </div>
+        </div>
+
+        <nav class="nav" style="margin-top:auto;">
+          <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>Check</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+        </nav>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S6</span> Browse by shape. Grouped by what you can see at 05:40, not by taxonomy.</figcaption>
+  </figure>
+
+  <!-- ============ S7 IDENTIFY — DICHOTOMOUS COUPLET ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:42</span><span class="sb-r"><span>25.79°N 55.98°E</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:12px;letter-spacing:.14em;">Identify</div><div class="ab-s">Step 3 · key K-GULF-04</div></div>
+        <span class="ab-sp"></span>
+        <span class="chip chip--sod num">14 left</span>
+      </div>
+
+      <div class="body">
+        <div class="pad" style="padding-top:10px;">
+          <span class="lbl" style="display:block;margin-bottom:6px;">Answers so far</span>
+          <div class="chips">
+            <span class="chip">Salt water</span>
+            <span class="chip">Body deep, flattened</span>
+            <span class="chip">Mouth small, terminal</span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:18px;">
+          <span class="lbl lbl--sod" style="display:block;margin-bottom:6px;">Couplet 3</span>
+          <p style="margin:0 0 12px;font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.2;">What shape is the tail?</p>
+
+          <button type="button" class="pnl" style="width:100%;padding:0;margin-bottom:8px;text-align:start;">
+            <div style="display:flex;gap:10px;align-items:center;padding:10px;">
+              <svg viewBox="0 0 100 48" style="width:104px;height:50px;flex:none;color:var(--sod)"><use href="#f-emperor"/></svg>
+              <span style="flex:1;">
+                <span style="display:block;font-size:16px;font-weight:600;">Forked or crescent</span>
+                <span style="display:block;font-size:12px;color:var(--txt2);margin-top:2px;">A clear notch in the middle of the tail</span>
+                <span class="lbl" style="display:block;margin-top:5px;">&rarr; 9 species</span>
+              </span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </div>
+          </button>
+
+          <button type="button" class="pnl" style="width:100%;padding:0;text-align:start;">
+            <div style="display:flex;gap:10px;align-items:center;padding:10px;">
+              <svg viewBox="0 0 100 48" style="width:104px;height:50px;flex:none;color:var(--sod)"><use href="#f-grouper"/></svg>
+              <span style="flex:1;">
+                <span style="display:block;font-size:16px;font-weight:600;">Rounded or squared</span>
+                <span style="display:block;font-size:12px;color:var(--txt2);margin-top:2px;">Trailing edge straight or curved outward</span>
+                <span class="lbl" style="display:block;margin-top:5px;">&rarr; 5 species</span>
+              </span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </div>
+          </button>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <div class="pnl pnl-b" style="display:flex;gap:9px;align-items:flex-start;">
+            <svg style="width:16px;height:16px;color:var(--txt3);flex:none;margin-top:2px"><use href="#i-info"/></svg>
+            <p style="margin:0;font-size:11.5px;color:var(--txt2);">The key narrows the field. It does not name your fish for you —
+            confirm against the species page before you rely on a rule.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="pad" style="padding-bottom:10px;display:flex;gap:8px;">
+            <button type="button" class="btn btn--gh" style="flex:1"><svg><use href="#i-back"/></svg>Back one step</button>
+            <button type="button" class="btn btn--gh" style="flex:1">Start again</button>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>Check</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S7</span> Identify. One couplet at a time, with a live count of what is still possible.</figcaption>
+  </figure>
+
+  </div>
+</section>
+<section class="sec">
+  <div class="sec-h"><span class="sec-n">SECTION C</span><h2 class="sec-t">Log and reference</h2></div>
+  <p class="sec-d">The tally is a working document, not a diary — it exists so the next check knows how many you
+  already have. The reference shelf is the receipts: the instruments themselves, in the language they were written in.</p>
+  <div class="grid">
+
+  <!-- ============ S8 TODAY ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>06:12</span><span class="sb-r"><span>TRIP 01:17</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <svg class="ab-ic"><use href="#i-today"/></svg>
+        <div><div class="ab-t">Today</div><div class="ab-s">27 Jul 2026 · started 04:55</div></div>
+        <span class="ab-sp"></span>
+        <button type="button" class="ab-btn" aria-label="Edit"><svg width="18" height="18"><use href="#i-log"/></svg></button>
+      </div>
+
+      <div class="body">
+        <div class="readout">
+          <span class="ro-num" style="color:var(--txt)">7</span>
+          <span class="ro-side" style="color:var(--sod)"><span class="ro-unit">landed</span><span class="ro-code">3 SPP</span></span>
+          <span class="ro-meta">
+            <span class="lbl">Vessel limit</span>
+            <span class="ro-lim" style="font-size:19px;color:var(--txt)">22 / 50 kg</span>
+            <span class="lbl">Ras Al Khaimah</span>
+          </span>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <span class="lbl" style="display:block;margin-bottom:7px;">Against the bag limit</span>
+          <div class="pnl">
+            <div class="row">
+              <svg class="row-ic" viewBox="0 0 100 48"><use href="#f-grouper"/></svg>
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Hamour</span>
+                <span class="bar" style="margin-top:5px;"><i class="g" style="width:60%"></i></span></span>
+              <span class="row-v" style="width:74px;">3 of 5<br><span style="font-size:10px;color:var(--meets-t)">2 remaining</span></span>
+            </div>
+            <div class="row">
+              <svg class="row-ic" viewBox="0 0 100 48"><use href="#f-mackerel"/></svg>
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Kanaad</span>
+                <span class="bar" style="margin-top:5px;"><i class="g" style="width:66%"></i></span></span>
+              <span class="row-v" style="width:74px;">4 of 6<br><span style="font-size:10px;color:var(--meets-t)">2 remaining</span></span>
+            </div>
+            <div class="row">
+              <svg class="row-ic" viewBox="0 0 100 48"><use href="#f-pomfret"/></svg>
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Zubaidi</span>
+                <span class="bar" style="margin-top:5px;"><i style="width:0%"></i></span></span>
+              <span class="row-v" style="width:74px;">0 of 5<br><span style="font-size:10px;color:var(--txt3)">5 remaining</span></span>
+            </div>
+            <div class="row" style="background:var(--fails-bg);">
+              <svg class="row-ic" viewBox="0 0 100 48" style="color:var(--fails-t)"><use href="#f-emperor"/></svg>
+              <span class="row-m"><span class="row-t" style="font-size:14px;color:var(--fails-t)">Sha&rsquo;ri</span>
+                <span class="row-s">Closed season 1 Mar – 30 Apr</span></span>
+              <span class="row-v" style="width:74px;color:var(--fails-t)">0<br><span style="font-size:10px;">no limit set</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <span class="lbl" style="display:block;margin-bottom:7px;">Checks that failed today</span>
+          <div class="pnl">
+            <div class="row">
+              <span class="row-ic" style="display:grid;place-items:center;color:var(--fails-t)"><svg style="width:18px;height:18px"><use href="#i-no"/></svg></span>
+              <span class="row-m"><span class="row-t" style="font-size:13.5px;">Hamour · 38 cm</span><span class="row-s">Below the minimum · 05:43 · not added</span></span>
+              <span class="row-v" style="font-size:11px;color:var(--txt3)">&minus;7 cm</span>
+            </div>
+            <div class="row">
+              <span class="row-ic" style="display:grid;place-items:center;color:var(--fails-t)"><svg style="width:18px;height:18px"><use href="#i-cal"/></svg></span>
+              <span class="row-m"><span class="row-t" style="font-size:13.5px;">Sha&rsquo;ri</span><span class="row-s">Closed season · 05:47 · not added</span></span>
+              <span class="row-v" style="font-size:11px;color:var(--txt3)">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="disc">
+            <svg><use href="#i-info"/></svg>
+            <p>Counts are yours alone. Nothing leaves this phone, and nothing here is a declaration to any authority.</p>
+          </div>
+          <div class="pad" style="padding-top:10px;padding-bottom:10px;display:flex;gap:8px;">
+            <button type="button" class="btn btn--gh" style="flex:1"><svg><use href="#i-plus"/></svg>Add by hand</button>
+            <button type="button" class="btn btn--pri" style="flex:1">End trip</button>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i"><svg><use href="#i-check"/></svg><span>Check</span></button>
+            <button type="button" class="nav-i on"><svg><use href="#i-today"/></svg><span>Today</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S8</span> Today. Bag limits as remaining, not as used — that is the number you act on.</figcaption>
+  </figure>
+
+  <!-- ============ S10 TRIPS ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>19:04</span><span class="sb-r"><span>NO TRIP OPEN</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <svg class="ab-ic"><use href="#i-trips"/></svg>
+        <div><div class="ab-t">Trips</div><div class="ab-s">148 recorded since 2024-09-02</div></div>
+        <span class="ab-sp"></span>
+        <button type="button" class="ab-btn" aria-label="Export"><svg width="18" height="18"><use href="#i-doc"/></svg></button>
+      </div>
+
+      <div class="body">
+        <div class="pad" style="padding-top:10px;">
+          <div class="chips">
+            <span class="chip chip--on">July 2026</span>
+            <span class="chip">All zones</span>
+            <span class="chip">All species</span>
+            <span class="chip">Failed checks</span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">July 2026 · totals</span><span class="lbl num">14 TRIPS</span></div>
+            <div class="pnl-b" style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;text-align:center;">
+              <span><span class="num" style="display:block;font-size:24px;font-weight:700;">96</span><span class="lbl">Landed</span></span>
+              <span><span class="num" style="display:block;font-size:24px;font-weight:700;">312</span><span class="lbl">Kg</span></span>
+              <span><span class="num" style="display:block;font-size:24px;font-weight:700;color:var(--fails-t)">21</span><span class="lbl">Failed</span></span>
+              <span><span class="num" style="display:block;font-size:24px;font-weight:700;">61</span><span class="lbl">Hours</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl">
+            <button type="button" class="row" style="width:100%">
+              <span class="row-ic num" style="display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;">
+                <span style="font-size:16px;font-weight:700;">27</span><span style="font-size:8px;color:var(--txt3)">JUL</span></span>
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Ras Al Khaimah</span>
+                <span class="row-s">04:55 – 06:12 · 7 landed · 22 kg · 2 failed</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-ic num" style="display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;">
+                <span style="font-size:16px;font-weight:700;">25</span><span style="font-size:8px;color:var(--txt3)">JUL</span></span>
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Ras Al Khaimah</span>
+                <span class="row-s">04:40 – 09:20 · 11 landed · 38 kg · 1 failed</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-ic num" style="display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;">
+                <span style="font-size:16px;font-weight:700;">22</span><span style="font-size:8px;color:var(--txt3)">JUL</span></span>
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Ras Al Khaimah</span>
+                <span class="row-s">05:05 – 08:55 · 9 landed · 27 kg · 0 failed</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-ic num" style="display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;">
+                <span style="font-size:16px;font-weight:700;">19</span><span style="font-size:8px;color:var(--txt3)">JUL</span></span>
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Ras Al Khaimah</span>
+                <span class="row-s">04:30 – 10:10 · 14 landed · 51 kg · 4 failed</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-ic num" style="display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;">
+                <span style="font-size:16px;font-weight:700;">16</span><span style="font-size:8px;color:var(--txt3)">JUL</span></span>
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Ras Al Khaimah</span>
+                <span class="row-s">04:45 – 08:05 · 6 landed · 19 kg · 3 failed</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-ic num" style="display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;">
+                <span style="font-size:16px;font-weight:700;">12</span><span style="font-size:8px;color:var(--txt3)">JUL</span></span>
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Ras Al Khaimah</span>
+                <span class="row-s">05:20 – 07:40 · 5 landed · 14 kg · 0 failed</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:10px;">
+          <p style="margin:0;font-size:11.5px;color:var(--txt3);">Storage: 148 trips = 96 kB. Export writes a CSV to this phone.</p>
+        </div>
+
+        <nav class="nav" style="margin-top:auto;">
+          <button type="button" class="nav-i"><svg><use href="#i-check"/></svg><span>Check</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+          <button type="button" class="nav-i on"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+        </nav>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S10</span> Trips. Filters across the top, the month&rsquo;s totals as a four-up readout.</figcaption>
+  </figure>
+
+  <!-- ============ S12 REFERENCE HUB ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>19:06</span><span class="sb-r"><span>PACK UAE-2026.2</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <svg class="ab-ic"><use href="#i-ref"/></svg>
+        <div><div class="ab-t">Reference</div><div class="ab-s">Everything the answers come from</div></div>
+      </div>
+
+      <div class="body">
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">Instruments on this phone</span><span class="lbl num">2</span></div>
+            <div class="row">
+              <span class="row-m"><span class="row-t" style="font-size:13px;">UAE · Ministerial Decision 580/2015</span>
+                <span class="row-s num" style="font-size:10.5px;">published 2015-11-03 · checked 2026-07-14</span></span>
+              <span class="chip chip--sod" style="flex:none;">AR · EN</span>
+            </div>
+            <div class="row">
+              <span class="row-m"><span class="row-t" style="font-size:13px;">Galicia · Orde do 27 de xullo de 2012</span>
+                <span class="row-s num" style="font-size:10.5px;">DOG núm. 226 · checked 2026-06-02</span></span>
+              <span class="chip" style="flex:none;">GL · ES</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <span class="lbl" style="display:block;margin-bottom:7px;">Shelf</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <button type="button" class="pnl" style="padding:12px 10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-height:96px;text-align:start;">
+              <svg style="width:22px;height:22px;color:var(--sod)"><use href="#i-doc"/></svg>
+              <span style="font-size:15px;font-weight:600;">Rule text</span>
+              <span class="lbl" style="letter-spacing:.06em;">Verbatim · 4 articles · 1 schedule</span>
+            </button>
+            <button type="button" class="pnl" style="padding:12px 10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-height:96px;text-align:start;">
+              <svg style="width:22px;height:22px;color:var(--fails-t)"><use href="#i-shield"/></svg>
+              <span style="font-size:15px;font-weight:600;">Protected species</span>
+              <span class="lbl" style="letter-spacing:.06em;">17 listed in this zone</span>
+            </button>
+            <button type="button" class="pnl" style="padding:12px 10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-height:96px;text-align:start;">
+              <svg style="width:22px;height:22px;color:var(--txt2)"><use href="#i-gear"/></svg>
+              <span style="font-size:15px;font-weight:600;">Gear and methods</span>
+              <span class="lbl" style="letter-spacing:.06em;">Gargoor · hand-line · net mesh</span>
+            </button>
+            <button type="button" class="pnl" style="padding:12px 10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-height:96px;text-align:start;">
+              <svg style="width:22px;height:22px;color:var(--txt2)"><use href="#i-scale"/></svg>
+              <span style="font-size:15px;font-weight:600;">Penalties</span>
+              <span class="lbl" style="letter-spacing:.06em;">Fines · suspension · revocation</span>
+            </button>
+            <button type="button" class="pnl" style="padding:12px 10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-height:96px;text-align:start;">
+              <svg style="width:22px;height:22px;color:var(--txt2)"><use href="#i-card"/></svg>
+              <span style="font-size:15px;font-weight:600;">Licences</span>
+              <span class="lbl" style="letter-spacing:.06em;">Vessel · fisher · crew</span>
+            </button>
+            <button type="button" class="pnl" style="padding:12px 10px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-height:96px;text-align:start;">
+              <svg style="width:22px;height:22px;color:var(--txt2)"><use href="#i-glossary"/></svg>
+              <span style="font-size:15px;font-weight:600;">Glossary</span>
+              <span class="lbl" style="letter-spacing:.06em;">TL · FL · SL · CW · SHL · ML</span>
+            </button>
+          </div>
+          <button type="button" class="pnl" style="width:100%;margin-top:8px;padding:11px 10px;display:flex;gap:10px;align-items:center;text-align:start;">
+            <svg style="width:20px;height:20px;color:var(--txt2);flex:none"><use href="#i-log"/></svg>
+            <span style="flex:1;"><span style="display:block;font-size:15px;font-weight:600;">Changelog</span>
+            <span class="lbl" style="letter-spacing:.06em;">What changed, when, and who checked it</span></span>
+            <span class="chip chip--warn" style="flex:none;">3 new</span>
+          </button>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl pnl-b" style="display:flex;gap:9px;align-items:flex-start;">
+            <svg style="width:16px;height:16px;color:var(--txt3);flex:none;margin-top:2px"><use href="#i-info"/></svg>
+            <p style="margin:0;font-size:11.5px;color:var(--txt2);">Brazil pack — piracema, 10 kg + 1 exemplar daily, 1,500 m exclusion
+            around dams and rapids — is available but not installed.</p>
+          </div>
+        </div>
+
+        <nav class="nav" style="margin-top:auto;">
+          <button type="button" class="nav-i"><svg><use href="#i-check"/></svg><span>Check</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+          <button type="button" class="nav-i on"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+        </nav>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S12</span> Reference hub. The instruments first, the explanations second.</figcaption>
+  </figure>
+  <!-- ============ S13 RULE TEXT READER — ARABIC ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr" dir="rtl" lang="ar">
+      <div class="sb"><span class="ar-num">١٩:٠٨</span><span class="sb-r"><span class="ar-num">٥٨٠ / ٢٠١٥</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="رجوع"><svg width="20" height="20" style="transform:scaleX(-1)"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-family:var(--ar);font-size:14px;letter-spacing:0;font-weight:600;">قرار وزاري رقم ٥٨٠ لسنة ٢٠١٥</div>
+        <div class="ab-s" style="font-family:var(--ar);font-size:11px;letter-spacing:0;">النص كما هو · بدون تلخيص</div></div>
+      </div>
+
+      <div class="body" style="overflow:hidden;">
+        <div class="pad" style="padding-top:10px;">
+          <div class="search" style="min-height:46px;">
+            <svg><use href="#i-search"/></svg>
+            <span class="search-q" style="font-family:var(--ar);font-size:15px;">الهامور<span class="caret"></span></span>
+            <span class="num" style="margin-inline-start:auto;font-size:11px;color:var(--sod)">٢ / ٥</span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:10px;">
+          <div class="chips">
+            <span class="chip" style="font-family:var(--ar);letter-spacing:0;font-size:12px;">المادة ١</span>
+            <span class="chip" style="font-family:var(--ar);letter-spacing:0;font-size:12px;">المادة ٢</span>
+            <span class="chip chip--on" style="font-family:var(--ar);letter-spacing:0;font-size:12px;">المادة ٣</span>
+            <span class="chip" style="font-family:var(--ar);letter-spacing:0;font-size:12px;">المادة ٤</span>
+            <span class="chip" style="font-family:var(--ar);letter-spacing:0;font-size:12px;">الجدول ١</span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl" style="border-inline-start:3px solid var(--sod);">
+            <div class="pnl-b" style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+              <span class="lbl ar-num" style="font-family:var(--ar);">تاريخ النشر ٢٠١٥-١١-٠٣</span>
+              <span class="lbl ar-num" style="font-family:var(--ar);color:var(--sod)">آخر تحقق ٢٠٢٦-٠٧-١٤</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <p style="margin:0 0 10px;font-family:var(--ar);font-size:19px;font-weight:700;">المادة (٣)</p>
+          <p style="margin:0 0 12px;font-family:var(--ar);font-size:16px;line-height:1.95;color:var(--txt);">
+            يُحظر صيد أو نقل أو عرض أو بيع أيٍّ من الأنواع المدرجة في الجدول رقم (١) المرفق بهذا القرار متى قلّ طول
+            الفرد عن الحد الأدنى المبيّن قرين كل نوع.</p>
+          <p style="margin:0 0 12px;font-family:var(--ar);font-size:16px;line-height:1.95;color:var(--txt);">
+            ويُقاس الطول بالسنتيمتر وفق الطريقة المحددة قرين النوع في الجدول ذاته؛ فيكون القياس من مقدمة الرأس وحتى
+            نهاية الزعنفة الذيلية في حال الطول الكلي، ومن مقدمة الرأس وحتى منتصف تفرّع الزعنفة الذيلية في حال الطول الشوكي.</p>
+          <p style="margin:0 0 12px;font-family:var(--ar);font-size:16px;line-height:1.95;color:var(--txt);">
+            وتسري أحكام هذه المادة على جميع مناطق الصيد في الدولة، ما لم يصدر في شأنها قرار محلي أشدّ.</p>
+        </div>
+
+        <div class="pad">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl" style="font-family:var(--ar);">الجدول (١) — مقتطف</span><span class="lbl" style="font-family:var(--ar);color:var(--sod)">نتيجة البحث ٢</span></div>
+            <div class="pnl-b" style="display:flex;flex-direction:column;gap:8px;">
+              <p style="margin:0;font-family:var(--ar);font-size:16px;line-height:1.8;">
+                <mark style="background:rgba(255,169,46,.3);color:var(--txt);padding:1px 3px;">الهامور</mark>
+                <span style="font-family:var(--sans);font-style:italic;font-size:13px;color:var(--txt2)">Epinephelus coioides</span>
+                — ٤٥ سم — الطول الكلي
+              </p>
+              <p style="margin:0;font-family:var(--ar);font-size:16px;line-height:1.8;color:var(--txt2);">
+                الكنعد <span style="font-family:var(--sans);font-style:italic;font-size:13px;">Scomberomorus commerson</span>
+                — ٦٥ سم — الطول الشوكي
+              </p>
+              <p style="margin:0;font-family:var(--ar);font-size:16px;line-height:1.8;color:var(--txt2);">
+                الزبيدي <span style="font-family:var(--sans);font-style:italic;font-size:13px;">Pampus argenteus</span>
+                — ٢٣ سم — الطول الكلي
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:12px;-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 92%);mask-image:linear-gradient(180deg,#000 0%,transparent 92%);">
+          <p style="margin:0 0 6px;font-family:var(--ar);font-size:19px;font-weight:700;">المادة (٤)</p>
+          <p style="margin:0;font-family:var(--ar);font-size:16px;line-height:1.95;color:var(--txt2);">
+            يُحظر صيد الأنواع المدرجة في الجدول رقم (٢) خلال فترة الحظر المبيّنة قرين كل نوع، ويسري الحظر على الصيد
+            والتداول معاً…</p>
+        </div>
+
+        <nav class="nav" style="margin-top:auto;">
+          <button type="button" class="nav-i"><svg><use href="#i-check"/></svg><span>فحص</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>اليوم</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>الرحلات</span></button>
+          <button type="button" class="nav-i on"><svg><use href="#i-ref"/></svg><span>المرجع</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>الإعدادات</span></button>
+        </nav>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S13</span> Rule text. The decision in its own language, searchable, with the date we last checked it.</figcaption>
+  </figure>
+
+  <!-- ============ S20 PENALTIES ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>19:11</span><span class="sb-r"><span>UAE FEDERAL</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:12px;letter-spacing:.14em;">Penalties</div><div class="ab-s">United Arab Emirates</div></div>
+      </div>
+
+      <div class="body">
+        <div class="pad" style="padding-top:12px;">
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">Size, season and bag-limit offences</span><span class="lbl lbl--sod">AED</span></div>
+            <div style="overflow-x:auto;">
+              <table class="tbl">
+                <thead><tr><th>Offence</th><th>Fine</th><th>Licence</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td style="color:var(--txt);font-weight:600;">First offence</td>
+                    <td class="k" style="font-size:15px;color:var(--warn)">AED 3,000</td>
+                    <td>6-month suspension</td>
+                  </tr>
+                  <tr>
+                    <td style="color:var(--txt);font-weight:600;">Second offence</td>
+                    <td class="k" style="font-size:15px;color:var(--fails-t)">AED 5,000</td>
+                    <td>Licence revoked</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:12px;">
+          <div class="readout" style="border:1px solid var(--hair);align-items:center;">
+            <span class="ro-num" style="font-size:74px;color:var(--warn)">3,000</span>
+            <span class="ro-side" style="color:var(--warn)"><span class="ro-unit">AED</span><span class="ro-code">1ST</span></span>
+          </div>
+          <p style="margin:8px 0 0;font-size:12px;color:var(--txt2);">Plus six months without a licence. On a 9-metre tarrad
+          working hand-lines and gargoor, that is the season.</p>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <span class="lbl" style="display:block;margin-bottom:7px;">Handled separately</span>
+          <div class="pnl">
+            <div class="row"><span class="row-ic" style="display:grid;place-items:center;color:var(--fails-t)"><svg style="width:18px;height:18px"><use href="#i-shield"/></svg></span>
+              <span class="row-m"><span class="row-t" style="font-size:13.5px;">Protected species</span><span class="row-s">Listed under a separate schedule of penalties</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg></div>
+            <div class="row"><span class="row-ic" style="display:grid;place-items:center;color:var(--txt2)"><svg style="width:18px;height:18px"><use href="#i-gear"/></svg></span>
+              <span class="row-m"><span class="row-t" style="font-size:13.5px;">Prohibited gear</span><span class="row-s">Confiscation of gear and catch</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg></div>
+            <div class="row"><span class="row-ic" style="display:grid;place-items:center;color:var(--txt2)"><svg style="width:18px;height:18px"><use href="#i-card"/></svg></span>
+              <span class="row-m"><span class="row-t" style="font-size:13.5px;">Fishing without a licence</span><span class="row-s">Separate schedule · vessel may be held</span></span>
+              <svg class="chev"><use href="#i-chev"/></svg></div>
+          </div>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="cite">
+            <div class="cite-row"><span class="cite-k">Source</span><span class="cite-v">UAE · Ministerial Decision 580/2015, Art. 3</span></div>
+            <div class="cite-row"><span class="cite-k">Dates</span><span class="cite-v sm">published 2015-11-03 · checked 2026-07-14</span></div>
+          </div>
+          <div class="disc">
+            <svg><use href="#i-info"/></svg>
+            <p><b>Reference only — not legal advice.</b> Verify with the Ministry of Climate Change &amp; Environment.</p>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i"><svg><use href="#i-check"/></svg><span>Check</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+            <button type="button" class="nav-i on"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+            <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S20</span> Penalties. The cost of getting it wrong, stated in the same readout language as a length.</figcaption>
+  </figure>
+
+  <!-- ============ S14 SETTINGS ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>19:14</span><span class="sb-r"><span>v2.4.1 · UAE-2026.2</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <svg class="ab-ic"><use href="#i-set"/></svg>
+        <div><div class="ab-t">Settings</div><div class="ab-s">Everything stays on this phone</div></div>
+      </div>
+
+      <div class="body" style="overflow:hidden;">
+        <div class="pad" style="padding-top:12px;">
+          <span class="lbl" style="display:block;margin-bottom:7px;">Language</span>
+          <div class="chips">
+            <span class="chip chip--on">English</span>
+            <span class="chip" lang="ar" style="font-family:var(--ar);letter-spacing:0;font-size:13px;">العربية</span>
+            <span class="chip" style="letter-spacing:.04em;">Galego</span>
+            <span class="chip" style="letter-spacing:.04em;">Español</span>
+            <span class="chip" style="letter-spacing:.04em;">Português (BR)</span>
+            <span class="chip" lang="ur" style="font-family:var(--ar);letter-spacing:0;font-size:13px;">اردو</span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <div class="pnl">
+            <div class="row">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Numerals</span><span class="row-s">How digits are drawn</span></span>
+              <span style="display:inline-flex;border:1px solid var(--hair2);flex:none;">
+                <span class="num" style="padding:5px 8px;background:var(--sod);color:#0A1418;font-weight:700;font-size:11px;">0–9</span>
+                <span class="num" style="padding:5px 8px;color:var(--txt3);font-size:11px;font-family:var(--ar)">٠–٩</span>
+              </span>
+            </div>
+            <div class="row">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Units</span><span class="row-s">Lengths and weights</span></span>
+              <span style="display:inline-flex;border:1px solid var(--hair2);flex:none;">
+                <span class="num" style="padding:5px 8px;background:var(--sod);color:#0A1418;font-weight:700;font-size:11px;">cm</span>
+                <span class="num" style="padding:5px 8px;color:var(--txt3);font-size:11px;">mm</span>
+                <span class="num" style="padding:5px 8px;color:var(--txt3);font-size:11px;">in</span>
+              </span>
+            </div>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Zone</span><span class="row-s">Which rule pack answers your checks</span></span>
+              <span class="row-v" style="font-size:11px;">Ras Al Khaimah</span><svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Ruler calibration</span><span class="row-s">Bank-card method · 3.78 px/mm</span></span>
+              <span class="row-v" style="font-size:11px;color:var(--meets-t)">2026-07-02</span><svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <span class="lbl" style="display:block;margin-bottom:7px;">Display and handling</span>
+          <div class="pnl">
+            <div class="row">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Sunlight mode</span><span class="row-s">Maximum contrast, no colour but the result</span></span>
+              <span style="display:inline-flex;border:1px solid var(--hair2);flex:none;">
+                <span class="num" style="padding:5px 8px;color:var(--txt3);font-size:10px;letter-spacing:.1em;">ON</span>
+                <span class="num" style="padding:5px 8px;background:var(--sod);color:#0A1418;font-weight:700;font-size:10px;letter-spacing:.1em;">OFF</span>
+              </span>
+            </div>
+            <div class="row">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Glove mode</span><span class="row-s">Every target 56dp or larger</span></span>
+              <span style="display:inline-flex;border:1px solid var(--hair2);flex:none;">
+                <span class="num" style="padding:5px 8px;background:var(--sod);color:#0A1418;font-weight:700;font-size:10px;letter-spacing:.1em;">ON</span>
+                <span class="num" style="padding:5px 8px;color:var(--txt3);font-size:10px;letter-spacing:.1em;">OFF</span>
+              </span>
+            </div>
+            <div class="row">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Capture coordinates</span><span class="row-s">Saved to your trips only · GPS receiver, not the network</span></span>
+              <span style="display:inline-flex;border:1px solid var(--hair2);flex:none;">
+                <span class="num" style="padding:5px 8px;background:var(--sod);color:#0A1418;font-weight:700;font-size:10px;letter-spacing:.1em;">ON</span>
+                <span class="num" style="padding:5px 8px;color:var(--txt3);font-size:10px;letter-spacing:.1em;">OFF</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <span class="lbl" style="display:block;margin-bottom:7px;">Data on this phone</span>
+          <div class="pnl">
+            <div class="row">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Storage used</span>
+                <span class="bar" style="margin-top:6px;"><i style="width:34%"></i></span></span>
+              <span class="row-v" style="width:84px;">168 MB<br><span style="font-size:10px;color:var(--txt3)">3 zone packs</span></span>
+            </div>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Export trips</span><span class="row-s">CSV to this phone&rsquo;s storage</span></span><svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">Import a rule pack</span><span class="row-s">From a file someone hands you</span></span><svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+            <button type="button" class="row" style="width:100%">
+              <span class="row-m"><span class="row-t" style="font-size:14px;">About</span><span class="row-s">v2.4.1 · pack UAE-2026.2 · checked 2026-07-14</span></span><svg class="chev"><use href="#i-chev"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <nav class="nav" style="margin-top:auto;">
+          <button type="button" class="nav-i"><svg><use href="#i-check"/></svg><span>Check</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+          <button type="button" class="nav-i on"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+        </nav>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">S14</span> Settings. Six languages, two numeral systems, three zone packs, no account.</figcaption>
+  </figure>
+
+  </div>
+</section>
+<section class="sec">
+  <div class="sec-h"><span class="sec-n">SECTION D</span><h2 class="sec-t">Modes and edge cases</h2></div>
+  <p class="sec-d">Where the direction earns its keep: a conflict it refuses to resolve for you, a third theme for
+  full sun, a glove layout, and the one-time unpack on first launch.</p>
+  <div class="grid">
+
+  <!-- ============ D4 TWO RULES APPLY ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:43</span><span class="sb-r"><span>25.79°N 55.98°E</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:12px;letter-spacing:.14em;">Hamour</div><div class="ab-s">Epinephelus coioides</div></div>
+      </div>
+      <div class="body">
+        <div class="verdict" style="background:var(--warn-bg);box-shadow:inset 4px 0 0 var(--warn);color:var(--warn);">
+          <svg><use href="#i-warn"/></svg>
+          <div>
+            <div class="verdict-t">Two rules apply</div>
+            <div class="verdict-s">47 cm measured · federal minimum 45 cm · emirate minimum 50 cm (total length)</div>
+          </div>
+        </div>
+        <div class="readout">
+          <span class="ro-num" style="color:var(--txt)">47</span>
+          <span class="ro-side" style="color:var(--sod)"><span class="ro-unit">cm</span><span class="ro-code">TL</span></span>
+          <span class="ro-meta">
+            <span class="lbl">Minimums</span>
+            <span class="ro-lim" style="font-size:19px;color:var(--txt)">45 <span style="color:var(--txt3)">/</span> 50 cm</span>
+            <span class="ro-delta" style="color:var(--warn)">+2 / &minus;3 cm</span>
+          </span>
+        </div>
+        <nav class="nav" style="margin-top:auto;">
+          <button type="button" class="nav-i on" tabindex="-1"><svg><use href="#i-check"/></svg><span>Check</span></button>
+          <button type="button" class="nav-i" tabindex="-1"><svg><use href="#i-today"/></svg><span>Today</span></button>
+          <button type="button" class="nav-i" tabindex="-1"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+          <button type="button" class="nav-i" tabindex="-1"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+          <button type="button" class="nav-i" tabindex="-1"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+        </nav>
+      </div>
+
+      <div class="scrim">
+        <div class="modal" role="dialog" aria-modal="true" aria-label="Two rules apply here">
+          <div class="pnl-h" style="border-bottom:1px solid var(--hair2);">
+            <span class="lbl lbl--sod">Conflict · zone overlap</span>
+            <span class="lbl">RAK-04</span>
+          </div>
+          <div style="padding:14px 12px 10px;">
+            <p style="margin:0 0 6px;font-family:var(--mono);font-size:19px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;line-height:1.15;">Two rules apply here</p>
+            <p style="margin:0;font-size:13px;color:var(--txt2);line-height:1.45;">Your position falls where a federal
+            rule and an emirate rule both apply, and they do not agree. Both are shown in full.</p>
+          </div>
+
+          <div style="border-top:1px solid var(--hair);padding:11px 12px;display:flex;gap:11px;align-items:flex-start;">
+            <span class="num" style="font-size:26px;font-weight:700;color:var(--txt);line-height:1;width:64px;flex:none;">45<span style="font-size:11px;color:var(--txt2)"> cm</span></span>
+            <span style="flex:1;">
+              <span class="lbl" style="display:block;margin-bottom:3px;">Federal · total length</span>
+              <span class="num" style="display:block;font-size:11px;color:var(--txt2);line-height:1.4;">Ministerial Decision 580/2015, Art. 3<br>published 2015-11-03 · checked 2026-07-14</span>
+            </span>
+          </div>
+
+          <div style="border-top:1px solid var(--hair);padding:11px 12px;display:flex;gap:11px;align-items:flex-start;background:var(--well);">
+            <span class="num" style="font-size:26px;font-weight:700;color:var(--txt);line-height:1;width:64px;flex:none;">50<span style="font-size:11px;color:var(--txt2)"> cm</span></span>
+            <span style="flex:1;">
+              <span class="lbl" style="display:block;margin-bottom:3px;">Emirate of Ras Al Khaimah · total length</span>
+              <span class="num" style="display:block;font-size:11px;color:var(--txt2);line-height:1.4;">Local Order 4/2021, Art. 7<br>published 2021-02-18 · checked 2026-07-14</span>
+            </span>
+          </div>
+
+          <div style="border-top:1px solid var(--hair2);padding:11px 12px;display:flex;gap:9px;align-items:flex-start;background:var(--panel2);">
+            <svg style="width:16px;height:16px;color:var(--sod);flex:none;margin-top:1px"><use href="#i-info"/></svg>
+            <p style="margin:0;font-size:11.5px;color:var(--txt2);line-height:1.45;"><b style="color:var(--txt)">This app does not choose between them.</b>
+            Your 47 cm fish meets one rule and fails the other. Which instrument governs your position is a question for the Ministry.</p>
+          </div>
+
+          <div class="disc">
+            <svg><use href="#i-info"/></svg>
+            <p><b>Reference only — not legal advice.</b> Verify with the Ministry of Climate Change &amp; Environment.</p>
+          </div>
+
+          <div style="padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px;">
+            <button type="button" class="btn btn--pri">Show both on the result</button>
+            <button type="button" class="btn btn--gh">Read both instruments</button>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">D4</span> Two rules apply. The app states the conflict and stops — it never averages, never picks the stricter one silently.</figcaption>
+  </figure>
+
+  <!-- ============ SUNLIGHT MODE ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr scr--sun">
+      <div class="sb" style="color:#000"><span>11:20</span><span class="sb-r"><span>SUNLIGHT MODE</span><span class="batt" style="border-color:#000"></span></span></div>
+      <div class="ab">
+        <button type="button" class="ab-back" aria-label="Back" style="color:#000"><svg width="20" height="20"><use href="#i-back"/></svg></button>
+        <div><div class="ab-t" style="font-size:13px;letter-spacing:.12em;">Hamour</div><div class="ab-s" style="color:#000">Epinephelus coioides</div></div>
+      </div>
+
+      <div class="body">
+        <div class="verdict v--fails">
+          <svg><use href="#i-no"/></svg>
+          <div>
+            <div class="verdict-t" style="font-size:21px;">Below the minimum</div>
+            <div class="verdict-s" style="color:#000;font-weight:600;">38 cm measured · minimum 45 cm (total length)</div>
+          </div>
+        </div>
+
+        <div class="readout" style="border-bottom:3px solid #000;">
+          <span class="ro-num">38</span>
+          <span class="ro-side" style="color:#000"><span class="ro-unit">cm</span><span class="ro-code">TL</span></span>
+          <span class="ro-meta">
+            <span class="lbl" style="color:#000">Minimum</span>
+            <span class="ro-lim" style="font-size:21px;color:#000;font-weight:700">45 cm</span>
+            <span class="ro-delta" style="color:#D50000;font-size:18px">&minus;7 cm</span>
+          </span>
+        </div>
+
+        <div class="pad" style="padding-top:14px;">
+          <div class="pnl" style="border:2px solid #000;">
+            <div class="pnl-h" style="background:#000;color:#fff;"><span class="lbl" style="color:#fff">Measured as</span><span class="lbl" style="color:#fff">TL</span></div>
+            <div class="pnl-b">
+              <div class="diag" style="border:1px solid #000;">
+                <svg viewBox="0 0 300 92" role="img" aria-label="Total length: snout tip to the tip of the tail fin">
+                  <use href="#f-grouper" x="18" y="8" width="252" height="52" style="color:#000"/>
+                  <g stroke="#000" stroke-width="1.6" fill="none" stroke-dasharray="3 3"><path d="M31 6v66M264 6v66"/></g>
+                  <g stroke="#000" stroke-width="2" fill="none"><path d="M31 72h233M31 72l7-4M31 72l7 4M264 72l-7-4M264 72l-7 4"/></g>
+                  <text x="148" y="88" fill="#000" font-family="ui-monospace,Menlo,monospace" font-size="10" letter-spacing="2" text-anchor="middle">TOTAL LENGTH</text>
+                </svg>
+              </div>
+              <p style="margin:8px 0 0;font-size:12.5px;color:#000;font-weight:500;">Snout tip to the tip of the tail fin, fish flat, mouth closed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:10px;">
+          <button type="button" class="pnl row" style="width:100%;border:2px solid #000;">
+            <svg style="width:20px;height:20px;color:#D50000;flex:none"><use href="#i-scale"/></svg>
+            <span class="row-m"><span class="row-t" style="font-size:14px;color:#000;">Penalty on a first offence</span>
+            <span class="row-s" style="color:#000;font-weight:500;">AED 3,000 + 6-month licence suspension</span></span>
+            <svg class="chev" style="color:#000"><use href="#i-chev"/></svg>
+          </button>
+        </div>
+
+        <div style="margin-top:auto;">
+          <div class="cite" style="border-top:2px solid #000;">
+            <div class="cite-row"><span class="cite-k" style="color:#000">Source</span><span class="cite-v" style="color:#000">UAE · Ministerial Decision 580/2015, Art. 3</span></div>
+            <div class="cite-row"><span class="cite-k" style="color:#000">Dates</span><span class="cite-v sm" style="color:#000">published 2015-11-03 · checked 2026-07-14</span></div>
+          </div>
+          <div class="disc">
+            <svg style="color:#000"><use href="#i-info"/></svg>
+            <p style="color:#000;font-weight:500;"><b>Reference only — not legal advice.</b> Verify with the Ministry of Climate Change &amp; Environment.</p>
+          </div>
+          <div class="pad" style="padding-top:10px;padding-bottom:10px;">
+            <button type="button" class="btn btn--pri btn--wide"><svg><use href="#i-plus"/></svg>Add to today</button>
+          </div>
+          <nav class="nav">
+            <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>Check</span></button>
+            <button type="button" class="nav-i" style="color:#000"><svg><use href="#i-today"/></svg><span>Today</span></button>
+            <button type="button" class="nav-i" style="color:#000"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+            <button type="button" class="nav-i" style="color:#000"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+            <button type="button" class="nav-i" style="color:#000"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">MODE</span> Sunlight. Third theme, not a light variant: black on white, hairlines become rules, and red is the only colour left.</figcaption>
+  </figure>
+
+  <!-- ============ GLOVE MODE ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr scr--glove">
+      <div class="sb"><span>05:40</span><span class="sb-r"><span>GLOVE MODE</span><span class="batt"></span></span></div>
+      <div class="ab">
+        <svg class="ab-ic"><use href="#i-check"/></svg>
+        <div><div class="ab-t">Catchlaw</div><div class="ab-s">Is this legal?</div></div>
+        <span class="ab-sp"></span>
+        <button type="button" class="ab-btn hit" data-dp="56dp" style="width:56px;height:56px;" aria-label="Ruler"><svg width="24" height="24"><use href="#i-ruler"/></svg></button>
+      </div>
+
+      <div class="body">
+        <div class="pad" style="padding-top:12px;">
+          <div class="chips" style="gap:8px;">
+            <span class="chip chip--sod" style="padding:8px 10px;"><svg><use href="#i-pin"/></svg>Ras Al Khaimah</span>
+            <span class="chip" style="padding:8px 10px;">Checked 2026-07-14</span>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
+            <span class="lbl">Recent — this trip</span><span class="lbl">3 shown</span>
+          </div>
+          <div class="recents hit" data-dp="56dp" style="grid-template-columns:repeat(3,1fr);gap:8px;">
+            <button type="button" class="rec"><svg viewBox="0 0 100 48"><use href="#f-grouper"/></svg><span class="rec-n" lang="ar">هامور</span><span class="rec-l">Hamour</span></button>
+            <button type="button" class="rec"><svg viewBox="0 0 100 48"><use href="#f-mackerel"/></svg><span class="rec-n" lang="ar">كنعد</span><span class="rec-l">Kanaad</span></button>
+            <button type="button" class="rec"><svg viewBox="0 0 100 48"><use href="#f-emperor"/></svg><span class="rec-n" lang="ar">شعري</span><span class="rec-l">Sha&rsquo;ri</span></button>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:20px;">
+          <span class="lbl" style="display:block;margin-bottom:8px;">Find the species</span>
+          <button type="button" class="search hit" data-dp="64dp" style="width:100%">
+            <svg style="width:22px;height:22px"><use href="#i-search"/></svg><span class="search-p" style="font-size:18px;">Search species</span>
+          </button>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
+            <button type="button" class="btn btn--gh" style="justify-content:flex-start;gap:12px;"><svg style="width:24px;height:24px"><use href="#i-shape"/></svg>Browse by shape</button>
+            <button type="button" class="btn btn--gh" style="justify-content:flex-start;gap:12px;"><svg style="width:24px;height:24px"><use href="#i-key"/></svg>Identify this fish</button>
+            <button type="button" class="btn btn--pri" style="justify-content:flex-start;gap:12px;"><svg style="width:24px;height:24px"><use href="#i-ruler"/></svg>Measure a fish</button>
+          </div>
+        </div>
+
+        <div class="pad" style="padding-top:20px;">
+          <div class="pnl">
+            <div class="pnl-h" style="padding:10px 12px;"><span class="lbl">Today</span><span class="lbl num">7 LANDED</span></div>
+            <div class="pnl-b" style="display:flex;flex-direction:column;gap:12px;padding:14px 12px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:14px;color:var(--txt2);width:70px;">Hamour</span>
+                <span class="bar" style="height:10px;"><i class="g" style="width:60%"></i></span>
+                <span class="num" style="font-size:14px;width:50px;text-align:end;">3 / 5</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:14px;color:var(--txt2);width:70px;">Kanaad</span>
+                <span class="bar" style="height:10px;"><i class="g" style="width:66%"></i></span>
+                <span class="num" style="font-size:14px;width:50px;text-align:end;">4 / 6</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="nav hit" data-dp="72dp" style="margin-top:auto;">
+          <button type="button" class="nav-i on"><svg><use href="#i-check"/></svg><span>Check</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-today"/></svg><span>Today</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-trips"/></svg><span>Trips</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-ref"/></svg><span>Reference</span></button>
+          <button type="button" class="nav-i"><svg><use href="#i-set"/></svg><span>Settings</span></button>
+        </nav>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">MODE</span> Glove. Fewer, larger targets — three recents instead of six, and the ruler promoted to a primary action.</figcaption>
+  </figure>
+
+  <!-- ============ FIRST LAUNCH — CONTENT EXTRACTION ============ -->
+  <figure class="frame">
+    <div class="bezel"><div class="scr">
+      <div class="sb"><span>05:36</span><span class="sb-r"><span>FIRST RUN</span><span class="batt"></span></span></div>
+
+      <div class="body">
+        <div class="pad" style="padding-top:46px;padding-bottom:28px;">
+          <div style="display:grid;place-items:center;margin-bottom:26px;">
+            <svg viewBox="0 0 160 100" style="width:172px;height:auto" role="img" aria-label="Sounder mark">
+              <g fill="none" stroke="#1E434F" stroke-width="1.4"><path d="M10 92h140"/></g>
+              <g fill="none" stroke="#FFA92E" stroke-width="1.6">
+                <path d="M80 92a34 34 0 0 1 34-34"/><path d="M80 92a54 54 0 0 1 54-54" opacity=".6"/><path d="M80 92a74 74 0 0 1 74-74" opacity=".3"/>
+              </g>
+              <use href="#f-grouper" x="18" y="30" width="88" height="42" style="color:#DCEBEF"/>
+              <g fill="none" stroke="#FFA92E" stroke-width="1.4"><path d="M80 92V74"/></g>
+            </svg>
+          </div>
+
+          <p class="lbl lbl--sod" style="text-align:center;margin:0 0 8px;">First launch · one time only</p>
+          <p style="margin:0 0 22px;text-align:center;font-family:var(--mono);font-size:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;">Unpacking the rules</p>
+
+          <div class="pnl">
+            <div class="pnl-h"><span class="lbl">Extracting rule data</span><span class="lbl num" style="color:var(--sod)">68%</span></div>
+            <div class="pnl-b">
+              <div class="prog"><i style="width:68%"></i></div>
+              <div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+              <div class="kv" style="margin-top:12px;border-top:1px solid var(--hair);">
+                <div>Species records</div><div>1,412 / 2,061</div>
+                <div>Rule pack</div><div>UAE-2026.2</div>
+                <div>Elapsed</div><div>4.1 s</div>
+                <div>Storage after unpack</div><div>108 MB</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pnl pnl-b" style="margin-top:12px;display:flex;gap:9px;align-items:flex-start;">
+            <svg style="width:16px;height:16px;color:var(--txt3);flex:none;margin-top:2px"><use href="#i-info"/></svg>
+            <p style="margin:0;font-size:12px;color:var(--txt2);line-height:1.45;">Everything you need shipped inside the app.
+            Nothing is being downloaded, and nothing will be. There is no account to make.</p>
+          </div>
+        </div>
+
+        <div class="pad" style="margin-top:auto;padding-bottom:16px;">
+          <div class="cite" style="border-top:1px solid var(--hair);">
+            <div class="cite-row"><span class="cite-k">Packs</span><span class="cite-v">Ras Al Khaimah · Rías Baixas</span></div>
+            <div class="cite-row"><span class="cite-k">Checked</span><span class="cite-v sm">UAE 2026-07-14 · Galicia 2026-06-02</span></div>
+            <div class="cite-row"><span class="cite-k">Available</span><span class="cite-v sm">Jurumirim — not installed</span></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <figcaption><span class="cap-code">FIRST</span> First launch. A determinate bar with real counts — under six seconds, once, with the radio off.</figcaption>
+  </figure>
+
+  </div>
+</section>
+
+<footer class="why">
+  <h2>Why this direction</h2>
+  <p>Khalid is not opening an app; he is reading an instrument, in the dark, with one hand, while a fish is
+  still alive in the bin. So Sounder borrows its whole visual grammar from the hardware already bolted to his
+  console — bezelled panels with visible fasteners, hairline rules, silkscreened micro-labels, and monospaced
+  tabular numerals that hold their column whether the value is 7 or 3,000. Committing to a dark blue-green
+  ground is not a style preference: a white screen at 05:40 costs him his night vision, and the sodium amber
+  accent is the colour of every harbour lamp and instrument backlight he already trusts, which is exactly why
+  it is reserved for chrome and never allowed to state a result. The measurement numeral is set enormous with
+  the unit and the method code as small superior labels beside it, because at arm&rsquo;s length in the dark the
+  only thing that must survive is the number and whether it cleared the line — the words and the icon carry the
+  verdict so the colour never has to work alone. Everything else on the result panel exists to make the
+  statement defensible rather than persuasive: the method diagram, the instrument and its two dates, and a
+  disclaimer that cannot be dismissed because a legal-liability constraint is not a piece of UI to be tidied
+  away. And when two rules collide, the panel does what a real instrument does with a contradictory reading —
+  it shows both traces and refuses to average them.</p>
+  <p class="small">Note on theming: the page chrome around these frames follows your light/dark preference and
+  your toggle. The screens inside them do not — the app ships one committed instrument palette plus a separate
+  sunlight mode, and showing it inverted would misrepresent the product.</p>
+</footer>
+</div>
