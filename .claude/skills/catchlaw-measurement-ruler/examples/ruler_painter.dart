@@ -1,14 +1,12 @@
 // Demonstrates the whole measurement subsystem end to end: the MeasurementMethod enum and the
 // Measurement value type holding an int of millimetres, ID-1 calibration with its plausibility
 // gate, the RulerView that pins the ruler subtree to TextDirection.ltr as a deliberate exception,
-// and a RulerPainter that receives labelDirection and a LonjaTokens snapshot as CONSTRUCTOR FIELDS
-// (a CustomPainter has no BuildContext and cannot read Directionality) and compares both in
-// shouldRepaint. Tick glyphs are drawn only after canvas.restore(). Conceptually compiles against
-// flutter/material; RulerScene, LonjaTokens and l10n stand in for the real app symbols.
+// and a RulerPainter that receives labelDirection and a token-colour snapshot as CONSTRUCTOR
+// FIELDS (a CustomPainter has no BuildContext and cannot read Directionality) and compares both in
+// shouldRepaint. Glyphs are drawn last, never inside a mirrored frame. Conceptually compiles
+// against flutter/material; RulerScene and the numerals callback stand in for real app symbols.
 // The View/Painter/Scene split itself is owned by custom-canvas-and-gestures — this file shows only
 // what the measurement domain adds on top of it.
-
-import 'dart:ui' show TextDirection;
 
 import 'package:flutter/material.dart';
 
@@ -50,9 +48,7 @@ final class RulerCalibration {
   final DateTime capturedOn;
 }
 
-sealed class CalibrationOutcome {
-  const CalibrationOutcome();
-}
+sealed class CalibrationOutcome { const CalibrationOutcome(); }
 
 final class CalibrationAccepted extends CalibrationOutcome {
   const CalibrationAccepted(this.calibration);
@@ -139,6 +135,9 @@ class RulerPainter extends CustomPainter {
       final len = mm % 10 == 0 ? 28.0 : (mm % 5 == 0 ? 18.0 : 10.0);
       canvas.drawLine(Offset(x, 0), Offset(x, len), tick);
     }
+    final markX = scene.markedMm * scene.pxPerMm; // running step-and-mark total, in millimetres
+    canvas.drawLine(Offset(markX, 0), Offset(markX, size.height),
+        Paint()..color = scene.markInk..strokeWidth = 2);
     _paintLabels(canvas, size); // glyphs last, never inside a mirrored frame
   }
 

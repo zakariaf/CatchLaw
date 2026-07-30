@@ -1,0 +1,101 @@
+# Validates the repository's own contracts. Deliberately dependency-free: this
+# repo carries a spec, a design system and Claude Code skills — not app code yet.
+# When the Flutter app lands, add an analyze/test job beside these.
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  skills:
+    name: skills contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Shell scripts parse
+        run: |
+          shopt -s nullglob
+          found=0
+          for f in .claude/skills/*/scripts/*.sh; do
+            found=1
+            bash -n "$f" || { echo "::error file=$f::bash syntax error"; exit 1; }
+          done
+          [ "$found" = 1 ] && echo "all scripts parse" || echo "no scripts found"
+
+      - name: Frontmatter parses to exactly name + description
+        run: |
+          python3 - <<'PY'
+          import glob, sys, yaml, os
+          bad = []
+          for p in sorted(glob.glob('.claude/skills/*/SKILL.md')):
+              d = os.path.basename(os.path.dirname(p))
+              raw = open(p, encoding='utf-8').read()
+              try:
+                  fm = yaml.safe_load(raw.split('---')[1]) or {}
+              except Exception as e:
+                  bad.append(f'{d}: YAML error — {str(e)[:80]}'); continue
+              if sorted(fm) != ['description', 'name']:
+                  bad.append(f'{d}: keys are {sorted(fm)}, expected [description, name]')
+              if fm.get('name') != d:
+                  bad.append(f"{d}: frontmatter name is {fm.get('name')!r}")
+              n = len(fm.get('description', ''))
+              if not 200 <= n <= 1024:
+                  bad.append(f'{d}: description is {n} chars')
+              if '<' in fm.get('description','') or '>' in fm.get('description',''):
+                  bad.append(f'{d}: description contains < or >')
+          print('\n'.join(bad) if bad else f'{len(glob.glob(".claude/skills/*/SKILL.md"))} skills OK')
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: No dangling bundled-file citations
+        run: |
+          python3 - <<'PY'
+          import glob, os, re, sys
+          bad = []
+          for p in sorted(glob.glob('.claude/skills/*/SKILL.md')):
+              d = os.path.dirname(p)
+              t = open(p, encoding='utf-8').read()
+              for c in sorted(set(re.findall(r'`((?:references|examples|scripts)/[A-Za-z0-9_.-]+)`', t))):
+                  if not os.path.exists(os.path.join(d, c)):
+                      bad.append(f'{os.path.basename(d)} cites missing {c}')
+          print('\n'.join(bad) if bad else 'no dangling citations')
+          sys.exit(1 if bad else 0)
+          PY
+
+  invariants:
+    name: product invariants
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The verdict must never read as an instruction. This is a legal boundary,
+      # not a copy preference — see .claude/skills/catchlaw-verdict-contract/.
+      # Scoped to app source so the skills may quote the banned words as examples.
+      - name: No imperative verdict strings in app source
+        run: |
+          if [ ! -d lib ] && [ ! -d app ]; then
+            echo "no app source yet — skipping"; exit 0
+          fi
+          hits=$(grep -rniE '"(keep|return|throw it back|put it back)[.!"]' \
+                   --include='*.dart' --include='*.arb' lib app 2>/dev/null || true)
+          if [ -n "$hits" ]; then
+            echo "::error::imperative verdict string found — the result must state a fact"
+            echo "$hits"; exit 1
+          fi
+          echo "no imperative verdict strings"
+
+      - name: No networking dependency
+        run: |
+          if [ ! -f pubspec.yaml ]; then echo "no pubspec yet — skipping"; exit 0; fi
+          hits=$(grep -nE '^\s+(http|dio|web_socket_channel|grpc|connectivity_plus):' pubspec.yaml || true)
+          if [ -n "$hits" ]; then
+            echo "::error::networking package declared — CatchLaw has no network code path"
+            echo "$hits"; exit 1
+          fi
+          echo "no networking dependency declared"

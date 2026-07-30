@@ -1,0 +1,12 @@
+# Code owners for CatchLaw.
+# The `main protection` ruleset requires code-owner review on every PR, so this
+# file is what makes that rule resolvable. Without it, no reviewer qualifies.
+
+*                       @zakariaf
+
+# The legal-liability surfaces. Changes here alter what the app is allowed to
+# say, or whether the offline claim still holds — never merge these unreviewed.
+/SPEC.md                                    @zakariaf
+/.claude/skills/catchlaw-verdict-contract/  @zakariaf
+/.claude/skills/catchlaw-offline-guarantee/ @zakariaf
+/.claude/skills/catchlaw-content-pipeline/  @zakariaf
