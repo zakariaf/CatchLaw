@@ -297,7 +297,7 @@ List<Failure> emitReferenceDb(ContentSource source, ContentBuildOptions options)
         Failure('A0', options.outFile.path, 0, 'the emitted schema rejected a row: ${e.message}'),
       ];
     } finally {
-      db.dispose();
+      db.close();
     }
 
     final File out = options.outFile..parent.createSync(recursive: true);
@@ -309,7 +309,7 @@ List<Failure> emitReferenceDb(ContentSource source, ContentBuildOptions options)
     try {
       staged.execute('VACUUM INTO ?', <Object?>[out.path]);
     } finally {
-      staged.dispose();
+      staged.close();
     }
 
     // A7 runs against the EMITTED bytes, read-only. A writable verification
@@ -322,7 +322,7 @@ List<Failure> emitReferenceDb(ContentSource source, ContentBuildOptions options)
         ...const NormParityAssertion().verify(emitted, path: out.path),
       ];
     } finally {
-      emitted.dispose();
+      emitted.close();
     }
 
     if (problems.isNotEmpty) {

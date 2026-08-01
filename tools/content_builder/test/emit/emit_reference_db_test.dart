@@ -106,7 +106,7 @@ void main() {
       final ({ContentSource source, ContentBuildOptions options, Directory root}) c = build();
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       final tables = <String>{
         for (final Row r in db.select(
@@ -160,7 +160,7 @@ void main() {
         final ({ContentSource source, ContentBuildOptions options, Directory root}) c = build();
         addTearDown(() => c.root.deleteSync(recursive: true));
         final Database db = emitAndOpen(c);
-        addTearDown(db.dispose);
+        addTearDown(db.close);
 
         expect(
           db.select("SELECT name FROM sqlite_master WHERE type = 'index' AND name = ?", <Object?>[
@@ -176,7 +176,7 @@ void main() {
       final ({ContentSource source, ContentBuildOptions options, Directory root}) c = build();
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       for (final table in <String>['content_string', 'key_leaf_species']) {
         expect(
@@ -192,7 +192,7 @@ void main() {
       final ({ContentSource source, ContentBuildOptions options, Directory root}) c = build();
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(db.select('PRAGMA foreign_key_check'), isEmpty);
     });
@@ -201,7 +201,7 @@ void main() {
       final ({ContentSource source, ContentBuildOptions options, Directory root}) c = build();
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect('${db.select('PRAGMA integrity_check').first.values.first}', 'ok');
     });
@@ -211,7 +211,7 @@ void main() {
       final ({ContentSource source, ContentBuildOptions options, Directory root}) c = build();
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       final meta = <String, String>{
         for (final Row r in db.select('SELECT key, value FROM content_meta'))
@@ -230,7 +230,7 @@ void main() {
       final ({ContentSource source, ContentBuildOptions options, Directory root}) c = build();
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(
         db.select("SELECT value FROM content_meta WHERE key = 'build_date'").single['value'],
@@ -247,7 +247,7 @@ void main() {
       );
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(db.select('SELECT id, code FROM zone').single['id'], 1);
       expect(db.select('SELECT id FROM rule').single['id'], 1);
@@ -340,7 +340,7 @@ void main() {
       final ({ContentSource source, ContentBuildOptions options, Directory root}) c = build();
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(
         '${db.select("SELECT sql FROM sqlite_master WHERE name = 'legal_text_fts'").single['sql']}',
@@ -355,7 +355,7 @@ void main() {
       final ({ContentSource source, ContentBuildOptions options, Directory root}) c = build();
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(
         db.select('SELECT count(*) AS n FROM legal_text_fts').single['n'],
@@ -368,7 +368,7 @@ void main() {
       final ({ContentSource source, ContentBuildOptions options, Directory root}) c = build();
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(
         db.select('SELECT rowid FROM legal_text_fts WHERE body_norm MATCH ?', <Object?>['veda']),
@@ -387,7 +387,7 @@ void main() {
       );
       addTearDown(() => c.root.deleteSync(recursive: true));
       final Database db = emitAndOpen(c);
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(
         db.select('SELECT rowid FROM legal_text_fts WHERE body_norm MATCH ?', <Object?>[

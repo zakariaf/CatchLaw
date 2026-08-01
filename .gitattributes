@@ -1,0 +1,6 @@
+
+# Generated drift output is COMMITTED (FLUTTER_GUIDE.md §7.4) — a fresh clone
+# must analyse without running a builder first — but it is not authored, so it
+# collapses in a diff and never provokes a merge conflict a human resolves.
+*.g.dart linguist-generated=true -diff merge=ours
+*.drift.dart linguist-generated=true -diff merge=ours

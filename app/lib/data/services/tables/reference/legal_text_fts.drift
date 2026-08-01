@@ -1,0 +1,21 @@
+-- SPEC.md §7.1's FTS5 virtual table.
+--
+-- An fts5 relation cannot be expressed as a Dart `Table` subclass, so this file
+-- is how drift is told it exists — which is what lets E05/T07 query it typed
+-- rather than through a raw string.
+--
+-- Indexed over `body_norm` and NOT over `body`: §7.1's own comment gives the
+-- reason, that `unicode61` does not fold Arabic orthographic variants.
+-- `remove_diacritics 2` handles the Latin side, Galician and Catalan accents
+-- included.
+--
+-- `content='legal_text'` is the external-content form: the verbatim text is
+-- stored once. An external-content table does not populate itself, and an empty
+-- index fails silently — every query returns nothing, which reads as "the text
+-- is not in the app". The content build populates it explicitly.
+CREATE VIRTUAL TABLE legal_text_fts USING fts5(
+  body_norm,
+  content = 'legal_text',
+  content_rowid = 'id',
+  tokenize = 'unicode61 remove_diacritics 2'
+);

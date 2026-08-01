@@ -418,3 +418,33 @@ renders. What this decision fixes is a **class** name in a package the fisher ne
 **Applied by:** E03/T01 through T11.
 
 ---
+## D-16 — `reference.db` is opened read-only through `NativeDatabase.opened`, not `createInBackground`
+
+**Decision.** `referenceExecutor()` wraps a `sqlite3.open(path, mode: OpenMode.readOnly)` handle in
+`NativeDatabase.opened(..., enableMigrations: false, closeUnderlyingOnClose: true)`, inside a
+`LazyDatabase`. It does **not** use `NativeDatabase.createInBackground`.
+
+**Losing source:** `catchlaw-reference-database/examples/reference_database.dart` and
+`FLUTTER_GUIDE.md` §5.2, both of which write
+`NativeDatabase.createInBackground(file, readOnly: true, setup: …)`.
+
+**Why.** That parameter does not exist. drift 2.34.2's `createInBackground` takes `logStatements`,
+`cachePreparedStatements`, `setup`, `sqlite3`, `enableMigrations`, `isolateSetup` and `readPool` — and
+no `readOnly`. The nearest available thing is a **writable** file handle guarded by
+`PRAGMA query_only = 1`, and that is a promise rather than a protection: the operating system would
+still permit the write that leaves a `-wal` beside the file. D-6's integrity guarantee is a sha256 over
+bytes that must not move, so the guarantee has to live in the handle, not in a pragma the next
+`setup` edit could drop.
+
+**The cost, named rather than glossed.** The open runs on the calling isolate instead of a background
+one. `LazyDatabase` still defers it to the first **query**, so nothing is awaited before `runApp` —
+which is the property §5.2 is actually protecting, and the one `catchlaw-conventions-index` rule 8,
+`check_app_invariants.sh` check 8 and E01/T01 test 11 all enforce. If a measured cold-start regression
+ever appears, the fix is a background isolate that still opens read-only, not a writable handle.
+
+**What would resolve it.** A `readOnly` parameter on drift's background constructor, or a correction
+to the two sources naming `NativeDatabase.opened`. Both are upstream of this repository.
+
+**Applied by:** E05/T01, and by every later task that opens `reference.db`.
+
+---

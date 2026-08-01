@@ -48,7 +48,7 @@ void main() {
           (body: 'Talla mínima', bodyNorm: NormColumns.bodyNorm('Talla mínima')),
         ],
       );
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(const NormParityAssertion().verify(db), isEmpty);
     });
@@ -62,7 +62,7 @@ void main() {
           (name: 'Ameixa babosa', searchNorm: 'ameixa-babosa'),
         ],
       );
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       final List<Failure> failures = const NormParityAssertion().verify(db).toList();
 
@@ -82,7 +82,7 @@ void main() {
           (name: kHamourWithArticle, searchNorm: kHamour),
         ],
       );
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(const NormParityAssertion().verify(db), isEmpty);
     });
@@ -93,7 +93,7 @@ void main() {
           (name: kHamourWithArticle, searchNorm: 'hamour'),
         ],
       );
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(const NormParityAssertion().verify(db), hasLength(1));
     });
@@ -106,7 +106,7 @@ void main() {
         names: const <({String name, String searchNorm})>[],
         texts: <({String body, String bodyNorm})>[(body: 'Talla mínima', bodyNorm: 'Talla mínima')],
       );
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       final List<Failure> failures = const NormParityAssertion().verify(db).toList();
 
@@ -121,7 +121,7 @@ void main() {
           (name: 'Almeja babosa', searchNorm: 'wrong'),
         ],
       );
-      addTearDown(db.dispose);
+      addTearDown(db.close);
 
       expect(const NormParityAssertion().verify(db).single.line, 2);
     });
