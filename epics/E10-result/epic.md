@@ -30,8 +30,8 @@ its numbers intact" have a screen to be executed against.
 The branch is cut from a `main` that already carries:
 
 - `packages/rule_engine/` (E02, E03) — `normaliseSpeciesTerm`, and the §7.3 resolution pipeline
-  returning sealed `Resolution` values: `Decided` (headline `RuleFinding` plus `secondary`),
-  `Ambiguous`, `NoRuleFound`, `NoLimitInInstrument`. Every `RuleFinding` carries a non-nullable
+  returning sealed `Resolution` values: `Decided` (headline `Finding` plus `secondary`),
+  `Ambiguous`, `NoRuleFound`, `NoLimitInInstrument`. Every `Finding` carries a non-nullable
   `Citation` and an `isExpired` flag, and `FindingKind` is the six-value precedence ladder. There is
   no user-visible sentence anywhere in the package (D-7).
 - `tools/content_builder/` and `app/assets/db/reference.db.gz` (E04) — the Galicia seed, every

@@ -153,7 +153,9 @@ complementary, not contradictory — the merge is the decision.
 
 ## D-7 — The engine returns types; the app owns every word
 
-**Decision.** `packages/rule_engine/` returns sealed `Verdict` and `Finding` values carrying numbers,
+**Decision.** `packages/rule_engine/` returns ~~sealed `Verdict` and `Finding`~~ **sealed
+`Resolution` and `Finding`** (the top type's name is amended by **D-15**; this decision's substance is
+untouched) values carrying numbers,
 enums, a required `Citation` and an `isExpired` flag. It contains **no user-visible sentence**, in any
 language. Wording comes from ARB (UI chrome) and `content_string` (bundled content), assembled in
 `app/lib/ui/`.
@@ -379,5 +381,40 @@ gate to make a build pass, and the honest move when a gate is wrong is to say so
 rewrite it. The gate is not failing: an exemption for a path nothing matches is inert, not dangerous.
 **E04/T07 already names this** in its own Risks ("catchlaw_shared and the gate exempts packages/shared,
 and neither exists here") and is the correction site.
+
+---
+
+## D-15 — The engine's types: `Resolution`, `Finding`, `Ambiguous`
+
+**Decision.** The sealed union `packages/rule_engine/` returns is **`Resolution`**, with variants
+`Decided`, `Ambiguous`, `NoRuleFound` and `UnknownSpecies`. The base type of one rule that fired is
+**`Finding`**. The disagreeing-tie variant is **`Ambiguous`**.
+
+Each of the three names is settled on its own evidence, because the three conflicts do not have the same
+loser:
+
+| Name | Chosen | Losing source |
+|---|---|---|
+| `Resolution` | `catchlaw-rule-engine`, E03's epic and T02, T05, T10, T11 | **D-7**, which says `Verdict` |
+| `Finding` | **D-7**, `catchlaw-verdict-contract`, and E03/T06–T11 | `catchlaw-rule-engine`, which says `RuleFinding` |
+| `Ambiguous` | `catchlaw-rule-engine` and E03/T05 | `catchlaw-verdict-contract` rule 6, which says `ConflictingRules` |
+
+**D-7 is amended, not overturned.** Its substance — the engine returns numbers, enums, a required
+`Citation` and an `isExpired` flag, and holds no user-visible sentence in any language — is untouched and
+is what E03/T10 and E10/T10 enforce. Only the two type names it wrote in passing lose, and they lose
+because eleven task files, their test tables and the epic's definition of done were all written against
+`Resolution`, while D-7 names the type once and does not depend on it.
+
+**`RuleFinding` has no constituency.** It appears in `catchlaw-rule-engine` and nowhere else: not in D-7,
+not in `catchlaw-verdict-contract`, and not once in any of E03's eleven task files.
+
+**On the vocabulary rule.** `CLAUDE.md` requires one word per concept and gives **verdict** for the whole
+answer and **finding** for one rule that fired, and `Resolution` is not that word. The rule is about the
+word used in *prose, ARB keys and column names* — where "verdict" continues to be the only word, in the
+`verdictWarn` token, `lonja-verdict-and-status`, `check_lonja_verdict.sh` and every sentence the app
+renders. What this decision fixes is a **class** name in a package the fisher never sees, whose own rule
+(D-7) is that it contains no words at all. `finding` keeps its word in both registers.
+
+**Applied by:** E03/T01 through T11.
 
 ---

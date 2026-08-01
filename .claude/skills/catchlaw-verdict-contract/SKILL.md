@@ -65,7 +65,7 @@ admitting this app only "as a reference/logging tool with no advisory function".
    rules'`. An uncited finding is opinion, and the carve-out holds only while the app READS.
 
 6. **Genuine ambiguity is SHOWN in full, never resolved.** Two rules of equal specificity produce
-   `ConflictingRules(rules)` and a dialog printing BOTH statements with BOTH citations in source
+   `Ambiguous(rules)` (D-15) and a dialog printing BOTH statements with BOTH citations in source
    order — no `reduce`, no `sort`, no "strictest wins", no "recommended" badge, no silent `.first`.
    Choosing between two live instruments is the act an adviser performs; the conflict is the reader's.
 
@@ -156,8 +156,8 @@ final rule = candidates.reduce((a, b) => a.minLengthCm > b.minLengthCm ? a : b);
 // RIGHT — equal specificity is reported, in source order, with neither ranked.
 sealed class Finding { const Finding(); }
 final class SingleRule extends Finding { const SingleRule(this.rule); final Rule rule; }
-final class ConflictingRules extends Finding {
-  const ConflictingRules(this.rules); // 2+, SOURCE order — no sort, no 'recommended', no primary
+final class Ambiguous extends Resolution {
+  const Ambiguous(this.rules); // 2+, SOURCE order — no sort, no 'recommended', no primary
   final List<Rule> rules;
 }
 // Printed by the ambiguity dialog, both plates at identical weight, no primary action:
@@ -273,7 +273,7 @@ const LonjaDisclaimer(); // fixed slot on the result surface — see lonja-verdi
       method in one sentence (rules 3, 4).
 - [ ] `Citation` is non-nullable on `Verdict` and `NoRuleRecorded`, with no `??` instrument-name
       fallback anywhere (rule 5).
-- [ ] Two equally specific rules produce `ConflictingRules` with both citations in source order and
+- [ ] Two equally specific rules produce `Ambiguous` with both citations in source order and
       no sort, no primary action and no "recommended" affordance (rule 6).
 - [ ] The no-rule case prints both sentences verbatim in all six locales and cites what was searched
       (rule 7).

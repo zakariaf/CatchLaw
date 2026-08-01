@@ -250,10 +250,13 @@ task.
   and the same snippet in its `SKILL.md` — declares `double minimumCm` and `double measuredCm`: wrong
   type, wrong unit. `check_measurement.sh` check 1 misses it, because its regex requires the identifier
   to contain `length`. The ruler skill is authoritative.
-- **The engine's top type name.** D-7 says sealed `Verdict` and `Finding`. `catchlaw-rule-engine` ships
-  `Resolution`, `Decided`, `NoRuleFound`, `Ambiguous` and `RuleFinding`, and `catchlaw-verdict-contract`
-  rule 6 calls the disagreeing tie `ConflictingRules(rules)` where the engine calls it `Ambiguous`. No
-  `D-n` names a loser; E03 is where it lands.
+- ~~**The engine's top type name.**~~ **Settled by D-15**, at the head of E03 where it landed. The three
+  conflicts had three different losers, so each name was decided on its own evidence: **`Resolution`**
+  (D-7's `Verdict` loses), **`Finding`** (`catchlaw-rule-engine`'s `RuleFinding` loses — it appears in
+  that skill and in no task file), **`Ambiguous`** (`catchlaw-verdict-contract`'s `ConflictingRules`
+  loses). D-7 is amended rather than overturned: its substance, that the engine holds no user-visible
+  sentence, is untouched. In the vocabulary table below, **verdict** and **finding** remain the words for
+  prose, ARB keys and column names; D-15 governs a class name in a package that contains no words.
 - **Is `Citation` four fields or five?** `catchlaw-verdict-contract` rule 5 and `catchlaw-rule-engine`
   rule 9 require exactly instrument, article, `publishedOn`, `checkedOn`; `product-invariants.md` §3
   adds `packId`.

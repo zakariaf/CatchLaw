@@ -39,7 +39,7 @@ content that fills them to `catchlaw-content-pipeline`, the `Result` spine to
 
 1. **An expired ruleset is TAGGED, never filtered away.** No resolution query may mention `valid_to`
    in a `WHERE`, and no Dart pipeline may `.where((r) => r.validTo!.isAfter(now))`; compute
-   `isExpired = validTo != null && validTo!.isBefore(req.on)` onto every `RuleFinding`. **WHY:** the
+   `isExpired = validTo != null && validTo!.isBefore(req.on)` onto every `Finding`. **WHY:** the
    day an annual orden de vedas or piracema portaria lapses, filtering wipes every rule it carried,
    every species falls to "no rule recorded", and a frozen snapshot silently becomes the live-data
    product this app can never be offline.
@@ -82,7 +82,7 @@ content that fills them to `catchlaw-content-pipeline`, the `Result` spine to
    with `NoLimitInInstrument`, a positive statement carrying its own `Citation`. **WHY:** absence of
    evidence stamped as permission fails silently in exactly the zones with the thinnest content.
 
-9. **Every finding carries a non-null Citation.** `RuleFinding({required Citation citation})` with
+9. **Every finding carries a non-null Citation.** `Finding({required Citation citation})` with
    instrument, article, `publishedOn` and `checkedOn` — never `Citation?`, never a default, never
    `citation ?? Citation.unknown()`. **WHY:** an uncited finding is an opinion, and the one moment it
    matters is at 06:00 with an inspector asking which article the number came from.
@@ -146,7 +146,7 @@ last verified wording, and at sea that is everything he has.
 final rows = await (select(rules)..where((t) => t.validTo.isBiggerThanValue(now))).get();
 
 // RIGHT — nothing is dropped; expiry becomes a flag computed from the injected date.
-RuleFinding _toFinding(RuleRow r, DateTime on) => RuleFinding(
+Finding _toFinding(RuleRow r, DateTime on) => Finding(
       kind: r.kind,
       citation: r.citation, // required, non-null, always
       isExpired: r.validTo != null && r.validTo!.isBefore(on),
@@ -193,7 +193,7 @@ const _precedence = <FindingKind, int>{
   FindingKind.protected: 60, FindingKind.closedSeason: 50, FindingKind.maxSize: 40,
   FindingKind.minSize: 30, FindingKind.bagLimit: 20, FindingKind.vesselLimit: 10,
 };
-List<RuleFinding> rankFailures(List<RuleFinding> all) => all.where((f) => f.fails).toList()
+List<Finding> rankFailures(List<Finding> all) => all.where((f) => f.fails).toList()
   ..sort((a, b) => _precedence[b.kind]!.compareTo(_precedence[a.kind]!));
 // Sha'ri, 52 cm, 14 March: closedSeason headlines, minSize rides as a secondary finding — the
 // rule table prints both, the stamp states only one.
@@ -264,7 +264,7 @@ Full worked file: `examples/species_normalisation.dart`.
   confident verdict neither instrument supports, and rule 1's deletion semantics in disguise.
 - **`zoneId.split('/').length` as specificity** — ranks a bank above the no-take exclusion drawn
   inside it, and returns the permissive rule where the strict one applies.
-- **`Citation? citation` on `RuleFinding`** — the first finding built without one ships an uncited
+- **`Citation? citation` on `Finding`** — the first finding built without one ships an uncited
   number, and nobody finds out until an inspector asks.
 - **`findings.isEmpty ? meets : ...`** — absence of evidence stamped as permission.
 - **`minCm` compared against a fork-length reading** — 65 cm FL read as 65 cm TL passes a Kanaad

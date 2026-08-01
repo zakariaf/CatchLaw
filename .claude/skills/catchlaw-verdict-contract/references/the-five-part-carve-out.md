@@ -50,7 +50,7 @@ transparently a READER of someone else's text.
 | `checkedOn` | 2026-07-14 | states how current the transcription is, and bounds the claim |
 
 Testable: `Citation` has four required non-nullable fields; `Verdict`, `NoRuleRecorded` and every
-element of `ConflictingRules` require one; no `??` supplies an instrument name; the citation renders
+element of `Ambiguous` require one; no `??` supplies an instrument name; the citation renders
 on-screen, not behind an `ExpansionTile`, tooltip or "More info" route.
 
 ## Part 3 — genuine ambiguity is shown, not resolved
@@ -62,15 +62,15 @@ specificity is not ambiguity — a zone rule beats a national rule and the engin
 |---|---|---|
 | One rule matches | `SingleRule` | one stamp, one citation |
 | Zone rule + national rule, zone is narrower | `SingleRule` (zone) | one stamp; the national rule still listed in the table |
-| Two rules, same zone, same species, same method | `ConflictingRules` | dialog printing both, source order, no primary action |
-| Two rules, same specificity, different methods (TL vs FL) | `ConflictingRules` | both, each with its own method named |
+| Two rules, same zone, same species, same method | `Ambiguous` | dialog printing both, source order, no primary action |
+| Two rules, same specificity, different methods (TL vs FL) | `Ambiguous` | both, each with its own method named |
 | Rules that disagree only on a date already past | `SingleRule` | the rule in force today |
 
 Banned resolutions, all of which are advice: `reduce` on the stricter minimum, `reduce` on the more
 permissive minimum, `candidates.first`, `sort` by anything, a "recommended" badge, an autofocused
 primary button, and rendering only one rule with a "another rule may apply" footnote.
 
-Testable: `ConflictingRules` is a distinct `sealed` case; the ambiguity dialog contains exactly N
+Testable: `Ambiguous` is a distinct `sealed` case; the ambiguity dialog contains exactly N
 equal-weight actions for N rules plus a defer action, and no widget in it is styled as primary.
 
 ## Part 4 — the app never interprets
