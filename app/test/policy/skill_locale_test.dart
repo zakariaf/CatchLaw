@@ -5,13 +5,10 @@ import 'package:yaml/yaml.dart';
 
 import 'repo_root.dart';
 
-/// The four files E01/T09 corrects. D-3 names the first three; D-4 the builder.
-const correctedFiles = <String>[
-  '.claude/skills/catchlaw-conventions-index/SKILL.md',
-  '.claude/skills/catchlaw-conventions-index/references/routing-table.md',
-  '.claude/skills/catchlaw-conventions-index/scripts/check_app_invariants.sh',
-  '.claude/skills/catchlaw-verdict-contract/SKILL.md',
-];
+/// The conventions index — the front door, and the one file that must LIST the
+/// six ARB names rather than merely avoid the wrong ones.
+const conventionsIndex = '.claude/skills/catchlaw-conventions-index/SKILL.md';
+const invariantsGate = '.claude/skills/catchlaw-conventions-index/scripts/check_app_invariants.sh';
 
 /// D-3. Catalan ships; Urdu does not. The region travels on Portuguese.
 const shippedArb = <String>[
@@ -26,6 +23,23 @@ const shippedArb = <String>[
 final _staleLocale = RegExp(r'app_ur\.arb|\bUrdu\b');
 final _staleBuilder = RegExp(r'content_build(?!er)|packages/content_build');
 final _stalePt = RegExp(r'app_pt\.arb');
+final _staleUr = RegExp("'ur'|`ur`");
+
+/// Every file under `.claude/skills/`, read once. The vendored general skills
+/// live in `.claude/skills-flutter/` (D-13) and are deliberately out of scope:
+/// they are upstream's text, corrected upstream.
+final Map<String, String> _skillFiles = {
+  for (final f in repoDir('.claude/skills').listSync(recursive: true).whereType<File>())
+    f.path.replaceFirst('${repoRoot().path}/', ''): f.readAsStringSync(),
+};
+
+/// Skill files matching [pattern]. The whole tree, never a hand-kept list: a
+/// per-decision test that names its own files can only ever find what its author
+/// already knew about, which is how six files sat stale behind four green tests.
+Set<String> staleFiles(RegExp pattern) => {
+  for (final e in _skillFiles.entries)
+    if (pattern.hasMatch(e.value)) e.key,
+};
 
 String frontmatterDescription(String path) {
   final String raw = repoFile(path).readAsStringSync();
@@ -41,33 +55,52 @@ Set<String> recordedDrift() => repoFile('tools/gates/known_skill_drift.txt')
     .toSet();
 
 void main() {
-  test('The four corrected skill files name no Urdu ARB or Urdu RTL lane', () {
-    final offenders = <String>[
-      for (final p in correctedFiles)
-        if (_staleLocale.hasMatch(repoFile(p).readAsStringSync())) p,
-    ];
+  test('The skill scan reads the sixteen app skills and not the vendored ones', () {
+    // Five tests below pass by finding NOTHING. If this scan ever reads an empty
+    // tree — a renamed directory, a typo, a checkout without .claude — every one
+    // of them goes green over nothing, which is CONVENTIONS.md §7's failure
+    // arriving through a test instead of a gate. So the count is the evidence.
+    final Set<String> skills = {for (final p in _skillFiles.keys) p.split('/')[2]};
+    expect(skills, hasLength(16), reason: 'CONVENTIONS.md §7: exactly sixteen (D-13)');
     expect(
-      offenders,
+      _skillFiles.keys.where((p) => p.contains('skills-flutter')),
+      isEmpty,
+      reason: "D-13: the vendored 33 are upstream's text, corrected upstream",
+    );
+    expect(_skillFiles.length, greaterThan(60));
+  });
+
+  test('No skill file names an Urdu ARB or an Urdu RTL lane', () {
+    expect(
+      staleFiles(_staleLocale),
       isEmpty,
       reason:
           'D-3: Urdu appears nowhere in SPEC.md and no bundled instrument is '
-          'published in it:\n${offenders.join('\n')}',
+          'published in it. There is one RTL locale, ar.',
     );
   });
 
-  test('The four corrected skill files name every ARB file with its full locale', () {
-    final offenders = <String>[
-      for (final p in correctedFiles)
-        if (_stalePt.hasMatch(repoFile(p).readAsStringSync())) p,
-    ];
+  test('No skill file names a bare ur locale', () {
     expect(
-      offenders,
+      staleFiles(_staleUr),
       isEmpty,
       reason:
-          'D-3: the region travels because the content is Brazilian, not Iberian:\n'
-          '${offenders.join('\n')}',
+          'D-3: the sixth locale is ca, not ur. SPEC.md §9.5 line 815 names the '
+          'gendered set — ar, es, gl, ca, pt_BR — and §9.1 line 840 gives '
+          "Catalan's justification, so neither was ever an open question.",
     );
-    final String index = repoFile(correctedFiles.first).readAsStringSync();
+  });
+
+  test('No skill file names a region-less Portuguese ARB', () {
+    expect(
+      staleFiles(_stalePt),
+      isEmpty,
+      reason: 'D-3: the region travels because the content is Brazilian, not Iberian',
+    );
+  });
+
+  test('The conventions index lists all six shipped ARB files', () {
+    final String index = _skillFiles[conventionsIndex]!;
     expect(
       shippedArb.where(index.contains),
       hasLength(shippedArb.length),
@@ -75,16 +108,18 @@ void main() {
     );
   });
 
-  test('The four corrected skill files name the content builder as content_builder', () {
-    final offenders = <String>[
-      for (final p in correctedFiles)
-        if (_staleBuilder.hasMatch(repoFile(p).readAsStringSync())) p,
-    ];
-    expect(offenders, isEmpty, reason: 'D-4: one name:\n${offenders.join('\n')}');
+  test('No skill file names the content builder as content_build', () {
+    expect(
+      staleFiles(_staleBuilder),
+      isEmpty,
+      reason:
+          'D-4: one name — directory tools/content_builder, package '
+          'content_builder, executable `dart run content_builder:build`',
+    );
   });
 
   test('catchlaw-conventions-index frontmatter description stays within the CI bound', () {
-    final String d = frontmatterDescription(correctedFiles.first);
+    final String d = frontmatterDescription(conventionsIndex);
     expect(
       d.length,
       inInclusiveRange(200, 1024),
@@ -96,7 +131,7 @@ void main() {
   });
 
   test('check_app_invariants.sh still scans every ARB file regardless of locale', () {
-    final String script = repoFile(correctedFiles[2]).readAsStringSync();
+    final String script = _skillFiles[invariantsGate]!;
     // The task file predicted two occurrences; the script ships one. The number
     // was never the contract — LOCALE-AGNOSTICISM is. So this pins both halves:
     // the wildcard include survives, and no locale-specific include appears
@@ -117,24 +152,21 @@ void main() {
 
   test('Files still carrying the pre-decision wording are exactly those recorded in '
       'known_skill_drift.txt', () {
-    final Set<String> actual = repoDir('.claude/skills')
-        .listSync(recursive: true)
-        .whereType<File>()
-        .map((f) => f.path.replaceFirst('${repoRoot().path}/', ''))
-        .where((p) {
-          final String t = repoFile(p).readAsStringSync();
-          return _staleLocale.hasMatch(t) ||
-              _staleBuilder.hasMatch(t) ||
-              _stalePt.hasMatch(t) ||
-              RegExp(r"'ur'|`ur`").hasMatch(t);
-        })
-        .toSet();
+    final Set<String> actual = {
+      ...staleFiles(_staleLocale),
+      ...staleFiles(_staleBuilder),
+      ...staleFiles(_stalePt),
+      ...staleFiles(_staleUr),
+    };
     expect(
       actual,
       recordedDrift(),
       reason:
-          'either this task left one of its four files unfixed, or a later change '
-          'introduced the pre-decision wording into a file with no owning epic',
+          'The register is EMPTY as of the E01 close-out, so this now asserts that '
+          'no skill file carries the pre-decision wording at all. A failure here '
+          'means a later change reintroduced it into a file with no owning epic. '
+          'The four tests above name which decision was broken; this one is the '
+          'accumulator that no per-decision test can be forgotten from.',
     );
   });
 }

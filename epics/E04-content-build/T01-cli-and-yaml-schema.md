@@ -26,7 +26,7 @@
 | `SPEC.md` | §7.1 | Every table the YAML must be able to express, and the exact column names — the loader's models mirror these, not a tidier invention |
 | `.claude/skills/catchlaw-content-pipeline/SKILL.md` | Rules 1, 2; "The tool is the deliverable" | `main` does four things — load, assert, emit, changelog — and never reaches emit with a non-empty failure list |
 | `.claude/skills/catchlaw-content-pipeline/references/build-assertions.md` | "rules.yaml schema", "Failure format" | The authored field names, and `<assertion-id> <file>:<line> <message>` sorted by file then line |
-| `.claude/skills/catchlaw-content-pipeline/examples/content_build_assertions.dart` | `main()` and `ContentBuildOptions` | The worked shape of the CLI; do not diverge from it silently |
+| `.claude/skills/catchlaw-content-pipeline/examples/content_builder_assertions.dart` | `main()` and `ContentBuildOptions` | The worked shape of the CLI; do not diverge from it silently |
 | `.claude/skills/catchlaw-content-pipeline/scripts/check_content_pipeline.sh` | checks 1, 2, 3, 5 | Three of the five checks scan YAML with **no** `content-pipeline-ok` escape hatch, which decides where negative fixtures may live |
 | `FLUTTER_GUIDE.md` | §2.4, §2.5 | Workspace member layout, `resolution: workspace`, `lib/` + `bin/` for the CLI |
 | `FLUTTER_GUIDE.md` | §7.1, §7.2 | SDK floor `^3.12.0` and sealed classes for the option/failure unions |
@@ -93,7 +93,7 @@ test that explains it, and cost one extra constructor. **Rejected:** `test/fixtu
 convention `CONVENTIONS.md` §4 forbids).
 
 **Three flag names are rejected by name, not merely unknown.** `--force`, `--skip-assertions` and
-`--allow-missing-locale` each exit 2 with `content_build: <flag> does not exist and will not be
+`--allow-missing-locale` each exit 2 with `content_builder: <flag> does not exist and will not be
 added; every assertion is fatal`. `catchlaw-content-pipeline` rule 2 says the flag that exists is the
 flag CI uses at 18:00 on a Friday. Somebody will eventually copy a command from a stale note or from
 another project; an explanation is cheaper than an argument. **Rejected:** accepting them and

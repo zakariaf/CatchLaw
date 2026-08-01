@@ -27,7 +27,7 @@
 | `SPEC.md` | §7.4 | The build emits a tiny separate asset carrying `build_date` and `schema_version`, plus a generated Dart constant |
 | `SPEC.md` | §13 | Legal-text FTS < 200 ms; first launch < 6 s for a ~10 MB copy plus the FTS index build |
 | `.claude/skills/catchlaw-reference-database/SKILL.md` | Rules 3–6; "The circular build-date check"; "Temp file, atomic rename, orphan sweep" | `kReferenceBuildId`, `kReferenceBytes`, `kReferenceSha256`, and that the sha256 is verified against the **decompressed** file |
-| `.claude/skills/catchlaw-content-pipeline/examples/content_build_assertions.dart` | `main()` | Emit, then run A7 against the emitted bytes, then delete the file if parity fails |
+| `.claude/skills/catchlaw-content-pipeline/examples/content_builder_assertions.dart` | `main()` | Emit, then run A7 against the emitted bytes, then delete the file if parity fails |
 | `epics/DECISIONS.md` | D-6, D-1 | The `.gz` asset at `app/assets/db/`, the sha256, the read-only open; and that extraction and the generated constant are E05/T01–T03 |
 | `epics/CONVENTIONS.md` | §8 | The floor under this task, including the no-`print`-outside-`kDebugMode` rule — this is a CLI, so `stdout.writeln` is the correct channel and `print` is still not |
 

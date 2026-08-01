@@ -29,7 +29,7 @@
 | `.claude/skills/catchlaw-rule-engine/references/resolution-algorithm.md` | "The four stages, in order", "The tie matrix", "The expiry axis", "Edge cases" | The exact predicate order, `outcomeEquals` semantics, and the Galician *orde de vedas* worked hazard |
 | `.claude/skills/catchlaw-rule-engine/SKILL.md` | Rules 1, 6, 8 | Expiry is tagged not filtered; a tie is reported not broken; "no rule found" never implies legality |
 | `.claude/skills/catchlaw-content-pipeline/references/build-assertions.md` | A8 row, "A8 — contradiction classes" | Six classes, with the resolution for each — `supersedes:`, delete the size rule, fix the zone |
-| `.claude/skills/catchlaw-content-pipeline/examples/content_build_assertions.dart` | `assertNoContradictions` | The worked shape: construct the engine from the source, switch on the result, no `default:` that swallows a variant |
+| `.claude/skills/catchlaw-content-pipeline/examples/content_builder_assertions.dart` | `assertNoContradictions` | The worked shape: construct the engine from the source, switch on the result, no `default:` that swallows a variant |
 | `epics/CONVENTIONS.md` | §9, invariant 5 | The invariant this pass must not weaken |
 
 ## What this delivers
@@ -63,7 +63,7 @@ threshold — a timing test on CI is a flake, and a flake in a fatal assertion g
 
 **The build reports the grid size it actually resolved.** `build-assertions.md` sizes a full corpus at
 roughly 40 000 cells. Galicia alone is smaller and its size will change as E22 lands. The build prints
-`content_build: A8 resolved <n> cells in <m> ms` with the real numbers, so the cost is a measurement
+`content_builder: A8 resolved <n> cells in <m> ms` with the real numbers, so the cost is a measurement
 somebody can act on rather than a claim in a document.
 
 **`isExpired` is never a failure, and this is the sentence that keeps invariant 5 intact.**

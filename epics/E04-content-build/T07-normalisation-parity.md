@@ -67,7 +67,7 @@ recomputes every persisted column from the emitted bytes; and a test greps the b
 for a declaration.
 
 **A7 runs against the emitted database, not against the in-memory rows.** The
-`content_build_assertions.dart` example runs it after `emitReferenceDb` and deletes the file if it
+`content_builder_assertions.dart` example runs it after `emitReferenceDb` and deletes the file if it
 fails, because *an unindexed database is worse than none*. Recomputing from the in-memory model would
 prove the model consistent with itself and say nothing about what SQLite stored — a truncated column,
 a `TEXT` affinity surprise or an emit-order bug would all pass.

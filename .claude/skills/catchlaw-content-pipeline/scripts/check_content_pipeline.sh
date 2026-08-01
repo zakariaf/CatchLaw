@@ -9,7 +9,7 @@ set -euo pipefail
 # the verdict stamp, a citation with no retrieved_on prints a footnote that claims a check
 # nobody made, an unattributable plate ships an infringement, and a second normalise() makes
 # Arabic search return nothing at all. Heuristic greps, not a compiler — this is a floor, not
-# proof; the real gate is `dart run content_build`. The ONLY exemption is a trailing
+# proof; the real gate is `dart run content_builder:build`. The ONLY exemption is a trailing
 # `content-pipeline-ok` comment on the offending line (// in Dart, # in YAML); nothing else.
 #
 # Checks:
