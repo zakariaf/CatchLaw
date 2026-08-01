@@ -52,6 +52,12 @@ analyzer:
   exclude:
     - build/**
     - "**/generated_plugin_registrant.dart"
+    # E01/T05 gate fixtures. These are deliberately-broken call sites that exist
+    # to be GREPPED, never compiled — their identifiers are undefined on purpose.
+    # Excluding them is safe precisely because nothing imports them; the reason
+    # §4.4 forbids excluding generated Dart (a real error would be swallowed)
+    # does not apply to a file no build ever reaches.
+    - tools/gates/testdata/**
     # DELIBERATELY NOT excluding **/*.g.dart — see FLUTTER_GUIDE.md §4.4.
     # `exclude` still resolves and type-checks the file and only suppresses
     # reporting inside it, so a genuine error in drift output would survive

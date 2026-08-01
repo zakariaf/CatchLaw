@@ -157,6 +157,14 @@ jobs:
       - name: Analyze with plugins
         run: dart analyze
 
+      # SPEC.md §14 static block, bullet 2. A shell step and not only the guard
+      # test, because a release checklist item most needs answering when the Dart
+      # suite is the thing that is broken. The two are not redundant: the test
+      # walks files, skips generated output and reports file and line; this runs
+      # when nothing compiles.
+      - name: Banned network APIs (SPEC §14)
+        run: bash tools/gates/no_banned_apis.sh app/lib
+
       # On Linux `flutter test` runs in a plain Dart VM where sqlite3_flutter_libs
       # does nothing, so an E05 database suite fails in a way that reads as a
       # broken repository. Four seconds now removes that whole class of failure.
