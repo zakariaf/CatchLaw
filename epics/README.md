@@ -57,11 +57,11 @@ other epic is strictly sequential.
 
 ## Status
 
-Nothing is built. Every epic below is `not started`.
+**E01 is merged.** Every epic below it is `not started`.
 
 | Epic | Branch | PR | Checks | Merged |
 |---|---|---|---|---|
-| E01 | — | — | — | ☐ |
+| E01 | `epic/01-foundation` | [#1](https://github.com/zakariaf/CatchLaw/pull/1) | all green | ☑ |
 | E02 | — | — | — | ☐ |
 | E03 | — | — | — | ☐ |
 | E04 | — | — | — | ☐ |
