@@ -503,3 +503,159 @@ String vernacularYaml(List<NameSpec> names) {
   }
   return buffer.toString();
 }
+
+// ---------------------------------------------------------------------------
+// E04/T05 — A4 citations, A5 species assets, A9 provenance.
+//
+// The citation block authors `instrument:`, `article:` and `jurisdiction:`
+// rather than the §7.1 column names `instrument_ref`, `article_ref` and
+// `jurisdiction_id`. That is deliberate and it is the gate's doing:
+// check_content_pipeline.sh check 2 is an awk window looking for
+// `instrument:|article:` with `retrieved_on:`, and against `*_ref` names it
+// cannot fire at all. D-2's rule of thumb — where a gate and the prose disagree
+// about a shape, the gate wins.
+// ---------------------------------------------------------------------------
+
+/// The Galician instrument every citation fixture cites.
+const String kGaliciaCitationId = 'es-ga-orde-2012-07-27-art4';
+
+/// A `citations.yaml` holding one block, opening on line 2.
+String citationsYaml({
+  String id = kGaliciaCitationId,
+  String jurisdiction = 'ES-GA',
+  String? publishedOn = '2012-08-06',
+  String? retrievedOn = '2026-08-12',
+  String? sourceUrl =
+      'https://www.xunta.gal/dog/Publicados/2012/20120806/AnuncioC3K1-010812-0001_gl.html',
+  String? sha256 = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+}) {
+  final buffer = StringBuffer('citations:\n');
+  buffer.writeln('  - id: $id');
+  buffer.writeln('    jurisdiction: $jurisdiction');
+  buffer.writeln('    instrument_type_key: instrument.orde  # content-pipeline-ok');
+  buffer.writeln('    instrument: Orde do 27 de xullo de 2012');
+  buffer.writeln('    article: Art. 4');
+  if (publishedOn != null) buffer.writeln('    published_on: $publishedOn');
+  if (retrievedOn != null) buffer.writeln('    retrieved_on: $retrievedOn');
+  if (sourceUrl != null) buffer.writeln('    source_url: $sourceUrl');
+  if (sha256 != null) buffer.writeln('    sha256: $sha256');
+  buffer.writeln('    lineage_id: es-ga-orde-2012-07-27');
+  return buffer.toString();
+}
+
+/// The section, file and body of a row on [table] carrying [citationId].
+({String path, String yaml}) referencingCitation(String table, String citationId) =>
+    switch (table) {
+      'rule' => (
+        path: 'content/es-ga/rules.yaml',
+        yaml:
+            'rules:\n  - id: es-ga-r-001\n    jurisdiction_id: ES-GA\n'
+            '    species_id: venerupis-corrugata\n    water_type: salt\n'
+            "    citation_id: $citationId\n    valid_from: '2012-08-01'\n",
+      ),
+      'closed_season' => (
+        path: 'content/es-ga/closed_seasons.yaml',
+        yaml:
+            'closed_seasons:\n  - id: es-ga-cs-001\n    rule_id: es-ga-r-001\n'
+            '    recurrence: annual\n    start_month: 3\n    start_day: 1\n'
+            '    end_month: 4\n    end_day: 30\n    citation_id: $citationId\n',
+      ),
+      'licence_type' => (
+        path: 'content/es-ga/licence_types.yaml',
+        yaml:
+            'licence_types:\n  - id: es-ga-l-001\n    jurisdiction_id: ES-GA\n'
+            '    water_type: salt\n    code: MARISQUEO\n'
+            '    name_key: licence.es_ga.marisqueo  # content-pipeline-ok\n'
+            '    description_key: licence.es_ga.marisqueo.desc  # content-pipeline-ok\n'
+            '    citation_id: $citationId\n',
+      ),
+      'gear_rule' => (
+        path: 'content/es-ga/gear_rules.yaml',
+        yaml:
+            'gear_rules:\n  - id: es-ga-g-001\n    jurisdiction_id: ES-GA\n'
+            '    gear_code: RASCO\n    gear_name_key: gear.rasco  # content-pipeline-ok\n'
+            '    is_allowed: true\n    citation_id: $citationId\n',
+      ),
+      'penalty' => (
+        path: 'content/es-ga/penalties.yaml',
+        yaml:
+            'penalties:\n  - id: es-ga-p-001\n    jurisdiction_id: ES-GA\n'
+            '    offence_key: penalty.undersize  # content-pipeline-ok\n'
+            '    citation_id: $citationId\n',
+      ),
+      _ => (
+        path: 'content/es-ga/legal_text.yaml',
+        yaml:
+            'legal_texts:\n  - id: es-ga-lt-001\n    jurisdiction_id: ES-GA\n'
+            '    locale: gl\n    body: O tamaño mínimo da ameixa babosa é de 38 mm.\n'
+            '    citation_id: $citationId\n',
+      ),
+    };
+
+/// A `species.yaml` for one species, with [silhouette] and [noVernacular].
+String speciesWithAssets({
+  String id = 'venerupis-corrugata',
+  String silhouette = 'sil/venerupis-corrugata.svg',
+  Map<String, String> noVernacular = const <String, String>{},
+}) {
+  final buffer = StringBuffer('species:\n');
+  buffer.writeln('  - id: $id');
+  buffer.writeln('    scientific_name: Venerupis corrugata');
+  buffer.writeln('    family_id: veneridae');
+  buffer.writeln('    taxon_group: bivalve');
+  buffer.writeln('    silhouette_asset: $silhouette');
+  if (noVernacular.isNotEmpty) {
+    buffer.writeln('    no_vernacular:');
+    noVernacular.forEach((String locale, String reason) {
+      buffer.writeln("      $locale: '$reason'");
+    });
+  }
+  return buffer.toString();
+}
+
+/// A `rules.yaml` whose single row cites [citationId] and [speciesId].
+String ruleCiting({
+  String citationId = kGaliciaCitationId,
+  String speciesId = 'venerupis-corrugata',
+}) =>
+    'rules:\n  - id: es-ga-r-001\n    jurisdiction_id: ES-GA\n'
+    '    species_id: $speciesId\n    water_type: salt\n'
+    "    citation_id: $citationId\n    valid_from: '2012-08-01'\n";
+
+/// A rule row carrying no `citation_id` — A1's failure, not A4's.
+const String kRuleWithoutCitationYaml = '''
+rules:
+  - id: es-ga-r-001
+    jurisdiction_id: ES-GA
+    species_id: venerupis-corrugata
+    water_type: salt
+    valid_from: '2012-08-01'
+''';
+
+/// A rule row naming no species — A1's failure, not A5's.
+const String kRuleWithoutSpeciesYaml = '''
+rules:
+  - id: es-ga-r-001
+    jurisdiction_id: ES-GA
+    water_type: salt
+    citation_id: es-ga-orde-2012-07-27-art4
+    valid_from: '2012-08-01'
+''';
+
+/// Two rules on one species: Galicia carries a size rule and a closed season
+/// for the same clam.
+const String kTwoRulesOneSpeciesYaml = '''
+rules:
+  - id: es-ga-r-001
+    jurisdiction_id: ES-GA
+    species_id: venerupis-corrugata
+    water_type: salt
+    citation_id: es-ga-orde-2012-07-27-art4
+    valid_from: '2012-08-01'
+  - id: es-ga-r-002
+    jurisdiction_id: ES-GA
+    species_id: venerupis-corrugata
+    water_type: salt
+    citation_id: es-ga-orde-2012-07-27-art4
+    valid_from: '2012-08-01'
+''';

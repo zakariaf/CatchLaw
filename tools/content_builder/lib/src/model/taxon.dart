@@ -44,6 +44,7 @@ class SpeciesRow extends ContentRow {
     required this.silhouetteAsset,
     this.colId,
     this.plateAsset,
+    this.noVernacular = const <String, String>{},
   });
 
   /// Reads a species from [row].
@@ -57,6 +58,11 @@ class SpeciesRow extends ContentRow {
     taxonGroup: row.string('taxon_group'),
     silhouetteAsset: row.string('silhouette_asset'),
     plateAsset: row.string('plate_asset'),
+    noVernacular: <String, String>{
+      for (final MapEntry<String, Object?> e
+          in (row.map('no_vernacular') ?? const <String, Object?>{}).entries)
+        if (e.value is String) e.key: e.value! as String,
+    },
   );
 
   /// The binomial, e.g. `Venerupis corrugata`.
@@ -78,8 +84,26 @@ class SpeciesRow extends ContentRow {
   /// Optional detailed plate, cleared per A6's illustrator death-year test.
   final String? plateAsset;
 
+  /// Locales in which this species deliberately has **no** vernacular name, and
+  /// the `*_key` explaining why.
+  ///
+  /// `SPEC.md` §8 bullet 5 read literally requires an Arabic name for *Venerupis
+  /// corrugata*, and no Galician instrument names a clam in Arabic. §9.2 step 3
+  /// is explicit that a wrong vernacular name is worse than no name, because it
+  /// produces a confident wrong finding. A declared absence is reviewable,
+  /// greppable, appears in the changelog diff when it changes, and lets §9.2's
+  /// fallback chain run down to the scientific name — which is where the chain
+  /// already ends. A SILENT gap still fails A5.
+  final Map<String, String> noVernacular;
+
   @override
-  Map<String, String?> get keyColumns => const <String, String?>{};
+  Map<String, String?> get keyColumns => <String, String?>{
+    // The reason key is itself a content string, so A2 forces its six
+    // translations. An untranslated reason would be a blank line explaining a
+    // blank line.
+    for (final MapEntry<String, String> e in noVernacular.entries)
+      'no_vernacular.${e.key}': e.value,
+  };
 }
 
 /// A `species_name` row: one vernacular name in one locale.

@@ -98,6 +98,72 @@ would let the file disagree with the run that produced it.
 - **`zone_ring.point_count`.** Derived from `coords`. A hand-kept count and a hand-kept list disagree
   the first time a coordinate is added.
 
+## The citation block, and why it is not spelt like the schema
+
+```yaml
+citations:
+  - id: es-ga-orde-2012-07-27-art4
+    jurisdiction: ES-GA
+    instrument_type_key: instrument.orde
+    instrument: Orde do 27 de xullo de 2012
+    article: Art. 4
+    published_on: 2012-08-06
+    retrieved_on: 2026-08-12          # the day a human opened the DOG
+    source_url: https://www.xunta.gal/dog/…
+    sha256: …                          # of the fetched document
+    lineage_id: es-ga-orde-2012-07-27
+```
+
+`jurisdiction`, `instrument` and `article` rather than `SPEC.md` §7.1's
+`jurisdiction_id`, `instrument_ref` and `article_ref`. This is the one block where the authored name
+and the column name differ, and the gate is the reason: `check_content_pipeline.sh` check 2 is an
+`awk` window looking for `instrument:` or `article:` beside `retrieved_on:`, and against `*_ref` names
+it cannot fire at all. `DECISIONS.md` D-2's rule of thumb — where a gate and the prose disagree about
+a **shape**, the gate wins. The §7.1 spellings still load, so a corpus authored either way is read.
+
+**`source_url` must be an official gazette.** The accepted hosts are per jurisdiction: `boe.es` and
+`xunta.gal` for Spain, `in.gov.br` and the state equivalent for Brazil, the UAE gazette domain for the
+UAE. NGO summaries, law-firm databases and commissioned translations are rejected — an abstract is
+both copyrighted and paraphrased, and a paraphrased minimum size is a wrong number that looks entirely
+plausible in review. A jurisdiction with **no** allowlist entry fails: silence is not permission.
+
+**`sha256` is an authoring field, not a column.** §7.1's `citation` table has no such column and §7.1
+is authoritative for the schema, so the digest is asserted at build time and carried into the
+changelog rather than into the database. Inventing a column would put this builder and E05's drift
+schema out of step.
+
+**The UAE is `verified: false` and must stay that way until somebody confirms it.** `SPEC.md` §8 marks
+the Gulf licence basis "cited but not independently verified in this session" and says the provision
+must be confirmed per state before that state's content ships. That is encoded in
+`tools/content_builder/lib/src/provenance/accepted_hosts.dart` as a gate on the data rather than a
+memo: every citation in an unverified jurisdiction fails A9.
+
+## When a species has no name in a locale
+
+`SPEC.md` §8 bullet 5 read literally requires an Arabic name for *Venerupis corrugata*. No Galician
+instrument names a clam in Arabic, and §9.2 step 3 is explicit that **a wrong vernacular name is worse
+than no name**, because it produces a confident wrong finding. Inventing a transliteration is also
+what the normalisation contract forbids: normalisation folds orthography and never guesses
+transliteration.
+
+So a species may declare the absence, per locale, with a reason:
+
+```yaml
+species:
+  - id: venerupis-corrugata
+    scientific_name: Venerupis corrugata
+    silhouette_asset: sil/venerupis-corrugata.svg
+    no_vernacular:
+      ar: reason.no_arabic_name_for_galician_bivalve
+```
+
+The reason is itself a `*_key`, so A2 forces its six translations — an untranslated reason would be a
+blank line explaining a blank line. A locale with **neither** a name nor a declaration still fails: a
+silent gap and a decided absence must not look the same in a diff.
+
+**This is the one place E04 does not implement a §8 bullet to the letter.** What would resolve it is a
+§8 amendment, which no epic owns.
+
 ## Two dates that are read by a human, never by the clock
 
 `citation.retrieved_on` and `jurisdiction.checked_on` claim that a person opened the gazette that day.
@@ -133,21 +199,33 @@ squinado* and `CW` for *Necora puber*, and §7.1 also declares `SL`, `ML`, `DW` 
 does **not** honour `content-pipeline-ok`, so there is no line-level exemption. A1 validates against
 all nine, and `MeasurementCode` in `tools/content_builder/lib/src/model/enums.dart` is the list.
 
-### G-2 — check 5 cannot fire on this corpus at all, and check 2 cannot either
+### G-2 — check 5 cannot fire on this corpus at all
 
-Worse than G-1, and found while writing A1. Both checks are `awk` window scans keyed to a field name
-followed immediately by a colon:
+Worse than G-1, and found while writing A1. Check 5 is an `awk` window keyed to a field name followed
+immediately by a colon:
 
 | Check | Wants | This corpus authors | Matches |
 |---|---|---|---|
 | 5 | `min_size:` / `max_size:` and `measurement_method:` | `min_size_mm:`, `max_size_mm:`, `measurement_method_id:` | never |
-| 2 | `instrument:` or `article:` with `retrieved_on:` | `instrument_ref:`, `article_ref:` | never |
 
-The column names are `SPEC.md` §7.1's, and §7.1 wins — the emitted database's columns and the
-authored field names are the same words on purpose. The consequence is that **two of the gate's seven
-checks are inert against `content/`**, and a green `check_content_pipeline.sh content` says nothing
-at all about sizes without a method or citations without a retrieval date.
+The column names are `SPEC.md` §7.1's, and for the `rule` table §7.1 wins — the emitted database's
+columns and the authored field names are the same words on purpose. The consequence is that **check 5
+is inert against `content/`**, and a green `check_content_pipeline.sh content` says nothing at all
+about a size authored without a method. A1 covers its ground.
 
-A1 covers check 5's ground and A4 (E04/T05) covers check 2's. This is exactly the
-`CONVENTIONS.md` §7 shape — a green tick meaning "I found nothing" and one meaning "I looked at
-nothing" are the same pixel — so it is written here rather than left to be rediscovered.
+**Check 2 was heading the same way and does not, because E04/T05 shaped the citation block for it.**
+It wants `instrument:` or `article:` beside `retrieved_on:`, and §7.1 spells those `instrument_ref`
+and `article_ref`. The citation block authors the gate's spellings — the one place the authored name
+and the column name differ, and D-2's rule of thumb is why. A4 covers the same ground regardless.
+
+This is exactly the `CONVENTIONS.md` §7 shape — a green tick meaning "I found nothing" and one meaning
+"I looked at nothing" are the same pixel — so it is written here rather than left to be rediscovered.
+
+### G-3 — `content/es-ga/citations.yaml` is not authored yet, and that is deliberate
+
+E04/T05 lists it as a deliverable. A citation block requires a `sha256` of the fetched gazette
+document and a `retrieved_on` naming the day a human opened it. Neither can be produced without
+actually fetching and reading the DOG, and writing a plausible-looking digest would be **precisely**
+the defect A9 exists to prevent: a footnote claiming a check nobody made. The assertion ships here;
+the transcription is E04/T11's, whose own risk note says a value nobody has read out of the DOG is a
+defect rather than a placeholder. The block shape is documented above.

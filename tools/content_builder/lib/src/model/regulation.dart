@@ -62,6 +62,7 @@ class CitationRow extends ContentRow {
     this.articleRef,
     this.sourceUrl,
     this.sha256,
+    this.lineageId,
   });
 
   /// Reads a citation from [row].
@@ -69,10 +70,17 @@ class CitationRow extends ContentRow {
     path: row.path,
     line: row.line,
     id: row.id,
-    jurisdictionId: row.string('jurisdiction_id'),
+    // `jurisdiction`, `instrument` and `article` rather than the §7.1 column
+    // names: check_content_pipeline.sh check 2 is an awk window looking for
+    // `instrument:|article:` beside `retrieved_on:`, and against `*_ref` names
+    // it cannot fire at all. D-2's rule of thumb — the gate beats the prose
+    // about a shape. The §7.1 names are still accepted, so a corpus authored
+    // either way loads.
+    jurisdictionId: row.string('jurisdiction') ?? row.string('jurisdiction_id'),
     instrumentTypeKey: row.string('instrument_type_key'),
-    instrumentRef: row.string('instrument_ref'),
-    articleRef: row.string('article_ref'),
+    instrumentRef: row.string('instrument') ?? row.string('instrument_ref'),
+    articleRef: row.string('article') ?? row.string('article_ref'),
+    lineageId: row.string('lineage_id'),
     publishedOn: row.string('published_on'),
     sourceUrl: row.string('source_url'),
     retrievedOn: row.string('retrieved_on'),
@@ -105,7 +113,19 @@ class CitationRow extends ContentRow {
 
   /// Digest of the fetched document, so the transcription can be re-checked
   /// against the same bytes.
+  ///
+  /// An **authoring** field, not a `SPEC.md` §7.1 column. §7.1 is authoritative
+  /// for the schema, so the digest is asserted at build time and carried into
+  /// the per-jurisdiction changelog rather than into the database — inventing a
+  /// column would put this builder and E05's drift schema out of step.
   final String? sha256;
+
+  /// The instrument lineage this article belongs to.
+  ///
+  /// The engine collapses candidates per `(zone_id, citation lineage)` and takes
+  /// the greatest `valid_from`, so an amending order must carry the lineage of
+  /// the order it amends or both will resolve at once.
+  final String? lineageId;
 
   @override
   Map<String, String?> get keyColumns => <String, String?>{

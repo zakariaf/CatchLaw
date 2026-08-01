@@ -18,18 +18,31 @@ import 'package:path/path.dart' as p;
 @immutable
 class ContentSource {
   /// A corpus of already-parsed [sources], carrying any load-time [failures].
-  const ContentSource({required this.sources, required this.failures});
+  ///
+  /// [buildDate] and [assetsRoot] are the build context A4 and A5 need: a
+  /// `retrieved_on` is compared against the build date, and a silhouette is
+  /// checked on disk. They travel on the corpus rather than as a second
+  /// argument to every assertion, so an assertion stays a function of the thing
+  /// it is asserting about.
+  const ContentSource({
+    required this.sources,
+    required this.failures,
+    this.buildDate,
+    this.assetsRoot,
+  });
 
   /// Reads [dir] as a corpus.
   ///
   /// A missing directory is a failure and not an empty corpus. An empty corpus
   /// passes every assertion there is, and the build would emit a database with
   /// no rules in it and exit 0.
-  factory ContentSource.load(Directory dir) {
+  factory ContentSource.load(Directory dir, {DateTime? buildDate, Directory? assetsRoot}) {
     if (!dir.existsSync()) {
       return ContentSource(
         sources: const <YamlSource>[],
         failures: <Failure>[Failure(kLoadFailureId, dir.path, 0, 'corpus directory not found')],
+        buildDate: buildDate,
+        assetsRoot: assetsRoot,
       );
     }
 
@@ -101,11 +114,27 @@ class ContentSource {
       );
     }
 
-    return ContentSource(sources: sources, failures: sortedFailures(failures));
+    return ContentSource(
+      sources: sources,
+      failures: sortedFailures(failures),
+      buildDate: buildDate,
+      assetsRoot: assetsRoot,
+    );
   }
 
   /// Every parsed file, in path order.
   final List<YamlSource> sources;
+
+  /// The `--build-date` this corpus is being built for; `null` outside a build.
+  ///
+  /// A4 compares it against `retrieved_on` — you cannot have read a gazette
+  /// after the build that quotes it. Nullable rather than defaulted: a default
+  /// would be a clock reading in disguise, and `DateTime.utc` is not a `const`
+  /// constructor so there is no honest sentinel to use instead.
+  final DateTime? buildDate;
+
+  /// Where A5 resolves `species.silhouette_asset`; `null` skips the disk check.
+  final Directory? assetsRoot;
 
   /// Defects found while reading the corpus, before any assertion ran, sorted by
   /// path then line.

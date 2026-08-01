@@ -28,6 +28,7 @@ class ContentBuildOptions {
     required this.buildDate,
     required this.generatorCommit,
     required this.changelogDir,
+    required this.assetsRoot,
   });
 
   /// The authored corpus, e.g. `content/`.
@@ -55,6 +56,14 @@ class ContentBuildOptions {
   /// rather than flagged, so the diff and the corpus it diffed cannot drift
   /// apart.
   final Directory changelogDir;
+
+  /// The asset root A5 resolves `species.silhouette_asset` against.
+  ///
+  /// Derived from [outFile]'s grandparent — `app/assets/db/reference.db` gives
+  /// `app/assets` — rather than flagged. A separate `--assets` option would let
+  /// a build check silhouettes in one tree and ship a database that names
+  /// another, and the failure would be a species with no picture on a phone.
+  final Directory assetsRoot;
 
   /// The name of the changelog directory inside the corpus.
   static const String changelogDirName = 'CHANGELOG';
@@ -97,6 +106,7 @@ class ContentBuildOptions {
       buildDate: buildDate,
       generatorCommit: results.option('generator-commit')!,
       changelogDir: Directory(p.join(inPath, changelogDirName)),
+      assetsRoot: Directory(p.dirname(p.dirname(results.option('out')!))),
     );
   }
 
