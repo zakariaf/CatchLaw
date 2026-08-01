@@ -291,3 +291,36 @@ Risk 6 records that its allowlist otherwise has no live subject at all. The exce
 
 **Applied by:** E01/T03 (as a follow-up commit on the same branch, per `CONVENTIONS.md` §1 — the check
 failed at step 4 and is fixed forward, never amended).
+
+---
+
+## D-13 — The vendored general Flutter skills live in `.claude/skills-flutter/`
+
+**Decision.** `.claude/skills/` holds exactly the sixteen `catchlaw-*` and `lonja-*` skills this
+repository authors. The 33 general Flutter skills, checked in so a fresh clone can read them without a
+marketplace fetch, live in `.claude/skills-flutter/`. The `flutter@flutter-skills` plugin declaration in
+`.claude/settings.json` stays: it is what keeps them upgradeable and what resolves the `flutter:<name>`
+form the task files use.
+
+**Why.** `check_app_invariants.sh` check 9 delegates to **every sibling** `check_*.sh` — it globs
+`"$SKILLS_ROOT"/*/scripts/check_*.sh`, where `SKILLS_ROOT` is derived from its own location. With the
+general skills as siblings, `check_app_invariants.sh app/lib` also ran their gates, and four of them
+failed against E01's tree: `check_routing.sh` wants a `GoRouter` that E12 delivers, `check_arb_parity.sh`
+wants an ARB template that E06 delivers, plus `check_adaptive.sh` and `check_forms.sh`. All sixteen of
+this repository's own gates passed. The failures were correct statements about a general practice and
+wrong questions to ask of a foundation epic.
+
+Editing the skill to scope its fan-out was refused: CLAUDE.md forbids editing a gate to make a build
+pass, and E01/T09 is the only task licensed to touch a skill at all. Separating the directories is the
+change that makes the gate's existing behaviour correct rather than making the gate lie.
+
+**Consequence.** `CONVENTIONS.md` §7's "sixteen" and CLAUDE.md's "two registries, kept apart by one
+rule" become true of the filesystem and not only of the prose. `app/test/policy/skill_gates_test.dart`
+requires a table row for **every** check script under `.claude/skills/`, unscoped by prefix, so a general
+skill dropped back in fails a test instead of quietly re-breaking the fan-out.
+
+The unnamespaced skill names (`accessibility-as-code`) stop resolving; the namespaced `flutter:` form
+(`flutter:accessibility-as-code`) is the one every task file already writes, and it resolves from the
+plugin.
+
+**Applied by:** E01/T08.

@@ -165,6 +165,15 @@ jobs:
       - name: Banned network APIs (SPEC §14)
         run: bash tools/gates/no_banned_apis.sh app/lib
 
+      # All sixteen skill gates, each against the directory D-1, D-2 and D-4 say
+      # it must actually read, with the scanned-file count printed for every row.
+      # The count is the point: every check_*.sh is a `grep -r ... || true`, so a
+      # target that exists and holds nothing prints OK and exits 0. A green tick
+      # meaning "I found nothing" and one meaning "I looked at nothing" are the
+      # same pixel, and this repository's offline claim is read off those greens.
+      - name: Skill gates (all sixteen, with a non-empty scan asserted)
+        run: bash tools/gates/run_skill_gates.sh tools/gates/skill_gates.tsv
+
       # On Linux `flutter test` runs in a plain Dart VM where sqlite3_flutter_libs
       # does nothing, so an E05 database suite fails in a way that reads as a
       # broken repository. Four seconds now removes that whole class of failure.

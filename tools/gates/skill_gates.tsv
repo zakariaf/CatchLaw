@@ -1,0 +1,32 @@
+# The sixteen skill gates this repository owns, and the directory each one must
+# actually read. Columns: script<TAB>target<TAB>glob<TAB>min_files
+#
+# The target is an ARGUMENT and the wrong one passes silently (D-1). Every row
+# carries the decision that fixes its target, so a path change re-checks the
+# reason rather than the string.
+#
+# min_files is 1 today and the column exists so a later epic can raise it. The
+# contract E01 signs is n >= 1: a gate that scans nothing prints the same green
+# as a gate that found nothing.
+#
+# The 33 general Flutter skills vendored under .claude/skills/ ship 12 more
+# check_*.sh. They enforce general practice, are maintained upstream in the
+# plugin repository, and are deliberately not rows here — CONVENTIONS.md §7
+# counts sixteen, and CLAUDE.md keeps the two registries apart.
+
+.claude/skills/catchlaw-conventions-index/scripts/check_app_invariants.sh	app/lib	*.dart	1	# D-1. Its check 9 fans out to every sibling with THIS target, so the engine and content gates below are the runs that see their real subject.
+.claude/skills/catchlaw-offline-guarantee/scripts/check_no_network.sh	app/lib	*.dart	1	# D-1. ROOT is TARGET/.., so it reads app/pubspec.yaml, app/analysis_options.yaml and app/android/app/src.
+.claude/skills/catchlaw-verdict-contract/scripts/check_verdict_contract.sh	app/lib	*.dart,*.arb	1	# D-1. The *.arb half has no subject until E06 adds app/lib/l10n/.
+.claude/skills/catchlaw-reference-database/scripts/check_reference_db.sh	app/lib	*.dart	1	# D-1. Its subject arrives with drift in E05.
+.claude/skills/catchlaw-measurement-ruler/scripts/check_measurement.sh	app/lib	*.dart	1	# D-1. Its subject arrives with the ruler in E09.
+.claude/skills/catchlaw-rule-engine/scripts/check_rule_engine.sh	packages/rule_engine/lib	*.dart	1	# D-1. NOT app/lib: pointed there it scans the app and passes trivially.
+.claude/skills/catchlaw-content-pipeline/scripts/check_content_pipeline.sh	tools/content_builder	*.dart,*.yaml	1	# D-4. The package, not its lib/: the script's own header says to pass a directory covering tools/.
+.claude/skills/lonja-buttons/scripts/check_lonja_buttons.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
+.claude/skills/lonja-design-tokens/scripts/check_lonja_tokens.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
+.claude/skills/lonja-dialogs-and-surfaces/scripts/check_lonja_dialogs.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
+.claude/skills/lonja-forms-and-controls/scripts/check_lonja_controls.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
+.claude/skills/lonja-icons-and-plates/scripts/check_lonja_icons.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
+.claude/skills/lonja-lists-and-tables/scripts/check_lonja_lists.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
+.claude/skills/lonja-navigation-chrome/scripts/check_lonja_nav.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
+.claude/skills/lonja-typography/scripts/check_lonja_type.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
+.claude/skills/lonja-verdict-and-status/scripts/check_lonja_verdict.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.

@@ -37,10 +37,12 @@ rest on a grep, so read the next section before trusting a green one.
 
 ## The gates, and what a green one does not mean
 
-Sixteen runnable `.claude/skills/*/scripts/check_*.sh`. `tools/gates/` grows alongside them across
-E01/T03–T05, T08, T09 and E06/T05; **E01/T08** is the task that wires all sixteen into
-`tools/gates/skill_gates.tsv` and `run_skill_gates.sh`, counting the files each one matched before
-trusting its exit code.
+Sixteen runnable `.claude/skills/*/scripts/check_*.sh` — and after D-13 that glob matches exactly
+sixteen, because the vendored general skills sit in `.claude/skills-flutter/`. `tools/gates/` grows
+alongside them across E01/T03–T05, T08, T09 and E06/T05; **E01/T08** is the task that wired all sixteen
+into `tools/gates/skill_gates.tsv` and `run_skill_gates.sh`, counting the files each one matched before
+trusting its exit code. A row is required for **every** script that glob finds, so a seventeenth is a
+failed test rather than a gate nobody runs.
 
 **Always pass the real target directory.** The target is an argument, and the wrong one passes silently.
 
@@ -123,9 +125,16 @@ and E01/T04 makes
 table. The dependency ban list is `catchlaw-offline-guarantee`'s.
 
 **The 33 general Flutter skills are installed at project scope** — `flutter@flutter-skills` 0.1.0,
-declared in `.claude/settings.json` so a fresh clone inherits it. **179 of the 181** task files name at
-least one of them. They are namespaced: a task table writes `state-management-riverpod`, the Skill tool
-takes `flutter:state-management-riverpod`. Reinstall with:
+declared in `.claude/settings.json` so a fresh clone inherits it — **and vendored at
+`.claude/skills-flutter/`** so a clone can read them without a marketplace fetch. **179 of the 181** task
+files name at least one of them. They are namespaced: a task table writes `state-management-riverpod`,
+the Skill tool takes `flutter:state-management-riverpod`.
+
+**They are not under `.claude/skills/`, and that is load-bearing (D-13).** `check_app_invariants.sh`
+check 9 delegates to every *sibling* `check_*.sh`, so a general gate parked beside the sixteen gets run
+against `app/lib` — and `check_routing.sh` then fails for want of a `GoRouter` that E12 delivers. Keeping
+the two registries in two directories is what makes `CONVENTIONS.md` §7's "sixteen" a fact about the
+filesystem rather than about the prose. Reinstall the plugin with:
 
 ```bash
 claude plugin marketplace add zakariaf/Flutter-Skills --scope project
