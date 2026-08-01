@@ -134,9 +134,16 @@ class ReferenceDatabase extends _$ReferenceDatabase {
 /// open; three of those are writes. `foreign_keys` is deliberately left off — it
 /// governs DML, there is none here, and enabling it buys nothing on a connection
 /// that cannot write.
-QueryExecutor referenceExecutor(File file) => LazyDatabase(
+QueryExecutor referenceExecutor(File file) => referenceExecutorAt(() async => file);
+
+/// The same read-only open, over a file that is not known yet.
+///
+/// [locate] runs inside the [LazyDatabase] callback — on the first query, after
+/// the first frame — so the composition root can wire this database without
+/// awaiting `path_provider`'s platform channel before `runApp`.
+QueryExecutor referenceExecutorAt(Future<File> Function() locate) => LazyDatabase(
   () async => NativeDatabase.opened(
-    sqlite3.open(file.path, mode: OpenMode.readOnly)
+    sqlite3.open((await locate()).path, mode: OpenMode.readOnly)
       ..execute('PRAGMA query_only = 1;')
       ..execute('PRAGMA busy_timeout = 5000;'),
     // reference.db is shipped whole and disposable: drift must not run a

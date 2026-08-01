@@ -119,5 +119,12 @@ void snapshotUserDatabase(File file, File into) {
 
 /// A [LazyDatabase] over the fisher's log at [file], guarded by
 /// [openUserDatabase].
-QueryExecutor guardedUserExecutor(File file) =>
-    LazyDatabase(() async => (await openUserDatabase(file)).executor);
+QueryExecutor guardedUserExecutor(File file) => guardedUserExecutorAt(() async => file);
+
+/// The same guarded open, over a file that is not known yet.
+///
+/// [locate] runs inside the [LazyDatabase] callback, so the version check, the
+/// snapshot and the migration all happen on the first query rather than ahead
+/// of the first frame.
+QueryExecutor guardedUserExecutorAt(Future<File> Function() locate) =>
+    LazyDatabase(() async => (await openUserDatabase(await locate())).executor);

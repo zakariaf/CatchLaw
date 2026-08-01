@@ -54,5 +54,10 @@ class UserDatabase extends _$UserDatabase {
 /// `runApp`, and background because this connection genuinely writes: a
 /// `synchronous = FULL` commit on the platform thread is a dropped frame at the
 /// moment a catch is recorded.
+///
+/// **The app does not use this one.** `main()` wires `guardedUserExecutorAt`,
+/// which adds the snapshot and T06's refusal of a database from the future. This
+/// is the unguarded primitive, for a test that wants a plain open — reaching for
+/// it in `lib/` would silently drop the guard that protects the fisher's log.
 QueryExecutor userExecutor(File file) =>
     LazyDatabase(() async => NativeDatabase.createInBackground(file));
