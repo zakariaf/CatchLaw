@@ -65,7 +65,7 @@ other epic is strictly sequential.
 | E02 | `epic/02-normalisation` | [#3](https://github.com/zakariaf/CatchLaw/pull/3) | all green | ☑ |
 | E03 | `epic/03-rule-engine` | [#4](https://github.com/zakariaf/CatchLaw/pull/4) | all green | ☑ |
 | E04 | `epic/04-content-build` | [#5](https://github.com/zakariaf/CatchLaw/pull/5) | all green | ☑ |
-| E05 | — | — | — | ☐ |
+| E05 | `epic/05-data-layer` | [#6](https://github.com/zakariaf/CatchLaw/pull/6) | all green | ☑ |
 | E06 | — | — | — | ☐ |
 | E07 | — | — | — | ☐ |
 | E08 | — | — | — | ☐ |
