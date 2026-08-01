@@ -1,7 +1,6 @@
 {
-  "build_id": "c784e86",
   "build_date": "2026-08-14",
-  "schema_version": "1",
+  "schema_version": 1,
   "bytes": 188416,
   "sha256": "ac31167757fd2057ceb621d992edb2273fb871e7037ecdd83e8f05d9437f461f"
 }

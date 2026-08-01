@@ -6,6 +6,7 @@ import 'package:content_builder/src/cli/failure.dart';
 import 'package:content_builder/src/cli/options.dart';
 import 'package:content_builder/src/cli/usage_failure.dart';
 import 'package:content_builder/src/emit/build_sidecar.dart';
+import 'package:content_builder/src/emit/content_build.dart';
 import 'package:content_builder/src/emit/emit_reference_db.dart';
 import 'package:content_builder/src/load/attributions.dart';
 import 'package:content_builder/src/load/content_source.dart';
@@ -69,6 +70,7 @@ int run(List<String> args, {required StringSink out, required StringSink err}) {
     return _report(emitted, options, err);
   }
   writeBuildSidecar(options);
+  emitContentBuild(options);
 
   final List<String> orphans = unreferencedKeys(source);
   if (orphans.isNotEmpty) {

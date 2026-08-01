@@ -87,3 +87,7 @@ flutter:
     # What the extraction verifies against: build id, date, uncompressed byte
     # count and uncompressed sha256.
     - assets/db/reference.build.json
+    # What the installer reads for the determinate bar's denominator, and what
+    # E18's "about the rule book" screen reads for the counts — neither of
+    # which should require opening ten megabytes of SQLite.
+    - assets/content_build.json
