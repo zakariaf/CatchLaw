@@ -21,6 +21,7 @@ import 'package:rule_engine/src/season/season_window.dart';
 
 part 'closed_season_finding.dart';
 part 'limit_finding.dart';
+part 'protected_finding.dart';
 part 'size_finding.dart';
 
 /// What a finding is about, in `SPEC.md` §7.3's six kinds.

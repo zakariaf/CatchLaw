@@ -126,6 +126,8 @@ void main() {
         'lib/src/findings/closed_season_finding.dart', // E03/T06 (part of finding.dart)
         'lib/src/findings/finding.dart', // E03/T06
         'lib/src/findings/limit_finding.dart', // E03/T08 (part of finding.dart)
+        'lib/src/findings/precedence.dart', // E03/T09
+        'lib/src/findings/protected_finding.dart', // E03/T09 (part of finding.dart)
         'lib/src/findings/size_finding.dart', // E03/T07 (part of finding.dart)
         'lib/src/models/catch_tally.dart', // E03/T03
         'lib/src/models/citation.dart', // E03/T01

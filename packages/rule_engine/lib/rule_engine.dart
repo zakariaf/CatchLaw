@@ -25,6 +25,7 @@ export 'src/date.dart';
 export 'src/engine_exception.dart';
 export 'src/failure.dart';
 export 'src/findings/finding.dart';
+export 'src/findings/precedence.dart';
 export 'src/models/catch_tally.dart';
 export 'src/models/citation.dart';
 export 'src/models/closed_season.dart';
