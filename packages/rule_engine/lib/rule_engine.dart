@@ -21,6 +21,8 @@
 /// This is the one barrel in the repository (`FLUTTER_GUIDE.md` Part 2.6).
 library;
 
+export 'src/engine_exception.dart';
+export 'src/failure.dart';
 export 'src/models/citation.dart';
 export 'src/models/closed_season.dart';
 export 'src/models/landing.dart';
