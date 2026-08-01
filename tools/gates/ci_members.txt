@@ -1,0 +1,15 @@
+# Which workspace members run a test suite in CI, stated once and read twice:
+# by the author of the `flutter` job in .github/workflows/validate.yml, and by
+# app/test/policy/ci_workflow_test.dart.
+#
+# A member with no suite and a member whose CI line was lost in a merge look
+# identical in a workflow file. This file is what tells them apart, so a package
+# added in a later epic without a CI line fails here rather than three epics on.
+#
+# Format: suite=<member> | no-suite=<member>, matching pubspec.yaml's workspace:.
+
+suite=app                             # flutter test — widget binding and policy tests
+suite=packages/rule_engine            # dart test — pure, headless, no widget binding
+suite=tools/content_builder           # dart test — the CLI's exit contract (D-4)
+
+no-suite=packages/analysis_defaults   # ships one dependency and a README, no Dart

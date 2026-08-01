@@ -182,3 +182,61 @@ preference — a merge commit is rejected.
 **Not decided here:** commit signing. `required_signatures` was deliberately left off the ruleset
 because SSH signing is not configured; if that changes, add the rule and every commit below needs
 `-S`.
+
+---
+
+## D-10 — Lints build on `flutter_lints`, not `very_good_analysis`
+
+**Decision.** The root `analysis_options.yaml` is `include: package:flutter_lints/flutter.yaml` plus the
+promotions and rule list in `FLUTTER_GUIDE.md` Part 4.3. `very_good_analysis` is not a dependency.
+
+**Source.** `FLUTTER_GUIDE.md` Part 4.2, executed against Dart 3.12.2.
+
+**Overruled.** `lint-and-style-config` rule 2, which requires building on `very_good_analysis` with a
+version-stamped include. VGA is aimed at *published packages*: it turns on `public_member_api_docs`,
+`lines_longer_than_80_chars`, `require_trailing_commas` and `discarded_futures`, three of which are wrong
+for a private app, and it still ships two rules the Dart team deprecated in the 3.13 cycle. It is also the
+only place in E01 where a general skill is not followed, which is why the reason is written into
+`analysis_options.yaml` itself rather than left to be reconstructed.
+
+E01's Risk 3 named this decision as owed and recorded that until it existed the divergence was "a comment
+in a file, which is weaker than a decision".
+
+**Applied by:** E01/T02. **Recorded by:** E01/T03.
+
+---
+
+## D-11 — `flutter analyze` gates; `dart analyze` reports, because only it loads the plugins
+
+**Decision.** CI runs both. `flutter analyze --fatal-infos` is the release-blocking gate.
+`dart analyze` runs immediately after as the single `continue-on-error` step in `validate.yml`, named
+"Analyze with plugins (informational until Riverpod lands — D-11)". It is promoted to a blocking gate in
+the epic that adds `flutter_riverpod`.
+
+**Why.** `flutter analyze` does not load analyzer plugins; `dart analyze` does. Measured, not assumed:
+pointing `import_lint` at a rule `app/lib/main.dart` must violate (`target: package:catchlaw/**.dart`,
+`from: package:flutter/**.dart`) produced "No issues found" from `flutter analyze` and
+`riverpod_lint`'s `missing_provider_scope` from `dart analyze` on the same tree. The analyzer also accepts
+unknown top-level option keys in silence — a planted bogus key drew no diagnostic — so an absence of plugin
+output is never evidence a plugin loaded. A workflow running only `flutter analyze` therefore carries a
+`plugins:` block that is decoration, which is the failure `FLUTTER_GUIDE.md` Part 4.1 fact 2 describes
+arriving through a different door.
+
+`dart analyze` cannot block yet: `riverpod_lint` requires a `ProviderScope` the app cannot have until
+`flutter_riverpod` is a dependency, and D-1/T01 defer every `SPEC.md` §10 package to the epic that first
+uses it. Suppressing the diagnostic was rejected outright — editing a gate to make a build pass is
+forbidden — so the warning stays visible and non-blocking instead.
+
+**Overruled.** `ci-pipeline-and-gates` rule 10 and E01/T03's test 8 as written, both of which forbid
+`continue-on-error` anywhere in the workflow. The blanket ban is replaced by a narrower and stronger
+assertion: the `flutter` job may contain exactly one `continue-on-error`, it must sit on a step whose name
+says `informational`, and the string may appear only once in the whole file. The exception is pinned to one
+named step rather than left as a pattern to copy.
+
+**Also recorded.** `import_lint` is inert under both commands — it did not fire even under `dart analyze`
+against a target that must match — so its `ui_must_not_import_drift` rule is not the layer-3 guard
+`FLUTTER_GUIDE.md` Part 4.6 assumes it is. E01's Risk 2 anticipated the rule *erroring* on its unmatched
+`package:catchlaw/ui/**` target; it does nothing at all, which is worse. The remedy Risk 2 prescribes —
+move the rule body to E05, where drift arrives and the target exists — stands, better justified.
+
+**Applied by:** E01/T03.
