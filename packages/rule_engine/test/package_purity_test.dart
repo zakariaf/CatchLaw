@@ -118,7 +118,10 @@ void main() {
       // Not a wildcard. CONVENTIONS.md §7: an empty scan reports success, so
       // tests 3 and 4 below are only worth their green tick if this set is
       // known. It grows one deliberate line per task, never automatically.
-      expect(_libDartPaths(), <String>['lib/rule_engine.dart']);
+      expect(_libDartPaths(), <String>[
+        'lib/rule_engine.dart',
+        'lib/src/search/normalise.dart', // E02/T02
+      ]);
     });
 
     test('lib imports no package:flutter and no dart:ui', () {

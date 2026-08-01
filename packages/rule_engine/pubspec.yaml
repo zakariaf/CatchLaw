@@ -10,9 +10,16 @@ environment:
   sdk: ^3.12.0
 
 dependencies:
-  # The only runtime dependency. A second one is a second thing a reviewer must
-  # reason about before believing the engine is pure.
+  # Every runtime dependency here is a thing a reviewer must reason about before
+  # believing the engine is pure, so there are two and each earns its place.
   meta: ^1.15.0
+  # SPEC.md §9.4 opens with NFKC and the Latin fold needs NFD; dart:core offers
+  # neither. Chosen against E02/T02's four criteria: it declares NO runtime
+  # dependencies at all, names no dart:io symbol, covers the full Unicode range
+  # (17.0, all four forms) rather than a Latin subset, and resolves on D-5's
+  # toolchain. A Latin-only strip table would pass every §9.4 example and fail
+  # the first decomposed paste out of a gazette PDF.
+  unorm_dart: ^0.3.2
 
 dev_dependencies:
   # Workspace-resolved: it makes package:flutter_lints/flutter.yaml load for

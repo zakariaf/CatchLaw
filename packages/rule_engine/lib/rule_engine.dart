@@ -11,6 +11,7 @@
 /// error rather than a lint, a grep or a code review (`FLUTTER_GUIDE.md` §4.6
 /// layer 1).
 ///
-/// This is the one barrel in the repository (`FLUTTER_GUIDE.md` Part 2.6). It
-/// exports nothing yet; E02 adds the first normalisation surface.
+/// This is the one barrel in the repository (`FLUTTER_GUIDE.md` Part 2.6).
 library;
+
+export 'src/search/normalise.dart';
