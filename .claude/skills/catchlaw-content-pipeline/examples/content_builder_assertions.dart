@@ -5,12 +5,12 @@
 // parity against the shared normalise(), the contradiction pass that runs the SHIPPED rule
 // engine over the authored grid, and a main() that writes NOTHING when anything failed.
 //
-// Conceptually compiles against package:catchlaw_shared and package:catchlaw_rule_engine, pub
+// Conceptually compiles against package:rule_engine (D-14, one package for the core), pub
 // workspace siblings of tools/content_builder. normalise() is IMPORTED, never redefined.
 
 import 'dart:io';
-import 'package:catchlaw_rule_engine/rule_engine.dart';
-import 'package:catchlaw_shared/text/normalise.dart' show normalise;
+import 'package:rule_engine/rule_engine.dart';
+import 'package:rule_engine/rule_engine.dart' show normaliseSpeciesTerm;
 import 'package:meta/meta.dart';
 
 /// The six shipped locales. There is no fallback chain to `en`.

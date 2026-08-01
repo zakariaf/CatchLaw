@@ -76,12 +76,12 @@ come into existence.
    `review: later`. **WHY:** "pending" ships, and an infringement claim against a fisheries-safety
    app is the story that ends the project rather than the sprint.
 
-9. **`search_norm` and `body_norm` come from the shared `normalise()`.** Imported from
-   `package:catchlaw_shared/text/normalise.dart` — the exact function the search field calls — and a
+9. **`search_norm` and `body_norm` come from the shared `normaliseSpeciesTerm()`.** Imported from
+   `package:rule_engine/rule_engine.dart` — the exact function the search field calls — and a
    parity pass recomputes every persisted column byte-for-byte. **WHY:** a second normaliser that
    strips one more Arabic diacritic means "كنعد" typed at 05:40 matches nothing that was written.
 
-10. **The shipped rule engine resolves the authored grid BEFORE it ships.** `package:catchlaw_rule_engine`
+10. **The shipped rule engine resolves the authored grid BEFORE it ships.** `package:rule_engine`
     evaluates every (species, zone, month) cell and any `ResolutionConflict` fails the build.
     **WHY:** two rows that each validate can still contradict, and the tie is broken at sea, offline,
     in favour of whichever row the query returned first.
@@ -179,7 +179,7 @@ The build writes the index the app queries. If the two normalisers differ by one
 search box returns nothing and the fisher concludes the species is not in the app.
 
 ```dart
-import 'package:catchlaw_shared/text/normalise.dart' show normalise;
+import 'package:rule_engine/rule_engine.dart' show normaliseSpeciesTerm;
 
 // WRONG — a second normaliser inside the build tool. It folds one more Arabic diacritic than
 // the app's does, so 'كنعد' typed with wet hands at 05:40 matches zero rows that were written.
@@ -225,7 +225,7 @@ Row-level assertions cannot see contradictions. The shipped engine is imported a
 authored grid, and only then is a per-jurisdiction changelog emitted as a diff against the last tag.
 
 ```dart
-import 'package:catchlaw_rule_engine/rule_engine.dart';
+import 'package:rule_engine/rule_engine.dart';
 
 // WRONG — every row validates, so ship it. Two rows that each validate still contradict.
 if (rows.every(validateRow)) await emitReferenceDb(rows, out);
@@ -283,8 +283,8 @@ Full worked file: `examples/content_builder_assertions.dart`.
       and a `sha256` (rules 6, 12).
 - [ ] Every bundled plate names an illustrator who died in 1945 or earlier for a 2026 build, and
       unattributable plates are absent from `plates.yaml`, not flagged (rules 7, 8).
-- [ ] The `*_norm` parity pass recomputes every persisted column with `package:catchlaw_shared`
-      `normalise()` and matches byte-for-byte (rule 9).
+- [ ] The `*_norm` parity pass recomputes every persisted column with `package:rule_engine`
+      `normaliseSpeciesTerm()` and matches byte-for-byte (rule 9).
 - [ ] The contradiction pass resolves the full (species, zone, month) grid with zero
       `ResolutionConflict` (rule 10).
 - [ ] `legal_text` holds exactly one locale per instrument, no `content_string` row keys a

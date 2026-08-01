@@ -151,8 +151,8 @@ Catalan interpunct `l·l` (U+00B7) does **not** decompose under NFD, and Catalan
 (D-3). **What would resolve it:** E04 re-runs T08's parity test over the real authored YAML before the
 first `reference.db` ships. That re-run is a line in E04's definition of done, not a hope.
 
-**8. Three names exist for the package this epic creates, and none of them is settled in
-`DECISIONS.md`.** `catchlaw-content-pipeline` rule 9 imports the fold from
+**8. ~~Three names exist for the package this epic creates, and none of them is settled in
+`DECISIONS.md`.~~ SETTLED BY D-14, raised at the close of this epic.** `catchlaw-content-pipeline` rule 9 imports the fold from
 `package:catchlaw_shared/text/normalise.dart` and calls it `normalise()`; its rule 10 imports the engine
 from `package:catchlaw_rule_engine`; `catchlaw-rule-engine` rule 10 puts the fold inside
 `packages/rule_engine/lib/src/search/normalise.dart` and calls it `normaliseSpeciesTerm`. D-1 places the
@@ -161,9 +161,10 @@ and why:** pubspec `name: rule_engine`, imported as `package:rule_engine/rule_en
 named `normaliseSpeciesTerm` and living inside that package. D-4 sets the precedent that the directory
 name is the pubspec name, `FLUTTER_GUIDE.md` §2.5 puts the barrel at
 `packages/rule_engine/lib/rule_engine.dart`, which only resolves under that package name, and D-1's member
-list has no fourth package to put a `catchlaw_shared` in. **What would resolve it:** a `DECISIONS.md`
-entry, owned by whoever maintains that page — not by a task file. E04 cannot be written without it,
-because its builder has to type the import.
+list has no fourth package to put a `catchlaw_shared` in. **Resolved:** D-14 records exactly that, names
+`catchlaw-content-pipeline` as the losing source, and applies the name to its rules 9 and 10 and its
+worked example in the same change. E04 is unblocked; its builder types
+`package:rule_engine/rule_engine.dart`.
 
 **7. Branch-coverage tooling is unconfirmed on the pinned toolchain.** The 100% figure comes from
 `FLUTTER_GUIDE.md` §6.3 and §6.4 and is not negotiable; the *tool* (`dart test --coverage` plus
@@ -219,10 +220,11 @@ this epic.
 - FTS5 over `body_norm` with `unicode61 remove_diacritics 2` (§7.1). E15, per §13's 200 ms figure.
 - Authored alias rows. Normalisation folds orthography; it never generates a transliteration, so
   `hammour` is content, not code.
-- **A `DECISIONS.md` entry settling the package name.** Risk 8 above: `catchlaw-content-pipeline` imports
-  the fold from `package:catchlaw_shared/…` and the engine from `package:catchlaw_rule_engine`, neither of
-  which is a member D-1 lists. This PR ships `name: rule_engine` and raises the conflict; a task file may
-  not amend `DECISIONS.md`, and E04 cannot start until it is amended.
+- ~~**A `DECISIONS.md` entry settling the package name.**~~ **Done — D-14, in this PR.** It is in the
+  PR because `CONVENTIONS.md` forbids a TASK from amending `DECISIONS.md`, not the epic; raising it at
+  the epic's close is the documented route, and leaving E04 blocked on a decision this epic already made
+  in code would have been the worse reading. The one hit not corrected is
+  `check_content_pipeline.sh`'s `SHARED_RE`, because it is a gate pattern — see D-14 and E04/T07.
 
 ## The epic loop
 
