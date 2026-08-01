@@ -1,4 +1,5 @@
 import 'package:content_builder/src/assert/a02_locale_coverage.dart';
+import 'package:content_builder/src/assert/a08_resolution.dart';
 import 'package:content_builder/src/assert/assertion.dart';
 import 'package:content_builder/src/cli/failure.dart';
 import 'package:content_builder/src/cli/options.dart';
@@ -58,6 +59,16 @@ int run(List<String> args, {required StringSink out, required StringSink err}) {
     // ahead of the rows that use them, and failing here would force a rule and
     // its strings into one commit.
     out.writeln('content_builder: ${orphans.length} content_string keys are unreferenced');
+  }
+  final GridReport? grid = ResolutionAssertion.lastReport;
+  if (grid != null) {
+    // Measured, never claimed. build-assertions.md sizes a full corpus at
+    // roughly 40 000 cells; Galicia alone is smaller and will grow through E22,
+    // so the cost is printed with the real numbers rather than asserted.
+    out.writeln(
+      'content_builder: A8 resolved ${grid.cells} cells over ${grid.rules} rules '
+      'in ${grid.milliseconds} ms',
+    );
   }
   out.writeln('content_builder: OK — ${source.rows.length} rows');
   return 0;

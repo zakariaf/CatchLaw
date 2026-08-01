@@ -4,6 +4,7 @@ import 'package:content_builder/src/assert/a03_gender.dart';
 import 'package:content_builder/src/assert/a04_citations.dart';
 import 'package:content_builder/src/assert/a05_species_assets.dart';
 import 'package:content_builder/src/assert/a06_plate_licence.dart';
+import 'package:content_builder/src/assert/a08_resolution.dart';
 import 'package:content_builder/src/cli/failure.dart';
 import 'package:content_builder/src/load/content_source.dart';
 
@@ -36,6 +37,7 @@ const List<Assertion> kAssertions = <Assertion>[
   CitationAssertion(),
   SpeciesAssetAssertion(),
   PlateLicenceAssertion(),
+  ResolutionAssertion(),
 ];
 
 /// Every failure the registered assertions find, sorted by path then line.

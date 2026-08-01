@@ -201,6 +201,43 @@ year to test and its ledger row is still mandatory, because S17 renders the whol
 **The Galicia seed ships zero cleared plates.** Every `species.plate_asset` is NULL, which §7.1
 permits, and the app renders the originated silhouette instead.
 
+## When two instruments disagree: `supersedes:` and `ambiguity_ack:`
+
+The shipped rule engine resolves every (species × zone × month × water type) cell of this corpus
+before a database is written. Row-level checks cannot see a contradiction: two rows that each validate
+perfectly can still say 380 mm and 400 mm about the same clam on the same bank in the same month, and
+the tie would then be broken at sea, offline, in favour of whichever row the query returned first.
+
+**`supersedes: <rule-id>`** is the first answer, and the common one: a newer instrument replaces an
+older one. It is implemented as a **shared citation lineage**, not as a second precedence rule — the
+engine already collapses candidates per `(zone_id, lineage)` and keeps the greatest `valid_from`, so
+`SPEC.md` §7.3 resolves it itself. The superseded row stays in the corpus: the changelog and the
+lineage both need it, and it is exempt from the unreachable-rule check for exactly that reason.
+
+**`ambiguity_ack: { with: <rule-id>, reason_key: <key> }`** is for a disagreement the sources really
+do contain. §7.3 step 4 and §6 D4 require the app to render **both** instruments when two at equal
+specificity disagree, and never to silently report the more permissive one. If the build failed on
+every ambiguity, no such pair could be authored, D4 would be unreachable, and the first genuine legal
+conflict would have nowhere to go but a `supersedes:` the sources do not support — precisely the
+silent choice §7.3 forbids. So the build fails on an **unacknowledged** ambiguity. Both rules must
+carry the acknowledgement, each naming the other, and the reason key is what D4 renders — it is a
+`*_key`, so A2 translates it six ways.
+
+**Two minima measured by different methods are not a contradiction.** `min_size_mm: 450 TL` and
+`min_size_mm: 400 FL` measure different parts of the fish; both must be shown, and neither
+acknowledgement nor supersession is needed. The exemption is narrow: the rules must agree on
+everything except the size pair, and their methods must differ. Two rules with different methods
+**and** different bag limits are a real contradiction wearing a method.
+
+**A protected species admits no size threshold**, even from another row. The precedence ladder
+headlines `protected`, the size would never be read, and its number would be uncheckable. Delete the
+size rule.
+
+**An expired rule is never a build failure.** The Galician *orde de vedas* is reissued annually and
+typically lapses on 30 April. Filtering on `valid_to` is what made every species fall through to "no
+rule recorded" in the first draft; failing the build on one would do the same damage a year earlier
+and more permanently, by making the corpus unshippable until somebody deleted the rows.
+
 ## When a species has no name in a locale
 
 `SPEC.md` §8 bullet 5 read literally requires an Arabic name for *Venerupis corrugata*. No Galician

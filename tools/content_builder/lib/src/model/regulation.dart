@@ -159,6 +159,10 @@ class RuleRow extends ContentRow {
     this.validTo,
     this.specificity = 0,
     this.minSizeMmConfirmed = false,
+    this.supersedes,
+    this.citationLineage,
+    this.ambiguityAckWith,
+    this.ambiguityAckReasonKey,
   });
 
   /// Reads a rule from [row].
@@ -185,6 +189,10 @@ class RuleRow extends ContentRow {
     validTo: row.string('valid_to'),
     specificity: row.integer('specificity') ?? 0,
     minSizeMmConfirmed: row.boolean('min_size_mm_confirmed') ?? false,
+    supersedes: row.string('supersedes'),
+    citationLineage: row.string('citation_lineage'),
+    ambiguityAckWith: row.map('ambiguity_ack')?['with'] as String?,
+    ambiguityAckReasonKey: row.map('ambiguity_ack')?['reason_key'] as String?,
   );
 
   /// The authority whose instrument this row transcribes.
@@ -248,6 +256,33 @@ class RuleRow extends ContentRow {
   /// Clears A1's sub-100 mm finfish range check for a genuinely small threshold,
   /// leaving an audit trail. There is no warning tier to put it in.
   final bool minSizeMmConfirmed;
+
+  /// The rule this one replaces.
+  ///
+  /// Implemented as a shared **citation lineage**, not as a second precedence
+  /// rule: the engine already collapses candidates per `(zone_id, lineage)` and
+  /// keeps the greatest `valid_from`, so an amending order that adopts the
+  /// lineage of the order it amends is resolved by `SPEC.md` §7.3 itself.
+  final String? supersedes;
+
+  /// The instrument lineage this rule belongs to, when it is not the rule's own.
+  final String? citationLineage;
+
+  /// The rule this one is acknowledged to genuinely disagree with.
+  ///
+  /// A8 fails on an **unacknowledged** ambiguity. §7.3 step 4 and §6 D4 require
+  /// the app to render **both** instruments when two at equal specificity
+  /// disagree, and never to silently report the more permissive one — so if
+  /// every ambiguity failed the build, D4 would be unreachable and the first
+  /// genuine legal conflict would have nowhere to go but a `supersedes:` the
+  /// sources do not support.
+  final String? ambiguityAckWith;
+
+  /// Why the two instruments disagree, as a `*_key` A2 translates six ways.
+  ///
+  /// It is what D4 renders. An untranslated reason would be a blank line
+  /// between two citations the fisher already cannot choose between.
+  final String? ambiguityAckReasonKey;
 
   @override
   Map<String, String?> get keyColumns => <String, String?>{'notes_key': notesKey};
