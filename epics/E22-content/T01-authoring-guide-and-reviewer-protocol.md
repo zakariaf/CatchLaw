@@ -15,7 +15,7 @@
 |---|---|
 | `catchlaw-content-pipeline` | Owns the authoring formats and the assertion contract. Rules 2, 6 and 12 fix what this guide may not soften — every assertion fatal, `retrieved_on` human-authored, gazette-only sourcing — and `references/build-assertions.md` fixes the failure-line shape A11 must match |
 | `catchlaw-conventions-index` | Rule 9, route before you edit: this task writes the front door for eight more, so it must point at owners rather than restate them. Invariant 3 is what a rule row's evidence exists to satisfy |
-| `catchlaw-rule-engine` | Rule 9 (`RuleFinding({required Citation citation})`) and rule 12 (a measurement is compared only against its own method) — the two engine facts an author has to understand before touching `rules.yaml` |
+| `catchlaw-rule-engine` | Rule 9 (`Finding({required Citation citation})`) and rule 12 (a measurement is compared only against its own method) — the two engine facts an author has to understand before touching `rules.yaml` |
 | `catchlaw-reference-database` | Rule 8 — a `catches` row denormalises `citation_text` and `content_version`, so an authored row's wording is copied into a fisher's permanent record and cannot be quietly corrected later |
 | `testing-strategy` | Which level A11 belongs at — pure Dart `package:test` over an in-memory corpus, no widget binding |
 | `dependency-hygiene` | This task adds an assertion to an existing package and must add no dependency to do it; a YAML ledger needs nothing that is not already there |

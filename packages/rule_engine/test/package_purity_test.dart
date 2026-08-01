@@ -120,7 +120,32 @@ void main() {
       // known. It grows one deliberate line per task, never automatically.
       expect(_libDartPaths(), <String>[
         'lib/rule_engine.dart',
+        'lib/src/date.dart', // E03/T03
+        'lib/src/engine_exception.dart', // E03/T02
+        'lib/src/failure.dart', // E03/T02
+        'lib/src/findings/closed_season_finding.dart', // E03/T06 (part of finding.dart)
+        'lib/src/findings/finding.dart', // E03/T06
+        'lib/src/findings/limit_finding.dart', // E03/T08 (part of finding.dart)
+        'lib/src/findings/precedence.dart', // E03/T09
+        'lib/src/findings/protected_finding.dart', // E03/T09 (part of finding.dart)
+        'lib/src/findings/size_finding.dart', // E03/T07 (part of finding.dart)
+        'lib/src/models/catch_tally.dart', // E03/T03
+        'lib/src/models/citation.dart', // E03/T01
+        'lib/src/models/closed_season.dart', // E03/T01
+        'lib/src/models/landing.dart', // E03/T01
+        'lib/src/models/measurement_method.dart', // E03/T01
+        'lib/src/models/rule.dart', // E03/T01
+        'lib/src/models/species.dart', // E03/T01
+        'lib/src/models/zone.dart', // E03/T01
+        'lib/src/resolve/candidate.dart', // E03/T03
+        'lib/src/resolve/candidate_selection.dart', // E03/T03
+        'lib/src/resolve/conflict.dart', // E03/T05
+        'lib/src/resolve/evaluation_request.dart', // E03/T03
+        'lib/src/resolve/zone_match.dart', // E03/T04
+        'lib/src/rule_evaluator.dart', // E03/T10
         'lib/src/search/normalise.dart', // E02/T02
+        'lib/src/season/season_window.dart', // E03/T06
+        'lib/src/verdict/resolution.dart', // E03/T10
       ]);
     });
 

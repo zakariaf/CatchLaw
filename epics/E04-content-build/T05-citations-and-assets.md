@@ -15,7 +15,7 @@
 |---|---|
 | `catchlaw-content-pipeline` | Rules 6 and 12, `references/build-assertions.md` A4/A5/A9, and `references/licence-provenance.md` for the accepted gazette hosts per jurisdiction |
 | `catchlaw-conventions-index` | Invariant 3 — every result carries a required, non-nullable `Citation`; A4 is what makes that representable in the data |
-| `catchlaw-rule-engine` | Rule 9 — `RuleFinding({required Citation citation})`. The engine cannot construct a finding without one, so an unresolved `citation_id` is a build failure and never a runtime null |
+| `catchlaw-rule-engine` | Rule 9 — `Finding({required Citation citation})`. The engine cannot construct a finding without one, so an unresolved `citation_id` is a build failure and never a runtime null |
 | `testing-strategy` | Loop naming across the six locales, one behaviour per test |
 
 ## Reference files

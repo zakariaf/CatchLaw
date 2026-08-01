@@ -1,0 +1,200 @@
+/// The fixtures E03's ~80 resolution tests vary one field of at a time.
+///
+/// All `const`, all built from the real rows `SPEC.md` and
+/// `catchlaw-content-pipeline` calibrate against, and all `k`-prefixed per
+/// `CONVENTIONS.md` §6 — the narrower rule for `testing/models/`, which wins
+/// over `FLUTTER_GUIDE.md` §3.1's general ban for fixtures and only fixtures.
+library;
+
+import 'package:rule_engine/rule_engine.dart';
+
+/// UAE Ministerial Decision 580/2015, Art. 3 — the citation every Gulf example
+/// in the spec and the skills is written around.
+const kCitationMd580 = Citation(
+  instrument: 'Ministerial Decision 580/2015',
+  article: 'Art. 3',
+  publishedOn: '2015-11-03',
+  checkedOn: '2026-07-14',
+);
+
+/// A second, separately-constructed instance of the same citation.
+///
+/// Exists so an equality test compares two objects rather than one object with
+/// itself, which would pass under identity equality and prove nothing.
+const kCitationMd580Copy = Citation(
+  instrument: 'Ministerial Decision 580/2015',
+  article: 'Art. 3',
+  publishedOn: '2015-11-03',
+  checkedOn: '2026-07-14',
+);
+
+/// A different instrument, for tests that need two citations to disagree.
+const kCitationRakLocal = Citation(
+  instrument: 'RAK Local Order 4/2018',
+  article: 'Art. 7',
+  publishedOn: '2018-02-11',
+  checkedOn: '2026-07-14',
+);
+
+/// *Epinephelus coioides* — هامور, the orange-spotted grouper.
+const kSpeciesHamour = Species(
+  id: 42,
+  scientificName: 'Epinephelus coioides',
+  taxonGroup: TaxonGroup.finfish,
+  colId: '4QZ7T',
+);
+
+/// *Lethrinus nebulosus* — شعري, the spangled emperor.
+const kSpeciesShari = Species(
+  id: 43,
+  scientificName: 'Lethrinus nebulosus',
+  taxonGroup: TaxonGroup.finfish,
+);
+
+/// Ras Al Khaimah, a subzone of the UAE.
+const kZoneRasAlKhaimah = Zone(
+  id: 1,
+  jurisdictionId: 7,
+  parentZoneId: 0,
+  code: 'ae-rak',
+  waterType: WaterType.salt,
+  zoneKind: ZoneKind.subzone,
+);
+
+/// A bank inside [kZoneRasAlKhaimah], for the ancestry ladder of T04.
+const kZoneRakBank = Zone(
+  id: 2,
+  jurisdictionId: 7,
+  parentZoneId: 1,
+  code: 'ae-rak-bank',
+  waterType: WaterType.salt,
+  zoneKind: ZoneKind.bank,
+);
+
+/// Hamour, minimum 45 cm total length — `min_size: 450`, method `TL`.
+///
+/// `validTo` is null: no expiry, which `product-invariants.md` §5 says is valid
+/// and never expired.
+const kRuleHamourMinSize = Rule(
+  id: 100,
+  jurisdictionId: 7,
+  zoneId: 1,
+  speciesId: 42,
+  waterType: WaterType.salt,
+  citation: kCitationMd580,
+  citationLineageId: 'ae-md-580-2015',
+  validFrom: '2015-11-03',
+  minSizeMm: 450,
+  measurementMethod: MeasurementMethod.totalLength,
+);
+
+/// A second, separately-constructed instance of [kRuleHamourMinSize].
+const kRuleHamourMinSizeCopy = Rule(
+  id: 100,
+  jurisdictionId: 7,
+  zoneId: 1,
+  speciesId: 42,
+  waterType: WaterType.salt,
+  citation: kCitationMd580,
+  citationLineageId: 'ae-md-580-2015',
+  validFrom: '2015-11-03',
+  minSizeMm: 450,
+  measurementMethod: MeasurementMethod.totalLength,
+);
+
+/// A rule with no zone: the whole jurisdiction, ranked 0 by T04's ladder.
+const kRuleWholeJurisdiction = Rule(
+  id: 101,
+  jurisdictionId: 7,
+  zoneId: null,
+  speciesId: 42,
+  waterType: WaterType.both,
+  citation: kCitationMd580,
+  citationLineageId: 'ae-md-580-2015',
+  validFrom: '2015-11-03',
+  minSizeMm: 400,
+  measurementMethod: MeasurementMethod.totalLength,
+);
+
+/// Sha'ri, closed 1 March to 30 April, annually.
+const kRuleShariClosedSeason = Rule(
+  id: 102,
+  jurisdictionId: 7,
+  zoneId: 1,
+  speciesId: 43,
+  waterType: WaterType.salt,
+  citation: kCitationMd580,
+  citationLineageId: 'ae-md-580-2015',
+  validFrom: '2015-11-03',
+  closedSeasons: <ClosedSeason>[
+    ClosedSeason(
+      recurrence: Recurrence.annual,
+      startMonth: 3,
+      startDay: 1,
+      endMonth: 4,
+      endDay: 30,
+      citation: kCitationMd580,
+    ),
+  ],
+);
+
+/// The UAE, as the root of the ancestry path Ras Al Khaimah hangs off.
+const kZoneUae = Zone(
+  id: 0,
+  jurisdictionId: 7,
+  parentZoneId: null,
+  code: 'ae',
+  waterType: WaterType.both,
+  zoneKind: ZoneKind.region,
+);
+
+/// A tally that records ZERO — distinct from no tally at all, which is what a
+/// fisher who has not opened the catch log has.
+const kTallyEmpty = CatchTally(countPerDay: 0, countPerTrip: 0, countPerSeason: 0, vesselCount: 0);
+
+/// A landing that was identified but never measured.
+const kLandingUnmeasured = Landing(lengthMm: null, method: null);
+
+/// A 38 cm hamour, measured by total length — under the 45 cm minimum.
+const kLandingUndersize = Landing(lengthMm: 380, method: MeasurementMethod.totalLength);
+
+/// A mangrove reserve inside Ras Al Khaimah.
+const kZoneRakMangroveReserve = Zone(
+  id: 3,
+  jurisdictionId: 7,
+  parentZoneId: 1,
+  code: 'ae-rak-mangrove',
+  waterType: WaterType.salt,
+  zoneKind: ZoneKind.reserve,
+);
+
+/// A no-take core drawn INSIDE the reserve — the case a depth heuristic gets
+/// wrong roughly half the time, per catchlaw-rule-engine rule 5.
+const kZoneRakNoTakeCore = Zone(
+  id: 4,
+  jurisdictionId: 7,
+  parentZoneId: 3,
+  code: 'ae-rak-no-take',
+  waterType: WaterType.salt,
+  zoneKind: ZoneKind.exclusion,
+);
+
+/// Galicia, for the Ameixa babosa trace.
+const kZoneGalicia = Zone(
+  id: 10,
+  jurisdictionId: 11,
+  parentZoneId: null,
+  code: 'es-ga',
+  waterType: WaterType.salt,
+  zoneKind: ZoneKind.region,
+);
+
+/// Banco de Cambados, a bank inside Galicia.
+const kZoneBancoDeCambados = Zone(
+  id: 11,
+  jurisdictionId: 11,
+  parentZoneId: 10,
+  code: 'es-ga-banco-cambados',
+  waterType: WaterType.salt,
+  zoneKind: ZoneKind.bank,
+);

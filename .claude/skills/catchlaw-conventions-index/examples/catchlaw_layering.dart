@@ -1,5 +1,5 @@
 // Demonstrates the CatchLaw layer map end to end in one file: (1) the pure-Dart rule_engine layer
-// with zero Flutter and zero drift imports, returning a sealed Verdict that always carries a
+// with zero Flutter and zero drift imports, returning a sealed Resolution that always carries a
 // Citation; (2) the lib/data/ layer opening the extracted read-only reference database and the
 // writable user database lazily, so nothing is awaited before runApp; (3) the lib/ui/ layer
 // rendering the verdict and keeping an expired rule pack visible behind a non-blocking ochre bar.

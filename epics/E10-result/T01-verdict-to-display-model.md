@@ -14,7 +14,7 @@
 | Skill | Why this task needs it |
 |---|---|
 | `catchlaw-verdict-contract` | Owns the sentence. Rules 1–5 fix the slot order, the mandatory numeric margin and the spelled-out method; rule 12 fixes the ARB key prefixes this task creates |
-| `catchlaw-rule-engine` | Owns what arrives: `Resolution`, `RuleFinding`, `FindingKind`, `isExpired`, and the three distinct no-rule variants this task must keep distinct |
+| `catchlaw-rule-engine` | Owns what arrives: `Resolution`, `Finding`, `FindingKind`, `isExpired`, and the three distinct no-rule variants this task must keep distinct |
 | `lonja-verdict-and-status` | Rule 2 — the four `VerdictCategory` values, and the ban on the surface re-deriving a category from a measurement |
 | `catchlaw-conventions-index` | The one-way layer map: this is `lib/ui/`, it reads engine types and repository values, and it never touches a DAO |
 | `i18n-rtl-l10n` | Rules 1–3: every string through gen-l10n, key and placeholder parity, ICU rather than concatenation |
@@ -61,7 +61,7 @@ No engine file is touched. No widget is written in this task.
 
 **D-7 is the whole shape of this task.** `packages/rule_engine/` returns numbers, enums, a required
 `Citation` and an `isExpired` flag, and holds no user-visible sentence in any language. Something has
-to turn `RuleFinding(kind: minSize, thresholdMm: 450, methodCode: 'TL', …)` plus a reading of 380 mm
+to turn `Finding(kind: minSize, thresholdMm: 450, methodCode: 'TL', …)` plus a reading of 380 mm
 into *"Below the minimum — 38 cm measured, minimum 45 cm (total length)"* in six languages. That
 something is this file, and it is a plain Dart class rather than a widget so the sentence can be
 asserted in all six locales without pumping a widget tree — six `expect`s instead of six

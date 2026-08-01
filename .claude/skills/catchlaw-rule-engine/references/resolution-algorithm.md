@@ -80,7 +80,7 @@ cannot exist offline. Tag, print the date, evaluate anyway.
 
 ## Finding precedence
 
-Every applicable rule produces a `RuleFinding`. Failures are ranked once, here.
+Every applicable rule produces a `Finding`. Failures are ranked once, here.
 
 | Order | `FindingKind` | Headline example | Why it outranks the next |
 |---|---|---|---|
