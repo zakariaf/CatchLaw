@@ -37,6 +37,10 @@ dependencies:
   # two, and so the version is pinned by the same lock file from the start.
   sqlite3: ^2.4.6
 
+  # The sidecar's sha256. E05 verifies the same digest after decompression, so
+  # the two halves of D-6 must agree on the algorithm and not merely on the word.
+  crypto: ^3.0.6
+
 dev_dependencies:
   # Workspace-resolved: it makes package:flutter_lints/flutter.yaml load for
   # this member's analysis_options.yaml.

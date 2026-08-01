@@ -13,6 +13,7 @@
         "path",
         "meta",
         "sqlite3",
+        "crypto",
         "analysis_defaults",
         "test"
       ],
@@ -22,7 +23,8 @@
         "yaml",
         "path",
         "meta",
-        "sqlite3"
+        "sqlite3",
+        "crypto"
       ],
       "devDependencies": [
         "analysis_defaults",
