@@ -101,6 +101,15 @@ class CatchDao extends DatabaseAccessor<UserDatabase> with _$CatchDaoMixin {
     return id;
   });
 
+  /// One catch, or `null`.
+  ///
+  /// Read back after an insert so a caller renders what is STORED rather than
+  /// what it hoped to store — §7.2's DEFAULTs are applied by SQLite, and a
+  /// value reassembled from the draft would report them as whatever the draft
+  /// happened to say.
+  Future<CatchRow?> byId(int id) =>
+      (select(catches)..where(($CatchesTable t) => t.id.equals(id))).getSingleOrNull();
+
   /// Updates a catch. `updated_at` is the caller's: this layer reads no clock.
   Future<bool> updateCatch(CatchRow row) => update(catches).replace(row);
 
