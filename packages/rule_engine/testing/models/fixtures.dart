@@ -51,14 +51,14 @@ const kSpeciesShari = Species(
   taxonGroup: TaxonGroup.finfish,
 );
 
-/// The Ras Al Khaimah region — a root zone, so its parent is null.
+/// Ras Al Khaimah, a subzone of the UAE.
 const kZoneRasAlKhaimah = Zone(
   id: 1,
   jurisdictionId: 7,
-  parentZoneId: null,
+  parentZoneId: 0,
   code: 'ae-rak',
   waterType: WaterType.salt,
-  zoneKind: ZoneKind.region,
+  zoneKind: ZoneKind.subzone,
 );
 
 /// A bank inside [kZoneRasAlKhaimah], for the ancestry ladder of T04.
@@ -156,3 +156,44 @@ const kLandingUnmeasured = Landing(lengthMm: null, method: null);
 
 /// A 38 cm hamour, measured by total length — under the 45 cm minimum.
 const kLandingUndersize = Landing(lengthMm: 380, method: MeasurementMethod.totalLength);
+
+/// A mangrove reserve inside Ras Al Khaimah.
+const kZoneRakMangroveReserve = Zone(
+  id: 3,
+  jurisdictionId: 7,
+  parentZoneId: 1,
+  code: 'ae-rak-mangrove',
+  waterType: WaterType.salt,
+  zoneKind: ZoneKind.reserve,
+);
+
+/// A no-take core drawn INSIDE the reserve — the case a depth heuristic gets
+/// wrong roughly half the time, per catchlaw-rule-engine rule 5.
+const kZoneRakNoTakeCore = Zone(
+  id: 4,
+  jurisdictionId: 7,
+  parentZoneId: 3,
+  code: 'ae-rak-no-take',
+  waterType: WaterType.salt,
+  zoneKind: ZoneKind.exclusion,
+);
+
+/// Galicia, for the Ameixa babosa trace.
+const kZoneGalicia = Zone(
+  id: 10,
+  jurisdictionId: 11,
+  parentZoneId: null,
+  code: 'es-ga',
+  waterType: WaterType.salt,
+  zoneKind: ZoneKind.region,
+);
+
+/// Banco de Cambados, a bank inside Galicia.
+const kZoneBancoDeCambados = Zone(
+  id: 11,
+  jurisdictionId: 11,
+  parentZoneId: 10,
+  code: 'es-ga-banco-cambados',
+  waterType: WaterType.salt,
+  zoneKind: ZoneKind.bank,
+);

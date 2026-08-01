@@ -23,23 +23,36 @@ enum WaterType {
 /// authoritative for the product, so it is a member here. The specificity
 /// integers are E03/T04's, which is the task that publishes the ladder.
 enum ZoneKind {
-  /// A whole region.
-  region,
+  /// A whole region. Rank 0 — level with a `NULL` zone id, deliberately.
+  region(0),
 
   /// A named subdivision of a region.
-  subzone,
+  subzone(10),
 
   /// A fishing bank.
-  bank,
+  bank(20),
 
-  /// A basin.
-  basin,
+  /// A basin. `SPEC.md` §7.3 says "bank/basin 20"; it shares the rung.
+  basin(20),
 
   /// A protected reserve.
-  reserve,
+  reserve(30),
 
-  /// An exclusion zone.
-  exclusion,
+  /// An exclusion zone — the strictest scope there is.
+  exclusion(40);
+
+  const ZoneKind(this.specificity);
+
+  /// Where this kind sits on `SPEC.md` §7.3's ladder. Higher wins.
+  ///
+  /// A CLOSED TABLE, and nothing derives it. `catchlaw-rule-engine` rule 5
+  /// names what a depth heuristic produces: `banco-de-cambados` is a bank at
+  /// depth 3, and a no-take exclusion drawn INSIDE it is at depth 4 in some
+  /// encodings and depth 3 in others, depending on how the path was built. A
+  /// specificity computed from path depth ranks the bank above the exclusion
+  /// roughly half the time — handing the permissive rule to a fisher standing
+  /// exactly where the strict one applies.
+  final int specificity;
 }
 
 /// A geometry a rule attaches to.

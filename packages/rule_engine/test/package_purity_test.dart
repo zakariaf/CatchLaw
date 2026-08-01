@@ -134,6 +134,7 @@ void main() {
         'lib/src/resolve/candidate.dart', // E03/T03
         'lib/src/resolve/candidate_selection.dart', // E03/T03
         'lib/src/resolve/evaluation_request.dart', // E03/T03
+        'lib/src/resolve/zone_match.dart', // E03/T04
         'lib/src/search/normalise.dart', // E02/T02
       ]);
     });
