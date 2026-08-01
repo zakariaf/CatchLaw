@@ -266,10 +266,16 @@ void main() {
 
   group('the publication-date test', () {
     test('appears nowhere in content_builder or in the corpus', () {
-      // check_content_pipeline.sh check 7 greps for `published_year < 1930` and
-      // its variants. Proved by the suite as well as by the gate, because a
-      // gate that is not run is a gate that is not there — and this one is the
-      // difference between a bundled plate and an infringement claim.
+      // check_content_pipeline.sh check 7 greps for a publication year compared
+      // against a 1930 threshold, and its variants. Proved by the suite as well
+      // as by the gate, because a gate that is not run is a gate that is not
+      // there — and this one is the difference between a bundled plate and an
+      // infringement claim.
+      //
+      // The phrasing above is deliberate: writing the banned comparison out in
+      // full, even in a comment, trips check 7 on this very file. Reworded
+      // rather than exempted — an escape hatch on the test that proves the ban
+      // would be the ban proving itself.
       //
       // source_year stays in the ledger as EVIDENCE about the artist and is
       // never compared to a threshold.
