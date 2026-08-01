@@ -1,46 +1,96 @@
 import 'package:meta/meta.dart';
+import 'package:rule_engine/src/models/rule.dart';
 
-/// What has already been taken, against which a bag or vessel limit is read.
+/// What has already been recorded, against which a bag or vessel limit is read.
 ///
-/// A value type with fields and no behaviour. E03/T08 adds the period
-/// accessors when it has a caller for them; adding them now would be code the
-/// analyzer cannot see is dead.
+/// Every field is NULLABLE, and null does not mean zero. `SPEC.md` §4.5 makes
+/// the catch log a feature the fisher chooses to use, so an absent count is a
+/// question nobody asked rather than an answer of none — and a limit compared
+/// against an assumed zero passes for a fisher who has taken forty fish and
+/// never opened the log.
+///
+/// Mass is carried in GRAMS as an `int`. `bag_limit` is an `INTEGER` and its
+/// unit may be `kg`, so the instrument's number is whole kilograms; keeping the
+/// tally in integer grams means the comparison never touches a `double`.
+/// Kilograms as floating point would put `0.1 + 0.2 == 0.30000000000000004` on
+/// the path between a fisher's eighth fish and a fine, and it would surface only
+/// at the boundary, which is the only place anybody looks.
 @immutable
 class CatchTally {
-  /// All four counts are required, because a missing one is not zero — it is a
-  /// question nobody asked, and defaulting it to zero would report a limit as
-  /// unmet when it may already have been reached.
+  /// Every count is optional: an absent one is unrecorded, never zero.
   const CatchTally({
-    required this.perDay,
-    required this.perTrip,
-    required this.perSeason,
-    required this.vesselCount,
+    this.countPerDay,
+    this.countPerTrip,
+    this.countPerSeason,
+    this.gramsPerDay,
+    this.gramsPerTrip,
+    this.gramsPerSeason,
+    this.vesselCount,
   });
 
-  /// Taken so far today.
-  final int perDay;
+  /// Individuals recorded today.
+  final int? countPerDay;
 
-  /// Taken so far on this trip.
-  final int perTrip;
+  /// Individuals recorded on this trip.
+  final int? countPerTrip;
 
-  /// Taken so far this season.
-  final int perSeason;
+  /// Individuals recorded this season.
+  final int? countPerSeason;
 
-  /// Taken so far by this vessel.
-  final int vesselCount;
+  /// Grams recorded today.
+  final int? gramsPerDay;
+
+  /// Grams recorded on this trip.
+  final int? gramsPerTrip;
+
+  /// Grams recorded this season.
+  final int? gramsPerSeason;
+
+  /// Individuals recorded against this vessel.
+  ///
+  /// Its own field rather than the day count, because they are different
+  /// numbers and `SPEC.md` §7.2 does not currently distinguish them either.
+  /// Keeping them apart means the engine never silently equates one fisher with
+  /// one hull while the schema question is open (epic risk 2).
+  final int? vesselCount;
+
+  /// Individuals recorded over [period], or `null` if none were.
+  int? countFor(LimitPeriod period) => switch (period) {
+    LimitPeriod.day => countPerDay,
+    LimitPeriod.trip => countPerTrip,
+    LimitPeriod.season => countPerSeason,
+  };
+
+  /// Grams recorded over [period], or `null` if none were.
+  int? gramsFor(LimitPeriod period) => switch (period) {
+    LimitPeriod.day => gramsPerDay,
+    LimitPeriod.trip => gramsPerTrip,
+    LimitPeriod.season => gramsPerSeason,
+  };
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is CatchTally &&
-          other.perDay == perDay &&
-          other.perTrip == perTrip &&
-          other.perSeason == perSeason &&
+          other.countPerDay == countPerDay &&
+          other.countPerTrip == countPerTrip &&
+          other.countPerSeason == countPerSeason &&
+          other.gramsPerDay == gramsPerDay &&
+          other.gramsPerTrip == gramsPerTrip &&
+          other.gramsPerSeason == gramsPerSeason &&
           other.vesselCount == vesselCount;
 
   @override
-  int get hashCode => Object.hash(perDay, perTrip, perSeason, vesselCount);
+  int get hashCode => Object.hash(
+    countPerDay,
+    countPerTrip,
+    countPerSeason,
+    gramsPerDay,
+    gramsPerTrip,
+    gramsPerSeason,
+    vesselCount,
+  );
 
   @override
-  String toString() => 'CatchTally(day $perDay, trip $perTrip, season $perSeason)';
+  String toString() => 'CatchTally(day $countPerDay, trip $countPerTrip, season $countPerSeason)';
 }

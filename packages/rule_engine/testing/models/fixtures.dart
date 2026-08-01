@@ -148,8 +148,9 @@ const kZoneUae = Zone(
   zoneKind: ZoneKind.region,
 );
 
-/// An empty tally: nothing taken today.
-const kTallyEmpty = CatchTally(perDay: 0, perTrip: 0, perSeason: 0, vesselCount: 0);
+/// A tally that records ZERO — distinct from no tally at all, which is what a
+/// fisher who has not opened the catch log has.
+const kTallyEmpty = CatchTally(countPerDay: 0, countPerTrip: 0, countPerSeason: 0, vesselCount: 0);
 
 /// A landing that was identified but never measured.
 const kLandingUnmeasured = Landing(lengthMm: null, method: null);

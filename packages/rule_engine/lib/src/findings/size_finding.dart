@@ -10,8 +10,8 @@ part of 'finding.dart';
 /// Rounding from the ruler's pixels to a whole millimetre belongs to
 /// `catchlaw-measurement-ruler` and happens in E09, before a [Landing] is
 /// constructed. By the time a value reaches here it is a decided integer, and
-/// nothing here second-guesses it: a 44.6 cm measurement is STATED, never
-/// rounded to "close enough".
+/// nothing here second-guesses it: a 446 mm measurement is stated as 446, never
+/// nudged toward the threshold it sits beside.
 sealed class SizeFinding extends Finding {
   const SizeFinding({
     required super.citation,
