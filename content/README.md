@@ -103,6 +103,17 @@ would let the file disagree with the run that produced it.
 - **`zone_ring.point_count`.** Derived from `coords`. A hand-kept count and a hand-kept list disagree
   the first time a coordinate is added.
 
+**An Arabic name that carries `ال` produces two `species_name` rows.** `SPEC.md` §9.4 step 5 requires
+both the stripped and unstripped forms to be indexed — instruments write `الهامور` and fishers type
+`هامور` — and §7.1 gives `species_name` one `search_norm` column and no `species_alias` table. So the
+build emits a second row with the same `species_id`, `locale`, `name`, `gender` and `region_hint`,
+`is_primary = 0`, and the stripped key. The article is not stripped when the remainder is under three
+characters: that is a real word, not an article.
+
+**The consequence lands on E08, and is written here rather than discovered there:** any list of names
+for a species must `SELECT DISTINCT name` or filter on `is_primary`, or an Arabic species appears
+twice.
+
 ## The citation block, and why it is not spelt like the schema
 
 ```yaml
