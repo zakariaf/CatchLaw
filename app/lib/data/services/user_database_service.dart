@@ -7,6 +7,7 @@ import 'package:catchlaw/data/services/tables/user/saved_zone.dart';
 import 'package:catchlaw/data/services/tables/user/species_recent.dart';
 import 'package:catchlaw/data/services/tables/user/trip.dart';
 import 'package:catchlaw/data/services/tables/user/user_profile.dart';
+import 'package:catchlaw/data/services/user_migration.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 
@@ -44,24 +45,7 @@ class UserDatabase extends _$UserDatabase {
   int get schemaVersion => understoodSchemaVersion;
 
   @override
-  MigrationStrategy get migration => MigrationStrategy(
-    onCreate: (Migrator m) => m.createAll(),
-    beforeOpen: (OpeningDetails details) async {
-      // Per-connection and NOT persisted in the file, so they are re-asserted
-      // on every open. `journal_mode` is persisted but is set idempotently, so
-      // a freshly created or restored database adopts it.
-      await customStatement('PRAGMA foreign_keys = ON;');
-      await customStatement('PRAGMA journal_mode = WAL;');
-      await customStatement('PRAGMA synchronous = FULL;');
-      await customStatement('PRAGMA busy_timeout = 5000;');
-
-      if (details.wasCreated) {
-        // The one place seeding is licensed. NOT in onCreate, where a failure
-        // would abort the create and leave a half-built database.
-        await into(userProfiles).insert(UserProfilesCompanion.insert(id: const Value<int>(1)));
-      }
-    },
-  );
+  MigrationStrategy get migration => userMigration(this);
 }
 
 /// A [LazyDatabase] over the fisher's log at [file].

@@ -1235,7 +1235,7 @@
     },
     {
       "name": "drift",
-      "version": "2.34.3",
+      "version": "2.34.2",
       "kind": "transitive",
       "source": "hosted",
       "dependencies": [

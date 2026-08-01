@@ -18,11 +18,17 @@ dependencies:
   # the content builder provably share one engine.
   rule_engine:
 
-  # D-5 pins drift at 2.34.2. SPEC.md §10 chose it over sqflite, Isar and Hive
-  # deliberately: §7.3's resolution is genuinely relational and needs real SQL
-  # with indices, and drift is the only one of the four that gives two
-  # independent database instances in one app.
-  drift: ^2.34.2
+  # D-5 pins drift at 2.34.2. EXACTLY 2.34.2, not ^2.34.2: a caret is not a pin,
+  # and the difference is load-bearing — drift 2.34.3 moved an internal the
+  # generator's `schema dump` tool reaches for, and drift_dev cannot be moved
+  # forward to match because 2.34.1+ requires an analyzer this workspace cannot
+  # give package:test.
+  #
+  # SPEC.md §10 chose drift over sqflite, Isar and Hive deliberately: §7.3's
+  # resolution is genuinely relational and needs real SQL with indices, and
+  # drift is the only one of the four that gives two independent database
+  # instances in one app.
+  drift: 2.34.2
 
   # sqlite3_flutter_libs bundles a modern SQLite with FTS5 compiled in; without
   # it the legal-text search of S13 has no tokeniser at all.
