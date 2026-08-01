@@ -57,7 +57,7 @@ other epic is strictly sequential.
 
 ## Status
 
-**E01 through E04 are merged.** Every epic below them is `not started`.
+**E01 through E05 are merged.** Every epic below them is `not started`.
 
 | Epic | Branch | PR | Checks | Merged |
 |---|---|---|---|---|
