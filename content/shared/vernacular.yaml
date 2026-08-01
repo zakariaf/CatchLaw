@@ -1,0 +1,45 @@
+# species_name — one vernacular name, in one locale, for one species.
+#
+# gender is REQUIRED in ar, ca, es, gl and pt_BR and optional only in en.
+# SPEC.md §9.5 records the defect this closes: ICU `select` was specified on a
+# gender field that existed nowhere in the schema, and a `select` on a null
+# argument renders the `other` branch — which in Spanish is one of the two
+# genders and so is wrong half the time.
+#
+# Exactly one is_primary per (species_id, locale). Zero means S5's result row
+# has no name to print; two means the result screen and the species list print
+# different names for the same fish, which reads as two species.
+#
+# search_norm is NOT authored. E04/T07 computes it with the engine's own
+# normaliseSpeciesTerm(), so the index and the query cannot disagree.
+#
+# ONLY NAMES THAT CAN BE SOURCED ARE HERE. SPEC.md §9.2 step 3: a wrong
+# vernacular name is worse than no name, because it produces a confident wrong
+# finding. Venerupis corrugata is a Galician and Spanish shellfish; `gl` and
+# `es` come from the Xunta's own tallas mínimas tables, `en` from the Catalogue
+# of Life vernacular extension (CC BY 4.0), which SPEC.md §9.2 step 2 makes the
+# sole source for English. `ar`, `ca` and `pt_BR` are absent on purpose: no
+# instrument in those languages names this clam. E04/T05 adds the authored
+# `no_vernacular:` declaration that records the absence and its reason, and E22
+# adds names only after native-speaker review.
+species_names:
+  - id: venerupis-corrugata-gl
+    species_id: venerupis-corrugata
+    locale: gl
+    name: Ameixa babosa
+    gender: f
+    is_primary: true
+    region_hint: Rías Baixas
+
+  - id: venerupis-corrugata-es
+    species_id: venerupis-corrugata
+    locale: es
+    name: Almeja babosa
+    gender: f
+    is_primary: true
+
+  - id: venerupis-corrugata-en
+    species_id: venerupis-corrugata
+    locale: en
+    name: Pullet carpet shell
+    is_primary: true

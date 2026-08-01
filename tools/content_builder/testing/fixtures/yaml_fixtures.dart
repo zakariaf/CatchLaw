@@ -473,3 +473,33 @@ rules:
     citation_id: es-ga-orde-2012-07-27-anexo-ii
     valid_from: '2012-08-01'
 ''';
+
+// ---------------------------------------------------------------------------
+// E04/T04 — A3 gender and is_primary.
+// ---------------------------------------------------------------------------
+
+/// One authored `species_name` row.
+typedef NameSpec = ({String speciesId, String locale, String? gender, bool isPrimary});
+
+/// A `species_name` row for [speciesId] in [locale].
+NameSpec name(
+  String locale, {
+  String speciesId = 'venerupis-corrugata',
+  String? gender = 'f',
+  bool isPrimary = true,
+}) => (speciesId: speciesId, locale: locale, gender: gender, isPrimary: isPrimary);
+
+/// A `vernacular.yaml` holding [names], one row each, opening on line 2.
+String vernacularYaml(List<NameSpec> names) {
+  final buffer = StringBuffer('species_names:\n');
+  for (var i = 0; i < names.length; i++) {
+    final NameSpec n = names[i];
+    buffer.writeln('  - id: ${n.speciesId}-${n.locale}-$i');
+    buffer.writeln('    species_id: ${n.speciesId}');
+    buffer.writeln('    locale: ${n.locale}');
+    buffer.writeln('    name: Ameixa babosa ${n.locale} $i');
+    if (n.gender != null) buffer.writeln('    gender: ${n.gender}');
+    buffer.writeln('    is_primary: ${n.isPrimary}');
+  }
+  return buffer.toString();
+}
