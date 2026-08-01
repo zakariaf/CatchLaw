@@ -12,9 +12,13 @@ import 'package:meta/meta.dart';
 import 'package:rule_engine/src/failure.dart';
 import 'package:rule_engine/src/models/citation.dart';
 import 'package:rule_engine/src/models/closed_season.dart';
+import 'package:rule_engine/src/models/landing.dart';
+import 'package:rule_engine/src/models/measurement_method.dart';
+import 'package:rule_engine/src/models/rule.dart';
 import 'package:rule_engine/src/season/season_window.dart';
 
 part 'closed_season_finding.dart';
+part 'size_finding.dart';
 
 /// What a finding is about, in `SPEC.md` §7.3's six kinds.
 ///
