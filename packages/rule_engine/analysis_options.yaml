@@ -4,6 +4,17 @@
 # zero problems, which is also what a clean package looks like. (Verified.)
 include: ../../analysis_options.yaml
 
+analyzer:
+  errors:
+    # check_no_network.sh requires this promoted to error HERE and not merely at
+    # the root, and the reason is specific to this package rather than general
+    # hygiene: an import of a package that is only a TRANSITIVE dependency
+    # compiles perfectly well, so a file under lib/ could import a package this
+    # pubspec never declared — an http edge reached through somebody else's
+    # dependency, invisible to the §14 direct-dependency allowlist because no
+    # line was ever added to a pubspec for a reviewer to see.
+    depend_on_referenced_packages: error
+
 linter:
   rules:
     # Two consumers — the app and the content builder — make an undocumented

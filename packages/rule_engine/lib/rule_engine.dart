@@ -21,4 +21,11 @@
 /// This is the one barrel in the repository (`FLUTTER_GUIDE.md` Part 2.6).
 library;
 
+export 'src/models/citation.dart';
+export 'src/models/closed_season.dart';
+export 'src/models/landing.dart';
+export 'src/models/measurement_method.dart';
+export 'src/models/rule.dart';
+export 'src/models/species.dart';
+export 'src/models/zone.dart';
 export 'src/search/normalise.dart';
