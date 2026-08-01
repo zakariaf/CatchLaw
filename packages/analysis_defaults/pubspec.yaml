@@ -1,0 +1,9 @@
+name: analysis_defaults
+description: >-
+  The lint configuration every workspace member includes as a dev dependency.
+  It ships one YAML file and no Dart; its payload arrives in E01/T02.
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0

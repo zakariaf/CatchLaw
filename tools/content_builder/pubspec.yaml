@@ -1,0 +1,18 @@
+name: content_builder
+description: >-
+  The authoring CLI: hand-written YAML in content/ compiled to the read-only
+  reference.db asset. One name, per D-4: this directory, this package, and
+  `dart run content_builder:build`.
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  # Resolved by the workspace, not by a path: + dependency_overrides pair. The
+  # builder and the app provably share one rule_engine.
+  rule_engine:
+
+dev_dependencies:
+  test: ^1.25.0

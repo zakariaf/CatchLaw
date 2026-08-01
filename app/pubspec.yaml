@@ -1,0 +1,20 @@
+name: catchlaw
+description: >-
+  CatchLaw — an offline catch-legality reference. Ships no network code path.
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # Pure Dart, opens nothing, dev-only: the policy tests parse five pubspecs,
+  # and regex-scanning YAML is how a policy test starts passing for the wrong
+  # reason.
+  yaml: ^3.1.2

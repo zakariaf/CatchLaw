@@ -1,0 +1,16 @@
+name: catchlaw_workspace
+description: >-
+  The CatchLaw pub workspace root. It ships nothing: it exists to resolve the
+  four members below into one dependency context and one pubspec.lock.
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+# D-1. Order as DECISIONS.md prints it. A fifth member changes the dependency
+# namespace for every other member, so the set is asserted by a policy test.
+workspace:
+  - app
+  - packages/rule_engine
+  - packages/analysis_defaults
+  - tools/content_builder

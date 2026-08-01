@@ -1,0 +1,20 @@
+name: rule_engine
+description: >-
+  Pure-Dart rule resolution shared by the app and the content builder. The
+  absence of a flutter dependency below is the purity guarantee, not an
+  oversight: importing the Flutter framework here is a compile error.
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  # The only runtime dependency. A second one is a second thing a reviewer must
+  # reason about before believing the engine is pure.
+  meta: ^1.15.0
+
+dev_dependencies:
+  # Plain `dart test`, never flutter_test — that would forfeit the headless
+  # millisecond tier this package exists to keep.
+  test: ^1.25.0
