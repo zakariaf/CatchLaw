@@ -33,8 +33,8 @@ class Citation {
 
   /// When a human last verified the wording, ISO-8601.
   ///
-  /// Not when a machine ran: `DateTime.now()` at build time records the build,
-  /// not the reading of the gazette.
+  /// Not when a machine ran: a wall-clock reading taken at build time records
+  /// the build, not the reading of the gazette.
   final String checkedOn;
 
   @override

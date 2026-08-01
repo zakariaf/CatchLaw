@@ -120,8 +120,10 @@ void main() {
       // known. It grows one deliberate line per task, never automatically.
       expect(_libDartPaths(), <String>[
         'lib/rule_engine.dart',
+        'lib/src/date.dart', // E03/T03
         'lib/src/engine_exception.dart', // E03/T02
         'lib/src/failure.dart', // E03/T02
+        'lib/src/models/catch_tally.dart', // E03/T03
         'lib/src/models/citation.dart', // E03/T01
         'lib/src/models/closed_season.dart', // E03/T01
         'lib/src/models/landing.dart', // E03/T01
@@ -129,6 +131,9 @@ void main() {
         'lib/src/models/rule.dart', // E03/T01
         'lib/src/models/species.dart', // E03/T01
         'lib/src/models/zone.dart', // E03/T01
+        'lib/src/resolve/candidate.dart', // E03/T03
+        'lib/src/resolve/candidate_selection.dart', // E03/T03
+        'lib/src/resolve/evaluation_request.dart', // E03/T03
         'lib/src/search/normalise.dart', // E02/T02
       ]);
     });

@@ -137,3 +137,22 @@ const kRuleShariClosedSeason = Rule(
     ),
   ],
 );
+
+/// The UAE, as the root of the ancestry path Ras Al Khaimah hangs off.
+const kZoneUae = Zone(
+  id: 0,
+  jurisdictionId: 7,
+  parentZoneId: null,
+  code: 'ae',
+  waterType: WaterType.both,
+  zoneKind: ZoneKind.region,
+);
+
+/// An empty tally: nothing taken today.
+const kTallyEmpty = CatchTally(perDay: 0, perTrip: 0, perSeason: 0, vesselCount: 0);
+
+/// A landing that was identified but never measured.
+const kLandingUnmeasured = Landing(lengthMm: null, method: null);
+
+/// A 38 cm hamour, measured by total length — under the 45 cm minimum.
+const kLandingUndersize = Landing(lengthMm: 380, method: MeasurementMethod.totalLength);

@@ -21,8 +21,10 @@
 /// This is the one barrel in the repository (`FLUTTER_GUIDE.md` Part 2.6).
 library;
 
+export 'src/date.dart';
 export 'src/engine_exception.dart';
 export 'src/failure.dart';
+export 'src/models/catch_tally.dart';
 export 'src/models/citation.dart';
 export 'src/models/closed_season.dart';
 export 'src/models/landing.dart';
@@ -30,4 +32,7 @@ export 'src/models/measurement_method.dart';
 export 'src/models/rule.dart';
 export 'src/models/species.dart';
 export 'src/models/zone.dart';
+export 'src/resolve/candidate.dart';
+export 'src/resolve/candidate_selection.dart';
+export 'src/resolve/evaluation_request.dart';
 export 'src/search/normalise.dart';
