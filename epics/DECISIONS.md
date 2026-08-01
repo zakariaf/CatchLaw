@@ -1,0 +1,184 @@
+# DECISIONS.md — conflicts resolved before the first line of code
+
+`SPEC.md`, `FLUTTER_GUIDE.md` and `.claude/skills/` were written in three separate research passes.
+They disagree in nine places. Each disagreement is settled here, once, with the losing source named so
+nobody re-opens it. **A task file never re-litigates a decision on this page; it cites it as `D-n`.**
+
+Where a decision changes a document or a skill, the task that performs the change is named. Until that
+task lands, the document still says the old thing — that is expected, and it is why this page exists.
+
+---
+
+## D-1 — Repository layout: pub workspace, app under `app/`
+
+**Decision.** The repository root is a bare pub-workspace package. Members:
+
+```
+catchlaw/                          # this repo
+├── pubspec.yaml                   # name: catchlaw_workspace — workspace root, ships nothing
+├── analysis_options.yaml
+├── app/                           # the Flutter app       (name: catchlaw)
+├── packages/rule_engine/          # pure Dart, zero Flutter
+├── packages/analysis_defaults/    # shared lints, dev-dependency of every member
+├── tools/content_builder/         # Dart CLI: authoring YAML → reference.db
+└── epics/ · design/ · research*/  # already here
+```
+
+**Source.** `FLUTTER_GUIDE.md` §2.4 and §2.5, which follow `flutter/samples`.
+
+**Overruled.** The `catchlaw-conventions-index` routing table places the app at the repository root
+(`lib/`, `assets/`) and the builder at `packages/content_build/`. That layout would make the workspace
+root simultaneously the Flutter app and the workspace owner — legal, but it puts `app/lib` and
+`tools/` in one dependency namespace and contradicts the researched tree.
+
+**Consequence for the gate scripts.** Every `.claude/skills/*/scripts/check_*.sh` takes an optional
+`TARGET_DIR` and **exits 2 when the directory does not exist** — verified by reading them. So CI calls
+them as `check_lonja_tokens.sh app/lib`, and a wrong path fails loudly instead of passing on an empty
+scan. No script needs editing. **Do not** let a gate default to `lib/` in CI: at this repo root that
+directory does not exist and the run would abort rather than scan `app/lib`.
+
+**Applied by:** E01/T01. **Skill correction:** E01/T09.
+
+---
+
+## D-2 — The theme lives at `app/lib/theme/`, not `app/lib/ui/core/themes/`
+
+**Decision.** `LonjaPrimitives`, `LonjaTokens`, `LonjaTheme` and the text theme live in
+`app/lib/theme/`. Shared non-theme widgets keep `FLUTTER_GUIDE.md`'s home, `app/lib/ui/core/ui/`.
+
+**Source.** Every `lonja-*` gate script exempts token constructs by matching the path fragment
+`/theme/` (`THEME_RE='/theme/'`). A colour authored in `ui/core/themes/lonja_tokens.dart` matches too —
+but `ui/core/themes/` also sits under `ui/`, and check 8 of `check_lonja_tokens.sh` bans
+`Theme.of` / `LonjaTokens.of` inside `*_painter.dart`, which is a `ui/` neighbourhood rule. Keeping the
+palette out of `ui/` keeps the two rule sets from overlapping.
+
+**Overruled.** `FLUTTER_GUIDE.md` §2.1's `ui/core/themes/`. That is the general Flutter convention; the
+gate script is executable and therefore wins.
+
+**Rule of thumb:** the gate script beats the prose whenever they disagree about a path.
+
+**Applied by:** E07/T01.
+
+---
+
+## D-3 — Six locales: `ar`, `en`, `es`, `gl`, `ca`, `pt_BR`. Catalan ships; Urdu does not
+
+**Decision.** ARB files are exactly:
+
+```
+app/lib/l10n/app_ar.arb   app_en.arb   app_es.arb   app_gl.arb   app_ca.arb   app_pt_BR.arb
+```
+
+RTL golden lanes: **`ar` only**. There is one RTL locale in this product.
+
+**Source.** `SPEC.md` §9.1, which justifies each locale by the publication language of the instrument
+being bundled — Catalan because Catalonia, Valencia and the Balearics publish their fishing orders in
+Catalan.
+
+**Overruled.** Three places in the skills name `app_ur.arb` and speak of "Arabic and Urdu RTL lanes":
+`catchlaw-conventions-index/SKILL.md` rule 12, its `references/routing-table.md`, and a report label in
+`scripts/check_app_invariants.sh`. Urdu appears nowhere in `SPEC.md` and no bundled instrument is
+published in it. `catchlaw-verdict-contract/SKILL.md` says `app_pt.arb`; the correct filename carries
+the region, `app_pt_BR.arb`, because the content is Brazilian and not Iberian Portuguese.
+
+**Applied by:** E06/T01. **Skill correction:** E01/T09 — four files, `ur` → `ca`, `app_pt` → `app_pt_BR`.
+
+---
+
+## D-4 — The content builder is `tools/content_builder/`, package `content_builder`
+
+**Decision.** One name: directory `tools/content_builder/`, pubspec `name: content_builder`,
+executable `dart run content_builder:build`.
+
+**Overruled.** `SPEC.md` §8 says `tools/build_content/`; the skills say `packages/content_build/`.
+Three names for one deliverable was going to cost somebody an afternoon.
+
+**Applied by:** E04/T01.
+
+---
+
+## D-5 — Toolchain floor
+
+| | Version | Why |
+|---|---|---|
+| Flutter | **3.44.6** (stable, 2026-07-08) | `FLUTTER_GUIDE.md` Part 0, verified |
+| Dart SDK constraint | **`^3.12.0`** | Pub workspaces need ≥ 3.6; 3.12 is what the guide verified against |
+| Riverpod | **3.4.1** + `riverpod_generator` 4.0.6 | Guide Part 5, verified on pub.dev |
+| drift | **2.34.2** | Guide Part 4.7 |
+
+**Overruled.** `SPEC.md` §10's "Flutter 3.24+ / Dart 3.5+" and "flutter_riverpod ^2.5". The spec was
+written first; the guide's numbers were verified later against the pub.dev and GitHub APIs. Dart 3.5
+cannot resolve a workspace at all, so the spec's floor is not merely older — it is incompatible with
+D-1.
+
+**Applied by:** E01/T01.
+
+---
+
+## D-6 — Reference database: gzipped asset, temp file, atomic rename, sha256, JSON marker
+
+**Decision.** All four mechanisms, together:
+
+1. Ship `app/assets/db/reference.db.gz`.
+2. Extract to a temp file under `getApplicationSupportDirectory()`, verify sha256, `rename()` into
+   place. A partial extraction leaves only the temp file, which is deleted and retried next launch.
+3. Write `app_meta.content_build_date` in `user.db` as the completion marker.
+4. Decide whether to extract by comparing a **generated Dart constant** against that marker — no
+   database open is required to make the decision.
+5. Open the extracted file `readOnly: true`, always.
+
+**Source.** `SPEC.md` §7.4 contributes the marker, the temp+rename and the "no open required" fix;
+`catchlaw-reference-database` contributes the `.gz` asset, the sha256 and the read-only open. They are
+complementary, not contradictory — the merge is the decision.
+
+**Applied by:** E05/T01–T03.
+
+---
+
+## D-7 — The engine returns types; the app owns every word
+
+**Decision.** `packages/rule_engine/` returns sealed `Verdict` and `Finding` values carrying numbers,
+enums, a required `Citation` and an `isExpired` flag. It contains **no user-visible sentence**, in any
+language. Wording comes from ARB (UI chrome) and `content_string` (bundled content), assembled in
+`app/lib/ui/`.
+
+**Why it needs saying.** `catchlaw-verdict-contract` bans imperatives "in Dart source and in all six
+ARB files", which reads as though the engine holds strings. It does not. The contract binds the layer
+that renders, and `check_verdict_contract.sh` scans `app/lib` and `app/lib/l10n` for exactly that
+reason.
+
+**Applied by:** E03/T10, enforced at E10/T10.
+
+---
+
+## D-8 — `EdgeInsets.only(left:` is banned by a grep gate, not by a lint
+
+**Decision.** The directional-padding ban is a CI grep gate in `tools/gates/no_directional_geometry.sh`,
+run over `app/lib`.
+
+**Why.** `SPEC.md` §9.3 says "a lint rule bans `EdgeInsets.only(left:`". No such rule exists in
+`package:lints`, `flutter_lints` or the analyzer's built-in set, and writing a custom analyzer plugin to
+enforce one line is disproportionate. Calling it a lint when it is a grep is the kind of small
+inaccuracy that makes a builder search for a rule name that was never published.
+
+**Applied by:** E06/T05.
+
+---
+
+## D-9 — Merging your own PR on this repository
+
+**Decision.** Each epic's PR is merged with `gh pr merge --squash --admin` **after** all checks report
+success.
+
+**Why.** The `main protection` ruleset requires one approving review **and** a code-owner review.
+`.github/CODEOWNERS` names `@zakariaf` for everything, and GitHub does not let an author approve their
+own pull request — so on a single-maintainer repository the requirement is unsatisfiable by design.
+Repository-admin bypass is enabled in the ruleset for exactly this case. `--admin` uses that bypass; it
+does **not** skip the status checks, which must already be green.
+
+The ruleset also enforces `required_linear_history` and squash-only merges, so `--squash` is not a
+preference — a merge commit is rejected.
+
+**Not decided here:** commit signing. `required_signatures` was deliberately left off the ruleset
+because SSH signing is not configured; if that changes, add the rule and every commit below needs
+`-S`.
