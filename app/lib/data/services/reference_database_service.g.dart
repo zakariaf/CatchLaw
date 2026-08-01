@@ -903,7 +903,7 @@ class $ZonesTable extends Zones with TableInfo<$ZonesTable, ZoneRow> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     $customConstraints:
-        'NOT NULL CHECK (zone_kind IN (\'region\',\'subzone\',\'bank\',\'basin\',\'reserve\',\'exclusion\'))',
+        'NOT NULL CHECK (zone_kind IN (\'region\',\'subzone\',\'bank\',\'basin\', \'reserve\',\'exclusion\'))',
   );
   static const VerificationMeta _geometrySourceMeta = const VerificationMeta('geometrySource');
   @override
