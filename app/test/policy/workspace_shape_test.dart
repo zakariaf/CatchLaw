@@ -90,9 +90,18 @@ void main() {
     );
   });
 
-  test('rule_engine pubspec declares meta as its only runtime dependency', () {
+  test('rule_engine pubspec declares exactly its two reviewed runtime dependencies', () {
     final deps = pubspecOf('packages/rule_engine')['dependencies'] as YamlMap;
-    expect(deps.keys, ['meta']);
+    expect(
+      deps.keys,
+      ['meta', 'unorm_dart'],
+      reason:
+          'Every runtime dependency of the engine is a thing a reviewer must '
+          'reason about before believing it is pure, so the set is pinned rather '
+          'than bounded. unorm_dart arrived in E02/T02 because dart:core offers '
+          'neither NFD nor the NFKC SPEC.md §9.4 opens with. A third entry is a '
+          'failing test, which is the point — not a number to raise.',
+    );
   });
 
   test('content_builder package is named content_builder', () {

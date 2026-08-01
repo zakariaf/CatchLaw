@@ -138,11 +138,21 @@ def analyse(doc: dict, workspace_root: str):
     """Return (direct_lines, ships, dev_only, parents).
 
     Handles the two shapes `dart pub deps --json` actually emits. In a pub
-    WORKSPACE every member comes back as `kind: root` with no direct/dev split at
-    all, so the sections are read from each member's own pubspec — which
-    `project-structure-and-packages` rule 5 calls the audit artifact anyway. In a
-    single-package checkout the kinds are `direct` and `dev`, the shape
-    `audit_deps.py` reads. Epic Risk 5 is exactly this: the schema is not ours.
+    WORKSPACE every member comes back as `kind: root`, so the `kind` field cannot
+    tell a shipping dependency from a dev one and the sections are read from each
+    member's own pubspec — which `project-structure-and-packages` rule 5 calls the
+    audit artifact anyway. In a single-package checkout the kinds are `direct` and
+    `dev`, the shape `audit_deps.py` reads. Epic Risk 5 is exactly this: the schema
+    is not ours.
+
+    The emitted objects ALSO carry `directDependencies` and `devDependencies`
+    arrays, which E02/T02 surfaced by regenerating the fixtures verbatim instead
+    of hand-trimming them to the three fields this gate reads. They would give the
+    same section split without opening a pubspec. Not adopted here, and the reason
+    is worth stating: this gate deliberately crosses the RESOLVED GRAPH with the
+    AUTHORED MANIFEST, so a dependency present in one and absent from the other is
+    visible. Reading both facts from the same emitted object would remove the only
+    place those two sources are compared.
     """
     packages = doc["packages"]
     deps = {p["name"]: list(p.get("dependencies") or []) for p in packages}

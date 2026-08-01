@@ -340,3 +340,44 @@ The unnamespaced skill names (`accessibility-as-code`) stop resolving; the names
 plugin.
 
 **Applied by:** E01/T08.
+
+---
+
+## D-14 — The engine package is `rule_engine`; there is no `catchlaw_shared`
+
+**Decision.** One package for the pure-Dart core: directory `packages/rule_engine/`, pubspec
+`name: rule_engine`, imported as `package:rule_engine/rule_engine.dart`. The normalisation fold lives
+inside it at `lib/src/search/normalise.dart` and is called `normaliseSpeciesTerm`. There is no
+`catchlaw_shared` package and no `packages/shared/` directory.
+
+**Overruled.** `catchlaw-content-pipeline` names two other packages for the same code: rule 9 imports the
+fold from `package:catchlaw_shared/text/normalise.dart` and calls it `normalise()`, and rule 10 imports
+the engine from `package:catchlaw_rule_engine`. Its `examples/content_builder_assertions.dart` imports
+both. That is three names for two things, one of which does not exist.
+
+**Grounds**, all three from documents that outrank the skill:
+
+1. **D-1** places the package at `packages/rule_engine/` and its workspace member list has nowhere to put
+   a fourth package. A `catchlaw_shared` member would have to be added to `pubspec.yaml`, and no decision
+   adds it.
+2. **D-4** sets the precedent that the directory name is the pubspec name — `tools/content_builder/` is
+   `name: content_builder`. `packages/rule_engine/` is `name: rule_engine`.
+3. **`FLUTTER_GUIDE.md` §2.5 and §2.6** put the one sanctioned barrel at
+   `packages/rule_engine/lib/rule_engine.dart`, which resolves as `package:rule_engine/rule_engine.dart`
+   and under no other name.
+
+Splitting the fold into a separate `catchlaw_shared` would also buy nothing this repository needs: the
+fold's two consumers are the app and `tools/content_builder/`, both of which already depend on
+`rule_engine`, and `catchlaw-rule-engine` rule 2's purity guarantee applies to exactly one package.
+
+**Applied by:** E02/T01 through T08, which ship the package and the fold under these names.
+
+**Not corrected here, and it has an owner.** `check_content_pipeline.sh` line 32 carries
+`SHARED_RE='packages/shared/|/catchlaw_shared/'`, an exemption for a package that does not exist. It is a
+**gate pattern**, and `CLAUDE.md` forbids editing a gate's patterns — the rule exists so nobody widens a
+gate to make a build pass, and the honest move when a gate is wrong is to say so rather than quietly
+rewrite it. The gate is not failing: an exemption for a path nothing matches is inert, not dangerous.
+**E04/T07 already names this** in its own Risks ("catchlaw_shared and the gate exempts packages/shared,
+and neither exists here") and is the correction site.
+
+---

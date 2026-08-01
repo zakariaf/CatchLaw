@@ -11,6 +11,7 @@ app dev_dependencies flutter_test
 app dev_dependencies yaml
 packages/analysis_defaults dependencies flutter_lints
 packages/rule_engine dependencies meta
+packages/rule_engine dependencies unorm_dart
 packages/rule_engine dev_dependencies analysis_defaults
 packages/rule_engine dev_dependencies test
 tools/content_builder dependencies rule_engine

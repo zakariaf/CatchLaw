@@ -148,7 +148,7 @@ still trips the gate; T02 records this as a gap per `CONVENTIONS.md` §4 — the
 against the full §7.1 list and is authoritative, and widening the gate's regex is a skill edit that
 belongs with the other skill corrections, not here.
 
-**Three names for one shared function.** `SPEC.md` §8 says "the shared package";
+**Three names for one shared function — settled by D-14.** `SPEC.md` §8 says "the shared package";
 `catchlaw-content-pipeline` says `package:catchlaw_shared/text/normalise.dart`;
 `check_content_pipeline.sh` exempts `packages/shared/`. D-1's workspace has no such member — the
 normaliser lives in `packages/rule_engine/`, put there by E02 and named by `catchlaw-rule-engine`

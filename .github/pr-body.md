@@ -1,101 +1,75 @@
-# E01 — Foundation, workspace and the offline gates
+# E02 — Rule engine: text normalisation
 
-Closes the first epic of `epics/README.md`. Nine tasks, one commit each, every `Task: E01/Tnn` trailer present.
+`packages/rule_engine/` now carries one function that turns any spelling of a fish name into one search key, and both sides of the search — the query the fisher types and the column the content builder writes — call that same function.
+
+`hamour`, `HAMOUR`, `هامور`, `هامورة`, `الهامور`, `هــامور`, a Presentation-Form paste out of a gazette PDF, `Epinephelus coioides` and `epinephelus  coioides` all reach `epinephelus-coioides`, while `شعري` stays firmly on `lethrinus-nebulosus` and the unauthored `shari` reaches nothing at all.
 
 ## What changed
 
-The repository became a Dart pub workspace with four members — `app/` (the Flutter app),
-`packages/rule_engine/` (pure Dart), `packages/analysis_defaults/` (shared lints) and
-`tools/content_builder/` (the CLI) — on Flutter 3.44.6 / Dart `^3.12.0`, with one committed
-`pubspec.lock`. `.github/workflows/validate.yml` gained a `format · analyze · test` job carrying the
-dependency-allowlist diff, the `SPEC.md` §14 banned-API grep, and a runner for all sixteen skill gates that
-fails when a gate scans an empty tree; plus an `android-release-manifest` job that reads the merged manifest
-off a built AAB. The Android shipping manifests removed `android.permission.INTERNET` and disabled backup;
-the iOS `Info.plist` gained two usage strings in six locales and a written statement of what iOS cannot
-prove. Four files under `.claude/skills/` were corrected to the six shipped locales and the content
-builder's real name.
+`normaliseSpeciesTerm` implements the ordered fold of `SPEC.md` §9.4 — NFKC, tatweel, harakat and superscript alef, the alef family, hamza on waw and ya, alef maqsura onto ya, the word-final ta-marbuta and ha collapse, both Arabic-Indic digit ranges, the Latin NFD fold with invariant lowercase, whitespace collapse. `indexKeys` produces the article-stripped and article-retained keys §9.4 step 5 requires. Both live in `lib/src/search/normalise.dart` and are exported from the one barrel.
 
-Nothing a user can see is built here. What a later epic can rely on is that `packages/rule_engine/` cannot
-import Flutter, that every member shares one lint config, that every one of the sixteen skill gates runs
-against its real target directory on every PR, and that a gate which scans nothing is a failure rather than
-a pass.
+The package declares no `flutter` dependency, so `import 'package:flutter/…'` here is a compile error rather than a lint — which is what will let `tools/content_builder/` compile it under a plain `dart run` with no Flutter SDK installed.
 
 ## Why
 
-`SPEC.md` §15 step 1 requires every §14 static check wired in from commit one so the offline guarantee can
-never regress. §5.3 records that the first draft's claim "no HTTP client is linked" was **false** —
-`printing` and `flutter_svg` both declare `http` — so the guarantee is not "no client exists" but "exactly
-two transitive edges exist, they are diffed on every PR, and every API that could reach them is
-grep-banned". That correction is why the allowlist gate is edge-level rather than a one-line pubspec grep.
+`SPEC.md` §4.1 makes local-name search a unit test and not a manual check, and §8 requires the content builder to import this function rather than reimplement it. Two corrections §9.4 records are pinned by name in the suite:
 
-## How it was verified
+- **NFKC runs first** because OCR of the gazette PDFs emits Arabic Presentation Forms. Fold the alef family before it and the class never matches U+FE83, the Presentation Form survives into the key, Latin search keeps working and Arabic search silently returns nothing.
+- **The word-final collapse deletes rather than folds `ة` to `ه`**, because `هاموره` is neither equal to nor a *prefix of* `هامور`, and §13 makes search a prefix query — so the first draft's fold would have removed the fish from the result set entirely, not merely ranked it lower.
 
-Each new gate was proved **red against a planted violation** before it was proved green:
+## Verification
 
-| Gate | Proved red by |
+- **116 tests** in `packages/rule_engine`, 134 in `app`, 1 in the builder
+- **100% coverage on `normalise.dart`** — 33/33 lines, **15/15 branches**
+- `check_rule_engine.sh` clean over `packages/rule_engine/lib` **and** `packages/rule_engine`, the second target proving no second normaliser hides in `test/` or `testing/`
+- All sixteen skill gates green; `dart format` and `flutter analyze --fatal-infos` clean
+- No file under `app/lib/` changed
+
+### The `< 50 ms` budget, measured
+
+| | |
 |---|---|
-| dependency allowlist | `http: ^1.5.0` added to `app/pubspec.yaml` on the live graph — named three ways, then reverted |
-| banned-API grep + layer-4 guard | `HttpClient()` pasted into `app/lib/main.dart` — both turned red naming `main.dart:10` |
-| Android manifest | the merged manifest read off the built AAB, not off our source |
-| skill-gate runner | row 1 pointed at an empty directory (`scanned 0 files`) and at a missing one |
-| nested-options trap | the `include:` line removed from `packages/rule_engine/analysis_options.yaml` |
-| `check_no_network` check 2 | the restated `depend_on_referenced_packages: error` removed from `app/analysis_options.yaml` |
-| iOS absence keys | `NSAppTransportSecurity`, `NSPhotoLibraryUsageDescription` and the always-location key each planted |
-| debug/profile INTERNET grants | the template's grants deleted — the tests assert the grant is **present** |
+| index side | 12.2 ms for 2,400 names folded once |
+| query side | 9.5 ms for 2,400 folds — **~4 µs per fold** |
 
-Six things were learned by executing rather than assuming, and each changed the work:
+Both inside §13's ceiling, but the two numbers are not comparable and only one competes with the search budget. The 12.2 ms is a **build** cost that E04 pays once per rebuild, off the device, never while a fisher is waiting. The number that competes is ~4 µs per query fold, so **E05 and E08 inherit essentially the whole 50 ms**, not 38 ms of it. Written into the test file so the next reader does not have to re-derive it.
 
-1. **`aapt2` cannot read an AAB.** `SPEC.md` §14 bullet 3 names it; it answers "could not identify format of
-   APK", and the prescribed `grep -q INTERNET` over that error text finds nothing and **reports success**.
-   `apkanalyzer` was worse — it printed an `ERROR` and exited `0`. The job uses `bundletool` and asserts the
-   dump produced a manifest before trusting any grep over it.
-2. **`flutter analyze` loads analyzer plugins on `ubuntu-24.04` and not on macOS.** The first CI run failed
-   on a diagnostic the local machine never showed. Both analyzers now block (D-12).
-3. **`import_lint` crashes the plugin server** — `import_lint is required`, thrown for every file under a
-   nested options file, exit 4. Deferred to E05 exactly as Risk 2 prescribed.
-4. **`dart pub deps --json` has two shapes**, and a workspace emits the one with no `direct`/`dev` kinds at
-   all. The gate handles both (Risk 5, arriving early).
-5. **The six iOS localizations did not ship.** All twelve `Info.plist` assertions passed while
-   `Runner.app` contained only `Base.lproj`; creating `.lproj` directories is not what ships them. Caught by
-   building on a Mac and listing the bundle.
-6. **The gate runner had its own failure mode inside it** — `while read` dropped the final line of a table
-   with no trailing newline, silently never running the sixteenth gate.
+## Risk 7 resolved — the branch-coverage invocation
 
-`dart pub get` at the root resolves to one `pubspec.lock` and one `.dart_tool/`. `dart format
---set-exit-if-changed .`, `flutter analyze --fatal-infos` and `dart analyze` are clean across four members.
-131 tests pass. All sixteen skill gates report a non-zero scanned-file count.
+The epic recorded the tooling as unverified. It is now:
 
-## Product invariants touched
+```bash
+dart test --coverage=<dir> --branch-coverage
+dart pub global run coverage:format_coverage --lcov --in=<dir> --out=lcov.info --report-on=lib
+```
 
-None weakened. Invariant 1 (no network code path) is the subject of T04, T05 and T06 and is strengthened
-from a statement into three failing checks. Invariants 2–5 are untouched: this epic adds no user-visible
-string, no verdict type, no colour and no expiry handling.
+Three things worth knowing, all of which cost a cycle here:
 
-## Decisions raised
+1. `--branch-coverage` is a **`dart test`** flag. `format_coverage` rejects it outright.
+2. `format_coverage --lcov` emits **no** `BRF`/`BRDA` records. Branch data lives only in the raw JSON's `branchHits`.
+3. **Branch hits must be aggregated across the per-isolate JSON files.** Reading one file reports false gaps — it showed 4 uncovered branches that are covered by other isolates. A naive check here would have failed a definition-of-done item that is actually met.
 
-Four new entries in `epics/DECISIONS.md`, each with the losing source named:
+## D-14 — the package name, settled
 
-- **D-10** — lints build on `flutter_lints`, not `very_good_analysis` (the divergence E01's Risk 3 said was
-  owed).
-- **~~D-11~~** — struck before it ever merged. Its premise was measured on macOS only and is false on the
-  runner; superseded rather than quietly rewritten.
-- **D-12** — both analyzers block; `import_lint` waits for E05; `flutter_riverpod` and a `ProviderScope`
-  arrive in E01 because satisfying `riverpod_lint` was the only option that was not suppression.
-- **D-13** — the vendored general Flutter skills move to `.claude/skills-flutter/`, because
-  `check_app_invariants.sh` check 9 fans out to every *sibling* gate.
+E02's Risk 8 recorded three names for one package with nothing in `DECISIONS.md` settling them. **D-14 is in this PR**, naming `catchlaw-content-pipeline` as the losing source: one package, `packages/rule_engine/`, `name: rule_engine`, imported as `package:rule_engine/rule_engine.dart`. No `catchlaw_shared`, no `packages/shared/`.
 
-## Follow-ups deliberately not in this PR
+It is in the PR rather than a task because `CONVENTIONS.md` forbids a *task* from amending `DECISIONS.md`, not an epic — and leaving E04 blocked on a decision this epic had already made in code would have been the worse reading. The skill's rules 9 and 10 and its worked example are corrected in the same change, per the amendment rule.
 
-- **The iOS and Android packet captures** — E21. `SPEC.md` §11 is explicit that the iOS half of the
-  guarantee rests on them, and CI on Linux cannot produce either.
-- **Layer 3 is not a proof.** ATS is left at its strict default and no `NSAppTransportSecurity` key is
-  declared. `Info.plist` says so, with the four false claims tabulated.
-- **`flutter run` hot reload** was not confirmed on hardware this session; the debug/profile grants it
-  depends on are in place and asserted by tests.
-- **The directional-padding grep** — D-8, E06/T05. There is no UI to scan yet.
-- **The routing table's root-relative paths** — D-1, still owed a task ID.
-- **`catchlaw-content-pipeline`'s locale list, gender set and `content_build` naming**, plus five more files
-  — all six are listed in `tools/gates/known_skill_drift.txt` with their owning epic, and a test asserts the
-  set matches reality exactly.
-- **The codegen freshness gate** — there is no generated code until E05.
-- **App version metadata** (`CFBundleShortVersionString`) — E21.
+**One hit deliberately not corrected:** `check_content_pipeline.sh` line 32 exempts `packages/shared/|/catchlaw_shared/`, a path that does not exist. That is a **gate pattern**, and `CLAUDE.md` forbids editing one — the rule exists so nobody widens a gate to make a build pass, and the honest move is to say so rather than quietly rewrite it. The gate is not failing; an exemption matching nothing is inert. **E04/T07 already names it in its Risks and is the correction site.**
+
+## Learned by executing
+
+- **A mutation script that reverts with `git checkout -- <file>` deletes uncommitted work.** It cost T03's implementation once, and the symptom was a mutation that stayed green because the target text no longer existed. Mutation scripts here now back up to a file.
+- **Green-on-arrival tests prove nothing, and two of them were weak.** T03's over-merge guard compares `هامور` and `شعري`; under a fold mapping *every* Arabic letter to alef it stays green, because the two words differ in length. §9.1 names five species that must stay apart, so a second test asserts all five reach five distinct keys — same mutation, that one goes red.
+- **The §9.4 acceptance test does not prove what it looks like it proves.** Removing the article strip leaves `الهامور` — the row §9.4 names for exactly that rule — **green**, because `الهامور` is itself an authored alias. Only `الشعري`, authored without the article, can reach its species through the stripped key. The test file now says so at the assertion.
+- **E01's deps fixtures were a shape `dart pub deps --json` never emits.** They had been hand-trimmed to the three keys the gate reads, so a gate that broke on the real output would have kept a green suite. Regenerating verbatim restored `version`, `source`, `directDependencies` and `devDependencies`, and the derivation is now a script rather than four hand-patched JSON files per new dependency.
+
+## Follow-ups deliberately not here
+
+- The SQL side of §13 — the indexed prefix query over `species_name.search_norm`, capped at 40 results. E05 and E08.
+- The builder that calls this function to populate `search_norm` and `body_norm`. E04, per §8.
+- FTS5 over `body_norm` with `unicode61 remove_diacritics 2`. E15.
+- Authored alias rows. Normalisation folds orthography and never generates a transliteration, so `hammour` is content, not code.
+- `check_content_pipeline.sh`'s `SHARED_RE` — E04/T07, as above.
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)

@@ -46,7 +46,7 @@
 
 ## Why it is built this way
 
-**"The shared package" is `packages/rule_engine/`, and three documents call it three things.**
+**"The shared package" is `packages/rule_engine/` (D-14), and three documents called it three things.**
 `SPEC.md` §8 says "the shared package"; `catchlaw-content-pipeline` rule 9 says
 `package:catchlaw_shared/text/normalise.dart`; `check_content_pipeline.sh` exempts
 `packages/shared/`. D-1's workspace has four members and none of them is a `shared` package. The
@@ -236,8 +236,9 @@ feat(content_builder): populate search_norm and body_norm from the engine's norm
 
 SPEC.md §8 bullet 7 says it in its own words: the same normalisation function
 the app uses, imported from the shared package, not reimplemented. In D-1's
-workspace that package is packages/rule_engine — the skills call it
-catchlaw_shared and the gate exempts packages/shared, and neither exists here.
+workspace that package is packages/rule_engine, which D-14 now settles. The
+skills were corrected with it; the gate's SHARED_RE exemption was NOT, because
+it is a gate pattern, and this task is its named correction site.
 
 A second implementation is the defect this prevents, and it is silent. The
 builder writes the index and the app writes the query; one extra folded

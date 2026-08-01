@@ -11,6 +11,14 @@
 /// error rather than a lint, a grep or a code review (`FLUTTER_GUIDE.md` §4.6
 /// layer 1).
 ///
-/// This is the one barrel in the repository (`FLUTTER_GUIDE.md` Part 2.6). It
-/// exports nothing yet; E02 adds the first normalisation surface.
+/// It has two consumers and they must agree byte for byte: the app, and
+/// `tools/content_builder/`, which imports this package rather than
+/// reimplementing it (`SPEC.md` §8). The ORDER of the normalisation steps is
+/// part of that shared contract, not an implementation detail — a different
+/// order in the two places produces a database whose keys the app cannot
+/// reproduce, and a search that silently returns nothing.
+///
+/// This is the one barrel in the repository (`FLUTTER_GUIDE.md` Part 2.6).
 library;
+
+export 'src/search/normalise.dart';
