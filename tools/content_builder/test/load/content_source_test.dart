@@ -3,6 +3,7 @@
 
 import 'dart:io';
 
+import 'package:content_builder/src/assert/assertion.dart';
 import 'package:content_builder/src/cli/failure.dart';
 import 'package:content_builder/src/load/content_source.dart';
 import 'package:test/test.dart';
@@ -140,13 +141,14 @@ void main() {
       expect(ContentSource.load(root).failures.single.message, contains('not found'));
     });
 
-    test('.assertions is empty before any assertion is registered', () {
-      // The registry T02-T09 plug into exists and starts empty. A pre-populated
-      // list is how a missing task looks exactly like a finished one.
+    test('.assertions exposes the registry in the order E04 lands it', () {
+      // The registry T02-T09 plug into. It held nothing at T01 and holds exactly
+      // what has landed since — a list that ran ahead of the tasks would make a
+      // missing assertion look exactly like a finished one.
       final Directory root = treeOf(kTwoDirectoryTree);
       addTearDown(() => root.deleteSync(recursive: true));
 
-      expect(ContentSource.load(root).assertions, isEmpty);
+      expect(ContentSource.load(root).assertions.map((Assertion a) => a.id), <String>['A1']);
     });
 
     test('.failures are sorted by path then line', () {

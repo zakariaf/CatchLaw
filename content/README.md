@@ -122,6 +122,32 @@ verdict stamp, and blank is not a verdict.
 ## GAPS
 
 Recorded per `epics/CONVENTIONS.md` §4: a rule that lives in neither registry is written down, not
-worked around locally.
+worked around locally. **The build tool is authoritative over the gate in every row below.** Widening
+a gate's regex is a skill edit with an owner and a task id, not something a content task does to make
+its own build green.
 
-*(Nothing recorded yet. E04/T02 adds the first entry.)*
+### G-1 — `check_content_pipeline.sh` check 5 knows four measurement codes; `SPEC.md` §7.1 declares nine
+
+The gate matches `measurement_method:[[:space:]]*(TL|FL|CW|SHL)`. Galicia alone needs `CL` for *Maja
+squinado* and `CW` for *Necora puber*, and §7.1 also declares `SL`, `ML`, `DW` and `CUSTOM`. Check 5
+does **not** honour `content-pipeline-ok`, so there is no line-level exemption. A1 validates against
+all nine, and `MeasurementCode` in `tools/content_builder/lib/src/model/enums.dart` is the list.
+
+### G-2 — check 5 cannot fire on this corpus at all, and check 2 cannot either
+
+Worse than G-1, and found while writing A1. Both checks are `awk` window scans keyed to a field name
+followed immediately by a colon:
+
+| Check | Wants | This corpus authors | Matches |
+|---|---|---|---|
+| 5 | `min_size:` / `max_size:` and `measurement_method:` | `min_size_mm:`, `max_size_mm:`, `measurement_method_id:` | never |
+| 2 | `instrument:` or `article:` with `retrieved_on:` | `instrument_ref:`, `article_ref:` | never |
+
+The column names are `SPEC.md` §7.1's, and §7.1 wins — the emitted database's columns and the
+authored field names are the same words on purpose. The consequence is that **two of the gate's seven
+checks are inert against `content/`**, and a green `check_content_pipeline.sh content` says nothing
+at all about sizes without a method or citations without a retrieval date.
+
+A1 covers check 5's ground and A4 (E04/T05) covers check 2's. This is exactly the
+`CONVENTIONS.md` §7 shape — a green tick meaning "I found nothing" and one meaning "I looked at
+nothing" are the same pixel — so it is written here rather than left to be rediscovered.
