@@ -34,6 +34,19 @@ final RegExp _hamzaOnWaw = RegExp('\u0624');
 /// one. E02/T04 carries the full argument.
 final RegExp _yaFamily = RegExp('[\u0626\u0649]');
 
+/// U+0629 ة or U+0647 ه at the end of a WORD, and nowhere else.
+///
+/// Deleting a medial ه merges unrelated names, which is the contract's "two
+/// species collapse into one". The anchor is a negative lookahead on the Arabic
+/// letter block rather than `\b`: Dart's word boundary is defined on ASCII word
+/// characters, so it never fires between ة and a space and does fire inside
+/// Arabic text where nobody intends it. The lookahead makes the Arabic comma
+/// U+060C a boundary, which is how a gazette species list is punctuated.
+///
+/// U+0649 ى is deliberately absent. T03 folded it onto ي, and a word-final ي is
+/// never deleted — §9.1 names شعري and صافي.
+final RegExp _wordFinalTaMarbutaOrHa = RegExp('[\u0629\u0647](?![\u0621-\u064A\u0671-\u06D3])');
+
 /// Combining diacritical marks, U+0300 to U+036F.
 ///
 /// Deliberately narrow. Arabic harakat sit at U+064B to U+0652 and are a
@@ -92,8 +105,14 @@ String normaliseSpeciesTerm(String input) {
   s = s.replaceAll(_hamzaOnWaw, '\u0648'); // to U+0648 waw
   s = s.replaceAll(_yaFamily, '\u064A'); // to U+064A ya
 
-  // Contract steps 7 and 8 — the word-final ta-marbuta/ha collapse and the
-  // digit fold — are inserted HERE by E02/T04 and E02/T06.
+  // Step 7 — the word-final collapse, to NOTHING rather than to a shared
+  // letter. SPEC.md §9.4 records the first draft folding ة to ه, which turned
+  // هامورة into هاموره — neither equal to nor a PREFIX of هامور. Search is a
+  // prefix query over an indexed column (§13), so losing the prefix property
+  // does not rank the fish lower, it removes it from the result set.
+  s = s.replaceAll(_wordFinalTaMarbutaOrHa, '');
+
+  // Contract step 8 — the digit fold — is inserted HERE by E02/T06.
 
   // Step 9 — the Latin fold. NFD splits a precomposed letter into its base and
   // its mark; deleting the marks is what turns ñ ç ã á into n c a a. A table of
