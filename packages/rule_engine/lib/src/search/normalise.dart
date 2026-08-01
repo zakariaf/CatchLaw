@@ -1,13 +1,44 @@
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
+// Every character class below is a \u escape. A literal harakat renders on top
+// of the letter before it, a literal ZWNJ renders as nothing at all, and a
+// reviewer cannot approve what they cannot see. Keeping them all in this one
+// file is also what check 4 of check_rule_engine.sh requires: a second file
+// carrying an Arabic class is reported as a drifting normaliser, which is
+// exactly what it would be.
+
+/// U+0640 ARABIC TATWEEL — a typographic stretch, never a letter.
+final RegExp _tatweel = RegExp('\u0640');
+
+/// U+064B-U+0652 harakat, plus U+0670 ARABIC LETTER SUPERSCRIPT ALEF.
+///
+/// U+0670 sits outside the run, and is the character an implementation with a
+/// single range silently misses.
+final RegExp _harakat = RegExp('[\u064B-\u0652\u0670]');
+
+/// U+200C-U+200F: ZWNJ, ZWJ, LRM, RLM.
+final RegExp _invisibleMarks = RegExp('[\u200C-\u200F]');
+
+/// U+0622 آ, U+0623 أ, U+0625 إ, U+0671 ٱ — hamza placement is inconsistent
+/// across sources and keyboards. U+0627 ا is absent because it is the target.
+final RegExp _alefFamily = RegExp('[\u0622\u0623\u0625\u0671]');
+
+/// U+0624 ؤ, hamza on waw.
+final RegExp _hamzaOnWaw = RegExp('\u0624');
+
+/// U+0626 ئ hamza on ya, and U+0649 ى alef maqsura.
+///
+/// The maqsura is FOLDED here, never deleted word-finally. `SPEC.md` §9.1 names
+/// شعري and صافي, so a word-final ya must survive; deleting a word-final
+/// maqsura instead would split the Egyptian spelling of a name from the Gulf
+/// one. E02/T04 carries the full argument.
+final RegExp _yaFamily = RegExp('[\u0626\u0649]');
+
 /// Combining diacritical marks, U+0300 to U+036F.
 ///
 /// Deliberately narrow. Arabic harakat sit at U+064B to U+0652 and are a
-/// separate, later step of the contract, so widening this class would silently
-/// do that step's work in the wrong position and change the key.
-///
-/// Written as escapes because a literal combining mark in source renders on top
-/// of the character before it, which makes the range invisible to a reviewer.
+/// separate, earlier step of the contract, so widening this class would do that
+/// step's work in the wrong position and change the key.
 final RegExp _combiningMarks = RegExp('[\u0300-\u036F]');
 
 /// Runs of whitespace, including the tab and newline an OCR paste carries.
@@ -22,8 +53,10 @@ final RegExp _whitespaceRun = RegExp(r'\s+');
 /// cannot reproduce and a search that silently returns nothing.
 ///
 /// The ordered steps are `SPEC.md` §9.4, numbered 1 to 10 in
-/// `catchlaw-rule-engine/references/normalisation-contract.md`. They are not
-/// restated here — one copy of that list, and it is the contract's.
+/// `catchlaw-rule-engine/references/normalisation-contract.md`. The order is a
+/// contract shared with `tools/content_builder/`, not an implementation detail.
+/// The steps are not restated here — one copy of that list, and it is the
+/// contract's.
 ///
 /// Lowercasing is invariant, never locale-aware. A key whose value depends on
 /// the device locale is a key the builder cannot reproduce.
@@ -31,12 +64,36 @@ final RegExp _whitespaceRun = RegExp(r'\s+');
 /// This is a fold, not a tokeniser: punctuation survives, so
 /// `Orange-spotted grouper` keeps its hyphen.
 String normaliseSpeciesTerm(String input) {
-  var s = input;
+  // Step 1 — NFKC, and it is FIRST for a reason that has a failure behind it.
+  // The Gulf text is transcribed from gazette PDFs (SPEC.md §8) and a naive
+  // extraction of those emits Arabic Presentation Forms, not letters. Fold the
+  // alef family before this line and its class never matches U+FE83, the
+  // Presentation Form survives into the key, Latin search keeps working, and
+  // Arabic search silently returns nothing.
+  String s = unorm.nfkc(input);
 
-  // Contract steps 1 to 8 — NFKC, tatweel, harakat and superscript alef, the
-  // alef family, hamza on waw and ya, alef maqsura, the word-final collapse and
-  // the digit fold — are inserted HERE, in order, by E02/T03 to E02/T06. The
-  // file reads in the contract's order so prose can be diffed against code.
+  // Step 2 — tatweel.
+  s = s.replaceAll(_tatweel, '');
+
+  // Step 3 — harakat and the superscript alef. Vowel marks are optional in
+  // practice, so keeping them makes every voweled paste unreachable.
+  s = s.replaceAll(_harakat, '');
+
+  // Not numbered in §9.4, but in the contract's character reference: the
+  // zero-width and bidi marks. They sit inside a word and make an otherwise
+  // identical string a different key, and they cannot be seen in a diff, in a
+  // review, or in a test failure message.
+  s = s.replaceAll(_invisibleMarks, '');
+
+  // Steps 4 to 6 — the letter families. Lossy on purpose, and safe because the
+  // output is a SEARCH KEY: display_name_ar is stored unmodified and is what
+  // the plate prints.
+  s = s.replaceAll(_alefFamily, '\u0627'); // to U+0627 alef
+  s = s.replaceAll(_hamzaOnWaw, '\u0648'); // to U+0648 waw
+  s = s.replaceAll(_yaFamily, '\u064A'); // to U+064A ya
+
+  // Contract steps 7 and 8 — the word-final ta-marbuta/ha collapse and the
+  // digit fold — are inserted HERE by E02/T04 and E02/T06.
 
   // Step 9 — the Latin fold. NFD splits a precomposed letter into its base and
   // its mark; deleting the marks is what turns ñ ç ã á into n c a a. A table of
