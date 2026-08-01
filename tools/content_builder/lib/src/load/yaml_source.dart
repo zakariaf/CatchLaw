@@ -18,6 +18,7 @@ class YamlRow {
     required this.path,
     required this.line,
     required this.section,
+    required this.id,
     required this.fields,
     this.jurisdiction,
   });
@@ -40,8 +41,8 @@ class YamlRow {
   /// The authored fields, keyed by their `SPEC.md` §7.1 column name.
   final Map<String, Object?> fields;
 
-  /// The row's `id`, or the empty string when it has none.
-  String get id => string('id') ?? '';
+  /// The row's identity: `key` on a `strings` row, `id` everywhere else.
+  final String id;
 
   /// Whether [key] was authored with a value. An explicit `null` reads as absent.
   bool has(String key) => fields[key] != null;
@@ -67,6 +68,12 @@ class YamlRow {
   /// [key] as a list, or `null` when absent or of another type.
   List<Object?>? list(String key) => switch (fields[key]) {
     final List<Object?> value => value,
+    _ => null,
+  };
+
+  /// [key] as a map, or `null` when absent or of another type.
+  Map<String, Object?>? map(String key) => switch (fields[key]) {
+    final Map<String, Object?> value => value,
     _ => null,
   };
 
@@ -180,10 +187,14 @@ class YamlSource {
         final fields = <String, Object?>{
           for (final MapEntry<Object?, Object?> f in node.entries) '${f.key}': _plain(f.value),
         };
-        final Object? id = fields['id'];
+        // `strings` rows are identified by `key` rather than `id`: the gate
+        // builds its definition set from `key:` lines, so the authoring shape
+        // is fixed by the gate rather than by symmetry with the other sections.
+        final String identity = identityColumnOf(section);
+        final Object? id = fields[identity];
         if (id is! String || id.isEmpty) {
           failures.add(
-            Failure(kLoadFailureId, displayPath, line, "a $section row carries no 'id'"),
+            Failure(kLoadFailureId, displayPath, line, "a $section row carries no '$identity'"),
           );
           continue;
         }
@@ -207,6 +218,7 @@ class YamlSource {
             path: displayPath,
             line: line,
             section: section,
+            id: id,
             fields: fields,
             jurisdiction: jurisdiction,
           ),

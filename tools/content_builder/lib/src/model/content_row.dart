@@ -1,4 +1,5 @@
 import 'package:content_builder/src/load/yaml_source.dart';
+import 'package:content_builder/src/model/key_reference.dart';
 import 'package:meta/meta.dart';
 
 /// One authored row, typed against the `SPEC.md` §7.1 table it becomes.
@@ -28,6 +29,21 @@ abstract class ContentRow {
 
   /// The authored id, stable forever: the changelog diff references it.
   final String id;
+
+  /// Every `*_key` column of this row, by column name, with its authored value.
+  ///
+  /// Abstract on purpose. A2 walks these rather than scanning text for `_key`,
+  /// so a column added to `SPEC.md` §7.1 later is a compile error in this file's
+  /// subclasses rather than a reference nobody checks. A `null` value means the
+  /// nullable column was not authored, and is skipped rather than reported.
+  Map<String, String?> get keyColumns;
+
+  /// This row's key references, ready for A2.
+  Iterable<KeyReference> get keyReferences => <KeyReference>[
+    for (final MapEntry<String, String?> column in keyColumns.entries)
+      if (column.value != null)
+        KeyReference(key: column.value!, column: column.key, path: path, line: line),
+  ];
 }
 
 /// Builds one typed row from one parsed [YamlRow].

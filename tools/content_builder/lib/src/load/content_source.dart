@@ -4,6 +4,10 @@ import 'package:content_builder/src/assert/assertion.dart';
 import 'package:content_builder/src/cli/failure.dart';
 import 'package:content_builder/src/load/authoring_format.dart';
 import 'package:content_builder/src/load/yaml_source.dart';
+import 'package:content_builder/src/model/content_row.dart';
+import 'package:content_builder/src/model/key_reference.dart';
+import 'package:content_builder/src/model/rows.dart';
+import 'package:content_builder/src/model/text.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
@@ -118,4 +122,22 @@ class ContentSource {
 
   /// Every row of the corpus, in file then document order.
   Iterable<YamlRow> get rows => sources.expand((YamlSource s) => s.rows);
+
+  /// Every row, typed against the `SPEC.md` §7.1 table it becomes.
+  ///
+  /// A section with no builder is skipped here and reported by the model test
+  /// that asserts the two registries agree — silently dropping a whole file's
+  /// rows is the defect that test exists to catch.
+  Iterable<ContentRow> get typedRows sync* {
+    for (final YamlRow row in rows) {
+      final RowBuilder? build = kRowBuilders[row.section];
+      if (build != null) yield build(row);
+    }
+  }
+
+  /// Every `*_key` reference in the corpus, with the row that made it.
+  Iterable<KeyReference> get keyReferences => typedRows.expand((ContentRow r) => r.keyReferences);
+
+  /// Every authored `content_string` block.
+  Iterable<ContentStringRow> get contentStrings => typedRows.whereType<ContentStringRow>();
 }

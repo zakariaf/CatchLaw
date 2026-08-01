@@ -64,3 +64,14 @@ bool isJurisdictionFile(String name) => kJurisdictionFiles.containsKey(name);
 
 /// Whether [name] is an authoring file of `shared/`.
 bool isSharedFile(String name) => kSharedFiles.containsKey(name);
+
+/// Sections whose rows are identified by a column other than `id`.
+///
+/// `strings` rows carry `key` because `check_content_pipeline.sh` builds its
+/// definition set from lines matching `^\s*(- )?key:`. A tidier `- id:` would
+/// leave that set empty and make check 1 report every reference in the corpus as
+/// undefined — D-2's rule of thumb, the gate script beats the prose.
+const Map<String, String> kIdentityColumn = <String, String>{'strings': 'key'};
+
+/// The column that identifies a row of [section].
+String identityColumnOf(String section) => kIdentityColumn[section] ?? 'id';

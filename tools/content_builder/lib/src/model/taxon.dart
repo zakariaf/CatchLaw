@@ -26,6 +26,9 @@ class FamilyRow extends ContentRow {
 
   /// Localised family name.
   final String? nameKey;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{'name_key': nameKey};
 }
 
 /// A `species` row.
@@ -74,6 +77,9 @@ class SpeciesRow extends ContentRow {
 
   /// Optional detailed plate, cleared per A6's illustrator death-year test.
   final String? plateAsset;
+
+  @override
+  Map<String, String?> get keyColumns => const <String, String?>{};
 }
 
 /// A `species_name` row: one vernacular name in one locale.
@@ -126,6 +132,9 @@ class SpeciesNameRow extends ContentRow {
 
   /// `RAK`, `Rías Baixas` — where this name is the one people use.
   final String? regionHint;
+
+  @override
+  Map<String, String?> get keyColumns => const <String, String?>{};
 }
 
 /// A `lookalike` row: a species this one is confused with, and how to tell them
@@ -159,6 +168,9 @@ class LookalikeRow extends ContentRow {
 
   /// The localised distinguishing feature.
   final String? differenceKey;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{'difference_key': differenceKey};
 }
 
 /// A `plates.yaml` row: the licence ledger behind `species.plate_asset`.
@@ -221,4 +233,7 @@ class PlateRow extends ContentRow {
   /// The year that work was published — evidence about the artist, never the
   /// test itself.
   final int? sourceYear;
+
+  @override
+  Map<String, String?> get keyColumns => const <String, String?>{};
 }

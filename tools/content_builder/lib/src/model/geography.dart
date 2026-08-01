@@ -90,6 +90,12 @@ class JurisdictionRow extends ContentRow {
   /// When the pack goes stale. Passing it raises the ochre bar; it never
   /// withholds a verdict.
   final String? validUntil;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{
+    'name_key': nameKey,
+    'authority_key': authorityKey,
+  };
 }
 
 /// A `zone` row: a geometry a rule attaches to.
@@ -163,6 +169,9 @@ class ZoneRow extends ContentRow {
 
   /// Bounding box north-east longitude.
   final double? maxLon;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{'name_key': nameKey};
 }
 
 /// A `zone_ring` row: one ring of a zone's polygon.
@@ -204,6 +213,9 @@ class ZoneRingRow extends ContentRow {
   /// rather than authored, because a hand-kept count and a hand-kept list
   /// disagree the first time a coordinate is added.
   final List<List<double>> coords;
+
+  @override
+  Map<String, String?> get keyColumns => const <String, String?>{};
 }
 
 double? _double(YamlRow row, String key) => switch (row.fields[key]) {

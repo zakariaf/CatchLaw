@@ -18,16 +18,22 @@ class ContentStringRow extends ContentRow {
 
   /// Reads a string from [row].
   ///
-  /// One authored row carries every locale, so a key that is missing one is
-  /// visible in the diff rather than only in A2's output.
+  /// One authored row carries every locale, so a key missing one is visible in
+  /// the diff rather than only in A2's output. The shape is
+  /// `- key: … / values: {ar: …, ca: …}` because
+  /// `check_content_pipeline.sh` builds its definition set from lines matching
+  /// `^\s*(- )?key:` — a tidier mapping would leave that set empty and make the
+  /// gate report every reference in the corpus as undefined. D-2's rule of
+  /// thumb: where the gate and the prose disagree about a shape, the gate wins.
   factory ContentStringRow.fromRow(YamlRow row) => ContentStringRow(
     path: row.path,
     line: row.line,
     id: row.id,
     key: row.string('key') ?? row.id,
     values: <String, String>{
-      for (final MapEntry<String, Object?> e in row.fields.entries)
-        if (e.key != 'id' && e.key != 'key' && e.value is String) e.key: e.value! as String,
+      for (final MapEntry<String, Object?> e
+          in (row.map('values') ?? const <String, Object?>{}).entries)
+        if (e.value is String) e.key: e.value! as String,
     },
   );
 
@@ -38,6 +44,9 @@ class ContentStringRow extends ContentRow {
   /// here: a missing key renders a blank line under the stamp, and blank is not
   /// a verdict.
   final Map<String, String> values;
+
+  @override
+  Map<String, String?> get keyColumns => const <String, String?>{};
 }
 
 /// A `glossary_term` row.
@@ -75,6 +84,12 @@ class GlossaryTermRow extends ContentRow {
 
   /// Display order within S22.
   final int sortOrder;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{
+    'term_key': termKey,
+    'definition_key': definitionKey,
+  };
 }
 
 /// A `content_change` row: one line of a jurisdiction's changelog.
@@ -126,4 +141,10 @@ class ContentChangeRow extends ContentRow {
 
   /// When the change was made.
   final String? changedOn;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{
+    'summary_key': summaryKey,
+    'detail_key': detailKey,
+  };
 }

@@ -1,3 +1,4 @@
+import 'package:content_builder/src/assert/a02_locale_coverage.dart';
 import 'package:content_builder/src/assert/assertion.dart';
 import 'package:content_builder/src/cli/failure.dart';
 import 'package:content_builder/src/cli/options.dart';
@@ -43,6 +44,13 @@ int run(List<String> args, {required StringSink out, required StringSink err}) {
     return _report(emitted, options, err);
   }
 
+  final List<String> orphans = unreferencedKeys(source);
+  if (orphans.isNotEmpty) {
+    // Counted, never failed. E22 authors shared glossary and family strings
+    // ahead of the rows that use them, and failing here would force a rule and
+    // its strings into one commit.
+    out.writeln('content_builder: ${orphans.length} content_string keys are unreferenced');
+  }
   out.writeln('content_builder: OK — ${source.rows.length} rows');
   return 0;
 }

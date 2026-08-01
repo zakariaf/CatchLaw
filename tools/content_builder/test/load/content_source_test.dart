@@ -148,7 +148,7 @@ void main() {
       final Directory root = treeOf(kTwoDirectoryTree);
       addTearDown(() => root.deleteSync(recursive: true));
 
-      expect(ContentSource.load(root).assertions.map((Assertion a) => a.id), <String>['A1']);
+      expect(ContentSource.load(root).assertions.map((Assertion a) => a.id), <String>['A1', 'A2']);
     });
 
     test('.failures are sorted by path then line', () {

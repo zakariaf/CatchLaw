@@ -102,18 +102,19 @@ void main() {
   });
 
   group('ContentStringRow', () {
-    test('.fromRow collects one locale per authored field', () {
+    test('.fromRow collects one locale per entry of the values block', () {
       // One row per key carrying all six locales, so a key missing one is
       // visible in the diff and not only in A2's output.
       const yaml = '''
 strings:
-  - id: closure.venerupis.spring
-    ar: موسم مغلق
-    en: Closed season
-    es: Veda
-    gl: Veda
-    ca: Veda
-    pt_BR: Defeso
+  - key: closure.venerupis.spring
+    values:
+      ar: موسم مغلق
+      ca: Veda
+      en: Closed season
+      es: Veda
+      gl: Veda
+      pt_BR: Defeso
 ''';
       final YamlRow row = YamlSource.fromString(
         yaml,
@@ -122,7 +123,7 @@ strings:
       final string = ContentStringRow.fromRow(row);
 
       expect(string.key, 'closure.venerupis.spring');
-      expect(string.values.keys, <String>['ar', 'en', 'es', 'gl', 'ca', 'pt_BR']);
+      expect(string.values.keys, <String>['ar', 'ca', 'en', 'es', 'gl', 'pt_BR']);
       expect(string.values['gl'], 'Veda');
     });
   });

@@ -39,6 +39,12 @@ class MeasurementMethodRow extends ContentRow {
   /// Originated SVG. It does not mirror in RTL — a fork-length arrow must point
   /// at the actual fork.
   final String? diagramAsset;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{
+    'name_key': nameKey,
+    'definition_key': definitionKey,
+  };
 }
 
 /// A `citation` row: the instrument a finding quotes.
@@ -100,6 +106,11 @@ class CitationRow extends ContentRow {
   /// Digest of the fetched document, so the transcription can be re-checked
   /// against the same bytes.
   final String? sha256;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{
+    'instrument_type_key': instrumentTypeKey,
+  };
 }
 
 /// A `rule` row.
@@ -217,6 +228,9 @@ class RuleRow extends ContentRow {
   /// Clears A1's sub-100 mm finfish range check for a genuinely small threshold,
   /// leaving an audit trail. There is no warning tier to put it in.
   final bool minSizeMmConfirmed;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{'notes_key': notesKey};
 }
 
 /// A `closed_season` row.
@@ -293,6 +307,9 @@ class ClosedSeasonRow extends ContentRow {
   /// Declared, never inferred from `end < start`: a November-to-February
   /// closure is legal and an inverted one is a typo, and the two look identical.
   final bool wrapsYear;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{'notes_key': notesKey};
 }
 
 /// A `licence_type` row.
@@ -346,6 +363,12 @@ class LicenceTypeRow extends ContentRow {
 
   /// The instrument establishing it.
   final String? citationId;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{
+    'name_key': nameKey,
+    'description_key': descriptionKey,
+  };
 }
 
 /// A `gear_rule` row.
@@ -403,6 +426,12 @@ class GearRuleRow extends ContentRow {
 
   /// The instrument.
   final String? citationId;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{
+    'gear_name_key': gearNameKey,
+    'constraint_key': constraintKey,
+  };
 }
 
 /// A `penalty` row.
@@ -460,6 +489,12 @@ class PenaltyRow extends ContentRow {
 
   /// The instrument.
   final String? citationId;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{
+    'offence_key': offenceKey,
+    'secondary_key': secondaryKey,
+  };
 }
 
 /// A `legal_text` row: the article as the authority published it.
@@ -509,4 +544,7 @@ class LegalTextRow extends ContentRow {
 
   /// Reading order within the instrument.
   final int sortOrder;
+
+  @override
+  Map<String, String?> get keyColumns => const <String, String?>{};
 }

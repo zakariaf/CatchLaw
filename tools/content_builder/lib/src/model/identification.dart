@@ -33,6 +33,9 @@ class KeyNodeRow extends ContentRow {
 
   /// Localised question. `null` on a leaf.
   final String? questionKey;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{'question_key': questionKey};
 }
 
 /// A `key_option` row: one answer to a node's question.
@@ -76,6 +79,9 @@ class KeyOptionRow extends ContentRow {
   /// `null` is a dead end — S7's terminal state, and a real answer rather than
   /// an error.
   final String? nextNodeId;
+
+  @override
+  Map<String, String?> get keyColumns => <String, String?>{'label_key': labelKey};
 }
 
 /// A `key_leaf_species` row: one candidate at a leaf.
@@ -109,4 +115,7 @@ class KeyLeafSpeciesRow extends ContentRow {
   /// Display order. A leaf with several candidates is an honest outcome, not a
   /// failure of the key.
   final int rank;
+
+  @override
+  Map<String, String?> get keyColumns => const <String, String?>{};
 }

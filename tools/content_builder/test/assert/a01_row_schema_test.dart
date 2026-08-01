@@ -298,12 +298,15 @@ void main() {
       // Through runAllAssertions, because the sort is the registry's job and not
       // each assertion's: ten assertions each sorting their own output would
       // give ten sorted blocks and one unsorted build log.
+      // Filtered to A1: the zone fixture also references a name_key nothing
+      // defines, which is A2's to report. Filtering a sorted list keeps it
+      // sorted, so the ordering claim survives the filter.
       final List<Failure> failures = runAllAssertions(
         corpusOf(<String, String>{
           'content/es-ga/zones.yaml': kZoneWithZoneKind('sector'),
           kRulesPath: kTwoBrokenRuleRowsYaml,
         }),
-      );
+      ).where((Failure f) => f.id == 'A1').toList();
 
       expect(failures.map((Failure f) => '${f.path}:${f.line}'), <String>[
         'content/es-ga/rules.yaml:4',

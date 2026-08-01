@@ -1,4 +1,5 @@
 import 'package:content_builder/src/assert/a01_row_schema.dart';
+import 'package:content_builder/src/assert/a02_locale_coverage.dart';
 import 'package:content_builder/src/cli/failure.dart';
 import 'package:content_builder/src/load/content_source.dart';
 
@@ -24,7 +25,7 @@ abstract interface class Assertion {
 ///
 /// Each of T02 through T09 adds its own entry, and the epic's definition of
 /// done is that all ten are here and all ten are fatal.
-const List<Assertion> kAssertions = <Assertion>[RowSchemaAssertion()];
+const List<Assertion> kAssertions = <Assertion>[RowSchemaAssertion(), LocaleCoverageAssertion()];
 
 /// Every failure the registered assertions find, sorted by path then line.
 List<Failure> runAllAssertions(ContentSource source) =>

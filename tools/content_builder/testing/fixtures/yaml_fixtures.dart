@@ -350,3 +350,126 @@ final String kFebruaryClosureYaml = closedSeasonYaml(
   '    recurrence: annual\n    start_month: 2\n    start_day: 1\n'
   '    end_month: 2\n    end_day: 28',
 );
+
+// ---------------------------------------------------------------------------
+// E04/T03 — A2 locale coverage.
+//
+// Fixture lines carrying a `*_key:` reference end in `# content-pipeline-ok`.
+// check_content_pipeline.sh check 1 scans `*.dart` as well as `*.yaml` and
+// builds its DEFS set from `*.yaml` files only, so a reference inside a Dart
+// string can never resolve against a definition inside another Dart string.
+// The hatch is the gate's own, used on fixtures and never on shipped content:
+// an ARB value or a real content/**.yaml row is never exempt.
+// ---------------------------------------------------------------------------
+
+/// The six D-3 locales, in the order `kShippedLocales` declares them.
+const List<String> kFixtureLocales = <String>['ar', 'ca', 'en', 'es', 'gl', 'pt_BR'];
+
+/// A plausible, distinct value per locale for [key].
+Map<String, String> allSixValues(String key) => <String, String>{
+  for (final String locale in kFixtureLocales) locale: '$key in $locale',
+};
+
+/// A `strings.yaml` defining each key of [blocks] with its locale values.
+String stringsYaml(Map<String, Map<String, String>> blocks) {
+  final buffer = StringBuffer('strings:\n');
+  for (final MapEntry<String, Map<String, String>> block in blocks.entries) {
+    buffer.writeln('  - key: ${block.key}');
+    buffer.writeln('    values:');
+    for (final MapEntry<String, String> value in block.value.entries) {
+      buffer.writeln("      ${value.key}: '${value.value}'");
+    }
+  }
+  return buffer.toString();
+}
+
+/// A `strings.yaml` defining [key] in all six locales.
+String completeStringsYaml(String key) =>
+    stringsYaml(<String, Map<String, String>>{key: allSixValues(key)});
+
+/// A `strings.yaml` defining [key] in every locale but [locale].
+String stringsMissingLocale(String key, String locale) => stringsYaml(<String, Map<String, String>>{
+  key: <String, String>{
+    for (final MapEntry<String, String> e in allSixValues(key).entries)
+      if (e.key != locale) e.key: e.value,
+  },
+});
+
+/// A `strings.yaml` defining [key] with [locale] set to [value] verbatim.
+String stringsWithValue(String key, String locale, String value) =>
+    stringsYaml(<String, Map<String, String>>{
+      key: <String, String>{...allSixValues(key), locale: value},
+    });
+
+/// A `zones.yaml` whose single row references [key] as its `name_key`.
+String zoneReferencing(String key) =>
+    '''
+zones:
+  - id: es-ga-rias-baixas
+    jurisdiction_id: ES-GA
+    code: rias-baixas
+    water_type: salt
+    zone_kind: region
+    name_key: $key  # content-pipeline-ok
+''';
+
+/// A `rules.yaml` whose single row sets the nullable [column] to [key].
+String ruleReferencing(String column, String key) =>
+    '''
+rules:
+  - id: es-ga-r-001
+    jurisdiction_id: ES-GA
+    species_id: venerupis-corrugata
+    water_type: salt
+    citation_id: es-ga-orde-2012-07-27-anexo-ii
+    valid_from: '2012-08-01'
+    $column: $key  # content-pipeline-ok
+''';
+
+/// A `gear_rules.yaml` row setting [column] to [key]; other keys are complete.
+String gearRuleReferencing(String column, String key) =>
+    '''
+gear_rules:
+  - id: es-ga-g-001
+    jurisdiction_id: ES-GA
+    gear_code: RASCO
+    gear_name_key: gear.rasco  # content-pipeline-ok
+    is_allowed: true
+    citation_id: es-ga-orde-2012-07-27-anexo-ii
+    $column: $key  # content-pipeline-ok
+''';
+
+/// A `penalties.yaml` row setting [column] to [key]; other keys are complete.
+String penaltyReferencing(String column, String key) =>
+    '''
+penalties:
+  - id: es-ga-p-001
+    jurisdiction_id: ES-GA
+    offence_key: penalty.undersize  # content-pipeline-ok
+    citation_id: es-ga-orde-2012-07-27-anexo-ii
+    $column: $key  # content-pipeline-ok
+''';
+
+/// A `changes.yaml` row setting [column] to [key]; other keys are complete.
+String changeReferencing(String column, String key) =>
+    '''
+changes:
+  - id: es-ga-ch-001
+    jurisdiction_id: ES-GA
+    from_version: '2026.07.0'
+    to_version: '2026.08.0'
+    summary_key: change.es_ga.2026_08  # content-pipeline-ok
+    changed_on: '2026-08-01'
+    $column: $key  # content-pipeline-ok
+''';
+
+/// A `rules.yaml` row referencing no `*_key` column at all.
+const String kRuleWithoutNotesKeyYaml = '''
+rules:
+  - id: es-ga-r-001
+    jurisdiction_id: ES-GA
+    species_id: venerupis-corrugata
+    water_type: salt
+    citation_id: es-ga-orde-2012-07-27-anexo-ii
+    valid_from: '2012-08-01'
+''';
