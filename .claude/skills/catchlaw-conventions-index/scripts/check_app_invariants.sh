@@ -62,7 +62,7 @@ fi
 report "imperative verdict string in Dart (state the measurement and the shortfall)" \
   "$(grep -rniE "['\"](Keep|Return|Release|Discard|Throw|Toss|Retain|Land it|Put it back|Do not keep)\b|(throw it back|put it back|keep it|return it|release it|safe to keep)" \
       --include='*.dart' "$TARGET" | grep -vE "$GEN_RE" | grep -v "$OK_RE" || true)"
-report "imperative verdict string in ARB (every locale, incl. app_ar.arb and app_ur.arb)" \
+report "imperative verdict string in ARB (every locale, incl. app_ar.arb and app_ca.arb)" \
   "$(grep -rniE '": *"(Keep|Return|Release|Discard|Throw|Toss|Retain)\b|"[^"]*(throw it back|put it back|keep it|return it|release it|safe to keep)[^"]*"' \
       --include='*.arb' "$TARGET" || true)"
 
@@ -98,7 +98,7 @@ report "expiry used as a gate (evaluate anyway and add the ochre StaleRuleBar)" 
   "$(grep -rnE 'if *\([^)]*(isExpired|isStale|expired|validUntil)[^)]*\) *\{? *(return|throw)|(isExpired|isStale|expired)[^;]*\? *(const )?[A-Za-z0-9_]*(Error|Expired|Unavailable|Empty)[A-Za-z0-9_]*\(|enabled: *![^;]*(isExpired|isStale)|onPressed: *[^;]*(isExpired|isStale)[^;]*\? *null' \
       --include='*.dart' "$TARGET" | grep -vE "$GEN_RE" | grep -v "$OK_RE" || true)"
 
-# 7. Layer map — the engine is pure Dart, shared with the content_build CLI.
+# 7. Layer map — the engine is pure Dart, shared with the content_builder CLI.
 engine_dirs="$(find "$ROOT" -maxdepth 4 -type d -name 'rule_engine' -not -path '*/.dart_tool/*' 2>/dev/null || true)"
 if [ -n "$engine_dirs" ]; then
   hits=""

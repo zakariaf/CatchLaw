@@ -268,7 +268,7 @@ const LonjaDisclaimer(); // fixed slot on the result surface — see lonja-verdi
 
 - [ ] `scripts/check_verdict_contract.sh` is clean over `lib/`.
 - [ ] No imperative verb and no second person appears in any Dart verdict literal or any `app_*.arb`
-      value, `app_ar.arb` and `app_pt.arb` included (rules 1, 2, 12).
+      value, `app_ar.arb` and `app_pt_BR.arb` included (rules 1, 2, 12).
 - [ ] Every finding string prints measured value, threshold, unit and a spelled-out measurement
       method in one sentence (rules 3, 4).
 - [ ] `Citation` is non-nullable on `Verdict` and `NoRuleRecorded`, with no `??` instrument-name

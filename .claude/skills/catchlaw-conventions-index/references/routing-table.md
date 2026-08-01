@@ -10,14 +10,14 @@ The invariants themselves are in `product-invariants.md`.
 |---|---|---|
 | `pubspec.yaml` (root) | pub workspace: the app plus `packages/*` | `project-structure-and-packages`, `dependency-hygiene` |
 | `packages/rule_engine/` | pure Dart, zero Flutter, zero drift — rules and verdicts | `catchlaw-rule-engine`, `dart3-idioms-and-coding-standards` |
-| `packages/content_build/` | CLI that builds and signs the reference DB | `catchlaw-content-pipeline` |
+| `tools/content_builder/` | CLI that builds and signs the reference DB | `catchlaw-content-pipeline` |
 | `assets/db/` | the shipped `reference.db` payload, opened read-only | `catchlaw-reference-database` |
 | `lib/data/` | drift: reference DAOs, `user.db`, mappers into engine types | `persistence-drift`, `catchlaw-reference-database` |
 | `lib/theme/` | `lonja_primitives.dart`, `lonja_tokens.dart`, `lonja_theme.dart` | `lonja-design-tokens`, `lonja-typography` |
 | `lib/design/` | icon paths, engraved plate specs | `lonja-icons-and-plates` |
 | `lib/ui/core/` | shared Lonja widgets | the `lonja-*` component skills |
 | `lib/ui/<feature>/` | screens and their notifiers | `state-management-riverpod`, `scaffold-feature-module` |
-| `lib/l10n/` | `app_ar.arb`, `app_en.arb`, `app_es.arb`, `app_gl.arb`, `app_pt.arb`, `app_ur.arb` | `i18n-rtl-l10n` |
+| `lib/l10n/` | `app_ar.arb`, `app_en.arb`, `app_es.arb`, `app_gl.arb`, `app_pt_BR.arb`, `app_ca.arb` | `i18n-rtl-l10n` |
 | `test/`, `test/goldens/` | unit, widget, golden, RTL lanes | `testing-strategy`, `widget-golden-and-a11y-testing` |
 
 Direction of dependency: `packages/rule_engine/` knows nothing. `lib/data/` depends on the engine.
@@ -28,7 +28,7 @@ Direction of dependency: `packages/rule_engine/` knows nothing. `lib/data/` depe
 | Working on | Read |
 |---|---|
 | a colour, gap, rule weight, radius, duration, glove density or theme value | `lonja-design-tokens` |
-| a type role, serif legal text, mono tabular figures, Arabic or Urdu faces | `lonja-typography` |
+| a type role, serif legal text, mono tabular figures, Arabic faces | `lonja-typography` |
 | an action button, its label, the variant ladder, a destructive confirm | `lonja-buttons` |
 | app bar, tabs, zone chip, back affordance, data-currency banner | `lonja-navigation-chrome` |
 | text field, numeric keypad, segmented control, switch, filter chip | `lonja-forms-and-controls` |
@@ -38,7 +38,7 @@ Direction of dependency: `packages/rule_engine/` knows nothing. `lib/data/` depe
 | result screen, verdict stamp, stale bar, citation footnote, disclaimer | `lonja-verdict-and-status` |
 | anything asserting the absence of network, sync, accounts or telemetry | `catchlaw-offline-guarantee` |
 | reference DB schema, seeding, extraction, sha256, the read-only open | `catchlaw-reference-database` |
-| `content_build` CLI, rule packs, validity dates, source provenance | `catchlaw-content-pipeline` |
+| `content_builder` CLI, rule packs, validity dates, source provenance | `catchlaw-content-pipeline` |
 | evaluation order, precedence, seasons, bag limits, zones, gear rules | `catchlaw-rule-engine` |
 | verdict WORDING, banned imperatives, citation string format | `catchlaw-verdict-contract` |
 | TL / FL / CW / SHL, units, rounding, the on-screen ruler and calibration | `catchlaw-measurement-ruler` |

@@ -6,7 +6,7 @@ description: >-
   statements of fact and never instructions, a citation on every result, colour as never the only
   signal and an expired ruleset still evaluated behind an ochre bar, the one-way layer map from the
   pure-Dart rule_engine package through lib/data/ to lib/ui/, the pub workspace shared with the
-  content_build CLI, the three database files assets/db/reference.db.gz, the extracted reference.db
+  content_builder CLI, the three database files assets/db/reference.db.gz, the extracted reference.db
   and the writable user.db, and a task-to-skill matrix spanning the sixteen app skills
   and thirty-three general ones. Use at the start of any CatchLaw work, before editing
   bootstrap.dart, when deciding which skill owns a change, when a task crosses rule_engine, data and
@@ -37,7 +37,7 @@ General Flutter practice is NOT in this repo: `const` policy, Riverpod, GoRouter
 
 5. **An expired ruleset is still EVALUATED and still shown.** Expiry sets a flag that renders the non-blocking ochre `StaleRuleBar`; it never returns early, never disables a control, never shows an error screen and never gates the result behind a dialog. **WHY:** there is no network to refresh from, so blocking on staleness converts a slightly old answer into no answer at all — a stale rule beats no rule at sea.
 
-6. **The layer map runs ONE WAY: `packages/rule_engine/` to `lib/data/` to `lib/ui/`.** The engine has zero `package:flutter` imports and zero knowledge of drift; `lib/data/` maps rows into engine types; `lib/ui/` never queries a DAO directly. **WHY:** a Flutter import in the engine breaks the `content_build` CLI that shares it through the pub workspace and forces every rule test to boot a widget binding.
+6. **The layer map runs ONE WAY: `packages/rule_engine/` to `lib/data/` to `lib/ui/`.** The engine has zero `package:flutter` imports and zero knowledge of drift; `lib/data/` maps rows into engine types; `lib/ui/` never queries a DAO directly. **WHY:** a Flutter import in the engine breaks the `content_builder` CLI that shares it through the pub workspace and forces every rule test to boot a widget binding.
 
 7. **Three database FILES, two drift databases, and the shipped one is READ-ONLY.** `assets/db/reference.db.gz` is extracted once to `reference.db` under `getApplicationSupportDirectory()` and opened `readOnly: true`; `user.db` is the only writable one and the only irreplaceable one. **WHY:** a writable open lets drift run `onCreate` against shipped content and drop a `-wal` beside it, after which the sha256 no longer matches and every later integrity check is a false alarm.
 
@@ -49,11 +49,11 @@ General Flutter practice is NOT in this repo: `const` policy, Riverpod, GoRouter
 
 11. **No account, no login, no sync, and no identifier ever leaves the device.** No `signIn`, no `deviceId`, no install UUID, no remote config, no crash upload; `user.db` is local, exportable by the user and by nobody else. **WHY:** the app's entire promise is that there is nothing to leak, and a device identifier is a sync feature waiting for a product manager to find it.
 
-12. **Six locales ship together or the feature does not ship.** `app_ar.arb`, `app_en.arb`, `app_es.arb`, `app_gl.arb`, `app_pt.arb` and `app_ur.arb` gain the key in the same PR, with Arabic and Urdu RTL lanes in the golden matrix; mechanics belong to `i18n-rtl-l10n`. **WHY:** a missing Arabic key falls back to English inside a legal statement, which is the one place a fisher cannot guess the meaning.
+12. **Six locales ship together or the feature does not ship.** `app_ar.arb`, `app_en.arb`, `app_es.arb`, `app_gl.arb`, `app_ca.arb` and `app_pt_BR.arb` gain the key in the same PR, with an Arabic RTL lane in the golden matrix; mechanics belong to `i18n-rtl-l10n`. **WHY:** a missing Arabic key falls back to English inside a legal statement, which is the one place a fisher cannot guess the meaning.
 
 ## The layer map is a one-way street
 
-`packages/rule_engine/` is pure Dart with zero Flutter imports, shared through pub workspaces with `packages/content_build/`. It takes plain values and returns a sealed verdict; it never sees a `Color`, a `BuildContext` or a DAO.
+`packages/rule_engine/` is pure Dart with zero Flutter imports, shared through pub workspaces with `tools/content_builder/`. It takes plain values and returns a sealed verdict; it never sees a `Color`, a `BuildContext` or a DAO.
 
 ```dart
 // WRONG — packages/rule_engine/lib/src/size_rule.dart
@@ -151,7 +151,7 @@ One row, one owner. The complete matrix, including every general skill not liste
 | the result screen, stamp, stale bar, citation footnote, disclaimer | `lonja-verdict-and-status` |
 | anything about the absence of network, sync or accounts | `catchlaw-offline-guarantee` |
 | the read-only reference DB, its schema, seeding or extraction | `catchlaw-reference-database` |
-| the `content_build` CLI, rule packs, checksums, publish dates | `catchlaw-content-pipeline` |
+| the `content_builder` CLI, rule packs, checksums, publish dates | `catchlaw-content-pipeline` |
 | rule evaluation, precedence, seasons, bag limits, zones | `catchlaw-rule-engine` |
 | verdict WORDING, banned imperatives, citation strings | `catchlaw-verdict-contract` |
 | TL, FL, CW, SHL, units, rounding, the on-screen ruler | `catchlaw-measurement-ruler` |
@@ -173,7 +173,7 @@ One row, one owner. The complete matrix, including every general skill not liste
 
 - **`http.get(Uri.https('api.catchlaw.app', '/rules'))`** — an offline app that hangs forever on the one boat where it is used.
 - **`connectivity_plus` in `pubspec.yaml`** — implies a code path that reacts to connectivity, which implies there is one.
-- **`import 'package:flutter/material.dart'` inside `packages/rule_engine/`** — breaks `content_build`, and makes every rule test boot a widget binding.
+- **`import 'package:flutter/material.dart'` inside `packages/rule_engine/`** — breaks `content_builder`, and makes every rule test boot a widget binding.
 - **`await database.open()` before `runApp`** — a black screen that is indistinguishable from a crash.
 - **`NativeDatabase(referenceFile)` without `readOnly: true`** — drift runs `onCreate` against shipped content and leaves a `-wal` that breaks every later sha256 check.
 - **`Text('Throw it back')`** — an instruction, so a wrong one is our liability rather than a misread rule.
@@ -195,7 +195,7 @@ One row, one owner. The complete matrix, including every general skill not liste
 - [ ] `packages/rule_engine/` has zero `package:flutter` and zero `package:drift` imports, and `lib/ui/` touches no DAO (rule 6).
 - [ ] `reference.db` is opened `readOnly: true`, `user.db` is the only writable one, and neither is awaited before `runApp` (rules 7, 8).
 - [ ] Every changed area names its owning skill in the PR description, and no general-plugin rule was copied into this repo (rules 9, 10).
-- [ ] All six ARB files gained the same keys, with `ar` and `ur` golden lanes green (rule 12).
+- [ ] All six ARB files gained the same keys, with the `ar` golden lane green (rule 12).
 
 ## Related skills
 
@@ -203,11 +203,11 @@ One row, one owner. The complete matrix, including every general skill not liste
 - See `catchlaw-rule-engine` for evaluation order, precedence between size, season, protection and bag limits, and the sealed verdict types.
 - See `catchlaw-verdict-contract` for the exact statement-of-fact wording, the banned-imperative lexicon and the citation string format.
 - See `catchlaw-reference-database` for the two-database contract, the read-only open, extraction and sha256 verification of the shipped `reference.db`.
-- See `catchlaw-content-pipeline` for the `content_build` CLI, rule-pack validity dates and how a pack is published.
+- See `catchlaw-content-pipeline` for the `content_builder` CLI, rule-pack validity dates and how a pack is published.
 - See `catchlaw-measurement-ruler` for TL, FL, CW and SHL, unit handling and the on-screen ruler.
 - See `lonja-design-tokens` for the pigment box and spacing spine every Lonja surface skill reads.
 - See `flutter-conventions-index` for the thirty-three general Flutter skills this repo defers to rather than restates.
-- See `project-structure-and-packages` for the pub-workspace mechanics that let the app and `content_build` share `rule_engine`.
+- See `project-structure-and-packages` for the pub-workspace mechanics that let the app and `content_builder` share `rule_engine`.
 
 ## References
 
