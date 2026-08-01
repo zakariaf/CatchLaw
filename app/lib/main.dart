@@ -17,6 +17,5 @@ class CatchlawApp extends StatelessWidget {
   const CatchlawApp({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      const MaterialApp(home: SizedBox.shrink());
+  Widget build(BuildContext context) => const MaterialApp(home: SizedBox.shrink());
 }

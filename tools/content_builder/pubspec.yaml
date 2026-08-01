@@ -15,4 +15,7 @@ dependencies:
   rule_engine:
 
 dev_dependencies:
+  # Workspace-resolved: it makes package:flutter_lints/flutter.yaml load for
+  # this member's analysis_options.yaml.
+  analysis_defaults:
   test: ^1.25.0

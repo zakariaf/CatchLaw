@@ -14,8 +14,7 @@ const members = <String>[
 ];
 
 YamlMap pubspecOf(String relativeDir) =>
-    loadYaml(repoFile('$relativeDir/pubspec.yaml').readAsStringSync())
-        as YamlMap;
+    loadYaml(repoFile('$relativeDir/pubspec.yaml').readAsStringSync()) as YamlMap;
 
 void main() {
   test('Workspace root declares exactly the four members', () {
@@ -55,14 +54,10 @@ void main() {
   });
 
   test('Exactly one pubspec.lock exists in the repository', () {
-    final locks = repoRoot()
+    final List<String> locks = repoRoot()
         .listSync(recursive: true, followLinks: false)
         .whereType<File>()
-        .where(
-          (f) =>
-              f.path.endsWith('pubspec.lock') &&
-              !f.path.contains('/.dart_tool/'),
-        )
+        .where((f) => f.path.endsWith('pubspec.lock') && !f.path.contains('/.dart_tool/'))
         .map((f) => f.path)
         .toList();
     expect(
@@ -85,9 +80,7 @@ void main() {
   });
 
   test('rule_engine pubspec declares no flutter dependency', () {
-    final raw = repoFile(
-      'packages/rule_engine/pubspec.yaml',
-    ).readAsStringSync();
+    final String raw = repoFile('packages/rule_engine/pubspec.yaml').readAsStringSync();
     expect(
       RegExp(r'^\s*flutter\s*:', multiLine: true).hasMatch(raw),
       isFalse,
@@ -107,14 +100,12 @@ void main() {
   });
 
   test('.fvmrc records Flutter 3.44.6 as JSON', () {
-    final decoded =
-        jsonDecode(repoFile('.fvmrc').readAsStringSync())
-            as Map<String, dynamic>;
+    final decoded = jsonDecode(repoFile('.fvmrc').readAsStringSync()) as Map<String, dynamic>;
     expect(decoded['flutter'], '3.44.6');
   });
 
   test('app main is not async', () {
-    final raw = repoFile('app/lib/main.dart').readAsStringSync();
+    final String raw = repoFile('app/lib/main.dart').readAsStringSync();
     expect(
       RegExp(r'(void|Future<void>)\s+main\(\)\s+async').hasMatch(raw),
       isFalse,

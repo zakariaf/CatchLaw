@@ -15,6 +15,9 @@ dependencies:
   meta: ^1.15.0
 
 dev_dependencies:
+  # Workspace-resolved: it makes package:flutter_lints/flutter.yaml load for
+  # this member's analysis_options.yaml.
+  analysis_defaults:
   # Plain `dart test`, never flutter_test — that would forfeit the headless
   # millisecond tier this package exists to keep.
   test: ^1.25.0

@@ -1,0 +1,12 @@
+# A nested options file REPLACES the parent for its subtree. Without this line
+# the package silently loses strict-casts, every promoted error and every rule
+# in FLUTTER_GUIDE.md Part 4.3's list — and `dart analyze` here would report
+# zero problems, which is also what a clean package looks like. (Verified.)
+include: ../../analysis_options.yaml
+
+linter:
+  rules:
+    # Two consumers — the app and the content builder — make an undocumented
+    # public member real debt rather than a style preference.
+    - public_member_api_docs
+    - avoid_print

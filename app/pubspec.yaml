@@ -12,6 +12,9 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  # Workspace-resolved: it makes package:flutter_lints/flutter.yaml load for
+  # this member's analysis_options.yaml.
+  analysis_defaults:
   flutter_test:
     sdk: flutter
   # Pure Dart, opens nothing, dev-only: the policy tests parse five pubspecs,

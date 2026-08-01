@@ -1,0 +1,13 @@
+# A nested options file REPLACES the parent for its subtree. This line is what
+# keeps the app under the workspace configuration.
+include: ../analysis_options.yaml
+
+analyzer:
+  errors:
+    # RESTATED ON PURPOSE. The include above already gives the app this
+    # promotion, so this line changes nothing about analysis. It exists because
+    # check_no_network.sh check 2 greps the analysis_options.yaml sitting beside
+    # its target directory and cannot follow an include:. Delete this line and
+    # the analyzer is unaffected, but that check silently skips — it prints
+    # nothing and the job goes green.
+    depend_on_referenced_packages: error
