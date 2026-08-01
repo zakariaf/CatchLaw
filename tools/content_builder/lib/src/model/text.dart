@@ -109,6 +109,7 @@ class ContentChangeRow extends ContentRow {
     required this.summaryKey,
     required this.changedOn,
     this.detailKey,
+    this.ruleIds = const <String>[],
   });
 
   /// Reads a change from [row].
@@ -122,6 +123,10 @@ class ContentChangeRow extends ContentRow {
     summaryKey: row.string('summary_key'),
     detailKey: row.string('detail_key'),
     changedOn: row.string('changed_on'),
+    ruleIds: <String>[
+      for (final Object? id in row.list('rule_ids') ?? const <Object?>[])
+        if (id is String) id,
+    ],
   );
 
   /// The authority whose pack changed.
@@ -139,8 +144,17 @@ class ContentChangeRow extends ContentRow {
   /// Localised detail.
   final String? detailKey;
 
-  /// When the change was made.
+  /// When the change was made. Authored, never a clock reading.
   final String? changedOn;
+
+  /// The authored row ids this entry accounts for.
+  ///
+  /// A10 fails when a shipping row differs from the committed snapshot and no
+  /// entry lists it. The mechanical diff detects the change; the author writes
+  /// what it means, because a generated `summary_key` would fail A2 the moment
+  /// it was generated and generating six locales of it is machine translation
+  /// of a legal note.
+  final List<String> ruleIds;
 
   @override
   Map<String, String?> get keyColumns => <String, String?>{

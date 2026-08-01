@@ -29,6 +29,7 @@ class ContentBuildOptions {
     required this.generatorCommit,
     required this.changelogDir,
     required this.assetsRoot,
+    this.check = false,
   });
 
   /// The authored corpus, e.g. `content/`.
@@ -64,6 +65,18 @@ class ContentBuildOptions {
   /// a build check silhouettes in one tree and ship a database that names
   /// another, and the failure would be a species with no picture on a phone.
   final Directory assetsRoot;
+
+  /// Compute every artefact, write nothing, and fail when what is committed
+  /// differs.
+  ///
+  /// Without it A10 could never fire: a build that regenerates `snapshot.json`
+  /// and the changelog every time makes the committed files correct by
+  /// construction. This is the standard generated-file discipline — the local
+  /// build writes, and CI checks.
+  ///
+  /// It does **not** weaken an assertion, which is why it is not one of the
+  /// three rejected names: it makes one stricter.
+  final bool check;
 
   /// The name of the changelog directory inside the corpus.
   static const String changelogDirName = 'CHANGELOG';
@@ -107,6 +120,7 @@ class ContentBuildOptions {
       generatorCommit: results.option('generator-commit')!,
       changelogDir: Directory(p.join(inPath, changelogDirName)),
       assetsRoot: Directory(p.dirname(p.dirname(results.option('out')!))),
+      check: results.flag('check'),
     );
   }
 
@@ -136,6 +150,13 @@ class ContentBuildOptions {
         'generator-commit',
         help: 'The commit this corpus was built from.',
         valueHelp: 'sha',
+      )
+      ..addFlag(
+        'check',
+        negatable: false,
+        help:
+            'Verify the committed snapshot.json and changelogs instead of '
+            'rewriting them. Makes A10 stricter, never weaker.',
       );
     for (final String flag in kRejectedFlags) {
       // Declared so the tool can answer by name, hidden so `usage` advertises

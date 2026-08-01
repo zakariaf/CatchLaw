@@ -62,6 +62,12 @@ final class ResolutionAssertion implements Assertion {
 
   @override
   Iterable<Failure> run(ContentSource source) sync* {
+    final rows = <String, RuleRow>{
+      for (final RuleRow r in source.typedRows.whereType<RuleRow>()) r.id: r,
+    };
+    // No rules is not a contradiction, and a corpus with none needs no date.
+    if (rows.isEmpty) return;
+
     final DateTime? date = on ?? source.buildDate;
     if (date == null) {
       // Resolving at no date would drop every rule whose valid_from is compared
@@ -69,11 +75,6 @@ final class ResolutionAssertion implements Assertion {
       yield const Failure(_id, 'content', 0, 'no date to resolve at; pass --build-date');
       return;
     }
-
-    final rows = <String, RuleRow>{
-      for (final RuleRow r in source.typedRows.whereType<RuleRow>()) r.id: r,
-    };
-    if (rows.isEmpty) return;
 
     final adapter = RuleSetAdapter.of(source);
     final Map<({Species species, WaterType waterType}), List<GridCell>> grid = ResolutionGrid.of(

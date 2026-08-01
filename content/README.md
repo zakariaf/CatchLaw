@@ -89,6 +89,19 @@ a node, its options and its leaves can disagree in a diff nobody reads as a whol
 
 A zone's rings are its geometry and are meaningless apart from it, so they share a file.
 
+**`snapshot.json` and `CHANGELOG/<jurisdiction>.md` are generated, committed, and rewritten by every
+clean build.** The snapshot is a canonical, sorted projection of exactly the fields that ship, and it
+is what the next build diffs against. It is checked in rather than derived from a git tag: a builder
+that shells out to `git` behaves differently in a shallow CI clone, in a worktree, and on a machine
+with no tags fetched, and its output would then depend on the checkout rather than on the input.
+Diffing against the previously built `reference.db` was rejected for a different reason — it would
+make a 10 MB binary a build input and put it in every review.
+
+**`--check` computes both and writes neither**, failing when what is committed differs. Without it A10
+could never fire: a build that regenerates them every time makes the committed files correct by
+construction. It makes an assertion stricter, which is why it is not one of the three flag names the
+CLI rejects.
+
 **`content_meta` is not authored.** Its three rows — `schema_version`, `build_date` and
 `generator_commit` — come from the build's own `--build-date` and `--generator-commit`. Authoring them
 would let the file disagree with the run that produced it.

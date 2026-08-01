@@ -1,5 +1,6 @@
 import 'package:content_builder/src/assert/a02_locale_coverage.dart';
 import 'package:content_builder/src/assert/a08_resolution.dart';
+import 'package:content_builder/src/assert/a10_changelog.dart';
 import 'package:content_builder/src/assert/assertion.dart';
 import 'package:content_builder/src/cli/failure.dart';
 import 'package:content_builder/src/cli/options.dart';
@@ -29,12 +30,21 @@ int run(List<String> args, {required StringSink out, required StringSink err}) {
     return e.exitCode;
   }
 
-  final source = ContentSource.load(options.inDir);
+  final source = ContentSource.load(
+    options.inDir,
+    buildDate: options.buildDate,
+    assetsRoot: options.assetsRoot,
+  );
   final List<Failure> failures = sortedFailures(<Failure>[
     ...source.failures,
     // The assertions read a corpus the loader could parse. Running them over a
     // half-read one reports defects in rows that were never there.
     if (source.failures.isEmpty) ...runAllAssertions(source),
+    // A10 in --check mode is a second, stricter run of the same assertion: it
+    // verifies the committed generated files rather than the build's right to
+    // rewrite them.
+    if (source.failures.isEmpty && options.check)
+      ...const ChangelogAssertion(check: true).run(source),
   ]);
 
   if (failures.isNotEmpty) {
@@ -47,6 +57,11 @@ int run(List<String> args, {required StringSink out, required StringSink err}) {
   // assemble; it is regenerated on every clean build, so it cannot drift from
   // the data it describes.
   writePlateLedger(source, options);
+  if (!options.check) {
+    // The generated half of the corpus, rewritten on every clean build. In
+    // --check mode nothing is written and the staleness was already reported.
+    writeChangelogs(source);
+  }
 
   final List<Failure> emitted = emitReferenceDb(source, options);
   if (emitted.isNotEmpty) {

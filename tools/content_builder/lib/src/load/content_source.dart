@@ -29,6 +29,7 @@ class ContentSource {
     required this.failures,
     this.buildDate,
     this.assetsRoot,
+    this.rootDir,
   });
 
   /// Reads [dir] as a corpus.
@@ -43,6 +44,7 @@ class ContentSource {
         failures: <Failure>[Failure(kLoadFailureId, dir.path, 0, 'corpus directory not found')],
         buildDate: buildDate,
         assetsRoot: assetsRoot,
+        rootDir: dir,
       );
     }
 
@@ -119,6 +121,7 @@ class ContentSource {
       failures: sortedFailures(failures),
       buildDate: buildDate,
       assetsRoot: assetsRoot,
+      rootDir: dir,
     );
   }
 
@@ -135,6 +138,12 @@ class ContentSource {
 
   /// Where A5 resolves `species.silhouette_asset`; `null` skips the disk check.
   final Directory? assetsRoot;
+
+  /// The corpus directory itself; `null` for a corpus built from strings.
+  ///
+  /// A10 reads the committed `snapshot.json` and writes the changelog beside the
+  /// rows they describe.
+  final Directory? rootDir;
 
   /// Defects found while reading the corpus, before any assertion ran, sorted by
   /// path then line.
