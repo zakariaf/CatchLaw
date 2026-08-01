@@ -47,6 +47,19 @@ final RegExp _yaFamily = RegExp('[\u0626\u0649]');
 /// never deleted — §9.1 names شعري and صافي.
 final RegExp _wordFinalTaMarbutaOrHa = RegExp('[\u0629\u0647](?![\u0621-\u064A\u0671-\u06D3])');
 
+/// U+0660-U+0669 Arabic-Indic digits and U+06F0-U+06F9 the Eastern set.
+///
+/// Both, because both are typed: a device configured for Persian or Urdu digit
+/// entry emits the second range even for Arabic text, and a keyboard is not a
+/// locale. Mapping only the first passes every test written with ٣٨ and fails
+/// silently on a keyboard nobody tested.
+///
+/// The bounds are explicit rather than "any Unicode decimal digit", which would
+/// swallow Devanagari and Thai digits — characters whose presence in a key would
+/// mean something went wrong upstream. U+066A ٪ sits immediately above the first
+/// range and must survive; a test sits on that boundary.
+final RegExp _arabicIndicDigits = RegExp('[\u0660-\u0669\u06F0-\u06F9]');
+
 /// Combining diacritical marks, U+0300 to U+036F.
 ///
 /// Deliberately narrow. Arabic harakat sit at U+064B to U+0652 and are a
@@ -112,7 +125,17 @@ String normaliseSpeciesTerm(String input) {
   // does not rank the fish lower, it removes it from the result set.
   s = s.replaceAll(_wordFinalTaMarbutaOrHa, '');
 
-  // Contract step 8 — the digit fold — is inserted HERE by E02/T06.
+  // Step 8 — both Arabic-Indic digit ranges to ASCII, by code-unit offset
+  // rather than a twenty-entry map. The map is the version where one row has a
+  // typo nobody sees; an offset cannot be half-right.
+  s = s.replaceAllMapped(
+    _arabicIndicDigits,
+    (Match m) => String.fromCharCode(
+      // Whichever range matched, the digit's value is its distance from that
+      // range's zero.
+      m[0]!.codeUnitAt(0) - (m[0]!.codeUnitAt(0) >= 0x06F0 ? 0x06F0 : 0x0660) + 0x30,
+    ),
+  );
 
   // Step 9 — the Latin fold. NFD splits a precomposed letter into its base and
   // its mark; deleting the marks is what turns ñ ç ã á into n c a a. A table of
