@@ -23,14 +23,29 @@ class SpeciesIndex {
     aliases.forEach((String alias, String speciesId) {
       for (final String key in indexKeys(alias)) {
         _byKey[key] = speciesId;
+        (_idsByKey[key] ??= <String>{}).add(speciesId);
       }
     });
   }
 
   final Map<String, String> _byKey = <String, String>{};
 
+  /// Every species id each key reaches, kept alongside [_byKey] so a collision
+  /// is visible instead of being silently overwritten by the last writer.
+  final Map<String, Set<String>> _idsByKey = <String, Set<String>>{};
+
   /// How many keys the index holds, so a test can assert it was not built empty.
   int get keyCount => _byKey.length;
+
+  /// Keys that reach more than one species id, with the ids they reach.
+  ///
+  /// Steps 4 to 7 of the contract are lossy on purpose. A collision in a corpus
+  /// built from distinct stems means they are lossier than the contract allows,
+  /// and the symptom on a device is two species merging into one.
+  Map<String, Set<String>> get collidingKeys => <String, Set<String>>{
+    for (final MapEntry<String, Set<String>> e in _idsByKey.entries)
+      if (e.value.length > 1) e.key: e.value,
+  };
 
   /// The species id [query] reaches, or `null` if no authored alias matches.
   ///
