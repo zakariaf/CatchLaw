@@ -34,6 +34,7 @@ export 'src/models/species.dart';
 export 'src/models/zone.dart';
 export 'src/resolve/candidate.dart';
 export 'src/resolve/candidate_selection.dart';
+export 'src/resolve/conflict.dart';
 export 'src/resolve/evaluation_request.dart';
 export 'src/resolve/zone_match.dart';
 export 'src/search/normalise.dart';
