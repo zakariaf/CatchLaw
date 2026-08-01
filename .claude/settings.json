@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "flutter-skills": {
+      "source": {
+        "source": "github",
+        "repo": "zakariaf/Flutter-Skills"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "flutter@flutter-skills": true
+  }
+}

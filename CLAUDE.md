@@ -122,9 +122,10 @@ and E01/T04 makes
 `tools/gates/allowlist/direct_dependencies.txt` the checked-in set. Not `pub add`, not memory, not this
 table. The dependency ban list is `catchlaw-offline-guarantee`'s.
 
-**The 33 general Flutter skills are not installed on this machine** — `claude plugin list` shows only
-`swift-lsp@claude-plugins-official`, while **179 of the 181** task files name at least one of them in
-their *Skills to load* table. Install at project scope, so a fresh clone inherits them.
+**The 33 general Flutter skills are installed at project scope** — `flutter@flutter-skills` 0.1.0,
+declared in `.claude/settings.json` so a fresh clone inherits it. **179 of the 181** task files name at
+least one of them. They are namespaced: a task table writes `state-management-riverpod`, the Skill tool
+takes `flutter:state-management-riverpod`. Reinstall with:
 
 ```bash
 claude plugin marketplace add zakariaf/Flutter-Skills --scope project
@@ -136,8 +137,12 @@ dart run content_builder:build --in content/ --out app/assets/db/reference.db
 gh pr merge --squash --admin --delete-branch   # only once every check reports SUCCESS (D-9)
 ```
 
-Installed, they are namespaced: a task table writes `state-management-riverpod`, the Skill tool takes
-`flutter:state-management-riverpod`.
+**Two of the 33 cannot auto-invoke.** `async-safety` and `design-review-workflow` carry an unquoted
+`: ` inside a plain YAML scalar — `async-safety`'s description contains `` `onTap: () => vm.save(x)` ``
+— so the frontmatter parses to nothing and the model is never offered them. It is a `description: >-`
+away from fixed, in the plugin repository rather than here. **E07/T07, E10/T07 and E16/T07 route to
+`async-safety`:** until the plugin is fixed, load it by explicit name or read its `SKILL.md` directly,
+and do not read a silent non-invocation as "no async rule applies".
 
 ## The shape of the repository
 
