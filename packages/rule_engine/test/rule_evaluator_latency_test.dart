@@ -28,16 +28,17 @@ List<Rule> _twentyRows() => <Rule>[
 ];
 
 void main() {
-  const request = EvaluationRequest(
+  final request = EvaluationRequest(
     jurisdictionId: 7,
     speciesId: 42,
     species: kSpeciesHamour,
     waterType: WaterType.salt,
-    zonePath: <Zone>[kZoneUae, kZoneRasAlKhaimah],
+    zonePath: const <Zone>[kZoneUae, kZoneRasAlKhaimah],
     on: '2026-07-30',
     contentCheckedOn: '2026-07-14',
     landing: kLandingUndersize,
     tally: kTallyEmpty,
+    searched: const <Citation>[kCitationMd580],
   );
   final List<Rule> rows = _twentyRows();
 

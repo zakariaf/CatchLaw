@@ -28,6 +28,7 @@ EvaluationRequest _request({String on = _on}) => EvaluationRequest(
   contentCheckedOn: '2026-07-14',
   landing: kLandingUndersize,
   tally: kTallyEmpty,
+  searched: const <Citation>[kCitationMd580],
 );
 
 Candidate _only(Rule rule) => selectCandidates(_request(), <Rule>[rule]).asOk.value.single;

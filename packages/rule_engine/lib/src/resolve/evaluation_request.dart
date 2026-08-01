@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:rule_engine/src/models/catch_tally.dart';
+import 'package:rule_engine/src/models/citation.dart';
 import 'package:rule_engine/src/models/landing.dart';
 import 'package:rule_engine/src/models/species.dart';
 import 'package:rule_engine/src/models/zone.dart';
@@ -21,7 +22,12 @@ import 'package:rule_engine/src/models/zone.dart';
 class EvaluationRequest {
   /// [waterType] must be [WaterType.salt] or [WaterType.fresh]: the fisher is
   /// standing in one or the other.
-  const EvaluationRequest({
+  // NOT const, and the assert below is why: an emptiness check on a List cannot
+  // be evaluated in a const context, so a const constructor would have to drop
+  // it. The assert is worth more than const-ness here — a request is built once
+  // per evaluation and never used as a fixture, and an uncited absence shipping
+  // is the failure it exists to stop.
+  EvaluationRequest({
     required this.jurisdictionId,
     required this.speciesId,
     required this.species,
@@ -31,7 +37,16 @@ class EvaluationRequest {
     required this.contentCheckedOn,
     required this.landing,
     required this.tally,
+    required this.searched,
   }) : assert(
+         searched.isNotEmpty,
+         'an absence must still be cited: NoRuleFound and UnknownSpecies answer '
+         'with the instruments that were consulted, and an empty list would be a '
+         'nullable citation in a different coat. A bundled jurisdiction always '
+         'has at least one citation row or it would not have passed the content '
+         'build (E04), so this can only fire on a mapper defect',
+       ),
+       assert(
          waterType != WaterType.both,
          'a request is salt or fresh; `both` is a property of a RULE, and a '
          '`both` request would make the fresh-drops-in-salt guard meaningless',
@@ -43,8 +58,16 @@ class EvaluationRequest {
   /// The species search already resolved.
   final int speciesId;
 
-  /// That species, for the statements T11 makes about absence.
-  final Species species;
+  /// That species, or `null` if the id is not in this jurisdiction's list.
+  ///
+  /// NULLABLE, and the null is load-bearing: it is a fact the reference
+  /// database knows and the engine does not, because the engine is handed rule
+  /// rows and never queries. E03/T11 checks it BEFORE stage 1 and returns
+  /// `UnknownSpecies`, rather than inferring the same thing from an empty
+  /// candidate list — which would conflate "we have never heard of this fish"
+  /// with "nobody has transcribed this zone yet", and send the reader to the
+  /// protected-species list for a fish that is simply not covered here.
+  final Species? species;
 
   /// Salt or fresh. Never [WaterType.both] — see the constructor's assert.
   final WaterType waterType;
@@ -66,4 +89,12 @@ class EvaluationRequest {
 
   /// What has already been taken.
   final CatchTally tally;
+
+  /// The instruments consulted, so an absence can still say what was looked in.
+  ///
+  /// Never empty — see the constructor's assert. This is how the two absence
+  /// arms satisfy invariant 3: not with one citation, because there is no one
+  /// rule, but with the list of sources consulted and the date the
+  /// transcription was last verified.
+  final List<Citation> searched;
 }

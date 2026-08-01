@@ -104,3 +104,73 @@ final class NoLimitInInstrument extends Resolution {
   @override
   List<Citation> get citations => <Citation>[citation];
 }
+
+/// The species is in the reference database, and no rule row covers it here.
+///
+/// **This does not mean it is legal.** The wording is
+/// `catchlaw-verdict-contract` rule 7's, fixed in all six locales, never
+/// softened into a reassurance and never an empty screen — but D-7 puts
+/// every one of those words in E06's ARB files, so this type's contribution is
+/// narrower and more durable: **there is no way to reach a permissive outcome
+/// from an absence.** [Decided] requires a headline [Finding], a [Finding]
+/// requires a rule to have been found, and this arm cannot produce one. The
+/// `findings.isEmpty ? meets` shape is not merely avoided here; it is
+/// unrepresentable, because there is no `meets` constructor to reach for.
+///
+/// Carries what was SEARCHED, so the fisher can say what was looked in.
+final class NoRuleFound extends Resolution {
+  /// [searched] is the instruments consulted; [checkedOn] is when the
+  /// transcription was last verified.
+  const NoRuleFound({required this.searched, required this.checkedOn, required this.isExpired});
+
+  /// The instruments consulted. Never empty.
+  final List<Citation> searched;
+
+  /// When the bundled content was last verified, ISO-8601.
+  final String checkedOn;
+
+  @override
+  final bool isExpired;
+
+  /// The sources consulted, which is how an absence stays cited.
+  ///
+  /// This does not weaken invariant 3. Read literally against an arm describing
+  /// the absence of any rule, "every result carries a required, non-nullable
+  /// Citation" would require the engine to NAME AN INSTRUMENT FOR A RULE THAT
+  /// DOES NOT EXIST — which is `catchlaw-verdict-contract`'s banned
+  /// `?? 'Local fisheries rules'` fallback. The reading that holds the
+  /// invariant's purpose is this one: the result is never uncited, and where
+  /// there is no single source there is a non-empty list of the sources
+  /// consulted.
+  @override
+  List<Citation> get citations => searched;
+}
+
+/// The species id is not in this jurisdiction's list at all.
+///
+/// A different thing from [NoRuleFound], and collapsing the two is the failure
+/// `catchlaw-rule-engine` rule 8 names: *absence of evidence stamped as
+/// permission fails silently in exactly the zones with the thinnest content* —
+/// which are the zones E22 has not reached yet, and therefore most of them for
+/// most of this product's life. `SPEC.md` §4.1 requires two visually distinct
+/// states, which the app can only render if the engine returns two types.
+final class UnknownSpecies extends Resolution {
+  /// [speciesId] is the id that was not found.
+  const UnknownSpecies({required this.speciesId, required this.searched, required this.checkedOn});
+
+  /// The id the reference database did not recognise here.
+  final int speciesId;
+
+  /// The instruments consulted. Never empty.
+  final List<Citation> searched;
+
+  /// When the bundled content was last verified, ISO-8601.
+  final String checkedOn;
+
+  /// Nothing was evaluated, so nothing could have lapsed.
+  @override
+  bool get isExpired => false;
+
+  @override
+  List<Citation> get citations => searched;
+}

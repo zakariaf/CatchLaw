@@ -32,6 +32,7 @@ EvaluationRequest _request({String on = _on, WaterType water = WaterType.salt}) 
       contentCheckedOn: '2026-07-14',
       landing: kLandingUndersize,
       tally: kTallyEmpty,
+      searched: const <Citation>[kCitationMd580],
     );
 
 List<Candidate> _select(Iterable<Rule> rules, {EvaluationRequest? request}) =>

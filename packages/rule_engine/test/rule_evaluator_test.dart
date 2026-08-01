@@ -19,6 +19,7 @@ EvaluationRequest _request({String on = _on, Landing landing = kLandingUndersize
       contentCheckedOn: '2026-07-14',
       landing: landing,
       tally: kTallyEmpty,
+      searched: const <Citation>[kCitationMd580],
     );
 
 Resolution _resolve(List<Rule> rows, {EvaluationRequest? request}) =>
@@ -116,13 +117,18 @@ void main() {
       }
     });
 
-    test('switches exhaustively over the arms that exist', () {
-      // The sealed union's whole purpose. A `default:` here would compile today
-      // and silently swallow the arms T11 adds.
+    test('switches exhaustively over every arm', () {
+      // The sealed union's whole purpose, DEMONSTRATED: this switch had three
+      // arms when T10 wrote it and stopped compiling the moment T11 added
+      // NoRuleFound and UnknownSpecies. A `default:` would have compiled
+      // through both and silently reported an absence as whatever the fallback
+      // said — which is the failure the union exists to make impossible.
       String arm(Resolution r) => switch (r) {
         Decided() => 'decided',
         Ambiguous() => 'ambiguous',
         NoLimitInInstrument() => 'no-limit',
+        NoRuleFound() => 'no-rule',
+        UnknownSpecies() => 'unknown',
       };
       expect(arm(_resolve(<Rule>[kRuleHamourMinSize])), 'decided');
     });

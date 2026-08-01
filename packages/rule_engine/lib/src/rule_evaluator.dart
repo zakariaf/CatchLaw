@@ -24,6 +24,23 @@ import 'package:rule_engine/src/verdict/resolution.dart';
 /// `Failure`, because there is no legal statement to make about it. The shape
 /// invites the opposite reading, so it is said here.
 Result<Resolution> evaluate(EvaluationRequest request, Iterable<Rule> rows) {
+  // Stage 0 — the species check, and it happens FIRST. Whether the id is in
+  // this jurisdiction's list is a fact the reference database knows and the
+  // engine does not, because the engine is handed rule rows and never queries.
+  // Inferring it from an empty candidate list instead would conflate "we have
+  // never heard of this fish" with "nobody has transcribed this zone yet", and
+  // send the reader to the protected-species list for a fish that is simply not
+  // covered here.
+  if (request.species == null) {
+    return Result<Resolution>.ok(
+      UnknownSpecies(
+        speciesId: request.speciesId,
+        searched: request.searched,
+        checkedOn: request.contentCheckedOn,
+      ),
+    );
+  }
+
   // Stages 1 and 2 — select on jurisdiction, species, water type and
   // validFrom, then collapse superseded rows per (zone, lineage). validTo is
   // never a filter.
@@ -39,10 +56,16 @@ Result<Resolution> evaluate(EvaluationRequest request, Iterable<Rule> rows) {
   // Stage 3 — keep what applies here, strictest first, source order preserved.
   final List<Candidate> ranked = matchAndRank(request, candidates);
   if (ranked.isEmpty) {
-    // E03/T11 turns this into the two distinct absence statements. Until then
-    // it is not representable, and returning a permissive answer here would be
-    // the exact failure that task exists to prevent.
-    throw UnimplementedError('absence arms arrive in E03/T11');
+    // The species exists here and no rule row covers it. NOT a permission, and
+    // structurally incapable of becoming one: there is no path from this arm to
+    // a Finding, and therefore none to a Decided.
+    return Result<Resolution>.ok(
+      NoRuleFound(
+        searched: request.searched,
+        checkedOn: request.contentCheckedOn,
+        isExpired: false,
+      ),
+    );
   }
 
   // Stage 4 — a disagreement at the top rung is returned, never resolved.

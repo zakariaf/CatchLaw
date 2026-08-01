@@ -27,6 +27,7 @@ EvaluationRequest _request({List<Zone> zonePath = _uaePath}) => EvaluationReques
   contentCheckedOn: '2026-07-14',
   landing: kLandingUndersize,
   tally: kTallyEmpty,
+  searched: const <Citation>[kCitationMd580],
 );
 
 Candidate _candidate(int id, int? zoneId) => Candidate(
