@@ -15,14 +15,16 @@ include: package:flutter_lints/flutter.yaml
 # options file. Restart the Dart Analysis Server after editing.
 plugins:
   riverpod_lint: 3.1.4 # EXACT pin — 3.1.6 fails version solving on Dart 3.12.2
-  import_lint: ^2.0.0 # architectural import bans (package: URIs only)
-
-import_lint:
-  rules:
-    ui_must_not_import_drift:
-      target: "package:catchlaw/ui/**.dart"
-      from: "package:drift/**.dart"
-      except: []
+  # import_lint is DELIBERATELY ABSENT until E05. Its ui_must_not_import_drift
+  # rule targets package:catchlaw/ui/**.dart, which does not exist until E08,
+  # against package:drift, which is not a dependency until E05 — and with the
+  # rule declared, import_lint throws "import_lint is required" out of
+  # Config.fromAnalysisOptions for every file analysed under a NESTED options
+  # file, because it reads the options file directly instead of the merged
+  # view and the three nested files carry no import_lint: key. That crashes the
+  # plugin server and makes dart analyze exit 4. E01's Risk 2 anticipated the
+  # rule erroring on an unmatched target and prescribed exactly this: move the
+  # rule body to E05, where drift arrives and the target exists. See D-12.
 
 analyzer:
   language:

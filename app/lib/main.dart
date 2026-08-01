@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Starts CatchLaw.
 ///
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 /// open lazily on their first query, and every `await` ahead of the first frame
 /// is a black screen indistinguishable from a crashed app on the boat where it
 /// matters (`catchlaw-conventions-index` rule 8, `SPEC.md` §13).
-void main() => runApp(const CatchlawApp());
+void main() => runApp(const ProviderScope(child: CatchlawApp()));
 
 /// The application root.
 ///

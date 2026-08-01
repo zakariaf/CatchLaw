@@ -86,26 +86,11 @@ void main() {
     expect(missing, isEmpty, reason: 'unrandomised suite step:\n${missing.join('\n')}');
   });
 
-  test('validate.yml neuters no gate step with continue-on-error', () {
-    final steps = (jobs()['flutter'] as YamlMap)['steps'] as YamlList;
-    final List<String> neutered = [
-      for (final s in steps)
-        if ((s as YamlMap)['continue-on-error'] == true) ((s['name'] ?? s['run']) as String),
-    ];
-    // D-11 buys exactly one non-gate reporting step: `dart analyze`, the only
-    // command that loads the analyzer plugins, which cannot block while
-    // riverpod_lint reports a ProviderScope the app cannot have yet. Any second
-    // occurrence is a gate someone switched off.
+  test('validate.yml sets continue-on-error on no step', () {
     expect(
-      neutered,
-      hasLength(1),
+      workflowText(),
+      isNot(contains('continue-on-error')),
       reason: 'continue-on-error on a gate is a deleted gate with a green tick on top',
-    );
-    expect(neutered.single, contains('informational'));
-    expect(
-      RegExp('continue-on-error').allMatches(workflowText()).length,
-      1,
-      reason: 'the D-11 exception is one named step, not a pattern to copy',
     );
   });
 

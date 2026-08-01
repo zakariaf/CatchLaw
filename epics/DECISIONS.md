@@ -206,7 +206,7 @@ in a file, which is weaker than a decision".
 
 ---
 
-## D-11 — `flutter analyze` gates; `dart analyze` reports, because only it loads the plugins
+## ~~D-11 — `flutter analyze` gates; `dart analyze` reports, because only it loads the plugins~~
 
 **Decision.** CI runs both. `flutter analyze --fatal-infos` is the release-blocking gate.
 `dart analyze` runs immediately after as the single `continue-on-error` step in `validate.yml`, named
@@ -240,3 +240,54 @@ against a target that must match — so its `ui_must_not_import_drift` rule is n
 move the rule body to E05, where drift arrives and the target exists — stands, better justified.
 
 **Applied by:** E01/T03.
+
+> **SUPERSEDED by D-12, before it ever merged.** Its factual premise was measured on macOS only and is
+> false on the runner: `flutter analyze` *does* load analyzer plugins on `ubuntu-24.04`. The first CI run
+> failed on `missing_provider_scope` reported by the supposedly plugin-free blocking gate, which is how the
+> error was caught. Struck rather than rewritten, per CLAUDE.md's amendment rule.
+
+---
+
+## D-12 — Both analyzers block; `import_lint` waits for E05; Riverpod arrives in E01
+
+**Decision.** Three things, settled together because one measurement produced all of them.
+
+1. **`validate.yml` runs `flutter analyze --fatal-infos` and `dart analyze`, both blocking.** Neither is
+   informational, and the workflow carries no `continue-on-error` anywhere — E01/T03's test 8 is restored
+   to the blanket ban it was written as.
+2. **`import_lint` is removed from the `plugins:` block until E05**, together with its
+   `ui_must_not_import_drift` rule body.
+3. **`flutter_riverpod: ^3.4.1` is a dependency of `app/` from E01**, and `app/lib/main.dart` wraps the
+   root in `ProviderScope`.
+
+**What was measured.** `flutter analyze` loads analyzer plugins on `ubuntu-24.04` and does **not** on a
+local macOS checkout of the same commit — verified in both directions, and the local behaviour is
+reproducible across a clean `--no-pub` run. An absence of plugin output is therefore never evidence about
+whether a plugin ran; only a diagnostic that must fire is. The analyzer also accepts unknown top-level
+option keys in silence, so the `plugins:` key being *present* proves nothing either.
+
+**Why `import_lint` goes.** With its rule declared it throws `import_lint is required` out of
+`Config.fromAnalysisOptions` for every file analysed under a **nested** options file — it reads the options
+file directly rather than the merged view, and `app/`, `packages/rule_engine/` and `tools/content_builder/`
+each carry an `analysis_options.yaml` with no `import_lint:` key. That crashes the plugin server and makes
+`dart analyze` exit 4. E01's Risk 2 anticipated the rule erroring on its unmatched
+`package:catchlaw/ui/**.dart` target and prescribed this exact remedy: move the rule body to E05, where
+drift arrives and the target exists, and keep `riverpod_lint` in the block. `FLUTTER_GUIDE.md` Part 4.6's
+"Layer 3 — `import_lint`. Verified working." is overruled: it is not working as an analyzer plugin on this
+toolchain, and layer 3 is not load-bearing for the offline guarantee, which rests on layers 1, 2 and 4.
+
+**Why Riverpod arrives now.** With the plugin lane genuinely live, `riverpod_lint` reports
+`missing_provider_scope` against a root widget that has no `ProviderScope`. The three ways out were to
+satisfy it, to remove the plugin, or to suppress the diagnostic. Suppression is forbidden outright —
+editing a gate to make a build pass. Removing `riverpod_lint` would contradict E01/T02's committed tests 2
+and 3 and leave the block empty. So the lint is satisfied: D-5 already pins Riverpod 3.4.1, and
+`catchlaw-conventions-index`'s own worked example is
+`void main() => runApp(const ProviderScope(child: CatchlawApp()));`.
+
+**Overruled.** E01/T01's "No dependency from `SPEC.md` §10 is declared yet", and its reasoning that each
+arrives in the epic that first uses it. That reasoning was aimed at `flutter_svg` and `printing` dragging
+their `http` edges in before T04's gate existed; `flutter_riverpod` has no `http` edge, and E01/T04's own
+Risk 6 records that its allowlist otherwise has no live subject at all. The exception is this package only.
+
+**Applied by:** E01/T03 (as a follow-up commit on the same branch, per `CONVENTIONS.md` §1 — the check
+failed at step 4 and is fixed forward, never amended).

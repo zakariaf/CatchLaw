@@ -33,12 +33,26 @@ jobs:
           done
           [ "$found" = 1 ] && echo "all scripts parse" || echo "no scripts found"
 
+      # Scoped to the skills THIS repository authors. CLAUDE.md keeps two
+      # registries apart: the sixteen catchlaw-*/lonja-* skills carry token
+      # values and app-domain law and are owned here; the 33 general Flutter
+      # skills are vendored from the flutter@flutter-skills plugin and are
+      # maintained upstream, where their authoring rules live. Nine of them fail
+      # this contract — two carry an unquoted ": " that makes the frontmatter
+      # parse to nothing, two declare disable-model-invocation, five use < or >
+      # — and CLAUDE.md already records that those corrections belong in the
+      # plugin repository rather than here. Gating on them would mean editing
+      # vendored content to make our build pass.
       - name: Frontmatter parses to exactly name + description
         run: |
           python3 - <<'PY'
           import glob, sys, yaml, os
           bad = []
-          for p in sorted(glob.glob('.claude/skills/*/SKILL.md')):
+          paths = sorted(glob.glob('.claude/skills/catchlaw-*/SKILL.md')
+                         + glob.glob('.claude/skills/lonja-*/SKILL.md'))
+          if len(paths) != 16:
+              print(f'expected 16 app skills, found {len(paths)}'); sys.exit(1)
+          for p in paths:
               d = os.path.basename(os.path.dirname(p))
               raw = open(p, encoding='utf-8').read()
               try:
@@ -54,7 +68,7 @@ jobs:
                   bad.append(f'{d}: description is {n} chars')
               if '<' in fm.get('description','') or '>' in fm.get('description',''):
                   bad.append(f'{d}: description contains < or >')
-          print('\n'.join(bad) if bad else f'{len(glob.glob(".claude/skills/*/SKILL.md"))} skills OK')
+          print('\n'.join(bad) if bad else f'{len(paths)} app skills OK')
           sys.exit(1 if bad else 0)
           PY
 
@@ -129,16 +143,12 @@ jobs:
       - run: dart format --output=none --set-exit-if-changed .
       - run: flutter analyze --fatal-infos
 
-      # D-11. `flutter analyze` does not load analyzer plugins; `dart analyze`
-      # does. Proved by pointing import_lint at a rule app/lib/main.dart must
-      # violate: flutter analyze reported nothing, dart analyze reported
-      # riverpod_lint. This step is what makes the plugins: block in
-      # analysis_options.yaml visible at all. It cannot block yet — riverpod_lint
-      # asks for a ProviderScope the app cannot have until flutter_riverpod is a
-      # dependency — so it reports and does not gate. It is promoted to a gate in
-      # the epic that adds Riverpod. It is the only non-blocking step in the file.
-      - name: Analyze with plugins (informational until Riverpod lands — D-11)
-        continue-on-error: true
+      # D-12. `flutter analyze` loads analyzer plugins on ubuntu-24.04 but NOT
+      # on a local macOS checkout, measured both ways — so `dart analyze` is run
+      # as well, because it is the command that loads them everywhere. Neither
+      # is informational: both block. A plugin lane that cannot fail is the
+      # decoration FLUTTER_GUIDE Part 4.1 fact 2 warns about.
+      - name: Analyze with plugins
         run: dart analyze
 
       # On Linux `flutter test` runs in a plain Dart VM where sqlite3_flutter_libs
