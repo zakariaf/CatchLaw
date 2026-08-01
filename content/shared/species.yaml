@@ -1,0 +1,19 @@
+# species — one row per species the app knows about.
+#
+# `search_norm` is NOT here: E04/T07 computes it from the engine's own
+# normaliseSpeciesTerm(), so the index the build writes and the query the search
+# field runs cannot disagree.
+#
+# `silhouette_asset` is originated SVG line art (SPEC.md §8) and is required by
+# A5 for every species a RULE reaches. Until the art is commissioned, a species
+# with no rule is shippable and one with a rule is not — which is the right way
+# round: a verdict with no picture is usable, a picture with no verdict is not.
+#
+# `plate_asset` is absent. The Galicia seed ships zero cleared plates (§7.1
+# makes the column optional) and the app renders the silhouette instead.
+species:
+  - id: venerupis-corrugata
+    scientific_name: Venerupis corrugata
+    family_id: veneridae
+    taxon_group: bivalve
+    silhouette_asset: sil/venerupis-corrugata.svg

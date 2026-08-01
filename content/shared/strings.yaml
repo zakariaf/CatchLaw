@@ -1,0 +1,41 @@
+# content_string, tier two of SPEC.md §9.2 — bundled content, not UI chrome.
+#
+# One block per key, all six D-3 locales beneath it. The shape is `- key:` with
+# a nested `values:` because check_content_pipeline.sh builds its definition set
+# from lines matching `^\s*(- )?key:`; a tidier mapping would leave that set
+# empty and make check 1 report every reference in the corpus as undefined.
+#
+# There is no fallback at build time. A2 fails on a key missing any locale, on
+# an empty value, on a whitespace-only value and on a value equal to its own
+# key. No key here may begin `legal_text.` — verbatim law is bundled in the
+# language the authority published it in and is never translated.
+#
+# Shared strings are every jurisdiction's. Authoring them ahead of the rows that
+# use them is expected: an unreferenced key is counted, never failed.
+strings:
+  - key: family.veneridae
+    values:
+      ar: أصداف الفينوس
+      ca: Cloïsses
+      en: Venus clams
+      es: Almejas
+      gl: Ameixas
+      pt_BR: Vôngoles
+
+  - key: measurement.shl.name
+    values:
+      ar: طول الصدفة
+      ca: Longitud de la closca
+      en: Shell length
+      es: Longitud de la concha
+      gl: Lonxitude da cuncha
+      pt_BR: Comprimento da concha
+
+  - key: measurement.shl.definition
+    values:
+      ar: أطول مسافة بين حافتي الصدفة
+      ca: La distància més llarga entre les vores de la closca
+      en: The longest distance between the edges of the shell
+      es: La distancia más larga entre los bordes de la concha
+      gl: A distancia máis longa entre os bordos da cuncha
+      pt_BR: A maior distância entre as bordas da concha

@@ -1,0 +1,39 @@
+# Galicia's own content_string rows. Same shape as shared/strings.yaml; a key
+# defined in both files is an A2 failure, because the winner would depend on
+# directory walk order rather than on a decision anybody made.
+strings:
+  - key: jurisdiction.es_ga.name
+    values:
+      ar: غاليسيا
+      ca: Galícia
+      en: Galicia
+      es: Galicia
+      gl: Galicia
+      pt_BR: Galiza
+
+  - key: jurisdiction.es_ga.authority
+    values:
+      ar: حكومة غاليسيا — وزارة البحر
+      ca: Xunta de Galicia — Conselleria do Mar
+      en: Xunta de Galicia — Department of the Sea
+      es: Xunta de Galicia — Consellería do Mar
+      gl: Xunta de Galicia — Consellería do Mar
+      pt_BR: Xunta da Galiza — Conselharia do Mar
+
+  - key: zone.es_ga.rias_baixas
+    values:
+      ar: ريّاس بايشاس
+      ca: Ries Baixes
+      en: Rías Baixas
+      es: Rías Baixas
+      gl: Rías Baixas
+      pt_BR: Rias Baixas
+
+  - key: change.es_ga.first_pack
+    values:
+      ar: أول حزمة لغاليسيا — الولاية والمنطقة والنوع، بلا قواعد بعد
+      ca: Primer paquet de Galícia — jurisdicció, zona i espècie; encara sense regles
+      en: First Galicia pack — jurisdiction, zone and species; no rules yet
+      es: Primer paquete de Galicia — jurisdicción, zona y especie; aún sin reglas
+      gl: Primeiro paquete de Galicia — xurisdición, zona e especie; aínda sen regras
+      pt_BR: Primeiro pacote da Galiza — jurisdição, zona e espécie; ainda sem regras

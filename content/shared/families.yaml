@@ -1,0 +1,9 @@
+# family — the taxonomic rank above species. One row per family any authored
+# species belongs to.
+#
+# `scientific` is the binomial authority's spelling and is not translated;
+# `name_key` is, because "Venus clams" and "Ameixas" are what a fisher reads.
+families:
+  - id: veneridae
+    scientific: Veneridae
+    name_key: family.veneridae

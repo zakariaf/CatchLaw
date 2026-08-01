@@ -39,3 +39,6 @@ coverage/
 .env
 .env.*
 !.env.example
+
+# The emitted database is a build artefact; the .gz is what ships (D-6).
+app/assets/db/reference.db

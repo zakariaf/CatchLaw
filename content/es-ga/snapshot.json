@@ -1,0 +1,13 @@
+{
+  "jurisdiction": "es-ga",
+  "content_version": "2026.08.0",
+  "rows": {
+    "zones/es-ga-rias-baixas": {
+      "code": "rias-baixas",
+      "jurisdiction_id": "ES-GA",
+      "name_key": "zone.es_ga.rias_baixas",
+      "water_type": "salt",
+      "zone_kind": "region"
+    }
+  }
+}

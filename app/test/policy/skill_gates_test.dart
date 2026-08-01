@@ -72,7 +72,24 @@ void main() {
   });
 
   test('Gate table names sixteen scripts', () {
-    expect(gateTable(), hasLength(16));
+    // Sixteen SCRIPTS, not sixteen rows. A script may appear more than once
+    // when it has more than one documented target, and
+    // check_content_pipeline.sh has two: its Dart checks find a subject under
+    // tools/content_builder, and checks 1, 2, 3, 5, 6 and 7 read only *.yaml,
+    // which lives at content/.
+    expect(gateTable().map((GateRow r) => r.script).toSet(), hasLength(16));
+  });
+
+  test('Gate table runs check_content_pipeline.sh against both its targets', () {
+    // CLAUDE.md names both. Running only tools/content_builder means CI never
+    // scans the authored corpus at all — and a gate that is not run is a gate
+    // that is not there, whatever colour it prints.
+    final Set<String> targets = gateTable()
+        .where((GateRow r) => r.script.endsWith('check_content_pipeline.sh'))
+        .map((GateRow r) => r.target)
+        .toSet();
+
+    expect(targets, <String>{'tools/content_builder', 'content'});
   });
 
   test("Gate runner fails when a target directory holds no file matching the gate's glob", () {
@@ -135,6 +152,19 @@ void main() {
       (r) => r.script.endsWith('check_content_pipeline.sh'),
     );
     expect(row.target, 'tools/content_builder', reason: 'D-4');
+  });
+
+  test('Gate table gives content a non-empty scan', () {
+    // The row would have been an EMPTY SCAN before E04/T03 authored the first
+    // strings.yaml, which is why it is added here and not in E01.
+    final GateRow row = gateTable().firstWhere((GateRow r) => r.target == 'content');
+    final int yaml = repoDir('content')
+        .listSync(recursive: true)
+        .whereType<File>()
+        .where((File f) => f.path.endsWith('.yaml'))
+        .length;
+
+    expect(yaml, greaterThanOrEqualTo(row.minFiles));
   });
 
   test('Gate table routes every lonja gate at app/lib', () {
