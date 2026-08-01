@@ -185,6 +185,17 @@ jobs:
         run: cd packages/rule_engine && dart test --test-randomize-ordering-seed random --reporter expanded
       - name: content_builder suite
         run: cd tools/content_builder && dart test --test-randomize-ordering-seed random --reporter expanded
+
+      # reference.db is git-ignored (D-6: the .gz is what ships), so CI builds
+      # it before the app suite. E05/T01's parity test reads the REAL file —
+      # drift's Table classes and the content builder's DDL are two
+      # descriptions of one schema, and only the built file can prove they
+      # agree. The date is fixed so the build stays reproducible.
+      - name: Build reference.db for the app suite
+        run: |
+          dart run content_builder:build \
+            --in content/ --out app/assets/db/reference.db \
+            --build-date 2026-08-14 --generator-commit "$(git rev-parse --short HEAD)"
       - name: app suite
         run: cd app && flutter test --test-randomize-ordering-seed random --reporter expanded
 

@@ -4,9 +4,20 @@
 # the PR diff when a dependency changes — SPEC.md §14, E01/T04. A hand-kept list
 # diverges from pubspec.yaml at the first `dart pub add`, after which the gate
 # compares two documents and neither describes the app.
+app dependencies convert
+app dependencies crypto
+app dependencies drift
 app dependencies flutter
 app dependencies flutter_riverpod
+app dependencies meta
+app dependencies path
+app dependencies path_provider
+app dependencies rule_engine
+app dependencies sqlite3
+app dependencies sqlite3_flutter_libs
 app dev_dependencies analysis_defaults
+app dev_dependencies build_runner
+app dev_dependencies drift_dev
 app dev_dependencies flutter_test
 app dev_dependencies yaml
 packages/analysis_defaults dependencies flutter_lints

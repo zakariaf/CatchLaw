@@ -32,10 +32,11 @@ dependencies:
   # @immutable on the row models. Same annotation package the engine uses.
   meta: ^1.15.0
 
-  # The emitter (E04/T10). Declared here rather than in T10 so the
-  # direct-dependency allowlist records one change for this package rather than
-  # two, and so the version is pinned by the same lock file from the start.
-  sqlite3: ^2.4.6
+  # The emitter (E04/T10). ^3.4.0 rather than ^2.x because D-5 pins drift at
+  # 2.34.2 and drift 2.34.2 requires sqlite3 ^3.4.0 — one workspace, one
+  # resolution, so the builder and the app link the same SQLite. D-5 wins over
+  # the version this package would otherwise have chosen for itself.
+  sqlite3: ^3.4.0
 
   # The sidecar's sha256. E05 verifies the same digest after decompression, so
   # the two halves of D-6 must agree on the algorithm and not merely on the word.

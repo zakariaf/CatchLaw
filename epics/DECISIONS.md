@@ -418,3 +418,79 @@ renders. What this decision fixes is a **class** name in a package the fisher ne
 **Applied by:** E03/T01 through T11.
 
 ---
+## D-16 — `reference.db` is opened read-only through `NativeDatabase.opened`, not `createInBackground`
+
+**Decision.** `referenceExecutor()` wraps a `sqlite3.open(path, mode: OpenMode.readOnly)` handle in
+`NativeDatabase.opened(..., enableMigrations: false, closeUnderlyingOnClose: true)`, inside a
+`LazyDatabase`. It does **not** use `NativeDatabase.createInBackground`.
+
+**Losing source:** `catchlaw-reference-database/examples/reference_database.dart` and
+`FLUTTER_GUIDE.md` §5.2, both of which write
+`NativeDatabase.createInBackground(file, readOnly: true, setup: …)`.
+
+**Why.** That parameter does not exist. drift 2.34.2's `createInBackground` takes `logStatements`,
+`cachePreparedStatements`, `setup`, `sqlite3`, `enableMigrations`, `isolateSetup` and `readPool` — and
+no `readOnly`. The nearest available thing is a **writable** file handle guarded by
+`PRAGMA query_only = 1`, and that is a promise rather than a protection: the operating system would
+still permit the write that leaves a `-wal` beside the file. D-6's integrity guarantee is a sha256 over
+bytes that must not move, so the guarantee has to live in the handle, not in a pragma the next
+`setup` edit could drop.
+
+**The cost, named rather than glossed.** The open runs on the calling isolate instead of a background
+one. `LazyDatabase` still defers it to the first **query**, so nothing is awaited before `runApp` —
+which is the property §5.2 is actually protecting, and the one `catchlaw-conventions-index` rule 8,
+`check_app_invariants.sh` check 8 and E01/T01 test 11 all enforce. If a measured cold-start regression
+ever appears, the fix is a background isolate that still opens read-only, not a writable handle.
+
+**What would resolve it.** A `readOnly` parameter on drift's background constructor, or a correction
+to the two sources naming `NativeDatabase.opened`. Both are upstream of this repository.
+
+**Applied by:** E05/T01, and by every later task that opens `reference.db`.
+
+---
+## D-17 — `user.db`'s migration harness ships without a committed drift snapshot, because `drift_dev schema` cannot run in this workspace
+
+**Decision.** E05/T05 ships the real `MigrationStrategy`, the pre-open snapshot and atomic restore, the
+every-pair migration loop and the hostile-fixture content test. It does **not** ship
+`app/drift_schemas/user/drift_schema_v1.json`, `user_schema_versions.dart` or the generated era classes
+under `app/test/drift/generated/`, and `onUpgrade` dispatches through a hand-written `switch` rather
+than drift's `stepByStep`.
+
+**Losing source:** E05/T05's "What this delivers", and `flutter:run-migration`'s prescribed workflow.
+
+**Why — a version constraint, not a preference.** The chain is short and every link is forced:
+
+| Link | Constraint | Set by |
+|---|---|---|
+| `drift` | **2.34.2** | D-5 |
+| `drift_dev` that matches drift 2.34.2 | ≥ 2.34.1, which requires `analyzer ^13.0.0` | pub.dev |
+| `flutter_test` | pins `test_api 0.7.11` | the Flutter SDK |
+| `test_api 0.7.11` | forces `package:test` 1.31.0 | pub.dev |
+| `package:test` 1.31.0 | caps `analyzer` below 13 | pub.dev |
+
+One workspace is one resolution, so `drift_dev` must be **2.34.0** — the last version that accepts an
+analyzer this workspace can also give `package:test`. Its code generator works against drift 2.34.2 and
+produces the `.g.dart` this epic commits. Its `schema dump`, `schema steps` and `schema generate`
+subcommands do **not**: they reach for `GeneratedDatabase.allSchemaEntities`, which drift 2.34.2's
+`drift3_preview` shim does not declare, and the tool fails to compile before it reads a line of ours.
+
+`dependency_overrides` would resolve it and D-1 forbids them by name.
+
+**What ships instead, and what it does and does not prove.** The v1 content test writes hostile rows —
+an apostrophe, Arabic, an em dash, a backslash, a whitespace-only note — through the current classes,
+reopens the file, and reads them back. That proves the schema round-trips the values a
+`columnTransformer` mangles silently. It does **not** prove a future migration preserves them, because
+`migrateAndValidate` is what compares a committed `CREATE` statement against a live one and there is no
+committed statement to compare against.
+
+**What must happen before the first real migration.** E13 or E16 adds the first `from → to` pair, and
+before it merges one of these must be true: `package:test` accepts analyzer 13, or `drift_dev` publishes
+a release accepting analyzer 12, or the migration is verified by a hand-written before/after fixture
+test that opens a v1 file built by this commit's schema. The third is always available and is the
+fallback the every-pair loop is shaped for. **A migration that lands with none of the three is a
+migration nobody has verified**, and the failure it hides is a fisher's catch log with a column silently
+emptied.
+
+**Applied by:** E05/T05, E05/T06. Read by E13 and E16 before either adds a column.
+
+---

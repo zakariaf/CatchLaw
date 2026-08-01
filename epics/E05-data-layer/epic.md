@@ -144,6 +144,13 @@ as written, including that its `Error` arm shadows `dart:core.Error`. T09 uses w
 does not fork a second spine.** If E03 shipped the single-parameter form, changing the arity is an E03
 follow-up and is recorded here rather than done quietly in E05.
 
+*Outcome:* E03 shipped the single-parameter `Result<T>` with arms `Ok` and `Failure` — already renamed
+away from `Error`, so §1.6's shadowing warning is answered. T09 used it as shipped and added the sealed
+`DataFailure` family beneath it, so the exhaustive `switch` `error-handling-typed-results` asks for is
+over `DataFailure` rather than over the `Result`'s second parameter. **Changing the arity remains an E03
+follow-up that no task owns.** Two further §1.6 points are answered in code: `asOk` appears nowhere, and
+`Failure` carries the stack trace the reference implementation drops.
+
 **7. `crypto` is a new direct dependency and §14 diffs the allowlist.** T02 needs sha256. The package
 is pure Dart and opens nothing, but the checked-in allowlist E01 ships is the only permitted set, so
 the allowlist entry lands in T02's commit or CI fails on the very next push.
