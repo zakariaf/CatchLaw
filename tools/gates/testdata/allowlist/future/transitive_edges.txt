@@ -1,0 +1,4 @@
+# Fixture edge allowlist for E01/T04. Mirrors SPEC.md §14 exactly.
+http <- flutter_svg
+http <- printing
+url_launcher_platform_interface <- share_plus

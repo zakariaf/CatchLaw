@@ -1,0 +1,12 @@
+# Fixture allowlist for E01/T04 test 6: the same set plus a third package that also declares http.
+# some_widget_pack is allowlisted as a DIRECT dependency on purpose, so the
+# only thing left for the gate to object to is the unrecorded http EDGE.
+# Not the live allowlist — that is tools/gates/allowlist/, generated with --write.
+catchlaw dependencies flutter
+catchlaw dependencies flutter_riverpod
+catchlaw dependencies flutter_svg
+catchlaw dependencies printing
+catchlaw dependencies share_plus
+catchlaw dependencies some_widget_pack
+catchlaw dev_dependencies flutter_test
+catchlaw dev_dependencies yaml

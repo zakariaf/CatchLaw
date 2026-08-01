@@ -140,6 +140,12 @@ jobs:
           n=$(find . -name pubspec.lock -not -path './.dart_tool/*' | wc -l | tr -d ' ')
           [ "$n" = 1 ] || { echo "::error::$n pubspec.lock files — a pub get ran inside a member"; exit 1; }
 
+      # SPEC.md §14 static block, bullet 1. Edge-level, not package-level: §5.3
+      # records that "no HTTP client is linked" was FALSE, so the guarantee is
+      # that http has exactly the two parents §14 names.
+      - name: Direct-dependency allowlist diff (SPEC §14)
+        run: dart pub deps --json | python3 tools/gates/check_dependency_allowlist.py --allowlist-dir tools/gates/allowlist
+
       - run: dart format --output=none --set-exit-if-changed .
       - run: flutter analyze --fatal-infos
 

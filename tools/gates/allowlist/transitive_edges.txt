@@ -1,0 +1,15 @@
+# The transitive-edge exceptions from SPEC.md §14, one line per `<package> <- <parent>`.
+#
+# `printing` declares http for PdfGoogleFonts and `flutter_svg` declares it for
+# SvgPicture.network; both entry points are grep-banned by
+# catchlaw-offline-guarantee. `share_plus` is the only sanctioned path to
+# url_launcher_platform_interface.
+#
+# The three lines below are ACTIVE from this commit even though printing and
+# share_plus arrive in E17 and flutter_svg in E08. A recorded edge whose package
+# is not in the shipping set is simply not checked, so the lines are inert until
+# the package lands — and stating the contract now is what lets E01 prove the
+# exception instead of discovering it three epics later.
+http <- flutter_svg
+http <- printing
+url_launcher_platform_interface <- share_plus

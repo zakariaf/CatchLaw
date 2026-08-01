@@ -1,0 +1,10 @@
+# Fixture allowlist for E01/T04 tests 5 and 8: the dependency set CatchLaw reaches once E08 adds
+# flutter_svg and E17 adds printing and share_plus.
+# Not the live allowlist — that is tools/gates/allowlist/, generated with --write.
+catchlaw dependencies flutter
+catchlaw dependencies flutter_riverpod
+catchlaw dependencies flutter_svg
+catchlaw dependencies printing
+catchlaw dependencies share_plus
+catchlaw dev_dependencies flutter_test
+catchlaw dev_dependencies yaml
