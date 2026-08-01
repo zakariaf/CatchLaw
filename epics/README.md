@@ -57,14 +57,14 @@ other epic is strictly sequential.
 
 ## Status
 
-**E01, E02 and E03 are merged.** Every epic below them is `not started`.
+**E01 through E04 are merged.** Every epic below them is `not started`.
 
 | Epic | Branch | PR | Checks | Merged |
 |---|---|---|---|---|
 | E01 | `epic/01-foundation` | [#1](https://github.com/zakariaf/CatchLaw/pull/1) | all green | ☑ |
 | E02 | `epic/02-normalisation` | [#3](https://github.com/zakariaf/CatchLaw/pull/3) | all green | ☑ |
 | E03 | `epic/03-rule-engine` | [#4](https://github.com/zakariaf/CatchLaw/pull/4) | all green | ☑ |
-| E04 | — | — | — | ☐ |
+| E04 | `epic/04-content-build` | [#5](https://github.com/zakariaf/CatchLaw/pull/5) | all green | ☑ |
 | E05 | — | — | — | ☐ |
 | E06 | — | — | — | ☐ |
 | E07 | — | — | — | ☐ |

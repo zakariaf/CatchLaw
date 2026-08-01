@@ -9,6 +9,12 @@
 # contract E01 signs is n >= 1: a gate that scans nothing prints the same green
 # as a gate that found nothing.
 #
+# A script may appear on MORE THAN ONE row. check_content_pipeline.sh has two
+# documented targets and needs both: tools/content_builder is where its Dart
+# checks find a subject, and content/ is where checks 1, 2, 3, 5, 6 and 7 do.
+# The count assertion is over distinct SCRIPTS, not over rows — sixteen scripts,
+# seventeen runs.
+#
 # The 33 general Flutter skills vendored under .claude/skills/ ship 12 more
 # check_*.sh. They enforce general practice, are maintained upstream in the
 # plugin repository, and are deliberately not rows here — CONVENTIONS.md §7
@@ -21,6 +27,7 @@
 .claude/skills/catchlaw-measurement-ruler/scripts/check_measurement.sh	app/lib	*.dart	1	# D-1. Its subject arrives with the ruler in E09.
 .claude/skills/catchlaw-rule-engine/scripts/check_rule_engine.sh	packages/rule_engine/lib	*.dart	1	# D-1. NOT app/lib: pointed there it scans the app and passes trivially.
 .claude/skills/catchlaw-content-pipeline/scripts/check_content_pipeline.sh	tools/content_builder	*.dart,*.yaml	1	# D-4. The package, not its lib/: the script's own header says to pass a directory covering tools/.
+.claude/skills/catchlaw-content-pipeline/scripts/check_content_pipeline.sh	content	*.yaml	1	# D-4's second target. CLAUDE.md: checks 1, 2, 3, 5, 6 and 7 read only *.yaml, which lives at content/. Inert until E04/T03 authored the first strings.yaml — before that this row would have been an EMPTY SCAN.
 .claude/skills/lonja-buttons/scripts/check_lonja_buttons.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
 .claude/skills/lonja-design-tokens/scripts/check_lonja_tokens.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
 .claude/skills/lonja-dialogs-and-surfaces/scripts/check_lonja_dialogs.sh	app/lib	*.dart	1	# D-1, D-2. The lonja gates exempt token constructs by the path fragment /theme/, which only resolves under app/lib.
