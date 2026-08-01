@@ -123,6 +123,8 @@ void main() {
         'lib/src/date.dart', // E03/T03
         'lib/src/engine_exception.dart', // E03/T02
         'lib/src/failure.dart', // E03/T02
+        'lib/src/findings/closed_season_finding.dart', // E03/T06 (part of finding.dart)
+        'lib/src/findings/finding.dart', // E03/T06
         'lib/src/models/catch_tally.dart', // E03/T03
         'lib/src/models/citation.dart', // E03/T01
         'lib/src/models/closed_season.dart', // E03/T01
@@ -137,6 +139,7 @@ void main() {
         'lib/src/resolve/evaluation_request.dart', // E03/T03
         'lib/src/resolve/zone_match.dart', // E03/T04
         'lib/src/search/normalise.dart', // E02/T02
+        'lib/src/season/season_window.dart', // E03/T06
       ]);
     });
 
