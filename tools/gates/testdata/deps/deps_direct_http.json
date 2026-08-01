@@ -972,12 +972,14 @@
       "dependencies": [
         "flutter",
         "flutter_riverpod",
+        "rule_engine",
         "drift",
         "sqlite3",
         "sqlite3_flutter_libs",
         "path",
         "path_provider",
         "meta",
+        "convert",
         "crypto",
         "analysis_defaults",
         "flutter_test",
@@ -989,12 +991,14 @@
       "directDependencies": [
         "flutter",
         "flutter_riverpod",
+        "rule_engine",
         "drift",
         "sqlite3",
         "sqlite3_flutter_libs",
         "path",
         "path_provider",
         "meta",
+        "convert",
         "crypto"
       ],
       "devDependencies": [

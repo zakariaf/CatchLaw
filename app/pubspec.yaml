@@ -13,6 +13,11 @@ dependencies:
   # D-5 pins the version; D-12 is why it arrives in E01 rather than later.
   flutter_riverpod: ^3.4.1
 
+  # The Result/Failure spine, the §7.3 resolution and the §9.4 fold. Resolved by
+  # the workspace, not by a path: + dependency_overrides pair, so the app and
+  # the content builder provably share one engine.
+  rule_engine:
+
   # D-5 pins drift at 2.34.2. SPEC.md §10 chose it over sqflite, Isar and Hive
   # deliberately: §7.3's resolution is genuinely relational and needs real SQL
   # with indices, and drift is the only one of the four that gives two
@@ -35,6 +40,11 @@ dependencies:
   # @visibleForTesting on the one createAll() seam. Same annotation package the
   # engine uses.
   meta: ^1.15.0
+
+  # AccumulatorSink, for hashing the payload as it streams rather than after it
+  # lands. A ~10 MB decompressed buffer on SPEC.md §13's 2 GB device is the
+  # anti-pattern this whole installer exists to avoid.
+  convert: ^3.1.2
 
   # The extraction integrity check of D-6. The content builder writes the same
   # digest into reference.build.json, so the two halves agree on the algorithm
@@ -65,3 +75,15 @@ dev_dependencies:
   # analyzer this workspace can also give `package:test`. 2.34.0 generates for
   # drift >=2.30.0 <2.35.0, so the runtime pin D-5 sets is unaffected.
   drift_dev: '>=2.34.0 <2.34.1'
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    # The shipping rule book (D-6 item 1). The uncompressed reference.db is
+    # git-ignored and is a build artefact; this is the file that goes into the
+    # bundle and is extracted once, verified by sha256, and opened read-only.
+    - assets/db/reference.db.gz
+    # What the extraction verifies against: build id, date, uncompressed byte
+    # count and uncompressed sha256.
+    - assets/db/reference.build.json
