@@ -178,3 +178,70 @@ jobs:
         run: cd tools/content_builder && dart test --test-randomize-ordering-seed random --reporter expanded
       - name: app suite
         run: cd app && flutter test --test-randomize-ordering-seed random --reporter expanded
+
+  android-release-manifest:
+    name: android release manifest
+    needs: flutter
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4                 # VERIFY: confirm the current major
+      - uses: actions/setup-java@v4               # VERIFY: confirm the current major
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: .fvmrc
+          cache: true
+      - run: dart pub get
+
+      # Unsigned on purpose. CI proves the artefact builds and what its manifest
+      # says; signing belongs to a human or a secrets-scoped release workflow, and
+      # a job with no signing secret has nothing to leak.
+      - run: cd app && flutter build appbundle --release
+
+      # SPEC.md §14 bullet 3 names `aapt2 dump xmltree` on the AAB. aapt2 CANNOT
+      # read an AAB — it answers "could not identify format of APK" and exits, and
+      # a `grep -q INTERNET` over that error text finds nothing and reports success.
+      # apkanalyzer is worse: it printed an ERROR and still exited 0. bundletool is
+      # the tool four-layers.md names for a bundle and the only one of the three
+      # that actually reads it. Pinned, because an unpinned tool is a second thing
+      # that can change the answer.
+      - name: Fetch bundletool 1.18.1
+        run: curl -sSL --fail -o "$RUNNER_TEMP/bundletool.jar"
+          https://github.com/google/bundletool/releases/download/1.18.1/bundletool-all-1.18.1.jar
+
+      - name: Merged release manifest grants no INTERNET and no background location
+        run: |
+          set -euo pipefail
+          AAB=app/build/app/outputs/bundle/release/app-release.aab
+          java -jar "$RUNNER_TEMP/bundletool.jar" dump manifest --bundle="$AAB" > merged-manifest.xml
+          # Prove the dump produced a manifest BEFORE trusting any grep over it.
+          # Every silent-pass this task uncovered had the same shape: a tool failed,
+          # wrote its error where the manifest should have been, and the greps below
+          # found nothing and called it a pass.
+          grep -q '<manifest' merged-manifest.xml || {
+            echo "::error::the dump produced no manifest — refusing to pass over it"
+            cat merged-manifest.xml; exit 1; }
+          for perm in android.permission.INTERNET android.permission.ACCESS_BACKGROUND_LOCATION; do
+            if grep -q "$perm" merged-manifest.xml; then
+              echo "::error::$perm is present in the MERGED release manifest"
+              grep -n "$perm" merged-manifest.xml
+              exit 1
+            fi
+          done
+          grep -q 'android:allowBackup="false"' merged-manifest.xml || {
+            echo "::error::allowBackup is not false in the merged manifest"; exit 1; }
+          echo "merged release manifest: no INTERNET, no background location, allowBackup=false"
+
+      # Read once so the baseline is known before a plugin ever adds a grant. At
+      # E01 it reads: uses-permission#android.permission.INTERNET ADDED from main,
+      # then REJECTED — the remove marker doing its job.
+      - uses: actions/upload-artifact@v4          # VERIFY: confirm the current major
+        with:
+          name: manifest-merger-release-report
+          path: app/build/app/outputs/logs/manifest-merger-release-report.txt
+          retention-days: 14

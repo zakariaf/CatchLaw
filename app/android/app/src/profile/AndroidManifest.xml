@@ -1,0 +1,17 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- THIS GRANT IS CORRECT AND MUST NOT BE REMOVED.
+         The Flutter tool needs android.permission.INTERNET to reach the Dart VM
+         service in the running app: breakpoints, hot reload and DevTools all go
+         over it. It applies to the profile build only and never ships.
+
+         Removing it does not improve the offline guarantee by one byte — the
+         shipping manifests in main/ and release/ are what the user installs — and
+         it does break `flutter run`. catchlaw-offline-guarantee rule 4 states the
+         consequence plainly: a guard that breaks flutter run is a guard someone
+         deletes before lunch, and then the real guarantee goes with it.
+
+         app/test/policy/android_manifest_test.dart ASSERTS this line is present,
+         which reads backwards until you have read the reason above. The guard test
+         and check_no_network.sh both skip this source set for the same reason. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+</manifest>

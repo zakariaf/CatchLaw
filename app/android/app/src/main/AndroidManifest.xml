@@ -1,0 +1,71 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- LAYER 2 OF THE OFFLINE GUARANTEE, and the only layer a regulator, a store
+         reviewer or a journalist can verify from the APK without reading our source.
+         CatchLaw ships without the INTERNET permission, so any socket the app opens
+         fails at the kernel whatever the Dart code says (SPEC.md §5.3). The fully
+         qualified name is deliberately not spelled out in this prose: check 3 of
+         check_no_network.sh greps for it and exempts only a line that OPENS a comment
+         or carries the remove marker, so writing it here would make the rule's own
+         explanation fail the rule.
+
+         The marker below does not merely decline the permission — it REMOVES it, and
+         tools: markers act on manifests of LOWER priority, so this is what strips an
+         INTERNET grant merged in by a plugin AAR. No grep over our own source can
+         reach that case, because the grant is not in our source.
+
+         The xmlns:tools declaration above is required. Omit it and the merger fails
+         the build with an unresolved-prefix error — and the fix somebody reaches for
+         is deleting this whole line, at which point the permission comes back and
+         nothing is red. (SPEC.md §11, four-layers.md.)
+
+         debug/ and profile/ deliberately GRANT it for the Dart VM service. Do not
+         "fix" them: a guard that breaks flutter run is a guard someone deletes. -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+
+    <application
+        android:label="CatchLaw"
+        android:allowBackup="false"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <!-- Specifies an Android theme to apply to this Activity as soon as
+                 the Android process has started. This theme is visible to the user
+                 while the Flutter UI initializes. After that, this theme continues
+                 to determine the Window background behind the Flutter UI. -->
+            <meta-data
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme"
+              />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!-- Don't delete the meta-data below.
+             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+    <!-- Required to query activities that can process text, see:
+         https://developer.android.com/training/package-visibility and
+         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+
+         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
+</manifest>
