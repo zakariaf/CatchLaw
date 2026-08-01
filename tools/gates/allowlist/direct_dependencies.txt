@@ -14,6 +14,11 @@ packages/rule_engine dependencies meta
 packages/rule_engine dependencies unorm_dart
 packages/rule_engine dev_dependencies analysis_defaults
 packages/rule_engine dev_dependencies test
+tools/content_builder dependencies args
+tools/content_builder dependencies meta
+tools/content_builder dependencies path
 tools/content_builder dependencies rule_engine
+tools/content_builder dependencies sqlite3
+tools/content_builder dependencies yaml
 tools/content_builder dev_dependencies analysis_defaults
 tools/content_builder dev_dependencies test

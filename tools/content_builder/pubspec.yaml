@@ -14,6 +14,29 @@ dependencies:
   # builder and the app provably share one rule_engine.
   rule_engine:
 
+  # The CLI surface. Every flag is declared here, including the three that exist
+  # only to be rejected by name (--force, --skip-assertions,
+  # --allow-missing-locale), so `args` reports them as parsed rather than as
+  # unknown-option noise.
+  args: ^2.6.0
+
+  # loadYamlNode keeps a SourceSpan on every node, which is the whole reason a
+  # failure can say `content/rules.yaml:118` instead of `rule r-041`.
+  yaml: ^3.1.2
+
+  # Directory walking and display-path relativisation. The failure line is a
+  # repository-relative path, never an absolute one, or two machines disagree
+  # about where the defect is.
+  path: ^1.9.0
+
+  # @immutable on the row models. Same annotation package the engine uses.
+  meta: ^1.15.0
+
+  # The emitter (E04/T10). Declared here rather than in T10 so the
+  # direct-dependency allowlist records one change for this package rather than
+  # two, and so the version is pinned by the same lock file from the start.
+  sqlite3: ^2.4.6
+
 dev_dependencies:
   # Workspace-resolved: it makes package:flutter_lints/flutter.yaml load for
   # this member's analysis_options.yaml.

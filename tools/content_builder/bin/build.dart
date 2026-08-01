@@ -1,16 +1,17 @@
 // The `dart run content_builder:build` entry point.
 //
 // D-4 gives this deliverable one name — directory `tools/content_builder/`,
-// package `content_builder`, executable `build` — and this stub makes that name
-// resolve from the first commit. The compiler itself is E04.
+// package `content_builder`, executable `build`.
+//
+// The entry point delegates immediately so the build itself stays testable:
+// everything below `run` reads its arguments and writes its output through
+// injected sinks, and no test has to spawn a process to assert a failure line.
 import 'dart:io';
 
-/// Prints the usage this CLI will honour and exits `64` (`EX_USAGE`).
+import 'package:content_builder/src/cli/run.dart';
+
+/// Runs the content build and exits with its code: 0 built, 1 failures and
+/// nothing written, 2 usage error.
 void main(List<String> args) {
-  stderr.writeln(
-    'content_builder: usage: dart run content_builder:build '
-    '--in <content-dir> --out <reference.db>',
-  );
-  stderr.writeln('not implemented yet — the compiler lands in E04.');
-  exit(64);
+  exitCode = run(args, out: stdout, err: stderr);
 }

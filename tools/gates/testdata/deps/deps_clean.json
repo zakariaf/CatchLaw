@@ -8,11 +8,21 @@
       "source": "root",
       "dependencies": [
         "rule_engine",
+        "args",
+        "yaml",
+        "path",
+        "meta",
+        "sqlite3",
         "analysis_defaults",
         "test"
       ],
       "directDependencies": [
-        "rule_engine"
+        "rule_engine",
+        "args",
+        "yaml",
+        "path",
+        "meta",
+        "sqlite3"
       ],
       "devDependencies": [
         "analysis_defaults",
@@ -805,6 +815,36 @@
     {
       "name": "lints",
       "version": "6.1.0",
+      "kind": "transitive",
+      "source": "hosted",
+      "dependencies": [],
+      "directDependencies": []
+    },
+    {
+      "name": "sqlite3",
+      "version": "2.9.4",
+      "kind": "transitive",
+      "source": "hosted",
+      "dependencies": [
+        "collection",
+        "ffi",
+        "meta",
+        "path",
+        "web",
+        "typed_data"
+      ],
+      "directDependencies": [
+        "collection",
+        "ffi",
+        "meta",
+        "path",
+        "web",
+        "typed_data"
+      ]
+    },
+    {
+      "name": "ffi",
+      "version": "2.2.0",
       "kind": "transitive",
       "source": "hosted",
       "dependencies": [],
