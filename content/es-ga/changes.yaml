@@ -1,0 +1,29 @@
+# content_change — what S23 tells the reader changed, and on whose authority.
+#
+# A machine cannot write a summary_key and does not try: the key is a *_key, A2
+# requires it in all six locales, and generating six locales of a legal note is
+# machine translation of exactly the kind SPEC.md §9.2 forbids for tier-2
+# content. The mechanical diff DETECTS the change; this file is where a human
+# says what it means.
+#
+# `rule_ids` lists every authored row the entry accounts for. A shipping row
+# that changed and appears in no entry is an A10 failure — the defect
+# build-assertions.md records as "a rule edited without regenerating", and §4.7's
+# promise that the user can see currency is what it breaks.
+#
+# `changed_on` is authored, never a clock reading.
+changes:
+  - id: es-ga-ch-2026-08-0
+    jurisdiction_id: ES-GA
+    from_version: ''
+    to_version: '2026.08.0'
+    summary_key: change.es_ga.first_pack
+    changed_on: '2026-08-12'
+    rule_ids:
+      - ES-GA
+      - es-ga-rias-baixas
+      - veneridae
+      - venerupis-corrugata
+      - venerupis-corrugata-gl
+      - venerupis-corrugata-es
+      - venerupis-corrugata-en

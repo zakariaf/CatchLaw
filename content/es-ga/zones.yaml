@@ -1,0 +1,13 @@
+# zone — a geometry a rule attaches to, and the specificity ladder the resolver
+# sorts on: exclusion 40, reserve 30, bank/basin 20, subzone 10, region 0.
+#
+# No `zone_rings` section: the coordinate annexes to the Orde have not been
+# transcribed, and `jurisdiction.has_zone_polygons` is false to match. S9 hides
+# the sub-zone level rather than offering a boundary nobody drew.
+zones:
+  - id: es-ga-rias-baixas
+    jurisdiction_id: ES-GA
+    code: rias-baixas
+    name_key: zone.es_ga.rias_baixas
+    water_type: salt
+    zone_kind: region

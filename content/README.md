@@ -334,6 +334,35 @@ and the column name differ, and D-2's rule of thumb is why. A4 covers the same g
 This is exactly the `CONVENTIONS.md` §7 shape — a green tick meaning "I found nothing" and one meaning
 "I looked at nothing" are the same pixel — so it is written here rather than left to be rediscovered.
 
+### G-4 — Galicia's rule rows are not authored, and cannot be without opening the DOG
+
+**This is the largest gap in the repository and it is not a code gap.** `SPEC.md` §8 closes with *the
+code is a fortnight; the content is the moat*. The machine is finished: `dart run
+content_builder:build` over this directory exits 0, emits `reference.db`, its gzip and its sidecar,
+passes `PRAGMA foreign_key_check` and `PRAGMA integrity_check`, and produces byte-identical files from
+two consecutive runs. What it currently compiles is Galicia's **structure** — the jurisdiction, the
+Rías Baixas, *Veneridae*, *Venerupis corrugata* and its three sourceable vernacular names.
+
+It compiles **no rules**, and that is a refusal rather than an omission. A rule row needs four things
+that only a human reading the *Orde da Xunta de Galicia do 27 de xullo de 2012* and its successors can
+supply:
+
+| Needed | Why nothing here can produce it |
+|---|---|
+| the minimum size and its measurement method | E04's own risk note: *a value nobody has read out of the DOG is a defect, not a placeholder*. The one Galician value published anywhere in this repository is *Venerupis corrugata*, 38 mm shell length |
+| `published_on` and `retrieved_on` | `retrieved_on` claims a person opened the gazette that day. A generated one records when a machine ran |
+| `sha256` of the fetched document | Writing a plausible-looking digest is **precisely** the defect A9 exists to prevent: a footnote claiming a check nobody made |
+| the verbatim `legal_text` body | It is quoted, not paraphrased. An abstract is both copyrighted and wrong |
+
+The tool refuses all four by design, and the product refuses to fetch them itself — invariant 1. So
+the transcription is human work with a named budget line (`SPEC.md` §8, §16 R1), and the build's job
+is to make a wrong transcription unshippable rather than to invent a right one.
+
+**What lands when it is done:** `content/es-ga/citations.yaml`, `rules.yaml`, `closed_seasons.yaml`
+and `legal_text.yaml`, plus `app/assets/sil/venerupis-corrugata.svg` — A5 requires a silhouette **on
+disk** for every species a rule reaches, and originated line art is commissioned, not generated.
+G-3's citation block shape and the sections table above are what those files fill in.
+
 ### G-3 — `content/es-ga/citations.yaml` is not authored yet, and that is deliberate
 
 E04/T05 lists it as a deliverable. A citation block requires a `sha256` of the fetched gazette

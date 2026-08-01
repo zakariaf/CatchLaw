@@ -1,0 +1,31 @@
+# ES-GA — Galicia, and the authority that publishes its shellfish sizes.
+#
+# `legal_text_locales: gl` records what the Xunta actually publishes in. SPEC.md
+# §9.6: bundled law exists only in the language the authority published it in,
+# and S13 renders a language-availability notice when the reader's locale is not
+# among them. The §9.2 fallback chain applies to content_string only and never
+# silently substitutes a different language of law.
+#
+# `has_zone_polygons: false` because the coordinate annexes have not been
+# transcribed. SPEC.md §8 on the Gulf says it for every jurisdiction: where no
+# coordinate list is printed, rules apply jurisdiction-wide and we do not invent
+# boundaries.
+#
+# `checked_on` is the day a human last read the published text. It is authored,
+# never a clock reading — the footnote on the result screen claims a person
+# opened the gazette that day, and that claim must be true.
+jurisdiction:
+  - id: ES-GA
+    code: ES-GA
+    country_iso2: ES
+    name_key: jurisdiction.es_ga.name
+    authority_key: jurisdiction.es_ga.authority
+    authority_url: https://www.pescadegalicia.gal/
+    has_saltwater: true
+    has_freshwater: false
+    has_zone_polygons: false
+    default_locale: gl
+    legal_text_locales: gl
+    content_version: '2026.08.0'
+    published_on: '2012-07-27'
+    checked_on: '2026-08-12'

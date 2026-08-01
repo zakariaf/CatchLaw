@@ -28,3 +28,12 @@ strings:
       es: Rías Baixas
       gl: Rías Baixas
       pt_BR: Rias Baixas
+
+  - key: change.es_ga.first_pack
+    values:
+      ar: أول حزمة لغاليسيا — الولاية والمنطقة والنوع، بلا قواعد بعد
+      ca: Primer paquet de Galícia — jurisdicció, zona i espècie; encara sense regles
+      en: First Galicia pack — jurisdiction, zone and species; no rules yet
+      es: Primer paquete de Galicia — jurisdicción, zona y especie; aún sin reglas
+      gl: Primeiro paquete de Galicia — xurisdición, zona e especie; aínda sen regras
+      pt_BR: Primeiro pacote da Galiza — jurisdição, zona e espécie; ainda sem regras
