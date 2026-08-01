@@ -1,0 +1,5 @@
+/* CatchLaw iOS usage strings — pt-BR. D-3 ships six locales; a missing key here
+   falls back to the base language inside a permission dialog, which is the one
+   screen where a fisher decides whether to trust the app. */
+"NSCameraUsageDescription" = "O CatchLaw usa a câmera para fotografar uma captura no seu próprio registro. A foto fica armazenada neste aparelho e é anexada ao registro da captura. Ela não é enviada para lugar nenhum.";
+"NSLocationWhenInUseUsageDescription" = "O CatchLaw faz uma única leitura de localização para sugerir em que zona você está pescando. A leitura é usada neste aparelho e não é enviada para lugar nenhum. Você sempre pode escolher a zona manualmente.";

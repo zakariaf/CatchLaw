@@ -1,0 +1,21 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- The release source set states the offline guarantee a second time, on purpose.
+         main/ already carries the same element, and main/ is what strips a grant merged
+         in from a plugin AAR. This file is the one an auditor diffs: it says, in the
+         build type that actually ships, that CatchLaw asks for no network permission.
+
+         SPEC.md §11 prints exactly this file. Nothing else belongs in a build-type
+         manifest — no application element, no activity, no attributes. Anything added
+         here silently overrides main/ for release builds only, which is the hardest
+         class of Android bug to reproduce.
+
+         The claim is not verified by reading this file. It is verified by
+         `aapt2 dump xmltree` against base/manifest/AndroidManifest.xml in the built AAB
+         (the flag is spelled out in validate.yml; a double hyphen cannot appear inside
+         an XML comment, which is a build failure and not a style point),
+         because what ships is the MERGED manifest and the merged manifest can contain a
+         permission that appears in none of our four files (SPEC.md §14 bullet 3). -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+</manifest>

@@ -1,0 +1,120 @@
+# The CatchLaw analyzer configuration. FLUTTER_GUIDE.md Part 4.3, verbatim.
+#
+# DIVERGENCE, recorded here rather than smuggled: lint-and-style-config rule 2
+# requires building on very_good_analysis with a version-stamped include. This
+# project builds on flutter_lints instead, per FLUTTER_GUIDE.md Part 4.2, which
+# rejects VGA for a private app with specific reasons — it turns on
+# public_member_api_docs, lines_longer_than_80_chars, require_trailing_commas
+# and discarded_futures, which are aimed at published packages, and it still
+# ships two rules the Dart team deprecated in the 3.13 cycle. Part 4 was
+# executed against Dart 3.12.2 and this file passes analyze with zero
+# undefined_lint. DECISIONS.md does not yet settle the conflict; a D-10 would.
+include: package:flutter_lints/flutter.yaml
+
+# TOP-LEVEL — not under `analyzer:`. Dart 3.10+. Cannot appear in a nested
+# options file. Restart the Dart Analysis Server after editing.
+plugins:
+  riverpod_lint: 3.1.4 # EXACT pin — 3.1.6 fails version solving on Dart 3.12.2
+  # import_lint is DELIBERATELY ABSENT until E05. Its ui_must_not_import_drift
+  # rule targets package:catchlaw/ui/**.dart, which does not exist until E08,
+  # against package:drift, which is not a dependency until E05 — and with the
+  # rule declared, import_lint throws "import_lint is required" out of
+  # Config.fromAnalysisOptions for every file analysed under a NESTED options
+  # file, because it reads the options file directly instead of the merged
+  # view and the three nested files carry no import_lint: key. That crashes the
+  # plugin server and makes dart analyze exit 4. E01's Risk 2 anticipated the
+  # rule erroring on an unmatched target and prescribed exactly this: move the
+  # rule body to E05, where drift arrives and the target exists. See D-12.
+
+analyzer:
+  language:
+    strict-casts: true # the three highest-value lines in the file: they close
+    strict-inference: true # type-system holes rather than express style
+    strict-raw-types: true # opinions
+  errors:
+    todo: ignore
+    # dead weight in an AOT snapshot we're keeping small for a 1.2s cold start
+    unused_import: error
+    unused_local_variable: error
+    unused_element: error
+    unused_field: error
+    dead_code: error
+    # data-loss / crash / architecture — an `info` is advisory, an `error`
+    # can't merge
+    unawaited_futures: error # a dropped drift write == silent data loss
+    use_build_context_synchronously: error
+    cancel_subscriptions: error # leaked subscription on a drift .watch()
+    avoid_dynamic_calls: error
+    avoid_web_libraries_in_flutter: error # bans dart:html/dart:js == bans XHR
+    depend_on_referenced_packages: error
+    always_use_package_imports: error
+    avoid_relative_lib_imports: error
+  exclude:
+    - build/**
+    - "**/generated_plugin_registrant.dart"
+    # E01/T05 gate fixtures. These are deliberately-broken call sites that exist
+    # to be GREPPED, never compiled — their identifiers are undefined on purpose.
+    # Excluding them is safe precisely because nothing imports them; the reason
+    # §4.4 forbids excluding generated Dart (a real error would be swallowed)
+    # does not apply to a file no build ever reaches.
+    - tools/gates/testdata/**
+    # DELIBERATELY NOT excluding **/*.g.dart — see FLUTTER_GUIDE.md §4.4.
+    # `exclude` still resolves and type-checks the file and only suppresses
+    # reporting inside it, so a genuine error in drift output would survive
+    # until `flutter build`. drift and freezed already emit
+    # `// ignore_for_file: type=lint,unused_import` in their headers, which is
+    # strictly better.
+
+formatter:
+  page_width: 100 # what flutter/flutter and flutter/packages use
+
+linter:
+  rules:
+    # A. Correctness
+    - avoid_dynamic_calls
+    - cast_nullable_to_non_nullable
+    - unawaited_futures
+    - unnecessary_statements
+    - throw_in_finally
+    - only_throw_errors
+    - avoid_type_to_string # meaningless under --obfuscate, which we use
+    - switch_on_type # `switch (x.runtimeType)` never matches subtypes —
+      # a real trap with sealed-class rule nodes
+    - cancel_subscriptions
+    - avoid_slow_async_io # cold-start path
+    - avoid_void_async
+    - missing_whitespace_between_adjacent_strings # bites in i18n strings
+    - no_adjacent_strings_in_list # a missing comma silently concatenates
+    - avoid_equals_and_hash_code_on_mutable_classes
+    - avoid_field_initializers_in_const_classes # silently defeats const-ness
+    # B. Typing — rule_engine is a real API with two consumers
+    - always_declare_return_types
+    - type_annotate_public_apis
+    - avoid_positional_boolean_parameters
+    - omit_obvious_local_variable_types
+    - specify_nonobvious_local_variable_types
+    # C. Imports & architecture
+    - always_use_package_imports
+    - directives_ordering
+    - combinators_ordering
+    - simple_directive_paths # NEW in Dart 3.12
+    # D. Ignore hygiene — the antidote to `// ignore:` rot
+    - document_ignores # every ignore needs a reason
+    - unnecessary_ignore # flags ignores whose diagnostic no longer fires
+    - flutter_style_todos
+    # E. Rendering / cold start
+    - use_colored_box # one less RenderObject than Container
+    - sized_box_shrink_expand
+    - use_enums
+    - prefer_const_constructors # dropped by flutter_lints 5.0.0 for annoyance,
+    - prefer_const_declarations # not for lack of value. All three are
+    - prefer_const_literals_to_create_immutables # `dart fix`-able
+    # F. Style
+    - prefer_single_quotes
+    - prefer_final_locals
+    - prefer_final_in_for_each
+    - sort_constructors_first
+    - unnecessary_parenthesis
+    - unnecessary_breaks # Dart 3: `break` at the end of a case is dead code
+    - use_setters_to_change_properties
+    - use_test_throws_matchers

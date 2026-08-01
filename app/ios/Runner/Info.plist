@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Catchlaw</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>catchlaw</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneClassName</key>
+					<string>UIWindowScene</string>
+					<key>UISceneConfigurationName</key>
+					<string>flutter</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<key>UISceneStoryboardFile</key>
+					<string>Main</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<!-- ================= LAYER 3 OF THE OFFLINE GUARANTEE, STATED HONESTLY =================
+
+	     iOS has no permission-level network opt-out. There is no counterpart to
+	     removing android.permission.INTERNET, and no sandbox entitlement that denies
+	     outbound networking. SPEC.md §11 opens the iOS block by saying the first
+	     draft's proposed proofs were worthless; four-layers.md tabulates why:
+
+	       "ATS prevents the app going online"            FALSE. ATS constrains cleartext
+	                                                      HTTP and permits every TLS request.
+	       "NSAllowsArbitraryLoads: false is a switch"    FALSE. It is the default, and it
+	                                                      only tightens cleartext policy.
+	       "the binary links no Network.framework"        FALSE. dart:io's HttpClient uses
+	                                                      BSD sockets in libSystem, and
+	                                                      CFNetwork is linked by the Flutter
+	                                                      engine whether or not we call it.
+	       "an entitlement can deny networking"           FALSE. No such entitlement exists.
+
+	     All four sound like engineering, which is how they survived a review once.
+
+	     So NO NSAppTransportSecurity key is declared here. SPEC.md §14 bullet 4 requires
+	     no ATS exceptions, and the cleanest way to declare none is to declare no dict at
+	     all: an NSExceptionDomains entry is only ever added INSIDE one that already
+	     exists. A key that does nothing and reads as protection is worse than an absent
+	     key with this comment.
+
+	     On iOS the guarantee rests on layer 1 (no networking package resolves, so an
+	     import is a compile error) and layer 4 (test/no_network_test.dart), and is
+	     verified per RELEASE with rvictl plus Wireshark over a five-minute exercise, with
+	     the device network UP — a capture taken with no connectivity is INVALID, because
+	     the app must have had the opportunity to call out. That capture is E21 and it
+	     blocks the release; nothing in this file proves anything about runtime behaviour.
+
+	     Store and privacy-questionnaire wording: do not write your own. It is held, marked
+	     verbatim, in .claude/skills/catchlaw-offline-guarantee/references/four-layers.md.
+
+	     BACKUP DIFFERS FROM ANDROID ON PURPOSE. NSURLIsExcludedFromBackupKey is NOT set,
+	     while Android sets allowBackup="false". iCloud device backup is the user's own
+	     encrypted backup and is acceptable; what this product excludes is a VENDOR server.
+	     Android's destination is Google's servers under a different trust model. SPEC.md
+	     §11 says both choices are explained to the user in S17.
+	     ================================================================================ -->
+
+	<key>NSCameraUsageDescription</key>
+	<string>CatchLaw uses the camera to photograph a catch for your own log. The photo is stored on this device and is attached to the catch record. It is not uploaded anywhere.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>CatchLaw takes a single location fix to suggest which zone you are fishing in. The fix is used on this device and is not sent anywhere. You can always choose the zone by hand instead.</string>
+
+	<!-- D-3: ar, en, es, gl, ca, pt_BR. In the Apple spelling pt-BR carries a hyphen.
+	     A missing InfoPlist.strings does not fail anything — iOS falls back to the base
+	     language — so the failure is an Arabic-speaking user reading an English sentence
+	     at the exact moment they decide whether to grant camera access. -->
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>ar</string>
+		<string>en</string>
+		<string>es</string>
+		<string>gl</string>
+		<string>ca</string>
+		<string>pt-BR</string>
+	</array>
+
+	<key>MinimumOSVersion</key>
+	<string>13.0</string>
+</dict>
+</plist>

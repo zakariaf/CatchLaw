@@ -1,0 +1,69 @@
+{
+  "root": "catchlaw",
+  "packages": [
+    {
+      "name": "catchlaw",
+      "kind": "root",
+      "dependencies": [
+        "flutter",
+        "flutter_riverpod",
+        "flutter_svg",
+        "printing",
+        "share_plus",
+        "flutter_test",
+        "yaml"
+      ]
+    },
+    {
+      "name": "flutter",
+      "kind": "direct",
+      "dependencies": []
+    },
+    {
+      "name": "flutter_riverpod",
+      "kind": "direct",
+      "dependencies": []
+    },
+    {
+      "name": "flutter_svg",
+      "kind": "direct",
+      "dependencies": [
+        "http"
+      ]
+    },
+    {
+      "name": "printing",
+      "kind": "direct",
+      "dependencies": [
+        "http"
+      ]
+    },
+    {
+      "name": "share_plus",
+      "kind": "direct",
+      "dependencies": [
+        "url_launcher_platform_interface"
+      ]
+    },
+    {
+      "name": "flutter_test",
+      "kind": "dev",
+      "dependencies": []
+    },
+    {
+      "name": "yaml",
+      "kind": "dev",
+      "dependencies": []
+    },
+    {
+      "name": "http",
+      "kind": "transitive",
+      "dependencies": []
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "kind": "transitive",
+      "dependencies": []
+    }
+  ]
+}

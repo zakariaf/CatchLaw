@@ -1,0 +1,3 @@
+# A nested options file REPLACES the parent for its subtree. This line is what
+# keeps the content builder under the workspace configuration.
+include: ../../analysis_options.yaml

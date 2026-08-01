@@ -1,0 +1,11 @@
+# Fixture allowlist for E01/T04 test 7: the same set plus build_runner, which pulls a local HTTP server
+# for watch mode. Reachable only from dev_dependencies, so it never ships.
+# Not the live allowlist — that is tools/gates/allowlist/, generated with --write.
+catchlaw dependencies flutter
+catchlaw dependencies flutter_riverpod
+catchlaw dependencies flutter_svg
+catchlaw dependencies printing
+catchlaw dependencies share_plus
+catchlaw dev_dependencies build_runner
+catchlaw dev_dependencies flutter_test
+catchlaw dev_dependencies yaml

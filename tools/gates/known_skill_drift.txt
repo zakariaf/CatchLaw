@@ -1,0 +1,25 @@
+# Skill files that still carry the pre-D-3 / pre-D-4 wording, and the task that
+# corrects each.
+#
+# THIS IS A SCHEDULE, NOT AN EXEMPTION. A line here is a correction with an owner
+# and a date, not permission to leave the file wrong. Delete the line in the same
+# commit as the fix; app/test/policy/skill_locale_test.dart asserts this set
+# matches reality exactly, so a file cannot quietly drop off the list and a later
+# change cannot introduce the wording into a file with no owning epic.
+#
+# Format: <path>  <owning epic/task>  # what is stale
+#
+# E01/T09 corrected four files and deliberately stopped there. The remaining six
+# are not a find-and-replace: catchlaw-content-pipeline's shipped-locale list,
+# its gendered-locale set and a build-assertion row justifying 'ur' as a "Gulf
+# crew language" are CONTENT decisions — what Catalan's gender rule is, and
+# whether a locale may be removed from a build assertion — and they belong with
+# the epic that builds the pipeline. D-4 names E04/T01; D-3 names E06/T01. The
+# skill is also a .github/CODEOWNERS legal-liability surface.
+
+.claude/skills/catchlaw-content-pipeline/SKILL.md                                E04/T01, E06/T01  # locale list ['ar','en','es','gl','pt_BR','ur'], gendered set includes ur and omits ca, names the CLI content_build
+.claude/skills/catchlaw-content-pipeline/examples/content_build_assertions.dart  E04/T01, E06/T01  # runnable example named content_build; 'ur' in its locale list
+.claude/skills/catchlaw-content-pipeline/references/build-assertions.md          E04/T01, E06/T01  # assertion row justifying 'ur' as a Gulf crew language; content_build throughout
+.claude/skills/catchlaw-content-pipeline/scripts/check_content_pipeline.sh       E04/T01           # header and messages name tools/content_build
+.claude/skills/catchlaw-conventions-index/references/product-invariants.md       E06/T01           # §3 citation section says "every locale including ar and ur"
+.claude/skills/catchlaw-conventions-index/examples/catchlaw_layering.dart        E04/T01           # doc comment names the content_build CLI

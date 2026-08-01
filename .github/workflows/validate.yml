@@ -8,13 +8,18 @@ on:
     branches: [main]
   pull_request:
 
+# A force-push must not leave two runs racing on the same ref.
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   skills:
     name: skills contract
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -28,12 +33,26 @@ jobs:
           done
           [ "$found" = 1 ] && echo "all scripts parse" || echo "no scripts found"
 
+      # Scoped to the skills THIS repository authors. CLAUDE.md keeps two
+      # registries apart: the sixteen catchlaw-*/lonja-* skills carry token
+      # values and app-domain law and are owned here; the 33 general Flutter
+      # skills are vendored from the flutter@flutter-skills plugin and are
+      # maintained upstream, where their authoring rules live. Nine of them fail
+      # this contract — two carry an unquoted ": " that makes the frontmatter
+      # parse to nothing, two declare disable-model-invocation, five use < or >
+      # — and CLAUDE.md already records that those corrections belong in the
+      # plugin repository rather than here. Gating on them would mean editing
+      # vendored content to make our build pass.
       - name: Frontmatter parses to exactly name + description
         run: |
           python3 - <<'PY'
           import glob, sys, yaml, os
           bad = []
-          for p in sorted(glob.glob('.claude/skills/*/SKILL.md')):
+          paths = sorted(glob.glob('.claude/skills/catchlaw-*/SKILL.md')
+                         + glob.glob('.claude/skills/lonja-*/SKILL.md'))
+          if len(paths) != 16:
+              print(f'expected 16 app skills, found {len(paths)}'); sys.exit(1)
+          for p in paths:
               d = os.path.basename(os.path.dirname(p))
               raw = open(p, encoding='utf-8').read()
               try:
@@ -49,7 +68,7 @@ jobs:
                   bad.append(f'{d}: description is {n} chars')
               if '<' in fm.get('description','') or '>' in fm.get('description',''):
                   bad.append(f'{d}: description contains < or >')
-          print('\n'.join(bad) if bad else f'{len(glob.glob(".claude/skills/*/SKILL.md"))} skills OK')
+          print('\n'.join(bad) if bad else f'{len(paths)} app skills OK')
           sys.exit(1 if bad else 0)
           PY
 
@@ -70,7 +89,7 @@ jobs:
 
   invariants:
     name: product invariants
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -99,3 +118,139 @@ jobs:
             echo "$hits"; exit 1
           fi
           echo "no networking dependency declared"
+
+  flutter:
+    name: format · analyze · test
+    runs-on: ubuntu-24.04            # pinned, not -latest: image drift moves the toolchain
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4                 # VERIFY: confirm the current major
+      - uses: subosito/flutter-action@v2          # v2 is current; there is no v3
+        with:
+          channel: stable
+          flutter-version-file: .fvmrc            # D-5 — one recorded version, local == CI
+          cache: true
+          pub-cache: true
+
+      - run: flutter --version
+      - run: dart pub get                         # ONCE, at the workspace root
+
+      - name: Exactly one lockfile, at the root
+        run: |
+          n=$(find . -name pubspec.lock -not -path './.dart_tool/*' | wc -l | tr -d ' ')
+          [ "$n" = 1 ] || { echo "::error::$n pubspec.lock files — a pub get ran inside a member"; exit 1; }
+
+      # SPEC.md §14 static block, bullet 1. Edge-level, not package-level: §5.3
+      # records that "no HTTP client is linked" was FALSE, so the guarantee is
+      # that http has exactly the two parents §14 names.
+      - name: Direct-dependency allowlist diff (SPEC §14)
+        run: dart pub deps --json | python3 tools/gates/check_dependency_allowlist.py --allowlist-dir tools/gates/allowlist
+
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: flutter analyze --fatal-infos
+
+      # D-12. `flutter analyze` loads analyzer plugins on ubuntu-24.04 but NOT
+      # on a local macOS checkout, measured both ways — so `dart analyze` is run
+      # as well, because it is the command that loads them everywhere. Neither
+      # is informational: both block. A plugin lane that cannot fail is the
+      # decoration FLUTTER_GUIDE Part 4.1 fact 2 warns about.
+      - name: Analyze with plugins
+        run: dart analyze
+
+      # SPEC.md §14 static block, bullet 2. A shell step and not only the guard
+      # test, because a release checklist item most needs answering when the Dart
+      # suite is the thing that is broken. The two are not redundant: the test
+      # walks files, skips generated output and reports file and line; this runs
+      # when nothing compiles.
+      - name: Banned network APIs (SPEC §14)
+        run: bash tools/gates/no_banned_apis.sh app/lib
+
+      # All sixteen skill gates, each against the directory D-1, D-2 and D-4 say
+      # it must actually read, with the scanned-file count printed for every row.
+      # The count is the point: every check_*.sh is a `grep -r ... || true`, so a
+      # target that exists and holds nothing prints OK and exits 0. A green tick
+      # meaning "I found nothing" and one meaning "I looked at nothing" are the
+      # same pixel, and this repository's offline claim is read off those greens.
+      - name: Skill gates (all sixteen, with a non-empty scan asserted)
+        run: bash tools/gates/run_skill_gates.sh tools/gates/skill_gates.tsv
+
+      # On Linux `flutter test` runs in a plain Dart VM where sqlite3_flutter_libs
+      # does nothing, so an E05 database suite fails in a way that reads as a
+      # broken repository. Four seconds now removes that whole class of failure.
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq libsqlite3-dev
+
+      # The suite set is stated in tools/gates/ci_members.txt and asserted by
+      # app/test/policy/ci_workflow_test.dart.
+      - name: rule_engine suite
+        run: cd packages/rule_engine && dart test --test-randomize-ordering-seed random --reporter expanded
+      - name: content_builder suite
+        run: cd tools/content_builder && dart test --test-randomize-ordering-seed random --reporter expanded
+      - name: app suite
+        run: cd app && flutter test --test-randomize-ordering-seed random --reporter expanded
+
+  android-release-manifest:
+    name: android release manifest
+    needs: flutter
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4                 # VERIFY: confirm the current major
+      - uses: actions/setup-java@v4               # VERIFY: confirm the current major
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: .fvmrc
+          cache: true
+      - run: dart pub get
+
+      # Unsigned on purpose. CI proves the artefact builds and what its manifest
+      # says; signing belongs to a human or a secrets-scoped release workflow, and
+      # a job with no signing secret has nothing to leak.
+      - run: cd app && flutter build appbundle --release
+
+      # SPEC.md §14 bullet 3 names `aapt2 dump xmltree` on the AAB. aapt2 CANNOT
+      # read an AAB — it answers "could not identify format of APK" and exits, and
+      # a `grep -q INTERNET` over that error text finds nothing and reports success.
+      # apkanalyzer is worse: it printed an ERROR and still exited 0. bundletool is
+      # the tool four-layers.md names for a bundle and the only one of the three
+      # that actually reads it. Pinned, because an unpinned tool is a second thing
+      # that can change the answer.
+      - name: Fetch bundletool 1.18.1
+        run: curl -sSL --fail -o "$RUNNER_TEMP/bundletool.jar"
+          https://github.com/google/bundletool/releases/download/1.18.1/bundletool-all-1.18.1.jar
+
+      - name: Merged release manifest grants no INTERNET and no background location
+        run: |
+          set -euo pipefail
+          AAB=app/build/app/outputs/bundle/release/app-release.aab
+          java -jar "$RUNNER_TEMP/bundletool.jar" dump manifest --bundle="$AAB" > merged-manifest.xml
+          # Prove the dump produced a manifest BEFORE trusting any grep over it.
+          # Every silent-pass this task uncovered had the same shape: a tool failed,
+          # wrote its error where the manifest should have been, and the greps below
+          # found nothing and called it a pass.
+          grep -q '<manifest' merged-manifest.xml || {
+            echo "::error::the dump produced no manifest — refusing to pass over it"
+            cat merged-manifest.xml; exit 1; }
+          for perm in android.permission.INTERNET android.permission.ACCESS_BACKGROUND_LOCATION; do
+            if grep -q "$perm" merged-manifest.xml; then
+              echo "::error::$perm is present in the MERGED release manifest"
+              grep -n "$perm" merged-manifest.xml
+              exit 1
+            fi
+          done
+          grep -q 'android:allowBackup="false"' merged-manifest.xml || {
+            echo "::error::allowBackup is not false in the merged manifest"; exit 1; }
+          echo "merged release manifest: no INTERNET, no background location, allowBackup=false"
+
+      # Read once so the baseline is known before a plugin ever adds a grant. At
+      # E01 it reads: uses-permission#android.permission.INTERNET ADDED from main,
+      # then REJECTED — the remove marker doing its job.
+      - uses: actions/upload-artifact@v4          # VERIFY: confirm the current major
+        with:
+          name: manifest-merger-release-report
+          path: app/build/app/outputs/logs/manifest-merger-release-report.txt
+          retention-days: 14
