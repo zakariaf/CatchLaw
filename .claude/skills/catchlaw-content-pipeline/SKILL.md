@@ -3,22 +3,22 @@ name: catchlaw-content-pipeline
 description: >-
   Governs the CatchLaw content pipeline that compiles hand-authored rules.yaml, species.yaml,
   vernacular.yaml, citations.yaml, zones.yaml and plates.yaml plus a Catalogue of Life extract into
-  the read-only reference.db asset — the tools/content_build CLI as a first-class deliverable, ten
+  the read-only reference.db asset — the tools/content_builder CLI as a first-class deliverable, ten
   assertions that FAIL the build on a min_size with no measurement_method, an unresolved
   content_string key in any of the six locales, a null gender in a gendered locale, a citation with
   no retrieved_on, a plate failing the illustrator death-year test, a search_norm not written by the
   shared normalise, a rule-engine contradiction, or a missing per-jurisdiction changelog diff. Use
   when authoring rules.yaml or species.yaml, adding a locale or a vernacular name, extending
-  tools/content_build, seeding reference.db, adding a citation or a bundled plate, clearing a plate
-  licence question, or reviewing content_build_assertions.dart in a diff.
+  tools/content_builder, seeding reference.db, adding a citation or a bundled plate, clearing a plate
+  licence question, or reviewing content_builder_assertions.dart in a diff.
 ---
 
 # CatchLaw Content Pipeline
 
 Content is not data the app happens to read — it IS the product, and the app is a viewer for it. A
 wrong row in `rules.yaml` costs Khalid AED 3,000 and six months of licence, so every row is authored
-out of band, asserted in CI and shipped as a byte-reproducible `assets/reference.db`. This skill owns
-the authoring formats, the `tools/content_build` CLI, the assertions that fail the build, licence
+out of band, asserted in CI and shipped as a byte-reproducible `app/assets/db/reference.db`. This skill
+owns the authoring formats, the `tools/content_builder` CLI, the assertions that fail the build, licence
 provenance and the changelog. It does not own the runtime schema, resolution semantics, or wording.
 
 Read the reference for the task at hand:
@@ -36,10 +36,10 @@ come into existence.
 
 ## Non-negotiable rules
 
-1. **The build tool is a tested package, never a shell script.** `tools/content_build` is a pub
+1. **The build tool is a tested package, never a shell script.** `tools/content_builder` is a pub
    workspace member with its own `pubspec.yaml`, unit tests and typed CLI:
-   `dart run content_build --in content/ --out assets/reference.db`. **WHY:** a `sqlite3 < load.sql`
-   pipeline emits a database nobody can reproduce, diff, or explain to a regulator.
+   `dart run content_builder:build --in content/ --out app/assets/db/reference.db`. **WHY:** a
+   `sqlite3 < load.sql` pipeline emits a database nobody can reproduce, diff, or explain to a regulator.
 
 2. **Every assertion FAILS the build. There is no warning tier.** Non-empty failure list means
    `exitCode = 1` and no `.db` is written; there is no `--force`, no `--skip-assertions`, no
@@ -52,12 +52,12 @@ come into existence.
    legal fish into a fine and a fine into a false acquittal.
 
 4. **Every `*_key` resolves in `content_string` for EVERY shipped locale.** All six — `ar`, `en`,
-   `es`, `gl`, `pt_BR`, `ur` — resolve or the build dies; there is no fallback chain to `en` and no
+   `es`, `gl`, `ca`, `pt_BR` — resolve or the build dies; there is no fallback chain to `en` and no
    empty-string placeholder. **WHY:** a missing key renders a blank line under the stamp, and blank
    is not a verdict, it is a screen he cannot act on.
 
-5. **A `species_name` in a gendered locale carries a non-null `gender`.** `es`, `gl`, `pt_BR`, `ar`
-   and `ur` require `gender: m | f`; only `en` may omit it. **WHY:** "la mero" instead of "el mero"
+5. **A `species_name` in a gendered locale carries a non-null `gender`.** `ar`, `es`, `gl`, `ca`
+   and `pt_BR` require `gender: m | f`; only `en` may omit it. **WHY:** "la mero" instead of "el mero"
    reads as machine translation, and a document that reads machine-translated is not believed when
    it states a prohibition.
 
@@ -98,17 +98,17 @@ come into existence.
 
 ## The tool is the deliverable
 
-`tools/content_build` is a workspace member beside `packages/rule_engine`, imports the same shared
+`tools/content_builder` is a workspace member beside `packages/rule_engine`, imports the same shared
 code the app does, and is reviewed like app code. Its `main` does exactly four things: load, assert,
 emit, changelog — and it never reaches `emit` with a non-empty failure list.
 
 ```dart
 // WRONG — an untested shell pipeline; the .db is not reproducible and not reviewable.
-//   sqlite3 assets/reference.db < schema.sql && python3 tools/load.py content/*.yaml
+//   sqlite3 app/assets/db/reference.db < schema.sql && python3 tools/load.py content/*.yaml
 
-// RIGHT — tools/content_build/bin/content_build.dart, a tested CLI in the pub workspace.
+// RIGHT — tools/content_builder/bin/build.dart, a tested CLI in the pub workspace.
 Future<void> main(List<String> args) async {
-  final opts = ContentBuildOptions.parse(args); // --in content/ --out assets/reference.db
+  final opts = ContentBuildOptions.parse(args); // --in content/ --out app/assets/db/reference.db
   final source = await ContentSource.load(opts.inDir); // yaml + col_extract.tsv
   final failures = await runAllAssertions(source, kShippedLocales);
   if (failures.isNotEmpty) {
@@ -121,7 +121,7 @@ Future<void> main(List<String> args) async {
 }
 ```
 
-Full worked file: `examples/content_build_assertions.dart`.
+Full worked file: `examples/content_builder_assertions.dart`.
 
 ## A size is a number AND a method
 
@@ -145,7 +145,7 @@ if (row.containsKey('min_size') && !row.containsKey('measurement_method')) {
 }
 ```
 
-Full worked file: `examples/content_build_assertions.dart`.
+Full worked file: `examples/content_builder_assertions.dart`.
 
 ## Two translation tiers, and one of them is single-locale
 
@@ -166,12 +166,12 @@ legalText.insert(LegalTextRow(
   sourceUrl: gazetteUrl, sha256: digest, retrievedOn: DateTime.utc(2026, 7, 14),
 ));
 // The editorial SUMMARY is translated, and is labelled a summary in all six locales.
-for (final locale in kShippedLocales) { // ar en es gl pt_BR ur
+for (final locale in kShippedLocales) { // ar en es gl ca pt_BR
   contentString.insert(key: 'summary.ae_md580_art3', locale: locale, value: summaries[locale]!);
 }
 ```
 
-Full worked file: `examples/content_build_assertions.dart`.
+Full worked file: `examples/content_builder_assertions.dart`.
 
 ## Normalisation is imported, never reimplemented
 
@@ -193,7 +193,7 @@ assertNormParity(db, columns: const [
 ]); // A7 recomputes every persisted column and compares byte-for-byte
 ```
 
-Full worked file: `examples/content_build_assertions.dart`.
+Full worked file: `examples/content_builder_assertions.dart`.
 
 ## Plates: the death-year test, not the publication-date test
 
@@ -217,7 +217,7 @@ bool clearToBundle(PlateSpec p, int buildYear) =>
 // Unattributed 1911 lithograph    -> DROPPED. Not 'pending', not 'licence: unknown'.
 ```
 
-Full worked file: `examples/content_build_assertions.dart`.
+Full worked file: `examples/content_builder_assertions.dart`.
 
 ## Run the engine over the data, then diff the jurisdictions
 
@@ -244,7 +244,7 @@ for (final cell in source.resolutionGrid()) { // species x zone x month, ~40k ce
 await writeChangelog('content/CHANGELOG/ae-rak.md', diffAgainstTag(previous, source, 'AE-RAK'));
 ```
 
-Full worked file: `examples/content_build_assertions.dart`.
+Full worked file: `examples/content_builder_assertions.dart`.
 
 ## Anti-patterns
 
@@ -252,7 +252,7 @@ Full worked file: `examples/content_build_assertions.dart`.
   engine's guess is a wrong verdict on a legal fish.
 - **`--skip-assertions` / `--force`** — the flag that exists is the flag a release uses on a Friday,
   and the row it waves through is the one that reaches an inspector.
-- **`String normalise(String s)` declared inside `tools/content_build`** — drifts from the app's by
+- **`String normalise(String s)` declared inside `tools/content_builder`** — drifts from the app's by
   one codepoint and search silently returns nothing for Arabic input.
 - **`if (plate.publishedYear < 1930)`** — the US test; Spain's 80 pma and Brazil's life+70 both
   outlive it, and we ship into both.
@@ -272,10 +272,10 @@ Full worked file: `examples/content_build_assertions.dart`.
 ## Definition of done
 
 - [ ] `scripts/check_content_pipeline.sh` is clean over `lib/`, and over `.` (so `content/` too).
-- [ ] `dart run content_build --in content/ --out assets/reference.db` exits 0, and a non-empty
-      failure list writes no `.db` at all (rules 1, 2).
+- [ ] `dart run content_builder:build --in content/ --out app/assets/db/reference.db` exits 0, and a
+      non-empty failure list writes no `.db` at all (rules 1, 2).
 - [ ] No `min_size` row lacks `measurement_method`; every method is TL, FL, CW or SHL (rule 3).
-- [ ] Every `*_key` resolves in `content_string` for `ar`, `en`, `es`, `gl`, `pt_BR` and `ur`, with
+- [ ] Every `*_key` resolves in `content_string` for `ar`, `en`, `es`, `gl`, `ca` and `pt_BR`, with
       no fallback chain (rule 4).
 - [ ] Every `species_name` in a gendered locale carries a non-null `gender`, and every rule's species
       has a silhouette and at least one vernacular name per locale (rule 5).
@@ -305,8 +305,8 @@ Full worked file: `examples/content_build_assertions.dart`.
 - See `lonja-icons-and-plates` for how a cleared plate is rendered as an engraved silhouette and the
   sizes it must be supplied in.
 - See `i18n-rtl-l10n` for tier-one ARB and gen-l10n, ICU plurals and the bidi isolation the Arabic
-  and Urdu content rows depend on.
-- See `ci-pipeline-and-gates` for wiring `content_build` and this skill's gate into the pipeline as
+  content rows depend on.
+- See `ci-pipeline-and-gates` for wiring `content_builder` and this skill's gate into the pipeline as
   a required check.
 
 ## References

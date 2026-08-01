@@ -180,10 +180,16 @@ rule 8, `check_app_invariants.sh` check 8, E01/T01 test 11, rejected again in E0
 Restoring a persisted theme before first paint is `flutter:app-startup-and-bootstrap`'s problem, not an
 exception to this.
 
-**Paths and locales inside the skills are knowingly stale. Take locales from D-3 and paths from D-1,
-always.** Four skill files carry the wrong locale set — three name `app_ur.arb`, three name
-`app_pt.arb`, and two do both; E01/T09 corrects those four and defers six more to E04/T01 and E06/T01. The register is `tools/gates/known_skill_drift.txt`,
-which T09 creates with a test that the set does not grow — consult it, never a list kept elsewhere.
+**Take locales from D-3 and paths from D-1, always.** The locale and builder-name drift is now
+*cleared*: E01/T09 corrected four skill files and the E01 close-out corrected the remaining six, so no
+file under `.claude/skills/` names `app_ur.arb`, an Urdu RTL lane, `app_pt.arb`, a bare `ur`, or the
+`content_build` CLI. The register `tools/gates/known_skill_drift.txt` is now **empty, and still
+load-bearing** — `app/test/policy/skill_locale_test.dart` asserts the stale set equals the register, so
+an empty register is the assertion that no file carries the old wording at all. Consult it, never a
+list kept elsewhere; if you must add a line, it is a correction with an owner, not an exemption.
+
+D-1's path staleness is a separate, open item — see *Not yet settled* on the routing table's
+root-relative `lib/` paths.
 
 There is no application code. `epics/README.md` is the order in which it appears — 22 epics, 181 tasks,
 hard dependencies, **E22** the one that runs in parallel from E04 onward. Building starts at **E01**.

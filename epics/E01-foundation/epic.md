@@ -238,9 +238,13 @@ string, no verdict type, no colour and no expiry handling.
 - **The directional-padding grep** `tools/gates/no_directional_geometry.sh` — D-8, E06/T05. There is no UI
   to scan yet.
 - **The routing table's root-relative paths** in `catchlaw-conventions-index` — D-1, see Risk 8.
-- **`catchlaw-content-pipeline`'s locale list, gender set and `content_build` naming** — D-3 (E06/T01) and
-  D-4 (E04/T01). Every remaining file is listed in `tools/gates/known_skill_drift.txt` with its owning
-  epic, and a test fails if the set grows. See Risk 9.
+- ~~**`catchlaw-content-pipeline`'s locale list, gender set and `content_build` naming** — D-3 (E06/T01)
+  and D-4 (E04/T01).~~ **Done in the E01 close-out instead.** The deferral rested on the gendered-locale
+  set being an open content decision; it is not — `SPEC.md` §9.5 line 815 names the gendered locales and
+  §9.1 line 840 justifies Catalan, both already written. `tools/gates/known_skill_drift.txt` is now empty
+  and the test asserts the stale set equals it, so the register went from "these six are excused" to "no
+  file may carry the old wording". Risk 9 is closed. The close-out also caught an eighth-place path drift
+  the register never tracked: `assets/reference.db` for `app/assets/db/reference.db`.
 - **The codegen freshness gate** (`build_runner` + `git diff --exit-code`) — there is no generated code
   until E05.
 

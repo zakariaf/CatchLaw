@@ -1,7 +1,7 @@
 # Build Assertions
 
-Scope: the ten assertions `tools/content_build` runs over `content/*.yaml` plus `col_extract.tsv`
-before a single byte of `assets/reference.db` is written, their exact failure messages, the schema
+Scope: the ten assertions `tools/content_builder` runs over `content/*.yaml` plus `col_extract.tsv`
+before a single byte of `app/assets/db/reference.db` is written, their exact failure messages, the schema
 they validate against, and the edge cases each one has already caught.
 
 ## The ten assertions
@@ -11,7 +11,7 @@ Every one of them is fatal. There is no warning tier, no `--force`, and no parti
 | Id | Proves | Failure message shape | Typical cause |
 |---|---|---|---|
 | A1 | Row validates against its table schema | `A1 rules.yaml:118 min_size without measurement_method` | a size copied from a PDF table without its column header |
-| A2 | Every `*_key` resolves in `content_string` for all six locales | `A2 rules.yaml:204 key 'closure.sha_ri_spring' missing for gl, ur` | a new key added in `en` only |
+| A2 | Every `*_key` resolves in `content_string` for all six locales | `A2 rules.yaml:204 key 'closure.sha_ri_spring' missing for gl, ca` | a new key added in `en` only |
 | A3 | `species_name` in a gendered locale has non-null `gender` | `A3 vernacular.yaml:77 gender null for locale es` | a name pasted from a checklist with no gender column |
 | A4 | `citation_id` resolves AND carries `retrieved_on` | `A4 citations.yaml:12 'ae-md-580-2015-art3' has no retrieved_on` | an article added before anyone opened the gazette |
 | A5 | Every rule's species has a silhouette and one vernacular per locale | `A5 species.yaml:31 'venerupis-corrugata' has no silhouette` | a shellfish added late, art not commissioned |
@@ -74,8 +74,8 @@ Six shipped locales. There is no fallback chain: a key resolves in every one or 
 | `en` | Latin, LTR | no | the ONLY locale allowed to omit `gender` |
 | `es` | Latin, LTR | yes | `el mero`, `la almeja` |
 | `gl` | Latin, LTR | yes | `a ameixa babosa` — never silently served `es` |
+| `ca` | Latin, LTR | yes | Catalonia, Valencia and the Balearics publish their own fishing orders in Catalan |
 | `pt_BR` | Latin, LTR | yes | the publication language of the Brazilian instruments |
-| `ur` | Arabic script, RTL | yes | Gulf crew language; RTL lanes cover it alongside `ar` |
 
 `species_name` rows carry `(species_id, locale, name, gender, is_preferred)`. Exactly one
 `is_preferred: true` per (species, locale) — two preferred names is an A3 failure, because the
@@ -125,7 +125,7 @@ followed by a count. Never a stack trace, never a partial database, never exit 0
 
 ```
 A1 content/rules.yaml:118 min_size without measurement_method
-A2 content/rules.yaml:204 key 'closure.sha_ri_spring' missing for gl, ur
+A2 content/rules.yaml:204 key 'closure.sha_ri_spring' missing for gl, ca
 A6 content/plates.yaml:56 illustrator unidentified — DROP the plate
-content_build: 3 assertion failures; assets/reference.db not written
+content_builder: 3 assertion failures; app/assets/db/reference.db not written
 ```

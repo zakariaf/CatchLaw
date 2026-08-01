@@ -12,6 +12,17 @@
 
          app/test/policy/android_manifest_test.dart ASSERTS this line is present,
          which reads backwards until you have read the reason above. The guard test
-         and check_no_network.sh both skip this source set for the same reason. -->
+         and check_no_network.sh both skip this source set for the same reason.
+
+         CONFIRMED ON HARDWARE, once, at the E01 close-out (E01/T06 definition of
+         done). Pixel 8a emulator, API 35, debug build:
+           adb shell dumpsys package app.catchlaw.catchlaw
+             requested permissions: android.permission.INTERNET
+             install permissions:   android.permission.INTERNET: granted=true
+           flutter run  ->  Reloaded 1 of 1190 libraries
+                            Restarted application in 523ms
+         An edited widget reached the running app, so this grant is not a
+         theoretical requirement copied from the Flutter template — it is load
+         bearing, and the release AAB is separately proved to lack it. -->
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

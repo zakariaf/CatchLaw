@@ -59,7 +59,8 @@ There is no exemption for a "friendly" hint, an onboarding screen, a tooltip or 
 | `packId` | `RAK-GULF v2026.2` | which shipped pack the text came from |
 
 Rendered footnote: `Ministerial Decision 580/2015, Art. 3 · published 2015-11-03 · checked
-2026-07-14`. Digits stay Western in every locale including `ar` and `ur`, because they are quoted
+2026-07-14`. Digits stay Western in every locale including `ar`, the one RTL locale, because they are
+quoted
 from a printed instrument (`lonja-typography`). Legal basis for reproducing the text at all: UAE
 Federal Decree-Law 38/2021 Art. 3, Spain Art. 13 LPI, Brazil Lei 9.610/1998 art. 8 IV — official
 texts are not protected works; `catchlaw-content-pipeline` records the per-jurisdiction basis.

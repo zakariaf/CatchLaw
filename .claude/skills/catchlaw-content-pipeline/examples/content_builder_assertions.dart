@@ -6,7 +6,7 @@
 // engine over the authored grid, and a main() that writes NOTHING when anything failed.
 //
 // Conceptually compiles against package:catchlaw_shared and package:catchlaw_rule_engine, pub
-// workspace siblings of tools/content_build. normalise() is IMPORTED, never redefined.
+// workspace siblings of tools/content_builder. normalise() is IMPORTED, never redefined.
 
 import 'dart:io';
 import 'package:catchlaw_rule_engine/rule_engine.dart';
@@ -14,10 +14,10 @@ import 'package:catchlaw_shared/text/normalise.dart' show normalise;
 import 'package:meta/meta.dart';
 
 /// The six shipped locales. There is no fallback chain to `en`.
-const kShippedLocales = <String>['ar', 'en', 'es', 'gl', 'pt_BR', 'ur'];
+const kShippedLocales = <String>['ar', 'en', 'es', 'gl', 'ca', 'pt_BR'];
 
 /// Every locale except `en` marks grammatical gender on a species name.
-const kGenderedLocales = <String>{'ar', 'es', 'gl', 'pt_BR', 'ur'};
+const kGenderedLocales = <String>{'ar', 'es', 'gl', 'ca', 'pt_BR'};
 
 /// One line of build output. `id` is the stable assertion id from build-assertions.md.
 @immutable
@@ -129,7 +129,7 @@ Iterable<Failure> assertNoContradictions(ContentSource src) sync* {
 /// The gate. A non-empty failure list writes NOTHING: no partial database, no warning tier,
 /// no --force. The flag that exists is the flag a release uses on a Friday.
 Future<void> main(List<String> args) async {
-  final opts = ContentBuildOptions.parse(args); // --in content/ --out assets/reference.db
+  final opts = ContentBuildOptions.parse(args); // --in content/ --out app/assets/db/reference.db
   final src = await ContentSource.load(opts.inDir);
   final buildYear = DateTime.now().toUtc().year;
   final failures = <Failure>[
@@ -142,7 +142,7 @@ Future<void> main(List<String> args) async {
   ]..sort((a, b) => (a.file + a.line.toString()).compareTo(b.file + b.line.toString()));
   if (failures.isNotEmpty) {
     for (final f in failures) stderr.writeln(f.render());
-    stderr.writeln('content_build: ${failures.length} failures; ${opts.outFile} not written');
+    stderr.writeln('content_builder: ${failures.length} failures; ${opts.outFile} not written');
     exitCode = 1;
     return;
   }
@@ -156,5 +156,5 @@ Future<void> main(List<String> args) async {
     return;
   }
   await emitChangelogs(src, opts.changelogDir); // A10: one .md per jurisdiction, as a diff
-  stdout.writeln('content_build: OK — ${src.rules.length} rules, ${src.plates.length} plates');
+  stdout.writeln('content_builder: OK — ${src.rules.length} rules, ${src.plates.length} plates');
 }

@@ -64,7 +64,7 @@ final class BelowMinimum extends Verdict {
   final MeasurementMethod method;
 }
 
-/// Pure function: the app and the content_build CLI both call this one.
+/// Pure function: the app and the content_builder CLI both call this one.
 Verdict evaluateSize(SizeRule rule, double measuredCm) => measuredCm < rule.minimumCm
     ? BelowMinimum(
         measuredCm: measuredCm, minimumCm: rule.minimumCm,

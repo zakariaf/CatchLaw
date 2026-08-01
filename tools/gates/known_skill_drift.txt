@@ -1,25 +1,29 @@
 # Skill files that still carry the pre-D-3 / pre-D-4 wording, and the task that
 # corrects each.
 #
-# THIS IS A SCHEDULE, NOT AN EXEMPTION. A line here is a correction with an owner
-# and a date, not permission to leave the file wrong. Delete the line in the same
-# commit as the fix; app/test/policy/skill_locale_test.dart asserts this set
-# matches reality exactly, so a file cannot quietly drop off the list and a later
-# change cannot introduce the wording into a file with no owning epic.
+# THIS REGISTER IS EMPTY, AND THAT IS THE POINT. It is not dead: with no lines,
+# app/test/policy/skill_locale_test.dart asserts that NO file under
+# .claude/skills/ names app_ur.arb, an Urdu RTL lane, app_pt.arb, a bare 'ur'
+# locale, or the content_build CLI. An empty register is the strongest form of
+# this test, not the absence of one — every entry was a hole in that guarantee.
 #
-# Format: <path>  <owning epic/task>  # what is stale
+# Format, should a line ever be needed again:
+#   <path>  <owning epic/task>  # what is stale
 #
-# E01/T09 corrected four files and deliberately stopped there. The remaining six
-# are not a find-and-replace: catchlaw-content-pipeline's shipped-locale list,
-# its gendered-locale set and a build-assertion row justifying 'ur' as a "Gulf
-# crew language" are CONTENT decisions — what Catalan's gender rule is, and
-# whether a locale may be removed from a build assertion — and they belong with
-# the epic that builds the pipeline. D-4 names E04/T01; D-3 names E06/T01. The
-# skill is also a .github/CODEOWNERS legal-liability surface.
-
-.claude/skills/catchlaw-content-pipeline/SKILL.md                                E04/T01, E06/T01  # locale list ['ar','en','es','gl','pt_BR','ur'], gendered set includes ur and omits ca, names the CLI content_build
-.claude/skills/catchlaw-content-pipeline/examples/content_build_assertions.dart  E04/T01, E06/T01  # runnable example named content_build; 'ur' in its locale list
-.claude/skills/catchlaw-content-pipeline/references/build-assertions.md          E04/T01, E06/T01  # assertion row justifying 'ur' as a Gulf crew language; content_build throughout
-.claude/skills/catchlaw-content-pipeline/scripts/check_content_pipeline.sh       E04/T01           # header and messages name tools/content_build
-.claude/skills/catchlaw-conventions-index/references/product-invariants.md       E06/T01           # §3 citation section says "every locale including ar and ur"
-.claude/skills/catchlaw-conventions-index/examples/catchlaw_layering.dart        E04/T01           # doc comment names the content_build CLI
+# A line here is a correction with an owner, never permission to leave a file
+# wrong, and it is deleted in the same commit as the fix.
+#
+# HISTORY. E01/T09 corrected four files and deferred six, on the reading that
+# catchlaw-content-pipeline's shipped-locale list, its gendered-locale set and a
+# build-assertion row justifying 'ur' as a "Gulf crew language" were CONTENT
+# decisions belonging to E04/T01 and E06/T01. That reading was wrong, and the
+# E01 close-out cleared all six: SPEC.md settles every one of them in prose that
+# was already written. §9.5 line 815 names the gendered locales exactly —
+# ar, es, gl, ca, pt_BR — so the set was never open. §9.1 line 840 supplies the
+# Catalan row's justification verbatim, so replacing the Urdu row needed no new
+# argument. The remaining hits were the D-4 CLI rename, which is mechanical.
+#
+# The deferral cost nothing here, but it is worth naming the failure mode: a
+# correction was scheduled three epics out because it LOOKED like a judgement
+# call, and nobody had checked whether the judgement was already on paper. Read
+# the spec before you write the IOU.

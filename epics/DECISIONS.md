@@ -81,7 +81,15 @@ Catalan.
 published in it. `catchlaw-verdict-contract/SKILL.md` says `app_pt.arb`; the correct filename carries
 the region, `app_pt_BR.arb`, because the content is Brazilian and not Iberian Portuguese.
 
-**Applied by:** E06/T01. **Skill correction:** E01/T09 — four files, `ur` → `ca`, `app_pt` → `app_pt_BR`.
+**Applied by:** E06/T01. **Skill correction:** E01/T09 — four files, `ur` → `ca`, `app_pt` → `app_pt_BR`
+— completed at the **E01 close-out**, which cleared the remaining two (`catchlaw-content-pipeline`'s
+shipped-locale list and gendered set, `product-invariants.md` §3).
+
+T09 deferred those two to E04/T01 and E06/T01 on the reading that the gendered-locale set was a content
+decision. It was not: `SPEC.md` §9.5 line 815 already names the gendered locales exactly — `ar`, `es`,
+`gl`, `ca`, `pt_BR` — and §9.1 line 840 supplies the Catalan row's justification verbatim. Nothing was
+open. The lesson is registered in `known_skill_drift.txt`: check whether the judgement is already on
+paper before scheduling an IOU for it.
 
 ---
 
@@ -93,7 +101,15 @@ executable `dart run content_builder:build`.
 **Overruled.** `SPEC.md` §8 says `tools/build_content/`; the skills say `packages/content_build/`.
 Three names for one deliverable was going to cost somebody an afternoon.
 
-**Applied by:** E04/T01.
+**The output path travels with the name:** `--out app/assets/db/reference.db`, the path E04/T01,
+E04/T11 and E18/T01 already invoke and the one `catchlaw-reference-database` ships from
+(`assets/db/reference.db.gz`). `catchlaw-content-pipeline` carried `assets/reference.db` in eight
+places — the same pre-D-4 drift, missing its `db/` segment, and never registered because the drift
+register only tracked the CLI name. Corrected at the E01 close-out.
+
+**Applied by:** E04/T01. **Skill correction:** the E01 close-out — four files, including the runnable
+example, renamed `content_build_assertions.dart` → `content_builder_assertions.dart` so one name means
+one name in the filesystem too.
 
 ---
 
