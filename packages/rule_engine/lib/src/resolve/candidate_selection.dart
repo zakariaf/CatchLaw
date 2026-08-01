@@ -108,13 +108,13 @@ EngineException? _defectIn(Rule rule) {
   // A row naming a measurement method is a size rule, and a size rule with no
   // threshold has no legal statement to make. It may not become an Ok.
   if (rule.measurementMethod != null && rule.minSizeMm == null && rule.maxSizeMm == null) {
-    return MalformedRule(ruleId: rule.id, field: 'minSizeMm');
+    return MalformedRule.noSizeThreshold(ruleId: rule.id);
   }
   if ((rule.minSizeMm != null || rule.maxSizeMm != null) && rule.measurementMethod == null) {
-    return MalformedRule(ruleId: rule.id, field: 'measurementMethod');
+    return MalformedRule.noMeasurementMethod(ruleId: rule.id);
   }
   if (rule.bagLimit != null && (rule.bagLimitUnit == null || rule.bagLimitPeriod == null)) {
-    return MalformedRule(ruleId: rule.id, field: 'bagLimitUnit');
+    return MalformedRule.noBagLimitPeriod(ruleId: rule.id);
   }
   return null;
 }

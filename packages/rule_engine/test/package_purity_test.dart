@@ -142,8 +142,10 @@ void main() {
         'lib/src/resolve/conflict.dart', // E03/T05
         'lib/src/resolve/evaluation_request.dart', // E03/T03
         'lib/src/resolve/zone_match.dart', // E03/T04
+        'lib/src/rule_evaluator.dart', // E03/T10
         'lib/src/search/normalise.dart', // E02/T02
         'lib/src/season/season_window.dart', // E03/T06
+        'lib/src/verdict/resolution.dart', // E03/T10
       ]);
     });
 

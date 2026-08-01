@@ -31,9 +31,24 @@ sealed class EngineException implements Exception {
 }
 
 /// A `rule` row that does not carry what its own shape requires.
+///
+/// The named constructors are the closed set of defects the engine can detect.
+/// They exist so no caller writes a field name as an inline literal: E04 matches
+/// on these to report against an authored row, and free text would make that a
+/// string comparison against a value somebody could typo. It also keeps every
+/// literal out of `lib/src/findings/`, which D-7's test scans.
 final class MalformedRule extends EngineException {
   /// Names the offending [ruleId] and [field].
   const MalformedRule({required this.ruleId, required this.field});
+
+  /// A size rule carrying no threshold.
+  const MalformedRule.noSizeThreshold({required this.ruleId}) : field = 'minSizeMm';
+
+  /// A size carrying no measurement method.
+  const MalformedRule.noMeasurementMethod({required this.ruleId}) : field = 'measurementMethod';
+
+  /// A bag limit with no period, which must never default to `day`.
+  const MalformedRule.noBagLimitPeriod({required this.ruleId}) : field = 'bagLimitPeriod';
 
   @override
   final int ruleId;

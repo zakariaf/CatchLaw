@@ -106,7 +106,7 @@ Result<List<Finding>> limitFindings(Rule rule, CatchTally? tally, {required bool
     final LimitPeriod? period = rule.bagLimitPeriod;
     final LimitUnit unit = rule.bagLimitUnit ?? LimitUnit.count;
     if (period == null) {
-      return Result<List<Finding>>.error(MalformedRule(ruleId: rule.id, field: 'bagLimitPeriod'));
+      return Result<List<Finding>>.error(MalformedRule.noBagLimitPeriod(ruleId: rule.id));
     }
     out.add(
       BagLimitFinding(

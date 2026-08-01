@@ -39,5 +39,7 @@ export 'src/resolve/candidate_selection.dart';
 export 'src/resolve/conflict.dart';
 export 'src/resolve/evaluation_request.dart';
 export 'src/resolve/zone_match.dart';
+export 'src/rule_evaluator.dart';
 export 'src/search/normalise.dart';
 export 'src/season/season_window.dart';
+export 'src/verdict/resolution.dart';
