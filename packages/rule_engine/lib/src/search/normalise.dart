@@ -125,3 +125,40 @@ String normaliseSpeciesTerm(String input) {
   // Step 10 — collapse and trim. An untrimmed key is a key nothing matches.
   return s.replaceAll(_whitespaceRun, ' ').trim();
 }
+
+/// U+0627 U+0644 — the Arabic definite article.
+const String _definiteArticle = '\u0627\u0644';
+
+/// Below this many characters, a leading `ال` is a word, not an article.
+///
+/// The contract's guard, and it is mechanical on purpose: it declines to strip
+/// whether or not the `ا` `ل` really was an article, because a two-letter key
+/// under a prefix query capped at 40 results (`SPEC.md` §13) matches half the
+/// table.
+const int _minimumStemLength = 3;
+
+/// The one or two keys [term] should be findable under, most specific first.
+///
+/// `SPEC.md` §9.4 step 5 requires the leading `ال` to be stripped AND both forms
+/// indexed. That is a key VARIANT rather than a fold step, so it lives here and
+/// not in [normaliseSpeciesTerm]: a fold that stripped the article would make
+/// the unstripped key unproducible, and a fisher who types `الهامور` would find
+/// nothing. The contract names that failure by hand, and Khalid types the
+/// article.
+///
+/// Both sides call this. The content builder writes one `species_name` row per
+/// key — §7.1 gives that table one `search_norm` column, so a second key is a
+/// second row — and the query tries the keys in the order yielded. The order is
+/// therefore fixed, not incidental.
+///
+/// Yields nothing for a term that folds away to nothing. An empty key in the
+/// index matches every prefix query.
+Iterable<String> indexKeys(String term) sync* {
+  final String key = normaliseSpeciesTerm(term);
+  if (key.isEmpty) return;
+  yield key;
+  if (key.startsWith(_definiteArticle) &&
+      key.length - _definiteArticle.length >= _minimumStemLength) {
+    yield key.substring(_definiteArticle.length);
+  }
+}
