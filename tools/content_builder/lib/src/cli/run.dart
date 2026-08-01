@@ -4,6 +4,7 @@ import 'package:content_builder/src/cli/failure.dart';
 import 'package:content_builder/src/cli/options.dart';
 import 'package:content_builder/src/cli/usage_failure.dart';
 import 'package:content_builder/src/emit/emit_reference_db.dart';
+import 'package:content_builder/src/load/attributions.dart';
 import 'package:content_builder/src/load/content_source.dart';
 
 /// The build, in the four phases `catchlaw-content-pipeline` fixes: load,
@@ -38,6 +39,13 @@ int run(List<String> args, {required StringSink out, required StringSink err}) {
   if (failures.isNotEmpty) {
     return _report(failures, options, err);
   }
+
+  // The ledger describes the CORPUS, not the database, and a corpus that
+  // passes every assertion is a corpus whose ledger is true. Written before
+  // emit for that reason and because SPEC.md §8 requires it to exist for E18 to
+  // assemble; it is regenerated on every clean build, so it cannot drift from
+  // the data it describes.
+  writePlateLedger(source, options);
 
   final List<Failure> emitted = emitReferenceDb(source, options);
   if (emitted.isNotEmpty) {

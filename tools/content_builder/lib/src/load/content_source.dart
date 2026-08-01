@@ -70,7 +70,7 @@ class ContentSource {
     var jurisdictions = 0;
     for (final Directory child in entries.whereType<Directory>()) {
       final String name = p.basename(child.path);
-      if (name == kChangelogDir) continue;
+      if (kGeneratedDirs.contains(name)) continue;
       final shared = name == kSharedDir;
       if (!shared) jurisdictions++;
 

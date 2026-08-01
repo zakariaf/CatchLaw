@@ -31,8 +31,13 @@ content/
 ├── es-ga/             jurisdiction.yaml  zones.yaml  citations.yaml  rules.yaml
 │                      closed_seasons.yaml  licence_types.yaml  gear_rules.yaml  penalties.yaml
 │                      legal_text.yaml  changes.yaml  strings.yaml  snapshot.json
-└── CHANGELOG/         es-ga.md
+├── CHANGELOG/         es-ga.md          # generated: the per-jurisdiction diff
+└── ATTRIBUTIONS/      plates.md         # generated: the plate licence ledger
 ```
+
+`CHANGELOG/` and `ATTRIBUTIONS/` are written by the build, not read by it. Neither is a jurisdiction —
+counting one would let a corpus with no jurisdiction at all pass the check that exists to catch
+exactly that.
 
 A file name outside this list is a failure, not a file that is skipped: `rule.yaml` for `rules.yaml`
 is a file nobody reads and nobody misses. So is a misspelt section — `speceis:` loads as "no rows",
@@ -137,6 +142,53 @@ the Gulf licence basis "cited but not independently verified in this session" an
 must be confirmed per state before that state's content ships. That is encoded in
 `tools/content_builder/lib/src/provenance/accepted_hosts.dart` as a gate on the data rather than a
 memo: every citation in an unverified jurisdiction fails A9.
+
+## Plates: the illustrator death-year test
+
+`content/shared/plates.yaml` is the licence ledger behind `species.plate_asset`. It is not a §7.1
+table: it is the evidence A6 tests and E18 renders in S17, and it stays out of the database because a
+licence claim belongs in the attribution page rather than in a column nobody reads.
+
+A plate is cleared on its illustrator's **death year**, against the longest term among the
+jurisdictions this app ships into:
+
+| Jurisdiction | Term | Counted from |
+|---|---|---|
+| Spain, author died before 1987-12-07 | life + **80** | TRLPI transitional regime — the longest we ship into |
+| EU, including Galicia within Spain | life + 70 | Directive 2006/116/EC |
+| Brazil | life + 70 | Lei 9.610/1998 art. 41 |
+| UAE | life + 50 | Berne minimum |
+
+`term(deathYear) = deathYear <= 1987 ? 80 : 70`, and a plate clears when
+`buildYear > deathYear + term(deathYear)`. For a **2026** build the artist must have died in **1945 or
+earlier**; 1946 fails by one year and clears in 2027. The comparison is strictly greater — a `>=`
+would ship every plate a year early. The build year comes from `--build-date`, not the clock: a plate
+that re-clears itself at midnight on 1 January produces a different database from the same corpus with
+no diff to show for it.
+
+**"Published before 1930, therefore public domain" is the US rule** and clears nothing in Spain,
+Brazil or the UAE. `source_year` is evidence about the artist and is never compared to a threshold; a
+test in the builder's own suite greps this directory and `tools/content_builder/lib` for such a
+comparison.
+
+**The Jordan & Evermann trap**, in `SPEC.md` §8's own words: the plates of *Fishes of North and Middle
+America* are excluded unless each staff illustrator is identified and cleared. Jordan (d. 1931) and
+Evermann (d. 1932) clear the test, **but they are the authors — the artists are a separate question
+the first draft simply missed.** Filling `illustrator` in with an author's name is not something code
+can detect. What code does is refuse a block with no illustrator at all; the rest is the ledger review.
+
+**An unattributable plate is deleted, never flagged.** `licence: unknown` and `review: later` are
+states that ship, and an infringement claim against a fisheries-safety app is the story that ends the
+project rather than the sprint. A6 fails on an absent illustrator and on the literal strings
+`unknown`, `unidentified` and `TBD` — the same three `check_content_pipeline.sh` check 3 looks for, so
+the build is never laxer than the grep.
+
+`origin: originated` is our commissioned art: the silhouettes, the measurement diagrams, and every
+diagram for a Brazilian rule, because Lei 9.610 art. 8 IV covers only *os textos*. It has no death
+year to test and its ledger row is still mandatory, because S17 renders the whole ledger.
+
+**The Galicia seed ships zero cleared plates.** Every `species.plate_asset` is NULL, which §7.1
+permits, and the app renders the originated silhouette instead.
 
 ## When a species has no name in a locale
 

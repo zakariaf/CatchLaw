@@ -1,0 +1,38 @@
+# The plate licence ledger. NOT a SPEC.md §7.1 table: it is the evidence A6
+# tests and E18 renders in S17, and it stays out of the database because a
+# licence claim belongs in the attribution page rather than in a column nobody
+# reads.
+#
+# A plate is cleared on its illustrator's DEATH YEAR, against the longest term
+# among the jurisdictions this app ships into — Spain's TRLPI transitional
+# regime, 80 years post mortem auctoris for authors who died before 7 December
+# 1987. For a 2026 build the artist must have died in 1945 or earlier.
+#
+# "Published before 1930, therefore public domain" is the US rule and clears
+# nothing in Spain, Brazil or the UAE. source_year is evidence about the artist
+# and is never compared to a threshold.
+#
+# THE JORDAN & EVERMANN TRAP, in SPEC.md §8's own words: the plates of Fishes of
+# North and Middle America are excluded unless each staff illustrator is
+# identified and cleared. Jordan (d. 1931) and Evermann (d. 1932) clear the
+# test, but they are the AUTHORS — the artists are a separate question the first
+# draft simply missed. Filling `illustrator` in with an author's name is not
+# something code can detect; the defence is this note and the ledger review.
+#
+# Drop rules, from licence-provenance.md. Each is a deletion, never a state:
+#   no identified illustrator            -> DROP. Not `licence: unknown`.
+#   illustrator known, death year not    -> DROP. An unknown death year is not
+#                                          an early one.
+#   a scan with no credit line           -> DROP, or commission an original.
+#   cleared under the US rule alone      -> DROP and re-clear.
+#
+# Required fields, all eleven: id, species_id, asset, origin
+# (public_domain | originated), illustrator, illustrator_death_year,
+# source_work, source_year, source_url, licence, cleared_on, cleared_by.
+# For `origin: originated` the illustrator is our commissioned artist and the
+# licence is the work-for-hire agreement id; the death-year test does not apply
+# and the ledger row is still mandatory.
+#
+# The Galicia seed ships ZERO cleared plates. Every species.plate_asset is NULL,
+# which §7.1 permits, and the app renders the originated silhouette instead.
+plates: []

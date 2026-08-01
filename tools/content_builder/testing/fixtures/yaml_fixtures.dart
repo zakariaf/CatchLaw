@@ -659,3 +659,49 @@ rules:
     citation_id: es-ga-orde-2012-07-27-art4
     valid_from: '2012-08-01'
 ''';
+
+// ---------------------------------------------------------------------------
+// E04/T06 — A6 the illustrator death-year test.
+// ---------------------------------------------------------------------------
+
+/// A complete `plates.yaml` ledger block, opening on line 2.
+///
+/// `omit` drops one field so A6 can be asked which one is missing.
+String plateYaml({
+  String id = 'bloch-epinephelus',
+  String origin = 'public_domain',
+  String? illustrator = 'Marcus Elieser Bloch',
+  int? deathYear = 1799,
+  String? omit,
+}) {
+  final fields = <String, String?>{
+    'species_id': 'venerupis-corrugata',
+    'asset': 'plate/bloch-epinephelus.webp',
+    'origin': origin,
+    'illustrator': illustrator,
+    'illustrator_death_year': deathYear?.toString(),
+    'source_work': 'Allgemeine Naturgeschichte der Fische',
+    'source_year': '1795',
+    'source_url': 'https://www.biodiversitylibrary.org/item/109761',
+    'licence': 'public-domain-pma-80',
+    'cleared_on': '2026-08-12',
+    'cleared_by': 'Z. Fatahi',
+  };
+  final buffer = StringBuffer('plates:\n  - id: $id\n');
+  fields.forEach((String key, String? value) {
+    if (value == null || key == omit) return;
+    buffer.writeln('    $key: $value');
+  });
+  return buffer.toString();
+}
+
+/// A ledger with no blocks at all. The Galicia seed ships zero cleared plates.
+const String kEmptyPlatesYaml = 'plates: []\n';
+
+/// A `species.yaml` naming [plateAsset] as its plate.
+String speciesWithPlate(String? plateAsset) =>
+    'species:\n  - id: venerupis-corrugata\n'
+    '    scientific_name: Venerupis corrugata\n'
+    '    family_id: veneridae\n    taxon_group: bivalve\n'
+    '    silhouette_asset: sil/venerupis-corrugata.svg\n'
+    '${plateAsset == null ? '' : '    plate_asset: $plateAsset\n'}';

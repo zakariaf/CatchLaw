@@ -1,6 +1,7 @@
 import 'package:content_builder/src/model/content_row.dart';
 import 'package:content_builder/src/model/geography.dart';
 import 'package:content_builder/src/model/identification.dart';
+import 'package:content_builder/src/model/plate_spec.dart';
 import 'package:content_builder/src/model/regulation.dart';
 import 'package:content_builder/src/model/taxon.dart';
 import 'package:content_builder/src/model/text.dart';
@@ -24,7 +25,7 @@ const Map<String, RowBuilder> kRowBuilders = <String, RowBuilder>{
   'species': SpeciesRow.fromRow,
   'species_names': SpeciesNameRow.fromRow,
   'lookalikes': LookalikeRow.fromRow,
-  'plates': PlateRow.fromRow,
+  'plates': PlateSpec.fromRow,
   'measurement_methods': MeasurementMethodRow.fromRow,
   'citations': CitationRow.fromRow,
   'rules': RuleRow.fromRow,

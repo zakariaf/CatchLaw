@@ -6,6 +6,15 @@ const String kSharedDir = 'shared';
 /// The corpus directory holding the per-jurisdiction changelogs A10 writes.
 const String kChangelogDir = 'CHANGELOG';
 
+/// The corpus directory holding the generated attribution ledgers.
+const String kAttributionsDir = 'ATTRIBUTIONS';
+
+/// Corpus directories the build WRITES rather than reads.
+///
+/// Neither is a jurisdiction. Counting one would let a corpus with no
+/// jurisdiction at all pass the check that exists to catch exactly that.
+const Set<String> kGeneratedDirs = <String>{kChangelogDir, kAttributionsDir};
+
 /// The authoring files of `shared/`, and the `SPEC.md` §7.1 sections each holds.
 ///
 /// One file per concern, one section per table. A section name is the table name
