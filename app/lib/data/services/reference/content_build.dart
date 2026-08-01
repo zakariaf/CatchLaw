@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:catchlaw/data/services/reference/content_build.g.dart';
+import 'package:catchlaw/data/services/reference/content_build.constants.dart';
 import 'package:catchlaw/data/services/reference_installer.dart';
 import 'package:meta/meta.dart';
 

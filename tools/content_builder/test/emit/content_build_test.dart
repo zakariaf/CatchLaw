@@ -78,7 +78,7 @@ void main() {
       expect(contentBuildJson(c.options).path, '${c.options.assetsRoot.path}/content_build.json');
       expect(
         contentBuildDart(c.options).path,
-        endsWith('lib/data/services/reference/content_build.g.dart'),
+        endsWith('lib/data/services/reference/content_build.constants.dart'),
       );
     });
 

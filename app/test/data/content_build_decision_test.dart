@@ -13,8 +13,8 @@
 import 'dart:io';
 
 import 'package:catchlaw/data/services/app_meta_marker_store.dart';
+import 'package:catchlaw/data/services/reference/content_build.constants.dart';
 import 'package:catchlaw/data/services/reference/content_build.dart';
-import 'package:catchlaw/data/services/reference/content_build.g.dart';
 import 'package:catchlaw/data/services/reference_installer.dart';
 import 'package:catchlaw/data/services/user_database_service.dart';
 import 'package:drift/native.dart';

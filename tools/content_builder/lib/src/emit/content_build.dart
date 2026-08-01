@@ -44,7 +44,14 @@ void emitContentBuild(ContentBuildOptions options) {
 File contentBuildJson(ContentBuildOptions options) =>
     File(p.join(options.assetsRoot.path, 'content_build.json'));
 
-/// `app/lib/data/services/reference/content_build.g.dart`.
+/// `app/lib/data/services/reference/content_build.constants.dart`.
+///
+/// **Not `.g.dart`.** That suffix belongs to `build_runner`, and
+/// `--delete-conflicting-outputs` removes any `.g.dart` it cannot trace to an
+/// input of its own — which this file, written by a different generator
+/// entirely, never has. It was deleted on the first `build_runner` run after it
+/// landed. Two generators sharing one suffix convention is a footgun that
+/// recurs every time anybody runs codegen.
 ///
 /// Derived from the assets root — `app/assets` — so one `--out` fixes every
 /// path this build writes and two options cannot disagree about which app they
@@ -56,7 +63,7 @@ File contentBuildDart(ContentBuildOptions options) => File(
     'data',
     'services',
     'reference',
-    'content_build.g.dart',
+    'content_build.constants.dart',
   ),
 );
 

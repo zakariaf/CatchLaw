@@ -296,7 +296,13 @@ class UserProfileRow extends DataClass implements Insertable<UserProfileRow> {
   /// string and silently discards it (§9.3).
   final String numeralSystem;
 
-  /// Display only. Everything is **stored** as integer millimetres.
+  /// The **unit a length is displayed in**, not a length. `SPEC.md` §7.2 types
+  /// it `TEXT` because it holds `cm`, `mm` or `in`; every length in this
+  /// database is an integer millimetre count, and conversion is display-only.
+  ///
+  /// `check_measurement.sh` matches the identifier `length` against a `String`
+  /// column and cannot tell a unit code from a measurement, so the declaration
+  /// carries the gate's one documented hatch.
   final String lengthUnit;
 
   /// The jurisdiction code, not an id: `reference.db` is a separate file and a
