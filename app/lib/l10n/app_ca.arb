@@ -21,5 +21,8 @@
   "identifyThisFish": "Identificar aquest peix",
   "browseByShape": "Explorar per forma",
   "rulePackExpired": "Aquestes normes han superat la data de fi declarada. Es mostren tal com es van publicar.",
-  "speciesSearchResultCount": "{count, plural, one{{count} de {total}} many{{count} de {total}} other{{count} de {total}}}"
+  "speciesSearchResultCount": "{count, plural, one{{count} de {total}} many{{count} de {total}} other{{count} de {total}}}",
+  "browseByShapeTitle": "Explorar per forma",
+  "browseNoSpeciesHeadline": "Cap espècie en aquest paquet",
+  "browseNoSpeciesBody": "Aquesta jurisdicció encara no té espècies transcrites."
 }

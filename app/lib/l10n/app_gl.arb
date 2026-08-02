@@ -21,5 +21,8 @@
   "identifyThisFish": "Identificar este peixe",
   "browseByShape": "Explorar por forma",
   "rulePackExpired": "Estas normas superaron a súa data de fin declarada. Amósanse tal como se publicaron.",
-  "speciesSearchResultCount": "{count, plural, one{{count} de {total}} other{{count} de {total}}}"
+  "speciesSearchResultCount": "{count, plural, one{{count} de {total}} other{{count} de {total}}}",
+  "browseByShapeTitle": "Explorar por forma",
+  "browseNoSpeciesHeadline": "Ningunha especie neste paquete",
+  "browseNoSpeciesBody": "Esta xurisdición aínda non ten especies transcritas."
 }

@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:catchlaw/data/providers.dart';
+import 'package:catchlaw/data/repositories/content_string_repository_drift.dart';
 import 'package:catchlaw/data/repositories/measurement_repository_drift.dart';
 import 'package:catchlaw/data/repositories/reference_repository_drift.dart';
 import 'package:catchlaw/data/repositories/settings_repository_drift.dart';
+import 'package:catchlaw/data/repositories/species_browse_repository_drift.dart';
 import 'package:catchlaw/data/repositories/species_facts_repository_drift.dart';
 import 'package:catchlaw/data/repositories/species_search_repository_drift.dart';
 import 'package:catchlaw/data/services/app_directories.dart';
@@ -61,6 +63,12 @@ List<Override> dataOverrides({required AppDirectories directories}) {
     ),
     speciesFactsRepositoryProvider.overrideWith(
       (Ref ref) => DriftSpeciesFactsRepository(ref.watch(referenceDatabaseProvider)),
+    ),
+    speciesBrowseRepositoryProvider.overrideWith(
+      (Ref ref) => DriftSpeciesBrowseRepository(
+        ref.watch(referenceDatabaseProvider),
+        contentStrings: ContentStringRepositoryDrift(ref.watch(referenceDatabaseProvider)),
+      ),
     ),
   ];
 }

@@ -110,5 +110,17 @@
         "type": "int"
       }
     }
+  },
+  "browseByShapeTitle": "Browse by shape",
+  "@browseByShapeTitle": {
+    "description": "S6's screen heading."
+  },
+  "browseNoSpeciesHeadline": "No species in this pack",
+  "@browseNoSpeciesHeadline": {
+    "description": "S6 when the pack carries no species at all. States what is, without blaming the reader."
+  },
+  "browseNoSpeciesBody": "This jurisdiction has no species transcribed yet.",
+  "@browseNoSpeciesBody": {
+    "description": "Why the grid is empty. A statement about the pack, never an instruction to the reader."
   }
 }

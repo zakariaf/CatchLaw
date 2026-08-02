@@ -111,4 +111,13 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get browseByShapeTitle => 'التصفح حسب الشكل';
+
+  @override
+  String get browseNoSpeciesHeadline => 'لا توجد أنواع في هذه الحزمة';
+
+  @override
+  String get browseNoSpeciesBody => 'لم تُدوَّن أنواع لهذه الولاية بعد.';
 }

@@ -106,6 +106,15 @@ class AppLocalizationsPt extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get browseByShapeTitle => 'Explorar por forma';
+
+  @override
+  String get browseNoSpeciesHeadline => 'Nenhuma espécie neste pacote';
+
+  @override
+  String get browseNoSpeciesBody => 'Esta jurisdição ainda não tem espécies transcritas.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -210,4 +219,13 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
     );
     return '$_temp0';
   }
+
+  @override
+  String get browseByShapeTitle => 'Explorar por forma';
+
+  @override
+  String get browseNoSpeciesHeadline => 'Nenhuma espécie neste pacote';
+
+  @override
+  String get browseNoSpeciesBody => 'Esta jurisdição ainda não tem espécies transcritas.';
 }

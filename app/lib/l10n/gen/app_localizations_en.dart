@@ -104,4 +104,13 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get browseByShapeTitle => 'Browse by shape';
+
+  @override
+  String get browseNoSpeciesHeadline => 'No species in this pack';
+
+  @override
+  String get browseNoSpeciesBody => 'This jurisdiction has no species transcribed yet.';
 }

@@ -236,6 +236,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one{{count} of {total}} other{{count} of {total}}}'**
   String speciesSearchResultCount(int count, int total);
+
+  /// S6's screen heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse by shape'**
+  String get browseByShapeTitle;
+
+  /// S6 when the pack carries no species at all. States what is, without blaming the reader.
+  ///
+  /// In en, this message translates to:
+  /// **'No species in this pack'**
+  String get browseNoSpeciesHeadline;
+
+  /// Why the grid is empty. A statement about the pack, never an instruction to the reader.
+  ///
+  /// In en, this message translates to:
+  /// **'This jurisdiction has no species transcribed yet.'**
+  String get browseNoSpeciesBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

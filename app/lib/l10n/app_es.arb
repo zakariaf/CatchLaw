@@ -21,5 +21,8 @@
   "identifyThisFish": "Identificar este pez",
   "browseByShape": "Explorar por forma",
   "rulePackExpired": "Estas normas superaron su fecha de fin declarada. Se muestran tal como se publicaron.",
-  "speciesSearchResultCount": "{count, plural, one{{count} de {total}} many{{count} de {total}} other{{count} de {total}}}"
+  "speciesSearchResultCount": "{count, plural, one{{count} de {total}} many{{count} de {total}} other{{count} de {total}}}",
+  "browseByShapeTitle": "Explorar por forma",
+  "browseNoSpeciesHeadline": "Ninguna especie en este paquete",
+  "browseNoSpeciesBody": "Esta jurisdicción todavía no tiene especies transcritas."
 }
