@@ -102,6 +102,20 @@ class LonjaDensity {
     gutter: LonjaSpace.s4,
   );
 
+  /// Gloved, or wet, or both.
+  ///
+  /// `SPEC.md` §4.9: all primary targets ≥ 56 dp with ≥ 8 dp separation. A
+  /// gloved or wet thumb loses roughly 8 dp of precision, and separation is
+  /// what prevents the adjacent-target mis-tap — which is the half people drop
+  /// when they read the size and stop.
+  static const LonjaDensity glove = LonjaDensity(
+    tapMin: 56,
+    tapGap: LonjaSpace.s2,
+    rowHeight: 72,
+    hitSlop: 4,
+    gutter: LonjaSpace.s5,
+  );
+
   /// The smallest side of a primary target.
   final double tapMin;
 

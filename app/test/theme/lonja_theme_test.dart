@@ -42,7 +42,12 @@ void main() {
 
     test('LonjaTheme.$name() attaches its palette as a LonjaTokens extension', () {
       // Without this the asserting of(context) from T02 throws on every screen.
-      expect(identical(build().extension<LonjaTokens>(), palette), isTrue);
+      //
+      // Value equality, not identity: T04's density parameter means the builder
+      // returns `palette.copyWith(density: …)`, which is a new instance even
+      // when the density is unchanged. What is being claimed is that the
+      // attached tokens ARE the palette, and that is what == says.
+      expect(build().extension<LonjaTokens>(), palette);
     });
 
     test('LonjaTheme.$name() paints the scaffold with the surface slot', () {

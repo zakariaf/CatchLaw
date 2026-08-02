@@ -83,6 +83,29 @@ abstract final class LonjaPalettes {
   );
 }
 
+/// The theme axis, and the only one.
+///
+/// **Not a `ThemeMode`.** `ThemeMode` has three values and one of them is
+/// `system`; sunlight is neither light nor dark nor a platform signal — no
+/// platform reports 100 000 lux. And **no value here mentions a glove**: glove
+/// mode is a second, orthogonal axis, because the theme answers *what light am
+/// I in* and glove mode answers *what is my hand like*. Both vary
+/// independently, and both odd-looking combinations are common — a gloved hand
+/// at night is normal on a boat, a bare hand in sunlight is normal on a quay.
+/// Folding them together would mean six palettes to author and six contrast
+/// tables to prove instead of three. Check 9 of `check_lonja_tokens.sh` greps
+/// for exactly that mistake, with no `/theme/` exemption and no escape hatch.
+enum LonjaSkin {
+  /// The regulations booklet indoors.
+  paper,
+
+  /// The same booklet under a deck lamp.
+  night,
+
+  /// The same booklet at Gulf noon.
+  sunlight,
+}
+
 /// `ThemeData` for each palette.
 ///
 /// The `ColorScheme` is **hand-authored and never `ColorScheme.fromSeed`**. A
@@ -92,18 +115,27 @@ abstract final class LonjaPalettes {
 /// over the slots, not a second source of truth.
 abstract final class LonjaTheme {
   /// The paper theme.
-  static ThemeData paper() => _build(LonjaPalettes.paper, Brightness.light);
+  static ThemeData paper({LonjaDensity density = LonjaDensity.standard}) =>
+      _build(LonjaPalettes.paper, Brightness.light, density);
 
   /// The night theme.
-  static ThemeData night() => _build(LonjaPalettes.night, Brightness.dark);
+  static ThemeData night({LonjaDensity density = LonjaDensity.standard}) =>
+      _build(LonjaPalettes.night, Brightness.dark, density);
 
   /// The sunlight theme.
   ///
   /// A **light** theme with a white ground. Reporting `dark` would invert the
   /// system UI over it.
-  static ThemeData sunlight() => _build(LonjaPalettes.sunlight, Brightness.light);
+  static ThemeData sunlight({LonjaDensity density = LonjaDensity.standard}) =>
+      _build(LonjaPalettes.sunlight, Brightness.light, density);
 
-  static ThemeData _build(LonjaTokens tokens, Brightness brightness) => ThemeData(
+  static ThemeData _build(LonjaTokens palette, Brightness brightness, LonjaDensity density) {
+    // The single lever T02 left open, used here and nowhere else.
+    final LonjaTokens tokens = palette.copyWith(density: density);
+    return _themeFor(tokens, brightness);
+  }
+
+  static ThemeData _themeFor(LonjaTokens tokens, Brightness brightness) => ThemeData(
     brightness: brightness,
     scaffoldBackgroundColor: tokens.surface,
     // Paper does not float. The cheapest way a shadow appears in this app is a
@@ -122,4 +154,18 @@ abstract final class LonjaTheme {
     ),
     extensions: <ThemeExtension<dynamic>>[tokens],
   );
+}
+
+/// The one place in the app where the two axes cross.
+///
+/// Three palettes and two densities give six renderings, and they are produced
+/// here rather than by six named builders — a switch that drops a case is a
+/// screen that silently renders paper, and one switch is one place to notice.
+ThemeData resolveLonjaTheme({required LonjaSkin skin, required bool gloved}) {
+  final LonjaDensity density = gloved ? LonjaDensity.glove : LonjaDensity.standard;
+  return switch (skin) {
+    LonjaSkin.paper => LonjaTheme.paper(density: density),
+    LonjaSkin.night => LonjaTheme.night(density: density),
+    LonjaSkin.sunlight => LonjaTheme.sunlight(density: density),
+  };
 }
