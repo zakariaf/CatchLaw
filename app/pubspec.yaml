@@ -117,3 +117,24 @@ flutter:
     # E18's "about the rule book" screen reads for the counts — neither of
     # which should require opening ten megabytes of SQLite.
     - assets/content_build.json
+    # The SIL OFL 1.1 text for both bundled families. An asset rather than a
+    # bare repository file because S17 renders it in full (E18) — SPEC.md §8
+    # makes shipping it the CONDITION under which the fonts may be bundled.
+    - assets/fonts/OFL.txt
+
+  # Two regular faces, under their original filenames (SPEC.md §8). Bundled, not
+  # fetched: google_fonts downloads at runtime, which invariant 1 forbids and
+  # two separate gates grep for.
+  #
+  # E07 owns the Lonja type ramp, the additional weights and the ~8 MB subset.
+  # These land here because a golden harness with no Arabic glyph coverage is
+  # not a harness — an `ar` golden taken under the default test font is
+  # byte-identical to the `en` one (FLUTTER_GUIDE.md §6.4 point 1) — and E07
+  # sits after this epic.
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+    - family: NotoNaskhArabic
+      fonts:
+        - asset: assets/fonts/NotoNaskhArabic-Regular.ttf

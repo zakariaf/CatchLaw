@@ -239,8 +239,51 @@ jobs:
           dart run content_builder:build \
             --in content/ --out app/assets/db/reference.db \
             --build-date 2026-08-14 --generator-commit "$(git rev-parse --short HEAD)"
+      # The everyday lane. Goldens are excluded because font rasterisation,
+      # subpixel positioning and antialiasing differ per host and per engine
+      # revision (FLUTTER_GUIDE.md §6.4 point 2) — an unexcluded golden churns
+      # on every machine that is not the one lane below.
       - name: app suite
-        run: cd app && flutter test --test-randomize-ordering-seed random --reporter expanded
+        run: cd app && flutter test --exclude-tags golden --test-randomize-ordering-seed random --reporter expanded
+
+  goldens:
+    name: goldens (linux only)
+    runs-on: ubuntu-24.04            # ONE host is the source of truth, or the files never stop moving
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: .fvmrc
+          cache: true
+          pub-cache: true
+
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq libsqlite3-dev
+      - run: dart pub get
+
+      # The golden lane pumps the real app root, which reaches no database —
+      # but flutter_test_config.dart runs for every file in app/test/, so the
+      # asset bundle has to exist. Building it here keeps this job independent
+      # of the one above rather than ordered behind it.
+      - name: Build reference.db for the golden lane
+        run: |
+          dart run content_builder:build \
+            --in content/ --out app/assets/db/reference.db \
+            --build-date 2026-08-14 --generator-commit "$(git rev-parse --short HEAD)"
+
+      # No --update-goldens, here or anywhere. A blessing step turns the suite
+      # into a ratchet that approves whatever shipped; regeneration is a
+      # deliberate, reviewed, local act with a titled commit.
+      - name: Golden lane
+        run: cd app && flutter test --tags golden --reporter expanded
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: golden-failures
+          path: app/test/**/failures/
+          retention-days: 14
 
   android-release-manifest:
     name: android release manifest

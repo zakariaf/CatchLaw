@@ -61,6 +61,6 @@ void main() {
     // libsqlite3-dev install that `ci_workflow_test.dart` requires every suite
     // step to follow.
     final String workflow = File('../.github/workflows/validate.yml').readAsStringSync();
-    expect(workflow, contains('cd app && flutter test --test-randomize-ordering-seed random'));
+    expect(workflow, contains('cd app && flutter test --exclude-tags golden'));
   });
 }
