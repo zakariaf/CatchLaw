@@ -153,6 +153,25 @@ jobs:
       # regenerated, and the fisher who finds out is the one whose clone will
       # not analyse. Regenerating and diffing is the only step that looks at
       # what is committed rather than at what was rebuilt.
+      # SPEC.md §14 static row 5 / §13 "Localisation completeness". Two
+      # mechanisms because there are two rules. Key and placeholder parity is
+      # general Flutter practice and keeps its maintained implementation in the
+      # plugin — forking it into this repo would drift from the origin within
+      # two PRs (catchlaw-conventions-index rule 10). The CLDR category table is
+      # app law and is a Dart test, because an ICU message needs parsing and a
+      # grep for `many` hits the word inside a translation.
+      #
+      # The path is written out. D-1: the gate exits 2 on a missing target, so a
+      # bare default aborts at this repo root instead of scanning app/lib/l10n.
+      - name: ARB key and placeholder parity (SPEC §14 row 5)
+        run: bash .claude/skills-flutter/i18n-rtl-l10n/scripts/check_arb_parity.sh app/lib/l10n
+
+      # The plural-category half needs no step of its own: `test/l10n/` is
+      # inside the app suite this workflow already runs, randomised and after
+      # libsqlite3-dev. A second `flutter test test/l10n` would run the same
+      # rows twice and would have to sit ahead of that install to be worth
+      # anything, which is the ordering the policy test forbids for a reason.
+
       - name: Committed gen-l10n output is current
         run: |
           cd app && flutter gen-l10n

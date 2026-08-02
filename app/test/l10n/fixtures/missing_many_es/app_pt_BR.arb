@@ -1,0 +1,5 @@
+{
+  "@@locale": "pt_BR",
+  "appTitle": "CatchLaw",
+  "searchResultCount": "{count, plural, one{{count} correspondência} many{{count} correspondências} other{{count} correspondências}}"
+}
