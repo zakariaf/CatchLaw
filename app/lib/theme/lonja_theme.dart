@@ -163,6 +163,43 @@ abstract final class LonjaTheme {
           surface: tokens.surface,
           onSurface: tokens.onSurface,
         ),
+        // A printed page separates things three ways — a rule, a change of stock,
+        // or space — and has no fourth mechanism and no z-axis. The moment a
+        // surface gains elevation, tint or a radius it stops reading as a document
+        // and starts reading as an app overlay, and this app's entire authority
+        // claim is a document claim. One elevated card reframes the screen.
+        dividerTheme: DividerThemeData(
+          color: tokens.hairline,
+          thickness: LonjaRules.rule,
+          space: LonjaSpace.s4,
+        ),
+        cardTheme: CardThemeData(
+          elevation: 0,
+          margin: EdgeInsets.zero,
+          color: tokens.surfaceSunk,
+          surfaceTintColor: const Color(0x00000000),
+          shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
+        ),
+        dialogTheme: DialogThemeData(
+          elevation: 0,
+          backgroundColor: tokens.surface,
+          surfaceTintColor: const Color(0x00000000),
+          shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
+        ),
+        bottomSheetTheme: BottomSheetThemeData(
+          elevation: 0,
+          backgroundColor: tokens.surface,
+          surfaceTintColor: const Color(0x00000000),
+          shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
+        ),
+        snackBarTheme: SnackBarThemeData(
+          elevation: 0,
+          backgroundColor: tokens.surfaceSunk,
+          behavior: SnackBarBehavior.fixed,
+          shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
+        ),
+        // Paper does not ripple.
+        splashFactory: NoSplash.splashFactory,
         extensions: <ThemeExtension<dynamic>>[
           tokens,
           LonjaType(
