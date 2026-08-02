@@ -1,6 +1,7 @@
 import 'package:catchlaw/data/model/enum_codecs.dart';
 import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/domain/models/user_profile.dart';
+import 'package:catchlaw/l10n/locale_notifier.dart';
 import 'package:catchlaw/l10n/numeral_system.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,15 +21,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// which is the same order-dependence one level up.
 final class NumeralSystemNotifier extends StreamNotifier<NumeralSystem> {
   @override
-  Stream<NumeralSystem> build() => ref
-      .watch(settingsRepositoryProvider)
-      .watchProfile()
-      .map((UserProfile profile) => profile.numeralSystem)
-      .distinct()
-      .map((NumeralSystem system) {
-        applyNumeralSystem(system);
-        return system;
-      });
+  Stream<NumeralSystem> build() {
+    // `auto` means "whatever CLDR says for the RESOLVED locale", so a locale
+    // change has to re-evaluate it. Declared as a Riverpod dependency rather
+    // than by calling applyNumeralSystem from LocaleNotifier: one function,
+    // one caller. Today every shipped locale is Latin, so a missing edge here
+    // would be invisible — which is exactly why it is stated rather than
+    // relied upon.
+    ref.watch(localeNotifierProvider);
+
+    return ref
+        .watch(settingsRepositoryProvider)
+        .watchProfile()
+        .map((UserProfile profile) => profile.numeralSystem)
+        .distinct()
+        .map((NumeralSystem system) {
+          applyNumeralSystem(system);
+          return system;
+        });
+  }
 }
 
 /// The numeral system in force, applied as a side effect of resolving.

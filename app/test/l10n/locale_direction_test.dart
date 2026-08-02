@@ -1,6 +1,7 @@
 import 'package:catchlaw/app.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Pumps the real app root at [locale] and reports the direction a descendant
@@ -10,16 +11,25 @@ import 'package:flutter_test/flutter_test.dart';
 /// consequence of the resolved locale reaching `GlobalWidgetsLocalizations`,
 /// and a test that inspected source instead would pass against an app that
 /// hardcodes it.
+///
+/// The bare `ProviderScope` is not decoration. E06/T06 made `CatchlawApp` a
+/// consumer, and an app root pumped without a scope is one that cannot exist —
+/// `main()` has always supplied one. Its data seams stay unoverridden on
+/// purpose: they throw by name, the notifiers land in `AsyncError`, and the
+/// pinned `locale` below is what decides. Which is the claim being made — the
+/// parameter still wins, and direction still follows it.
 Future<TextDirection> _pumpAndReadDirection(WidgetTester tester, Locale locale) async {
   late TextDirection observed;
   await tester.pumpWidget(
-    CatchlawApp(
-      locale: locale,
-      home: Builder(
-        builder: (BuildContext context) {
-          observed = Directionality.of(context);
-          return const SizedBox.shrink();
-        },
+    ProviderScope(
+      child: CatchlawApp(
+        locale: locale,
+        home: Builder(
+          builder: (BuildContext context) {
+            observed = Directionality.of(context);
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     ),
   );

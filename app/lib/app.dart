@@ -1,5 +1,9 @@
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
+import 'package:catchlaw/l10n/locale_notifier.dart';
+import 'package:catchlaw/l10n/numeral_system_notifier.dart';
+import 'package:catchlaw/l10n/resolve_locale.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// The application root.
 ///
@@ -11,16 +15,17 @@ import 'package:flutter/material.dart';
 /// [GlobalWidgetsLocalizations]: `ar` is the one RTL language this product
 /// ships (D-3). A root `Directionality(TextDirection.rtl)` would make every
 /// physical-side inset *look* correct in Arabic and break any LTR island —
-/// including E09's ruler, which must not mirror.
-class CatchlawApp extends StatelessWidget {
+/// including E09's ruler, which must not mirror. `no_directional_geometry.sh`
+/// enforces the construct's absence; E06/T01's rows prove the behaviour by
+/// pumping `ar` and `en`.
+class CatchlawApp extends ConsumerWidget {
   /// Creates the application root.
   const CatchlawApp({super.key, this.locale, this.home});
 
-  /// The locale to pin, or `null` to follow the device.
+  /// A locale to pin regardless of state, for tests that are about direction
+  /// rather than about persistence.
   ///
-  /// E06/T06 replaces the `null` with the override persisted in
-  /// `user_profile.locale_override`; until then the device decides and a test
-  /// pins one directly.
+  /// Production leaves this `null` and the stored override decides.
   final Locale? locale;
 
   /// What to show inside the localised scope.
@@ -30,13 +35,29 @@ class CatchlawApp extends StatelessWidget {
   final Widget? home;
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    onGenerateTitle: (BuildContext context) => AppLocalizations.of(context).appTitle,
-    locale: locale,
-    // gen-l10n emits this list already carrying the three Global delegates, so
-    // a hand-written copy is one that drifts.
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    home: home ?? const SizedBox.shrink(),
-  );
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watched, not read: the swap must happen and a rebuild must follow it, or
+    // a screen renders the digits of whenever it last built (E06/T04).
+    ref.watch(numeralSystemProvider);
+
+    return MaterialApp(
+      onGenerateTitle: (BuildContext context) => AppLocalizations.of(context).appTitle,
+      locale: locale ?? ref.watch(localeNotifierProvider).value,
+      // gen-l10n emits this list already carrying the three Global delegates, so
+      // a hand-written copy is one that drifts.
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      // The platform's ORDERED list, not its first entry: a phone set to es_ES
+      // with gl second is a real configuration, and Flutter's own fallback for
+      // no match is supportedLocales.first — which gen-l10n emits
+      // alphabetically, so a German phone would launch in Arabic.
+      localeListResolutionCallback: (List<Locale>? deviceLocales, Iterable<Locale> supported) =>
+          resolveLocale(
+            override: locale ?? ref.read(localeNotifierProvider).value,
+            deviceLocales: deviceLocales ?? const <Locale>[],
+            supported: supported.toList(),
+          ),
+      home: home ?? const SizedBox.shrink(),
+    );
+  }
 }
