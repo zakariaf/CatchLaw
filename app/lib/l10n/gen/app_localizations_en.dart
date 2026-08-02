@@ -27,4 +27,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsLanguageSystemDefault => 'Device language';
+
+  @override
+  String get settingsNumeralSystem => 'Digits';
+
+  @override
+  String get settingsNumeralSystemAuto => 'Device language default';
+
+  @override
+  String get settingsNumeralSystemLatn => 'Western — 0 1 2 3';
+
+  @override
+  String get settingsNumeralSystemArab => 'Arabic-Indic — ٠ ١ ٢ ٣';
 }

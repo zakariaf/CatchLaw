@@ -31,4 +31,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsLanguageSystemDefault => 'لغة الجهاز';
+
+  @override
+  String get settingsNumeralSystem => 'الأرقام';
+
+  @override
+  String get settingsNumeralSystemAuto => 'الإعداد الافتراضي للغة';
+
+  @override
+  String get settingsNumeralSystemLatn => 'غربية — 0 1 2 3';
+
+  @override
+  String get settingsNumeralSystemArab => 'عربية هندية — ٠ ١ ٢ ٣';
 }

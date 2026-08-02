@@ -28,4 +28,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsLanguageSystemDefault => 'Idioma del dispositivo';
+
+  @override
+  String get settingsNumeralSystem => 'Cifras';
+
+  @override
+  String get settingsNumeralSystemAuto => 'Valor predeterminado del idioma';
+
+  @override
+  String get settingsNumeralSystemLatn => 'Occidentales — 0 1 2 3';
+
+  @override
+  String get settingsNumeralSystemArab => 'Arábigo-índicas — ٠ ١ ٢ ٣';
 }

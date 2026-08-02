@@ -128,6 +128,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Device language'**
   String get settingsLanguageSystemDefault;
+
+  /// S14's label for the numeral-system control. Not `numbers`: what the fisher picks is which digit shapes render, not whether numbers appear.
+  ///
+  /// In en, this message translates to:
+  /// **'Digits'**
+  String get settingsNumeralSystem;
+
+  /// The `auto` value of user_profile.numeral_system: defer to whatever CLDR says for the resolved locale. Phrased as a statement about where the value comes from, never as an instruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Device language default'**
+  String get settingsNumeralSystemAuto;
+
+  /// The `latn` value: Western digits always, regardless of locale. The sample digits are part of the label so the choice is visible without applying it.
+  ///
+  /// In en, this message translates to:
+  /// **'Western — 0 1 2 3'**
+  String get settingsNumeralSystemLatn;
+
+  /// The `arab` value: Arabic-Indic digits (U+0660-U+0669) always. Distinct from the Persian block U+06F0-U+06F9, which this app does not offer.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic-Indic — ٠ ١ ٢ ٣'**
+  String get settingsNumeralSystemArab;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

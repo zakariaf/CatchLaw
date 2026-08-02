@@ -1,11 +1,11 @@
 {
   "@@locale": "ar",
-
   "appTitle": "CatchLaw",
-
   "searchResultCount": "{count, plural, zero{لا نتائج} one{نتيجة واحدة} two{نتيجتان} few{{count} نتائج} many{{count} نتيجة} other{{count} نتيجة}}",
-
   "settingsLanguage": "اللغة",
-
-  "settingsLanguageSystemDefault": "لغة الجهاز"
+  "settingsLanguageSystemDefault": "لغة الجهاز",
+  "settingsNumeralSystem": "الأرقام",
+  "settingsNumeralSystemAuto": "الإعداد الافتراضي للغة",
+  "settingsNumeralSystemLatn": "غربية — 0 1 2 3",
+  "settingsNumeralSystemArab": "عربية هندية — ٠ ١ ٢ ٣"
 }

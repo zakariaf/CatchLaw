@@ -28,6 +28,18 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get settingsLanguageSystemDefault => 'Idioma do dispositivo';
+
+  @override
+  String get settingsNumeralSystem => 'Algarismos';
+
+  @override
+  String get settingsNumeralSystemAuto => 'Padrão do idioma';
+
+  @override
+  String get settingsNumeralSystemLatn => 'Ocidentais — 0 1 2 3';
+
+  @override
+  String get settingsNumeralSystemArab => 'Arábico-índicos — ٠ ١ ٢ ٣';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -54,4 +66,16 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get settingsLanguageSystemDefault => 'Idioma do dispositivo';
+
+  @override
+  String get settingsNumeralSystem => 'Algarismos';
+
+  @override
+  String get settingsNumeralSystemAuto => 'Padrão do idioma';
+
+  @override
+  String get settingsNumeralSystemLatn => 'Ocidentais — 0 1 2 3';
+
+  @override
+  String get settingsNumeralSystemArab => 'Arábico-índicos — ٠ ١ ٢ ٣';
 }

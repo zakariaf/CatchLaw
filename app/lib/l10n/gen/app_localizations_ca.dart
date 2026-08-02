@@ -28,4 +28,16 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get settingsLanguageSystemDefault => 'Idioma del dispositiu';
+
+  @override
+  String get settingsNumeralSystem => 'Xifres';
+
+  @override
+  String get settingsNumeralSystemAuto => 'Valor predeterminat de l’idioma';
+
+  @override
+  String get settingsNumeralSystemLatn => 'Occidentals — 0 1 2 3';
+
+  @override
+  String get settingsNumeralSystemArab => 'Aràbigo-índiques — ٠ ١ ٢ ٣';
 }

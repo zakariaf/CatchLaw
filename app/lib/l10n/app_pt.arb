@@ -1,11 +1,11 @@
 {
   "@@locale": "pt",
-
   "appTitle": "CatchLaw",
-
   "searchResultCount": "{count, plural, one{{count} correspondência} many{{count} correspondências} other{{count} correspondências}}",
-
   "settingsLanguage": "Idioma",
-
-  "settingsLanguageSystemDefault": "Idioma do dispositivo"
+  "settingsLanguageSystemDefault": "Idioma do dispositivo",
+  "settingsNumeralSystem": "Algarismos",
+  "settingsNumeralSystemAuto": "Padrão do idioma",
+  "settingsNumeralSystemLatn": "Ocidentais — 0 1 2 3",
+  "settingsNumeralSystemArab": "Arábico-índicos — ٠ ١ ٢ ٣"
 }
