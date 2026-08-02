@@ -1,5 +1,6 @@
 import 'package:catchlaw/theme/lonja_primitives.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
+import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:flutter/material.dart';
 
 /// The three palettes, each with all thirteen slots written out.
@@ -126,34 +127,50 @@ abstract final class LonjaTheme {
   ///
   /// A **light** theme with a white ground. Reporting `dark` would invert the
   /// system UI over it.
+  ///
+  /// Its ramp carries a `w500` floor. At 100 000 lux a `w400` stem thins to
+  /// nothing against white long before its contrast ratio says anything is
+  /// wrong — the failure sunlight exists to prevent is not a ratio failure.
   static ThemeData sunlight({LonjaDensity density = LonjaDensity.standard}) =>
-      _build(LonjaPalettes.sunlight, Brightness.light, density);
+      _build(LonjaPalettes.sunlight, Brightness.light, density, minWeight: FontWeight.w500);
 
-  static ThemeData _build(LonjaTokens palette, Brightness brightness, LonjaDensity density) {
+  static ThemeData _build(
+    LonjaTokens palette,
+    Brightness brightness,
+    LonjaDensity density, {
+    FontWeight minWeight = FontWeight.w100,
+  }) {
     // The single lever T02 left open, used here and nowhere else.
     final LonjaTokens tokens = palette.copyWith(density: density);
-    return _themeFor(tokens, brightness);
+    return _themeFor(tokens, brightness, minWeight);
   }
 
-  static ThemeData _themeFor(LonjaTokens tokens, Brightness brightness) => ThemeData(
-    brightness: brightness,
-    scaffoldBackgroundColor: tokens.surface,
-    // Paper does not float. The cheapest way a shadow appears in this app is a
-    // Material default nobody overrode, so it is overridden here once.
-    shadowColor: const Color(0x00000000),
-    colorScheme: ColorScheme(
-      brightness: brightness,
-      primary: tokens.accent,
-      onPrimary: tokens.onAccent,
-      secondary: tokens.accent,
-      onSecondary: tokens.onAccent,
-      error: tokens.verdictFail,
-      onError: tokens.onAccent,
-      surface: tokens.surface,
-      onSurface: tokens.onSurface,
-    ),
-    extensions: <ThemeExtension<dynamic>>[tokens],
-  );
+  static ThemeData _themeFor(LonjaTokens tokens, Brightness brightness, FontWeight minWeight) =>
+      ThemeData(
+        brightness: brightness,
+        scaffoldBackgroundColor: tokens.surface,
+        // Paper does not float. The cheapest way a shadow appears in this app is a
+        // Material default nobody overrode, so it is overridden here once.
+        shadowColor: const Color(0x00000000),
+        colorScheme: ColorScheme(
+          brightness: brightness,
+          primary: tokens.accent,
+          onPrimary: tokens.onAccent,
+          secondary: tokens.accent,
+          onSecondary: tokens.onAccent,
+          error: tokens.verdictFail,
+          onError: tokens.onAccent,
+          surface: tokens.surface,
+          onSurface: tokens.onSurface,
+        ),
+        extensions: <ThemeExtension<dynamic>>[
+          tokens,
+          LonjaType(
+            latin: LonjaTypeScale.latin(minWeight: minWeight),
+            arabic: LonjaTypeScale.arabic(minWeight: minWeight),
+          ),
+        ],
+      );
 }
 
 /// The one place in the app where the two axes cross.
