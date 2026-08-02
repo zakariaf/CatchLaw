@@ -13,6 +13,8 @@
 /// cannot.
 library;
 
+import 'package:rule_engine/rule_engine.dart' show MeasurementMethod;
+
 /// `water_type` on `zone`, `rule` and `licence_type`.
 enum WaterKind {
   /// The sea.
@@ -137,3 +139,25 @@ T _decode<T>(List<T> values, String? sql, T fallback) {
   }
   return fallback;
 }
+
+/// `rule.measurement_method_id` as the engine's enum.
+///
+/// **Here and not beside the species**, and `check_measurement.sh` check 6 is
+/// what says so: the same fish is measured differently in two countries, so TL
+/// versus FL is a column on the RULE row and never a property of the species. A
+/// decoder living in a `*species*.dart` file asserts the opposite of that, and
+/// the thing it asserts is what turns a legal fish into a fine.
+///
+/// Total, with a documented fallback, like every other codec here: the id comes
+/// out of a file a content update replaces wholesale, so a value this build does
+/// not recognise must not throw on a fisher's phone. `totalLength` is the
+/// fallback because it is the method the largest number of instruments use — a
+/// hint that named the wrong method still carries the right number, where a
+/// crash carries nothing.
+MeasurementMethod measurementMethodOfId(int id) => switch (id) {
+  1 => MeasurementMethod.totalLength,
+  2 => MeasurementMethod.forkLength,
+  3 => MeasurementMethod.carapaceWidth,
+  4 => MeasurementMethod.shellLength,
+  _ => MeasurementMethod.totalLength,
+};
