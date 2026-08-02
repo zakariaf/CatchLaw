@@ -150,5 +150,13 @@
   "lookAlikeConfusedWith": "How to tell them apart",
   "@lookAlikeConfusedWith": {
     "description": "The label above the difference sentence. `What differentiates them`, not `how to avoid the mistake`: the sentence beneath describes a physical character, and the reader decides what that means."
+  },
+  "recentsStripLabel": "Recent here",
+  "@recentsStripLabel": {
+    "description": "The recents strip's heading. HERE, because recents are per zone: the six species of the Ría de Arousa are not the six of Ras Al Khaimah."
+  },
+  "recentsEmptyBody": "Species you open in this zone appear here.",
+  "@recentsEmptyBody": {
+    "description": "Shown when the strip is empty. States what will fill it — a description of the mechanism, not an instruction to go and use it."
   }
 }

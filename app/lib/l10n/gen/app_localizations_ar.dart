@@ -141,4 +141,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get lookAlikeConfusedWith => 'ما يفرّق بينهما';
+
+  @override
+  String get recentsStripLabel => 'الأخيرة هنا';
+
+  @override
+  String get recentsEmptyBody => 'تظهر هنا الأنواع التي تفتحها في هذه المنطقة.';
 }

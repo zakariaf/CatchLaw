@@ -134,4 +134,10 @@ class AppLocalizationsGl extends AppLocalizations {
 
   @override
   String get lookAlikeConfusedWith => 'Que as diferencia';
+
+  @override
+  String get recentsStripLabel => 'Recentes aquí';
+
+  @override
+  String get recentsEmptyBody => 'As especies que abras nesta zona aparecen aquí.';
 }

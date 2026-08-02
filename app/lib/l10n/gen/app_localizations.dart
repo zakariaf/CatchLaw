@@ -296,6 +296,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How to tell them apart'**
   String get lookAlikeConfusedWith;
+
+  /// The recents strip's heading. HERE, because recents are per zone: the six species of the Ría de Arousa are not the six of Ras Al Khaimah.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent here'**
+  String get recentsStripLabel;
+
+  /// Shown when the strip is empty. States what will fill it — a description of the mechanism, not an instruction to go and use it.
+  ///
+  /// In en, this message translates to:
+  /// **'Species you open in this zone appear here.'**
+  String get recentsEmptyBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -31,5 +31,7 @@
   "speciesPlateSemanticLabel": "Lámina grabada",
   "speciesProtectedAnywhere": "Protegida en algún lugar de esta jurisdicción",
   "lookAlikeSectionLabel": "Se confunde fácilmente con",
-  "lookAlikeConfusedWith": "Qué las diferencia"
+  "lookAlikeConfusedWith": "Qué las diferencia",
+  "recentsStripLabel": "Recientes aquí",
+  "recentsEmptyBody": "Las especies que abras en esta zona aparecen aquí."
 }

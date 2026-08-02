@@ -31,5 +31,7 @@
   "speciesPlateSemanticLabel": "لوحة محفورة",
   "speciesProtectedAnywhere": "محمي في مكان ما ضمن هذه الولاية",
   "lookAlikeSectionLabel": "يُخلط بسهولة مع",
-  "lookAlikeConfusedWith": "ما يفرّق بينهما"
+  "lookAlikeConfusedWith": "ما يفرّق بينهما",
+  "recentsStripLabel": "الأخيرة هنا",
+  "recentsEmptyBody": "تظهر هنا الأنواع التي تفتحها في هذه المنطقة."
 }

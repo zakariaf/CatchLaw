@@ -136,4 +136,10 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get lookAlikeConfusedWith => 'Què les diferencia';
+
+  @override
+  String get recentsStripLabel => 'Recents aquí';
+
+  @override
+  String get recentsEmptyBody => 'Les espècies que obris en aquesta zona apareixen aquí.';
 }

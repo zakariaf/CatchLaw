@@ -110,6 +110,25 @@ class SpeciesRecentDao extends DatabaseAccessor<UserDatabase> with _$SpeciesRece
             ])
             ..limit(limit))
           .watch();
+
+  /// Records that this species was opened here, now.
+  ///
+  /// **Upsert, not read-modify-write.** Two taps a frame apart on a wet screen
+  /// would otherwise both read `use_count = 3` and both write `4`, and the
+  /// species the fisher actually catches most would drift down the strip. The
+  /// increment happens inside SQLite, where the row is locked.
+  Future<void> recordUse({
+    required int speciesId,
+    required String jurisdictionCode,
+    required String zoneCode,
+    required String at,
+  }) => customStatement(
+    'INSERT INTO species_recent (species_id, jurisdiction_code, zone_code, use_count, last_used_at) '
+    'VALUES (?1, ?2, ?3, 1, ?4) '
+    'ON CONFLICT (species_id, jurisdiction_code, zone_code) DO UPDATE SET '
+    'use_count = use_count + 1, last_used_at = excluded.last_used_at',
+    <Object>[speciesId, jurisdictionCode, zoneCode, at],
+  );
 }
 
 /// Reads and writes "this looks wrong to me".

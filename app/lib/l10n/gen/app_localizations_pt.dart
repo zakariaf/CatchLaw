@@ -136,6 +136,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lookAlikeConfusedWith => 'O que as diferencia';
+
+  @override
+  String get recentsStripLabel => 'Recentes aqui';
+
+  @override
+  String get recentsEmptyBody => 'As espécies que você abrir nesta zona aparecem aqui.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -270,4 +276,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get lookAlikeConfusedWith => 'O que as diferencia';
+
+  @override
+  String get recentsStripLabel => 'Recentes aqui';
+
+  @override
+  String get recentsEmptyBody => 'As espécies que você abrir nesta zona aparecem aqui.';
 }

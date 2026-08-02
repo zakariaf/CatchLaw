@@ -31,5 +31,7 @@
   "speciesPlateSemanticLabel": "Prancha gravada",
   "speciesProtectedAnywhere": "Protegida em algum lugar desta jurisdição",
   "lookAlikeSectionLabel": "Confundida facilmente com",
-  "lookAlikeConfusedWith": "O que as diferencia"
+  "lookAlikeConfusedWith": "O que as diferencia",
+  "recentsStripLabel": "Recentes aqui",
+  "recentsEmptyBody": "As espécies que você abrir nesta zona aparecem aqui."
 }
