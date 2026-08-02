@@ -108,9 +108,10 @@ class LonjaButton extends StatelessWidget {
 
   /// A leading glyph slot, empty until the icon family lands.
   ///
-  /// E07 ships no icon: `lonja-icons-and-plates` rule 1 bans `Icons.` outright,
-  /// its per-theme stroke width has no row in `token-tables.md` yet, and no
-  /// epic owns the authored family. E08 is its first consumer.
+  /// E07 ships no icon. `lonja-icons-and-plates` rule 1 bans the Material icon
+  /// namespace outright, its per-theme stroke width has no row in
+  /// `token-tables.md` yet, and no epic owns the authored family — E08 is its
+  /// first consumer.
   final Widget? leading;
 
   /// Latched by the caller while the action runs.
