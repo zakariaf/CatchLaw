@@ -115,6 +115,21 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get browseNoSpeciesBody => 'Esta jurisdição ainda não tem espécies transcritas.';
+
+  @override
+  String get speciesOtherNames => 'Outros nomes';
+
+  @override
+  String get speciesScientificName => 'Nome científico';
+
+  @override
+  String get speciesFamilyLabel => 'Família';
+
+  @override
+  String get speciesPlateSemanticLabel => 'Prancha gravada';
+
+  @override
+  String get speciesProtectedAnywhere => 'Protegida em algum lugar desta jurisdição';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -228,4 +243,19 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get browseNoSpeciesBody => 'Esta jurisdição ainda não tem espécies transcritas.';
+
+  @override
+  String get speciesOtherNames => 'Outros nomes';
+
+  @override
+  String get speciesScientificName => 'Nome científico';
+
+  @override
+  String get speciesFamilyLabel => 'Família';
+
+  @override
+  String get speciesPlateSemanticLabel => 'Prancha gravada';
+
+  @override
+  String get speciesProtectedAnywhere => 'Protegida em algum lugar desta jurisdição';
 }

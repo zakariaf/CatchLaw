@@ -113,4 +113,19 @@ class AppLocalizationsGl extends AppLocalizations {
 
   @override
   String get browseNoSpeciesBody => 'Esta xurisdición aínda non ten especies transcritas.';
+
+  @override
+  String get speciesOtherNames => 'Outros nomes';
+
+  @override
+  String get speciesScientificName => 'Nome científico';
+
+  @override
+  String get speciesFamilyLabel => 'Familia';
+
+  @override
+  String get speciesPlateSemanticLabel => 'Lámina gravada';
+
+  @override
+  String get speciesProtectedAnywhere => 'Protexida nalgún lugar desta xurisdición';
 }

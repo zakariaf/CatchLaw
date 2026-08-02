@@ -14,6 +14,7 @@ library;
 import 'package:catchlaw/data/repositories/measurement_repository.dart';
 import 'package:catchlaw/data/repositories/reference_repository.dart';
 import 'package:catchlaw/data/repositories/settings_repository.dart';
+import 'package:catchlaw/data/repositories/species_account_repository.dart';
 import 'package:catchlaw/data/repositories/species_browse_repository.dart';
 import 'package:catchlaw/data/repositories/species_facts_repository.dart';
 import 'package:catchlaw/data/repositories/species_search_repository.dart';
@@ -68,6 +69,12 @@ final Provider<SpeciesBrowseRepository> speciesBrowseRepositoryProvider =
       (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
     );
 
+/// S2's static half.
+final Provider<SpeciesAccountRepository> speciesAccountRepositoryProvider =
+    Provider<SpeciesAccountRepository>(
+      (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
+    );
+
 /// Every seam `dataOverrides` must fill.
 ///
 /// A list rather than a comment, so "is this one wired?" is a test rather than
@@ -82,4 +89,5 @@ final List<ProviderBase<Object?>> kDataSeams = <ProviderBase<Object?>>[
   speciesSearchRepositoryProvider,
   speciesFactsRepositoryProvider,
   speciesBrowseRepositoryProvider,
+  speciesAccountRepositoryProvider,
 ];

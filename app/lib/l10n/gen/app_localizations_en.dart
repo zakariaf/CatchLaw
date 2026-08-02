@@ -113,4 +113,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get browseNoSpeciesBody => 'This jurisdiction has no species transcribed yet.';
+
+  @override
+  String get speciesOtherNames => 'Other names';
+
+  @override
+  String get speciesScientificName => 'Scientific name';
+
+  @override
+  String get speciesFamilyLabel => 'Family';
+
+  @override
+  String get speciesPlateSemanticLabel => 'Engraved plate';
+
+  @override
+  String get speciesProtectedAnywhere => 'Protected somewhere in this jurisdiction';
 }

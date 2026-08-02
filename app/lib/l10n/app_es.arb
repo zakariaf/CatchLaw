@@ -24,5 +24,10 @@
   "speciesSearchResultCount": "{count, plural, one{{count} de {total}} many{{count} de {total}} other{{count} de {total}}}",
   "browseByShapeTitle": "Explorar por forma",
   "browseNoSpeciesHeadline": "Ninguna especie en este paquete",
-  "browseNoSpeciesBody": "Esta jurisdicción todavía no tiene especies transcritas."
+  "browseNoSpeciesBody": "Esta jurisdicción todavía no tiene especies transcritas.",
+  "speciesOtherNames": "Otros nombres",
+  "speciesScientificName": "Nombre científico",
+  "speciesFamilyLabel": "Familia",
+  "speciesPlateSemanticLabel": "Lámina grabada",
+  "speciesProtectedAnywhere": "Protegida en algún lugar de esta jurisdicción"
 }

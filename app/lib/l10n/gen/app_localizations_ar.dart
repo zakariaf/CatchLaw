@@ -120,4 +120,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get browseNoSpeciesBody => 'لم تُدوَّن أنواع لهذه الولاية بعد.';
+
+  @override
+  String get speciesOtherNames => 'أسماء أخرى';
+
+  @override
+  String get speciesScientificName => 'الاسم العلمي';
+
+  @override
+  String get speciesFamilyLabel => 'الفصيلة';
+
+  @override
+  String get speciesPlateSemanticLabel => 'لوحة محفورة';
+
+  @override
+  String get speciesProtectedAnywhere => 'محمي في مكان ما ضمن هذه الولاية';
 }

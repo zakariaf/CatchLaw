@@ -115,4 +115,19 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get browseNoSpeciesBody => 'Aquesta jurisdicció encara no té espècies transcrites.';
+
+  @override
+  String get speciesOtherNames => 'Altres noms';
+
+  @override
+  String get speciesScientificName => 'Nom científic';
+
+  @override
+  String get speciesFamilyLabel => 'Família';
+
+  @override
+  String get speciesPlateSemanticLabel => 'Làmina gravada';
+
+  @override
+  String get speciesProtectedAnywhere => 'Protegida en algun lloc d’aquesta jurisdicció';
 }

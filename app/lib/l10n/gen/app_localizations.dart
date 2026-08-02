@@ -254,6 +254,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This jurisdiction has no species transcribed yet.'**
   String get browseNoSpeciesBody;
+
+  /// S2's block of names in the other shipped locales. Set small and after the reader's own name.
+  ///
+  /// In en, this message translates to:
+  /// **'Other names'**
+  String get speciesOtherNames;
+
+  /// The binomial's label. It comes LAST on the header, because a reader who does not read Latin cannot check it.
+  ///
+  /// In en, this message translates to:
+  /// **'Scientific name'**
+  String get speciesScientificName;
+
+  /// The family label on S2.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get speciesFamilyLabel;
+
+  /// What a screen reader announces the engraved plate as.
+  ///
+  /// In en, this message translates to:
+  /// **'Engraved plate'**
+  String get speciesPlateSemanticLabel;
+
+  /// S2's protection mark. A STATEMENT about where a protection exists, not a verdict about this catch and not an instruction — E10's finding is what states the rule with its citation. It says SOMEWHERE on purpose: the account page is reached before a zone is known.
+  ///
+  /// In en, this message translates to:
+  /// **'Protected somewhere in this jurisdiction'**
+  String get speciesProtectedAnywhere;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

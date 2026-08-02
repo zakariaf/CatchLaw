@@ -24,5 +24,10 @@
   "speciesSearchResultCount": "{count, plural, one{{count} de {total}} many{{count} de {total}} other{{count} de {total}}}",
   "browseByShapeTitle": "Explorar por forma",
   "browseNoSpeciesHeadline": "Nenhuma espécie neste pacote",
-  "browseNoSpeciesBody": "Esta jurisdição ainda não tem espécies transcritas."
+  "browseNoSpeciesBody": "Esta jurisdição ainda não tem espécies transcritas.",
+  "speciesOtherNames": "Outros nomes",
+  "speciesScientificName": "Nome científico",
+  "speciesFamilyLabel": "Família",
+  "speciesPlateSemanticLabel": "Prancha gravada",
+  "speciesProtectedAnywhere": "Protegida em algum lugar desta jurisdição"
 }

@@ -24,5 +24,10 @@
   "speciesSearchResultCount": "{count, plural, one{{count} de {total}} many{{count} de {total}} other{{count} de {total}}}",
   "browseByShapeTitle": "Explorar per forma",
   "browseNoSpeciesHeadline": "Cap espècie en aquest paquet",
-  "browseNoSpeciesBody": "Aquesta jurisdicció encara no té espècies transcrites."
+  "browseNoSpeciesBody": "Aquesta jurisdicció encara no té espècies transcrites.",
+  "speciesOtherNames": "Altres noms",
+  "speciesScientificName": "Nom científic",
+  "speciesFamilyLabel": "Família",
+  "speciesPlateSemanticLabel": "Làmina gravada",
+  "speciesProtectedAnywhere": "Protegida en algun lloc d’aquesta jurisdicció"
 }

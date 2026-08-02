@@ -24,5 +24,10 @@
   "speciesSearchResultCount": "{count, plural, one{{count} de {total}} other{{count} de {total}}}",
   "browseByShapeTitle": "Explorar por forma",
   "browseNoSpeciesHeadline": "Ningunha especie neste paquete",
-  "browseNoSpeciesBody": "Esta xurisdición aínda non ten especies transcritas."
+  "browseNoSpeciesBody": "Esta xurisdición aínda non ten especies transcritas.",
+  "speciesOtherNames": "Outros nomes",
+  "speciesScientificName": "Nome científico",
+  "speciesFamilyLabel": "Familia",
+  "speciesPlateSemanticLabel": "Lámina gravada",
+  "speciesProtectedAnywhere": "Protexida nalgún lugar desta xurisdición"
 }

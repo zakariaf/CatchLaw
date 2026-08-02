@@ -24,5 +24,10 @@
   "speciesSearchResultCount": "{count, plural, zero{{count} من {total}} one{{count} من {total}} two{{count} من {total}} few{{count} من {total}} many{{count} من {total}} other{{count} من {total}}}",
   "browseByShapeTitle": "التصفح حسب الشكل",
   "browseNoSpeciesHeadline": "لا توجد أنواع في هذه الحزمة",
-  "browseNoSpeciesBody": "لم تُدوَّن أنواع لهذه الولاية بعد."
+  "browseNoSpeciesBody": "لم تُدوَّن أنواع لهذه الولاية بعد.",
+  "speciesOtherNames": "أسماء أخرى",
+  "speciesScientificName": "الاسم العلمي",
+  "speciesFamilyLabel": "الفصيلة",
+  "speciesPlateSemanticLabel": "لوحة محفورة",
+  "speciesProtectedAnywhere": "محمي في مكان ما ضمن هذه الولاية"
 }
