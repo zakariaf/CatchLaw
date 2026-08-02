@@ -128,4 +128,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get speciesProtectedAnywhere => 'Protected somewhere in this jurisdiction';
+
+  @override
+  String get lookAlikeSectionLabel => 'Easily confused with';
+
+  @override
+  String get lookAlikeConfusedWith => 'How to tell them apart';
 }

@@ -29,5 +29,7 @@
   "speciesScientificName": "Nome científico",
   "speciesFamilyLabel": "Família",
   "speciesPlateSemanticLabel": "Prancha gravada",
-  "speciesProtectedAnywhere": "Protegida em algum lugar desta jurisdição"
+  "speciesProtectedAnywhere": "Protegida em algum lugar desta jurisdição",
+  "lookAlikeSectionLabel": "Confundida facilmente com",
+  "lookAlikeConfusedWith": "O que as diferencia"
 }

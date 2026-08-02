@@ -142,5 +142,13 @@
   "speciesProtectedAnywhere": "Protected somewhere in this jurisdiction",
   "@speciesProtectedAnywhere": {
     "description": "S2's protection mark. A STATEMENT about where a protection exists, not a verdict about this catch and not an instruction — E10's finding is what states the rule with its citation. It says SOMEWHERE on purpose: the account page is reached before a zone is known."
+  },
+  "lookAlikeSectionLabel": "Easily confused with",
+  "@lookAlikeSectionLabel": {
+    "description": "The look-alike block's heading on S2. States that a confusion exists — it does not warn, advise or instruct."
+  },
+  "lookAlikeConfusedWith": "How to tell them apart",
+  "@lookAlikeConfusedWith": {
+    "description": "The label above the difference sentence. `What differentiates them`, not `how to avoid the mistake`: the sentence beneath describes a physical character, and the reader decides what that means."
   }
 }

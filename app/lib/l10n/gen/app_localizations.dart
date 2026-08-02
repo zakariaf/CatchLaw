@@ -284,6 +284,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Protected somewhere in this jurisdiction'**
   String get speciesProtectedAnywhere;
+
+  /// The look-alike block's heading on S2. States that a confusion exists — it does not warn, advise or instruct.
+  ///
+  /// In en, this message translates to:
+  /// **'Easily confused with'**
+  String get lookAlikeSectionLabel;
+
+  /// The label above the difference sentence. `What differentiates them`, not `how to avoid the mistake`: the sentence beneath describes a physical character, and the reader decides what that means.
+  ///
+  /// In en, this message translates to:
+  /// **'How to tell them apart'**
+  String get lookAlikeConfusedWith;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

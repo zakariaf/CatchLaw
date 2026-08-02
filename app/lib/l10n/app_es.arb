@@ -29,5 +29,7 @@
   "speciesScientificName": "Nombre científico",
   "speciesFamilyLabel": "Familia",
   "speciesPlateSemanticLabel": "Lámina grabada",
-  "speciesProtectedAnywhere": "Protegida en algún lugar de esta jurisdicción"
+  "speciesProtectedAnywhere": "Protegida en algún lugar de esta jurisdicción",
+  "lookAlikeSectionLabel": "Se confunde fácilmente con",
+  "lookAlikeConfusedWith": "Qué las diferencia"
 }

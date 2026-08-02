@@ -130,4 +130,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get speciesProtectedAnywhere => 'Protegida en algún lugar de esta jurisdicción';
+
+  @override
+  String get lookAlikeSectionLabel => 'Se confunde fácilmente con';
+
+  @override
+  String get lookAlikeConfusedWith => 'Qué las diferencia';
 }

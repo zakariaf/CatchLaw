@@ -128,4 +128,10 @@ class AppLocalizationsGl extends AppLocalizations {
 
   @override
   String get speciesProtectedAnywhere => 'Protexida nalgún lugar desta xurisdición';
+
+  @override
+  String get lookAlikeSectionLabel => 'Confúndese doadamente con';
+
+  @override
+  String get lookAlikeConfusedWith => 'Que as diferencia';
 }

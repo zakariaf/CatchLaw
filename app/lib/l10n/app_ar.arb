@@ -29,5 +29,7 @@
   "speciesScientificName": "الاسم العلمي",
   "speciesFamilyLabel": "الفصيلة",
   "speciesPlateSemanticLabel": "لوحة محفورة",
-  "speciesProtectedAnywhere": "محمي في مكان ما ضمن هذه الولاية"
+  "speciesProtectedAnywhere": "محمي في مكان ما ضمن هذه الولاية",
+  "lookAlikeSectionLabel": "يُخلط بسهولة مع",
+  "lookAlikeConfusedWith": "ما يفرّق بينهما"
 }

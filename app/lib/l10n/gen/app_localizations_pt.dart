@@ -130,6 +130,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get speciesProtectedAnywhere => 'Protegida em algum lugar desta jurisdição';
+
+  @override
+  String get lookAlikeSectionLabel => 'Confundida facilmente com';
+
+  @override
+  String get lookAlikeConfusedWith => 'O que as diferencia';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -258,4 +264,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get speciesProtectedAnywhere => 'Protegida em algum lugar desta jurisdição';
+
+  @override
+  String get lookAlikeSectionLabel => 'Confundida facilmente com';
+
+  @override
+  String get lookAlikeConfusedWith => 'O que as diferencia';
 }

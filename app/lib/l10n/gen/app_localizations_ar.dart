@@ -135,4 +135,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get speciesProtectedAnywhere => 'محمي في مكان ما ضمن هذه الولاية';
+
+  @override
+  String get lookAlikeSectionLabel => 'يُخلط بسهولة مع';
+
+  @override
+  String get lookAlikeConfusedWith => 'ما يفرّق بينهما';
 }

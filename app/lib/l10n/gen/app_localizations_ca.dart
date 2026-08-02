@@ -130,4 +130,10 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get speciesProtectedAnywhere => 'Protegida en algun lloc d’aquesta jurisdicció';
+
+  @override
+  String get lookAlikeSectionLabel => 'Es confon fàcilment amb';
+
+  @override
+  String get lookAlikeConfusedWith => 'Què les diferencia';
 }
