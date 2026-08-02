@@ -1,4 +1,4 @@
-import 'package:catchlaw/domain/models/species_hint.dart';
+import 'package:catchlaw/domain/models/rule_hint.dart';
 import 'package:meta/meta.dart';
 import 'package:rule_engine/rule_engine.dart' show Citation;
 
@@ -21,7 +21,7 @@ class SpeciesFacts {
   final bool inActiveZone;
 
   /// The one-word headline, in numbers and enums.
-  final SpeciesHint hint;
+  final RuleHint hint;
 
   /// The instrument behind the hint.
   final Citation citation;
