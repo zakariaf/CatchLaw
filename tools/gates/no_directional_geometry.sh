@@ -62,26 +62,43 @@ fi
 
 status=0
 
+# `file:line:content` for every line this gate is willing to judge. Built once,
+# because two of the three filters need to look at a line's NEIGHBOUR and a
+# plain `grep -v` cannot.
+#
+# Three exemptions, and each earns its place:
+#
+#   * a line carrying the hatch as a trailing comment;
+#   * a line whose PREDECESSOR is a standalone hatch comment. `dart format`
+#     wraps any construct past the page width, and a hatch that a formatter can
+#     silently detach from its own statement is a hatch nobody can rely on —
+#     which was discovered by watching CI split exactly that fixture;
+#   * a COMMENT-ONLY line. app.dart's doc comment explains why no Directionality
+#     is constructed by naming the construct, and a scan that cannot tell a
+#     prohibition from its rationale forces the rationale out of the file —
+#     which is how a rule survives as a regex and dies as knowledge. A trailing
+#     comment after real code is untouched, because the code half still matches.
+#
+# The filename is always printed, even for a single-file scan: a gate that fails
+# without naming the file is a gate nobody can act on.
+SCANNABLE="$(mktemp)"
+trap 'rm -f "$SCANNABLE"' EXIT
+for f in "${FILES[@]}"; do
+  awk -v path="$f" '
+    {
+      exempt = ($0 ~ /catchlaw-directional-ok/) ||
+               (prev ~ /^[[:space:]]*\/\/.*catchlaw-directional-ok/) ||
+               ($0 ~ /^[[:space:]]*(\/\/|\*)/)
+      if (!exempt) printf "%s:%d:%s\n", path, NR, $0
+      prev = $0
+    }
+  ' "$f"
+done > "$SCANNABLE"
+
 # $1 = label, $2 = extended regex.
-#
-# Two filters, and both earn their place:
-#
-#   * a line carrying the hatch is dropped, so the marker exempts its own line
-#     and nothing else;
-#   * a COMMENT-ONLY line is dropped. app.dart's doc comment explains why no
-#     Directionality is constructed by naming the construct, and a scan that
-#     cannot tell a prohibition from its rationale forces the rationale out of
-#     the file — which is how a rule survives as a regex and dies as knowledge.
-#     A trailing comment after real code is untouched, because the code half
-#     still matches.
-#
-# -H so the filename is always printed, even for a single-file scan: a gate that
-# fails without naming the file is a gate nobody can act on.
 scan() {
   local label="$1" pattern="$2" hits
-  hits="$(grep -HnE "$pattern" "${FILES[@]}" 2>/dev/null \
-    | grep -v 'catchlaw-directional-ok' \
-    | grep -vE '^[^:]+:[0-9]+:[[:space:]]*(//|\*)' || true)"
+  hits="$(grep -E "$pattern" "$SCANNABLE" || true)"
   if [[ -n "$hits" ]]; then
     status=1
     echo "== BANNED: $label =="

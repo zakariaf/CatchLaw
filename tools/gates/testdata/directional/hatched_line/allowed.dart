@@ -5,5 +5,5 @@
 
 Widget build() {
   // The ruler of SPEC.md §9.3 is the one construct that must NOT mirror.
-  return const Padding(padding: EdgeInsets.only(left: 40), child: SizedBox.shrink()); // catchlaw-directional-ok
+  return const Align(alignment: Alignment.centerLeft); // catchlaw-directional-ok
 }

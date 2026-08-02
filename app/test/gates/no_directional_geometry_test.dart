@@ -53,6 +53,7 @@ void main() {
     'edge_insets_symmetric',
     'edge_insets_directional',
     'hatched_line',
+    'hatched_above',
     'generated_file',
   ]) {
     test('no_directional_geometry.sh exits 0 for $fixture', () {
