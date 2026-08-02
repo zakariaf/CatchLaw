@@ -62,4 +62,89 @@ class AppLocalizationsAr extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get speciesSearchLabel => 'الأنواع';
+
+  @override
+  String get speciesSearchHint => 'هامور، كنعد، Epinephelus';
+
+  @override
+  String get speciesGroupInYourZone => 'في منطقتك';
+
+  @override
+  String get speciesGroupElsewhere => 'في مكان آخر ضمن هذه الولاية';
+
+  @override
+  String get speciesHintProtected => 'محمي';
+
+  @override
+  String get speciesHintClosed => 'موسم مغلق';
+
+  @override
+  String get speciesNoMatchHeadline => 'لا يوجد نوع بهذا الاسم';
+
+  @override
+  String get speciesNoMatchBody =>
+      'قد يُكتب الاسم بصورة مختلفة هنا، أو قد لا يكون النوع مُدوَّنًا بعد.';
+
+  @override
+  String get identifyThisFish => 'تحديد هذه السمكة';
+
+  @override
+  String get browseByShape => 'التصفح حسب الشكل';
+
+  @override
+  String get rulePackExpired => 'انقضى تاريخ انتهاء هذه القواعد المعلن. تُعرض كما نُشرت.';
+
+  @override
+  String speciesSearchResultCount(int count, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count من $total',
+      many: '$count من $total',
+      few: '$count من $total',
+      two: '$count من $total',
+      one: '$count من $total',
+      zero: '$count من $total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get browseByShapeTitle => 'التصفح حسب الشكل';
+
+  @override
+  String get browseNoSpeciesHeadline => 'لا توجد أنواع في هذه الحزمة';
+
+  @override
+  String get browseNoSpeciesBody => 'لم تُدوَّن أنواع لهذه الولاية بعد.';
+
+  @override
+  String get speciesOtherNames => 'أسماء أخرى';
+
+  @override
+  String get speciesScientificName => 'الاسم العلمي';
+
+  @override
+  String get speciesFamilyLabel => 'الفصيلة';
+
+  @override
+  String get speciesPlateSemanticLabel => 'لوحة محفورة';
+
+  @override
+  String get speciesProtectedAnywhere => 'محمي في مكان ما ضمن هذه الولاية';
+
+  @override
+  String get lookAlikeSectionLabel => 'يُخلط بسهولة مع';
+
+  @override
+  String get lookAlikeConfusedWith => 'ما يفرّق بينهما';
+
+  @override
+  String get recentsStripLabel => 'الأخيرة هنا';
+
+  @override
+  String get recentsEmptyBody => 'تظهر هنا الأنواع التي تفتحها في هذه المنطقة.';
 }

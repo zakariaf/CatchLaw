@@ -164,6 +164,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{code, select, ar{Arabic} en{English} es{Spanish} gl{Galician} ca{Catalan} ptBR{Brazilian Portuguese} other{English}}'**
   String languageName(String code);
+
+  /// S5's persistent field label. A noun, above the rule, never a placeholder that vanishes on focus.
+  ///
+  /// In en, this message translates to:
+  /// **'Species'**
+  String get speciesSearchLabel;
+
+  /// Illustrative examples inside the empty field, chosen to show that a LOCAL name works — not only a scientific one.
+  ///
+  /// In en, this message translates to:
+  /// **'hamour, mero, Epinephelus'**
+  String get speciesSearchHint;
+
+  /// The first result group. Shown first because it is the answer to the question actually being asked.
+  ///
+  /// In en, this message translates to:
+  /// **'In your zone'**
+  String get speciesGroupInYourZone;
+
+  /// The second result group. Never hidden: a fisher who picked the wrong zone must be able to see that his fish exists, rather than being told it does not.
+  ///
+  /// In en, this message translates to:
+  /// **'Elsewhere in this jurisdiction'**
+  String get speciesGroupElsewhere;
+
+  /// One-word row hint. A STATEMENT about the species' status under an instrument, never an instruction: no imperative, no advice about what to do with the fish. The banned lexicon is product-invariants.md §2, and it is not quoted here — check_lonja_verdict reads this file and cannot tell a prohibition from an example of one, and ARB values are never exempt.
+  ///
+  /// In en, this message translates to:
+  /// **'protected'**
+  String get speciesHintProtected;
+
+  /// One-word row hint: a closure covers today. A statement of fact, never an instruction.
+  ///
+  /// In en, this message translates to:
+  /// **'closed'**
+  String get speciesHintClosed;
+
+  /// S5's empty state. States what happened; the two actions beside it are the way onward.
+  ///
+  /// In en, this message translates to:
+  /// **'No species by that name'**
+  String get speciesNoMatchHeadline;
+
+  /// Why a name might not match, without blaming the reader and without promising the species is absent. Never an instruction.
+  ///
+  /// In en, this message translates to:
+  /// **'The name may be spelled differently here, or the species may not be transcribed yet.'**
+  String get speciesNoMatchBody;
+
+  /// The primary way onward from an empty search — S7's key. One of the three entry points §4.3 requires.
+  ///
+  /// In en, this message translates to:
+  /// **'Identify this fish'**
+  String get identifyThisFish;
+
+  /// The secondary way onward from an empty search — S6.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse by shape'**
+  String get browseByShape;
+
+  /// The ochre stale bar. A STATEMENT that the data passed its end date and is shown as published. It must not tell the reader to update, check elsewhere, or do anything at all — invariant 5 shows the finding anyway.
+  ///
+  /// In en, this message translates to:
+  /// **'These rules passed their stated end date. They are shown as published.'**
+  String get rulePackExpired;
+
+  /// How many species matched, out of how many the jurisdiction carries. The second number is what makes the empty state's claim honest.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} of {total}} other{{count} of {total}}}'**
+  String speciesSearchResultCount(int count, int total);
+
+  /// S6's screen heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse by shape'**
+  String get browseByShapeTitle;
+
+  /// S6 when the pack carries no species at all. States what is, without blaming the reader.
+  ///
+  /// In en, this message translates to:
+  /// **'No species in this pack'**
+  String get browseNoSpeciesHeadline;
+
+  /// Why the grid is empty. A statement about the pack, never an instruction to the reader.
+  ///
+  /// In en, this message translates to:
+  /// **'This jurisdiction has no species transcribed yet.'**
+  String get browseNoSpeciesBody;
+
+  /// S2's block of names in the other shipped locales. Set small and after the reader's own name.
+  ///
+  /// In en, this message translates to:
+  /// **'Other names'**
+  String get speciesOtherNames;
+
+  /// The binomial's label. It comes LAST on the header, because a reader who does not read Latin cannot check it.
+  ///
+  /// In en, this message translates to:
+  /// **'Scientific name'**
+  String get speciesScientificName;
+
+  /// The family label on S2.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get speciesFamilyLabel;
+
+  /// What a screen reader announces the engraved plate as.
+  ///
+  /// In en, this message translates to:
+  /// **'Engraved plate'**
+  String get speciesPlateSemanticLabel;
+
+  /// S2's protection mark. A STATEMENT about where a protection exists, not a verdict about this catch and not an instruction — E10's finding is what states the rule with its citation. It says SOMEWHERE on purpose: the account page is reached before a zone is known.
+  ///
+  /// In en, this message translates to:
+  /// **'Protected somewhere in this jurisdiction'**
+  String get speciesProtectedAnywhere;
+
+  /// The look-alike block's heading on S2. States that a confusion exists — it does not warn, advise or instruct.
+  ///
+  /// In en, this message translates to:
+  /// **'Easily confused with'**
+  String get lookAlikeSectionLabel;
+
+  /// The label above the difference sentence. `What differentiates them`, not `how to avoid the mistake`: the sentence beneath describes a physical character, and the reader decides what that means.
+  ///
+  /// In en, this message translates to:
+  /// **'How to tell them apart'**
+  String get lookAlikeConfusedWith;
+
+  /// The recents strip's heading. HERE, because recents are per zone: the six species of the Ría de Arousa are not the six of Ras Al Khaimah.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent here'**
+  String get recentsStripLabel;
+
+  /// Shown when the strip is empty. States what will fill it — a description of the mechanism, not an instruction to go and use it.
+  ///
+  /// In en, this message translates to:
+  /// **'Species you open in this zone appear here.'**
+  String get recentsEmptyBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

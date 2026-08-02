@@ -59,6 +59,89 @@ class AppLocalizationsPt extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get speciesSearchLabel => 'Espécies';
+
+  @override
+  String get speciesSearchHint => 'garoupa, mero, Epinephelus';
+
+  @override
+  String get speciesGroupInYourZone => 'Na sua zona';
+
+  @override
+  String get speciesGroupElsewhere => 'Em outro lugar desta jurisdição';
+
+  @override
+  String get speciesHintProtected => 'protegida';
+
+  @override
+  String get speciesHintClosed => 'defeso';
+
+  @override
+  String get speciesNoMatchHeadline => 'Nenhuma espécie com esse nome';
+
+  @override
+  String get speciesNoMatchBody =>
+      'O nome pode ser escrito de outra forma aqui, ou a espécie pode ainda não estar transcrita.';
+
+  @override
+  String get identifyThisFish => 'Identificar este peixe';
+
+  @override
+  String get browseByShape => 'Explorar por forma';
+
+  @override
+  String get rulePackExpired =>
+      'Estas regras passaram da data de término declarada. São exibidas como publicadas.';
+
+  @override
+  String speciesSearchResultCount(int count, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count de $total',
+      many: '$count de $total',
+      one: '$count de $total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get browseByShapeTitle => 'Explorar por forma';
+
+  @override
+  String get browseNoSpeciesHeadline => 'Nenhuma espécie neste pacote';
+
+  @override
+  String get browseNoSpeciesBody => 'Esta jurisdição ainda não tem espécies transcritas.';
+
+  @override
+  String get speciesOtherNames => 'Outros nomes';
+
+  @override
+  String get speciesScientificName => 'Nome científico';
+
+  @override
+  String get speciesFamilyLabel => 'Família';
+
+  @override
+  String get speciesPlateSemanticLabel => 'Prancha gravada';
+
+  @override
+  String get speciesProtectedAnywhere => 'Protegida em algum lugar desta jurisdição';
+
+  @override
+  String get lookAlikeSectionLabel => 'Confundida facilmente com';
+
+  @override
+  String get lookAlikeConfusedWith => 'O que as diferencia';
+
+  @override
+  String get recentsStripLabel => 'Recentes aqui';
+
+  @override
+  String get recentsEmptyBody => 'As espécies que você abrir nesta zona aparecem aqui.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -116,4 +199,87 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
     });
     return '$_temp0';
   }
+
+  @override
+  String get speciesSearchLabel => 'Espécies';
+
+  @override
+  String get speciesSearchHint => 'garoupa, mero, Epinephelus';
+
+  @override
+  String get speciesGroupInYourZone => 'Na sua zona';
+
+  @override
+  String get speciesGroupElsewhere => 'Em outro lugar desta jurisdição';
+
+  @override
+  String get speciesHintProtected => 'protegida';
+
+  @override
+  String get speciesHintClosed => 'defeso';
+
+  @override
+  String get speciesNoMatchHeadline => 'Nenhuma espécie com esse nome';
+
+  @override
+  String get speciesNoMatchBody =>
+      'O nome pode ser escrito de outra forma aqui, ou a espécie pode ainda não estar transcrita.';
+
+  @override
+  String get identifyThisFish => 'Identificar este peixe';
+
+  @override
+  String get browseByShape => 'Explorar por forma';
+
+  @override
+  String get rulePackExpired =>
+      'Estas regras passaram da data de término declarada. São exibidas como publicadas.';
+
+  @override
+  String speciesSearchResultCount(int count, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count de $total',
+      many: '$count de $total',
+      one: '$count de $total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get browseByShapeTitle => 'Explorar por forma';
+
+  @override
+  String get browseNoSpeciesHeadline => 'Nenhuma espécie neste pacote';
+
+  @override
+  String get browseNoSpeciesBody => 'Esta jurisdição ainda não tem espécies transcritas.';
+
+  @override
+  String get speciesOtherNames => 'Outros nomes';
+
+  @override
+  String get speciesScientificName => 'Nome científico';
+
+  @override
+  String get speciesFamilyLabel => 'Família';
+
+  @override
+  String get speciesPlateSemanticLabel => 'Prancha gravada';
+
+  @override
+  String get speciesProtectedAnywhere => 'Protegida em algum lugar desta jurisdição';
+
+  @override
+  String get lookAlikeSectionLabel => 'Confundida facilmente com';
+
+  @override
+  String get lookAlikeConfusedWith => 'O que as diferencia';
+
+  @override
+  String get recentsStripLabel => 'Recentes aqui';
+
+  @override
+  String get recentsEmptyBody => 'As espécies que você abrir nesta zona aparecem aqui.';
 }

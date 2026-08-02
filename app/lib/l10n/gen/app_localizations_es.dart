@@ -59,4 +59,87 @@ class AppLocalizationsEs extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get speciesSearchLabel => 'Especies';
+
+  @override
+  String get speciesSearchHint => 'mero, hamour, Epinephelus';
+
+  @override
+  String get speciesGroupInYourZone => 'En tu zona';
+
+  @override
+  String get speciesGroupElsewhere => 'En otro lugar de esta jurisdicción';
+
+  @override
+  String get speciesHintProtected => 'protegida';
+
+  @override
+  String get speciesHintClosed => 'veda';
+
+  @override
+  String get speciesNoMatchHeadline => 'Ninguna especie con ese nombre';
+
+  @override
+  String get speciesNoMatchBody =>
+      'El nombre puede escribirse de otra forma aquí, o la especie puede no estar transcrita todavía.';
+
+  @override
+  String get identifyThisFish => 'Identificar este pez';
+
+  @override
+  String get browseByShape => 'Explorar por forma';
+
+  @override
+  String get rulePackExpired =>
+      'Estas normas superaron su fecha de fin declarada. Se muestran tal como se publicaron.';
+
+  @override
+  String speciesSearchResultCount(int count, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count de $total',
+      many: '$count de $total',
+      one: '$count de $total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get browseByShapeTitle => 'Explorar por forma';
+
+  @override
+  String get browseNoSpeciesHeadline => 'Ninguna especie en este paquete';
+
+  @override
+  String get browseNoSpeciesBody => 'Esta jurisdicción todavía no tiene especies transcritas.';
+
+  @override
+  String get speciesOtherNames => 'Otros nombres';
+
+  @override
+  String get speciesScientificName => 'Nombre científico';
+
+  @override
+  String get speciesFamilyLabel => 'Familia';
+
+  @override
+  String get speciesPlateSemanticLabel => 'Lámina grabada';
+
+  @override
+  String get speciesProtectedAnywhere => 'Protegida en algún lugar de esta jurisdicción';
+
+  @override
+  String get lookAlikeSectionLabel => 'Se confunde fácilmente con';
+
+  @override
+  String get lookAlikeConfusedWith => 'Qué las diferencia';
+
+  @override
+  String get recentsStripLabel => 'Recientes aquí';
+
+  @override
+  String get recentsEmptyBody => 'Las especies que abras en esta zona aparecen aquí.';
 }

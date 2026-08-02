@@ -1,73 +1,82 @@
 ### What changed
 
-`app/lib/theme/` in full, and the first four Lonja components.
+S5, S6 and the static half of S2 — a fisher can now find a fish.
 
-- `lonja_primitives.dart` — 25 pigments, each named for its measured CIE L\*, read by nothing
-  outside `lib/theme/`.
-- `lonja_tokens.dart` — the 4 pt spine, the four rule weights, the radius ceiling of 2, the motion
-  durations, `LonjaDensity`, and the `LonjaTokens` `ThemeExtension`: thirteen semantic slots plus
-  density, value equality over every field, an asserting `of(context)`, a `copyWith` **narrowed to
-  density**, and a `lerp` in which density snaps rather than interpolating.
-- `lonja_theme.dart` — `LonjaPalettes.paper`, `.night`, `.sunlight`, each with all thirteen slots
-  written out; the three builders, `LonjaSkin`, and `resolveLonjaTheme(skin:, gloved:)`.
-- `lonja_faces.dart`, `lonja_typography.dart` — four system stacks, sixteen named steps, tabular
-  figures on every mono step, and the `ar` variant resolved at `of(context)` time.
-- `lonja_button_style.dart`, and `app/lib/ui/core/ui/`: **`LonjaRule`, `LonjaPanel`,
-  `LonjaPlateSurface`, `LonjaButton` and `showLonjaConfirm`** — four components, named by path here
-  because E08's epic file states none exist after E07 and will otherwise re-author them.
-- `app/testing/theme/` — the transcribed pigment, palette, contrast and ramp tables, the CIE
-  arithmetic the proofs use, the `pumpLonja` harness, and the specimen sheet the goldens render.
+- **The search** — a range predicate over `search_norm`, never a `LIKE`, with an
+  `EXPLAIN QUERY PLAN` row proving it uses the index and a latency proof at `SPEC.md` §13's own
+  scale (400 species, 2 400 names). The raw query is folded by the engine's own
+  `normaliseSpeciesTerm` inside the repository, so it is folded exactly once.
+- **The two groups** — **in your zone** first, **elsewhere in this jurisdiction** second and never
+  hidden.
+- **The §7.3 predicates** — zone reach (`NULL`, the zone, or an ancestor), `valid_from` as a filter
+  and `valid_to` as no filter at all, and hint precedence: protected, then closure, then size.
+- **S5's empty state** — one primary (**Identify this fish**) and one secondary (**Browse by
+  shape**), with the jurisdiction's real species count beside them.
+- **S6** — a silhouette grid grouped by family, with the family names in the reader's own language.
+- **S2's static half** — the local name large, the family, the binomial last, other-locale names
+  under it, and **named, empty slots** for E09's ruler and E10's verdict.
+- **The look-alike card** — both directions, one physical character from the pack, and a mark when
+  the confusable species is protected.
+- **Recents** — per zone, frequency before recency, written by an upsert.
+- Twenty-two ARB keys in all seven files (D-18), four golden lanes, and the fakes and fixtures the
+  rows run against.
 
 ### Why
 
-`SPEC.md` §11 "Both" makes sunlight a third theme and not a variant; §4.9 makes glove mode a target
-size requirement and colour independence a correctness requirement; §13 puts numbers on both. D-2
-puts the palette at `app/lib/theme/` because every `lonja-*` gate exempts token constructs by the
-path fragment `/theme/`.
-
-Two decisions carry the epic. **Sunlight is authored, not derived** — the tempting
-`paper.copyWith(...)` leaves `onSurfaceFaint` at 4.60:1 and `hairline` at 1.75:1, both of which are a
-measured pass on a bench and a failure in the hand. At ~100,000 lux the *middle* of the tonal range
-disappears first, so sunlight deletes the middle rather than compressing it, and what survives is the
-verdict. **And the action ladder is graded by field, outline and rule weight, never by hue** — in
-greyscale the primary and destructive fields are 2.3 L\* apart, which is visually the same box.
+`SPEC.md` §5.2 point 2 is the argument that shapes the whole epic: *a wrong confident
+classification on a protected species is the worst failure this app could have.* Everything here
+either helps a fisher find the right fish or admits that two fish look alike.
 
 ### How it was verified
 
-- CIE L\* computed from every hex and compared with the tabled decimal (±0.05) and with the integer
-  in the pigment's own name (±0.6). The proof was shown to discriminate by nudging `ink11` one hex
-  digit and watching the ARGB row fail.
-- All 33 published contrast ratios re-derived from the WCAG formula and compared to two decimal
-  places, then checked against their own floors — which are deliberately **not** flattened:
-  `onSurfaceFaint` at 3.62:1 and `ochre47` at 3.97:1 are asserted as documented sub-floor values.
-- 39 binding assertions, one per slot per palette; sunlight proved authored by sharing **exactly two**
-  slot values with paper, where a `copyWith` sunlight would share six neutrals and both hairlines.
-- All sixteen type steps compared against the transcribed ramp; every Arabic step proved to be ×1.12
-  at zero tracking on the Naskh stack, with `binomial` the one step that keeps the Latin serif.
-- Eight golden lanes plus four greyscale assertions, and a row proving each gate target is non-empty
-  before any green is read.
-- Every gate clean with an explicit target directory, checked by exit code rather than through a pipe.
+- The search's query plan asserted, not assumed — a `LIKE` can be optimised into the same range
+  today and silently stop being when a `PRAGMA` or a `COLLATE NOCASE` changes on a rebuilt content
+  database.
+- **E04's Galicia seed carries zero `rule` rows.** It is a structural seed and the authored content
+  is E22's epic, so the §7.3 predicate rows run against a synthetic pack at the right shape — a test
+  pointed at the built file would have passed over an empty table, which is the same silent-green
+  failure `CONVENTIONS.md` §7 records for gates. The DAO tests that ask whether drift's tables and
+  the builder's DDL agree still use the built file.
+- Every gate clean, checked by exit code rather than through a pipe.
+
+### Gate findings kept rather than worked around
+
+Six, and every one of them was right about something real:
+
+1. `SpeciesResultRow` wore drift's `Row` suffix *and* used `result`, a banned domain word →
+   `SpeciesListing`.
+2. `SpeciesHint` declared a `MeasurementMethod` in a `*species*.dart` file — the same fish is
+   measured differently in two countries, so TL versus FL is a **rule** column → `RuleHint`, decoder
+   moved to `enum_codecs.dart`.
+3. A `Citation?` local → E05's `_require` shape: a rule whose citation does not resolve does not
+   become a rule.
+4. A raw `TextField` and an `InputDecoration` border outside `ui/core` → `LonjaSearchField`, drawing
+   its own rule at a Lonja weight.
+5. An eager `ListView` twice → slivers on S5, a scrolling column on S2, and a named empty state on
+   the recents strip.
+6. **An actual `.toUpperCase()`** in S6's family heading — a silent no-op on Arabic, so the heading
+   would shout in Galician and read as body text in `ar`.
+
+### One finding worth carrying forward
+
+A widget test's `ProviderScope` that omits `retry: noRetry` is testing a different app: Riverpod 3
+**retries** a provider whose build threw, with backoff, so a failing read never reaches `AsyncError`
+and the screen sits in `loading` forever. The error-branch row did not fail — it hung. Every harness
+here mirrors `main()` now.
+
+### Deferred, stated rather than done badly
+
+`species_recent`'s covering index is **not** added. D-17 records that `drift_dev`'s schema tooling
+cannot run in this workspace, so there is no committed snapshot to migrate against and the first
+`from → to` pair needs a hand-written before/after fixture; E13 or E16 owns it. At the seed's scale
+the primary key already serves the read.
+
+The golden PNGs are macOS placeholders; the follow-up commit on this branch replaces them with the
+Linux lane's bytes.
 
 ### Product invariants touched
 
-None weakened.
-
-1. **No network path** — the four faces are system stacks; nothing is fetched, and two gates grep for
-   the runtime-webfont package.
-2. **A verdict states a fact** — no verdict wording ships here. `showLonjaConfirm` requires its
-   `cancelLabel` and supplies no default precisely because every wording
-   `lonja-dialogs-and-surfaces` rule 3 tables opens with a verb `check_app_invariants.sh` check 3
-   fails (epic risk 2).
-3. **Citation required** — untouched.
-4. **Colour is never the only signal** — this is the epic that makes it enforceable, and T08 is where
-   it stops being a slogan.
-5. **An expired ruleset is still shown** — untouched; the ochre bar is E10's.
-
-### Known gaps, deliberately visible
-
-- The committed golden PNGs were blessed on macOS and are placeholders; no Linux host is available
-  here. The pixel rows **skip out loud** off Linux, and the follow-up commit on this branch replaces
-  them with the bytes the Linux lane produces.
-- Epic risks 1, 2, 3 and 5 are unreconciled skill-file disagreements. Each is resolved in this epic
-  by taking `lonja-design-tokens` as the owner of values (the routing table's own rule) and is
-  recorded rather than re-argued; none is edited here, because they are outside this epic's files.
+None weakened. Invariant 3 is made unrepresentable rather than checked — `SpeciesFacts` carries a
+required, non-nullable `Citation`, because a hint about a protection is a statement about a
+published instrument. Invariant 5 holds: `valid_to` never filters, and the stale bar sits above the
+list rather than over it.
