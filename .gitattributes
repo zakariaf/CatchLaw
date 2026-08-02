@@ -4,3 +4,9 @@
 # collapses in a diff and never provokes a merge conflict a human resolves.
 *.g.dart linguist-generated=true -diff merge=ours
 *.drift.dart linguist-generated=true -diff merge=ours
+
+# gen-l10n output. Committed for the same reason as the drift output — the
+# golden lane and every CI job then need no codegen stage, and a fresh clone
+# analyses immediately (FLUTTER_GUIDE.md §7.4). Authored text lives in the ARB
+# files beside it; these are a projection of those.
+app/lib/l10n/gen/*.dart linguist-generated=true -diff merge=ours

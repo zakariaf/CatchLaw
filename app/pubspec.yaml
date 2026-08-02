@@ -10,6 +10,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # The Global* delegates of SPEC.md §9.3. They are what map a resolved locale
+  # to a TextDirection, which is why no Directionality is constructed anywhere
+  # in app/lib — RTL is a consequence of `ar`, never a switch.
+  flutter_localizations:
+    sdk: flutter
+
+  # NumberFormat and the numeral-system lever of §9.3. Deliberately unpinned:
+  # flutter_localizations pins intl exactly, so a caret here resolves to a
+  # conflict rather than to a choice. SPEC.md §10's `^0.19` is a floor the SDK
+  # already exceeds; E06/T04 asserts the emitted digit block rather than the
+  # version, so whichever one resolves, the test states the truth.
+  intl: any
+
   # D-5 pins the version; D-12 is why it arrives in E01 rather than later.
   flutter_riverpod: ^3.4.1
 
@@ -84,6 +98,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  # gen-l10n refuses to run without it, and `flutter run` regenerates from the
+  # ARB on top of the committed output rather than instead of it: synthetic
+  # packages are gone on 3.44.6, so `output-dir: lib/l10n/gen` is a real
+  # directory in the tree and stays diffable.
+  generate: true
 
   assets:
     # The shipping rule book (D-6 item 1). The uncompressed reference.db is

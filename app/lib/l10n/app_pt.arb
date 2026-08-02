@@ -1,0 +1,11 @@
+{
+  "@@locale": "pt",
+
+  "appTitle": "CatchLaw",
+
+  "searchResultCount": "{count, plural, one{{count} correspondência} many{{count} correspondências} other{{count} correspondências}}",
+
+  "settingsLanguage": "Idioma",
+
+  "settingsLanguageSystemDefault": "Idioma do dispositivo"
+}

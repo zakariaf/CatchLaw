@@ -69,6 +69,9 @@ gate script is executable and therefore wins.
 app/lib/l10n/app_ar.arb   app_en.arb   app_es.arb   app_gl.arb   app_ca.arb   app_pt_BR.arb
 ```
 
+**Amended by D-18**, which adds a seventh file, `app_pt.arb`, as the base fallback `gen-l10n` refuses
+to build without. Six languages, seven files; everything else in this decision stands.
+
 RTL golden lanes: **`ar` only**. There is one RTL locale in this product.
 
 **Source.** `SPEC.md` §9.1, which justifies each locale by the publication language of the instrument
@@ -492,5 +495,64 @@ migration nobody has verified**, and the failure it hides is a fisher's catch lo
 emptied.
 
 **Applied by:** E05/T05, E05/T06. Read by E13 and E16 before either adds a column.
+
+---
+
+## D-18 — `app_pt.arb` ships as the base fallback beside `app_pt_BR.arb`, because `gen-l10n` will not build without it
+
+**Decision.** `app/lib/l10n/` holds **seven** ARB files, not six:
+
+```
+app_ar.arb   app_en.arb   app_es.arb   app_gl.arb   app_ca.arb   app_pt.arb   app_pt_BR.arb
+```
+
+Six languages, seven files. `app_pt.arb` is a toolchain-required base, carries the same Brazilian
+Portuguese text as `app_pt_BR.arb`, and is never the file a translator is pointed at — `app_pt_BR.arb`
+remains the one the Brazilian content is authored into.
+
+**Losing source.** D-3's "ARB files are exactly" list, and every restatement of "no `app_pt.arb`":
+`epics/E06-localisation/epic.md` (twice), `epics/E16-settings/T02-language-numerals-units.md`,
+`epics/E20-rtl-hardening/T02-plural-categories.md`, `epics/E18-about/T05-collected-transmitted-and-no-url.md`.
+D-3's *substance* is untouched and is not re-argued: Catalan ships, Urdu does not, the region travels on
+Portuguese, and `Locale('pt', 'BR')` is what `supportedLocales` carries.
+
+**Why — the toolchain, not a preference.** On the Flutter pinned by D-5, `gen-l10n` throws before it
+generates a line:
+
+```
+Arb file for a fallback, pt, does not exist, even though the following locale(s) exist: [pt_BR].
+```
+
+`flutter_tools/lib/src/localizations/gen_l10n_types.dart:753` raises it unconditionally — there is no
+flag, and `--suppress-warnings` does not reach it because it is an `L10nException`, not a warning. The
+same file, at line 662, rejects the obvious dodge: an `@@locale` that disagrees with its filename is
+itself an error, so a file named `app_pt.arb` cannot declare `@@locale: pt_BR`. D-3 as written is not
+merely inconvenient on this toolchain; it is unbuildable.
+
+**The three options, and why the base file wins.**
+
+| Option | What breaks |
+|---|---|
+| Seven files: `app_pt.arb` + `app_pt_BR.arb` | D-3's file **count**, and nothing else |
+| Six files, Portuguese named `app_pt.arb` | `Locale('pt','BR')` never resolves — D-3's **substance**, and the reason E01/T09 gave for it |
+| Six files, `app_pt_BR.arb` alone | does not build |
+
+**The harm D-3 named cannot occur through this file.** E01/T09 justified the region with "a `pt` ARB
+resolves on a Portugal-locale device and shows Brazilian state rules to somebody they do not apply to."
+Rules do not travel in ARB. Tier 1 is UI chrome (`SPEC.md` §9.2); which jurisdiction's rules are
+evaluated comes from the pack and the zone the fisher picks in S9, never from the UI locale. What a
+`pt-PT` device actually gets from this base file is Portuguese chrome instead of English chrome, and
+Portugal is not a shipped jurisdiction in either case.
+
+**What this obliges.** Every task that adds an ARB key adds it to **seven** files. The parity gate
+discovers the seventh by globbing `app_*.arb`, so it needs no edit and cannot be satisfied by six.
+`AppLocalizations.supportedLocales` therefore carries seven entries, and E06/T01's test asserts the
+seven — with `pt` present *as a base* and `ur` absent — rather than a bare count of six.
+
+**Not amended:** `epics/E01-foundation/T09-correct-skill-locales.md`. Its statements were true when
+written, its correction shipped, and the epic is merged; a completed task file is a record of what was
+done, not a live instruction.
+
+**Applied by:** E06/T01. Read by every later task that writes an ARB key, and by E20/T02.
 
 ---

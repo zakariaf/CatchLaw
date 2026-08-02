@@ -1,6 +1,7 @@
+import 'package:catchlaw/app.dart';
 import 'package:catchlaw/data/bootstrap_data.dart';
 import 'package:catchlaw/data/services/app_directories.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Starts CatchLaw.
@@ -21,15 +22,3 @@ void main() => runApp(
     child: const CatchlawApp(),
   ),
 );
-
-/// The application root.
-///
-/// Carries no theme, no colour and no route yet: the Lonja theme lives at
-/// `app/lib/theme/` and arrives in E07 (D-2), and the navigation shell in E12.
-class CatchlawApp extends StatelessWidget {
-  /// Creates the application root.
-  const CatchlawApp({super.key});
-
-  @override
-  Widget build(BuildContext context) => const MaterialApp(home: SizedBox.shrink());
-}

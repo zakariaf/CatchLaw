@@ -971,6 +971,8 @@
       "source": "root",
       "dependencies": [
         "flutter",
+        "flutter_localizations",
+        "intl",
         "flutter_riverpod",
         "rule_engine",
         "drift",
@@ -988,6 +990,8 @@
       ],
       "directDependencies": [
         "flutter",
+        "flutter_localizations",
+        "intl",
         "flutter_riverpod",
         "rule_engine",
         "drift",
@@ -1931,6 +1935,38 @@
       ],
       "directDependencies": [
         "meta"
+      ]
+    },
+    {
+      "name": "intl",
+      "version": "0.20.2",
+      "kind": "transitive",
+      "source": "hosted",
+      "dependencies": [
+        "clock",
+        "meta",
+        "path"
+      ],
+      "directDependencies": [
+        "clock",
+        "meta",
+        "path"
+      ]
+    },
+    {
+      "name": "flutter_localizations",
+      "version": "0.0.0",
+      "kind": "transitive",
+      "source": "sdk",
+      "dependencies": [
+        "flutter",
+        "intl",
+        "path"
+      ],
+      "directDependencies": [
+        "flutter",
+        "intl",
+        "path"
       ]
     },
     {

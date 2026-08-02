@@ -228,7 +228,7 @@ Only after the tests are red.
 
 - [ ] All 17 rows pass, and each failed first.
 - [ ] All thirteen ARB keys exist in `app_ar.arb`, `app_en.arb`, `app_es.arb`, `app_gl.arb`,
-      `app_ca.arb` and `app_pt_BR.arb` (D-3). No `app_pt.arb`, no `app_ur.arb`.
+      `app_ca.arb`, `app_pt_BR.arb` and the `app_pt.arb` base of D-18 (D-3). No `app_ur.arb`.
 - [ ] `grep -rn "NumberFormat" app/lib | grep -E "^\S+:\s*(final|static|const)"` returns nothing — no
       cached formatter anywhere (`SPEC.md` §9.3).
 - [ ] `grep -rn "u-nu-\|numberFormatSymbols" app/lib/ui` returns nothing: the lever is E06's, not this

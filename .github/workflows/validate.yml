@@ -146,6 +146,19 @@ jobs:
       - name: Direct-dependency allowlist diff (SPEC §14)
         run: dart pub deps --json | python3 tools/gates/check_dependency_allowlist.py --allowlist-dir tools/gates/allowlist
 
+      # FLUTTER_GUIDE.md §7.4 commits generated Dart, and `flutter test` honours
+      # `generate: true` — so it regenerates the localisations and runs against
+      # the fresh output while git keeps the stale one. Every other check in
+      # this job would stay green over an ARB edit whose Dart was never
+      # regenerated, and the fisher who finds out is the one whose clone will
+      # not analyse. Regenerating and diffing is the only step that looks at
+      # what is committed rather than at what was rebuilt.
+      - name: Committed gen-l10n output is current
+        run: |
+          cd app && flutter gen-l10n
+          cd .. && git diff --exit-code -- app/lib/l10n/gen \
+            || { echo "::error::app/lib/l10n/gen is stale — run 'cd app && flutter gen-l10n' and commit"; exit 1; }
+
       - run: dart format --output=none --set-exit-if-changed .
       - run: flutter analyze --fatal-infos
 

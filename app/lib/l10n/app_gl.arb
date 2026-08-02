@@ -1,0 +1,11 @@
+{
+  "@@locale": "gl",
+
+  "appTitle": "CatchLaw",
+
+  "searchResultCount": "{count, plural, one{{count} coincidencia} other{{count} coincidencias}}",
+
+  "settingsLanguage": "Idioma",
+
+  "settingsLanguageSystemDefault": "Idioma do dispositivo"
+}

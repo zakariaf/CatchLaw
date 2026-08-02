@@ -1,0 +1,28 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "CatchLaw",
+  "@appTitle": {
+    "description": "The application name, shown by the OS task switcher. The one key that is legitimately identical in all six locales: it is a product name, not a sentence."
+  },
+
+  "searchResultCount": "{count, plural, one{{count} match} other{{count} matches}}",
+  "@searchResultCount": {
+    "description": "Count of species matching the S5 search term. The list is capped at 40 (SPEC.md §13), so the number is always small — but the plural categories are the locale's, not the number's.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "S14's label for the language control. Its value differs per locale, which is what lets a test prove the ar bundle loaded rather than silently falling back to this template."
+  },
+
+  "settingsLanguageSystemDefault": "Device language",
+  "@settingsLanguageSystemDefault": {
+    "description": "The null-override state: no language has been pinned, so the device decides. Phrased as a noun, not as `Follow the device` — every string in this app states what is, and never tells the reader to do something."
+  }
+}
