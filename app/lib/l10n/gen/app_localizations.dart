@@ -1,0 +1,220 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_ar.dart';
+import 'app_localizations_ca.dart';
+import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_gl.dart';
+import 'app_localizations_pt.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'gen/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
+abstract class AppLocalizations {
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static AppLocalizations of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  }
+
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('ca'),
+    Locale('en'),
+    Locale('es'),
+    Locale('gl'),
+    Locale('pt'),
+    Locale('pt', 'BR'),
+  ];
+
+  /// The application name, shown by the OS task switcher. The one key that is legitimately identical in all six locales: it is a product name, not a sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'CatchLaw'**
+  String get appTitle;
+
+  /// Count of species matching the S5 search term. The list is capped at 40 (SPEC.md §13), so the number is always small — but the plural categories are the locale's, not the number's.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} match} other{{count} matches}}'**
+  String searchResultCount(int count);
+
+  /// S14's label for the language control. Its value differs per locale, which is what lets a test prove the ar bundle loaded rather than silently falling back to this template.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// The null-override state: no language has been pinned, so the device decides. Phrased as a noun, not as `Follow the device` — every string in this app states what is, and never tells the reader to do something.
+  ///
+  /// In en, this message translates to:
+  /// **'Device language'**
+  String get settingsLanguageSystemDefault;
+
+  /// S14's label for the numeral-system control. Not `numbers`: what the fisher picks is which digit shapes render, not whether numbers appear.
+  ///
+  /// In en, this message translates to:
+  /// **'Digits'**
+  String get settingsNumeralSystem;
+
+  /// The `auto` value of user_profile.numeral_system: defer to whatever CLDR says for the resolved locale. Phrased as a statement about where the value comes from, never as an instruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Device language default'**
+  String get settingsNumeralSystemAuto;
+
+  /// The `latn` value: Western digits always, regardless of locale. The sample digits are part of the label so the choice is visible without applying it.
+  ///
+  /// In en, this message translates to:
+  /// **'Western — 0 1 2 3'**
+  String get settingsNumeralSystemLatn;
+
+  /// The `arab` value: Arabic-Indic digits (U+0660-U+0669) always. Distinct from the Persian block U+06F0-U+06F9, which this app does not offer.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic-Indic — ٠ ١ ٢ ٣'**
+  String get settingsNumeralSystemArab;
+
+  /// Shown beside a verbatim legal text when the reader's locale is not among the jurisdiction's legal_text_locales. A STATEMENT ABOUT THE DATA, never an instruction: it must not tell the reader to switch language, change a setting, or do anything at all. SPEC.md §9.6 — we do not translate legal text, because an unofficial translation of a penal instrument is a liability.
+  ///
+  /// In en, this message translates to:
+  /// **'The verbatim text of this instrument exists only in {language}.'**
+  String legalTextLanguageNotice(String language);
+
+  /// The name of one shipped language, IN THE READER'S OWN LANGUAGE — Galician named in Arabic, Arabic named in Galician. A select rather than six keys so the 36 cells stay under the ARB parity gate. The `other` branch exists only because ICU requires one; every shipped code has its own branch.
+  ///
+  /// In en, this message translates to:
+  /// **'{code, select, ar{Arabic} en{English} es{Spanish} gl{Galician} ca{Catalan} ptBR{Brazilian Portuguese} other{English}}'**
+  String languageName(String code);
+}
+
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) =>
+      <String>['ar', 'ca', 'en', 'es', 'gl', 'pt'].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when language+country codes are specified.
+  switch (locale.languageCode) {
+    case 'pt':
+      {
+        switch (locale.countryCode) {
+          case 'BR':
+            return AppLocalizationsPtBr();
+        }
+        break;
+      }
+  }
+
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
+    case 'ca':
+      return AppLocalizationsCa();
+    case 'en':
+      return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'gl':
+      return AppLocalizationsGl();
+    case 'pt':
+      return AppLocalizationsPt();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
+}

@@ -36,7 +36,7 @@
 | `.claude/skills/catchlaw-offline-guarantee/references/four-layers.md` | "The strength ladder", "The API grep list" | Layer 2 is the only one a third party can check without trusting us — which is why it is named on screen |
 | `.claude/skills/catchlaw-offline-guarantee/references/verification-ritual.md` | "Why a proxy is not evidence", "Evidence retention" | The packet capture the iOS sentence refers to, and the two-year retention that makes it a record rather than an assertion |
 | `.claude/skills/catchlaw-conventions-index/references/product-invariants.md` | "1 — No network code path", "2 — Statement of fact" | The banned symbol list, and the banned lexicon every string here must clear |
-| `epics/DECISIONS.md` | D-3 | Six locales, `app_ca.arb` and `app_pt_BR.arb` — never `app_ur.arb`, never `app_pt.arb` |
+| `epics/DECISIONS.md` | D-3, D-18 | Six languages, `app_ca.arb` and `app_pt_BR.arb` — never `app_ur.arb`; `app_pt.arb` is the required base, not a seventh language |
 | `epics/DECISIONS.md` | D-2 | The gate script beats the prose whenever they disagree — the tie-break used against `product-invariants.md`'s `url_launcher` allowance |
 
 ## What this delivers

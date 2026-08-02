@@ -32,6 +32,19 @@ class ContentStringDao extends DatabaseAccessor<ReferenceDatabase> with _$Conten
     return <String, String>{for (final ContentStringRow r in rows) r.key: r.value};
   }
 
+  /// Every locale row for one [key], keyed by locale.
+  ///
+  /// The whole key in one statement, because the §9.2 fallback chain has four
+  /// steps and S5 renders up to forty rows: a statement per step would be a
+  /// hundred and sixty round trips against a `WITHOUT ROWID` table for one
+  /// screen (`SPEC.md` §13).
+  Future<Map<String, String>> valuesFor(String key) async {
+    final List<ContentStringRow> rows = await (select(
+      contentStrings,
+    )..where(($ContentStringsTable t) => t.key.equals(key))).get();
+    return <String, String>{for (final ContentStringRow r in rows) r.locale: r.value};
+  }
+
   /// Every locale [key] resolves in. E15's language-availability notice.
   Future<List<String>> localesFor(String key) async {
     final List<ContentStringRow> rows = await (select(

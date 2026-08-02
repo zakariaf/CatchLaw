@@ -1,0 +1,14 @@
+# gen-l10n configuration. Every key below was read out of `flutter gen-l10n
+# --help` on the pinned Flutter 3.44.6 (D-5) rather than from memory: the tool
+# names an unknown key in its error, and `synthetic-package` is now deprecated
+# to the point of being unsettable.
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-dir: lib/l10n/gen
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+
+# The highest-value line in this file. With the getter non-nullable, a mistyped
+# or missing key is an analyzer error; with the default `true` it is an empty
+# widget that ships to one locale in six.
+nullable-getter: false

@@ -1,0 +1,58 @@
+{
+  "@@locale": "en",
+  "appTitle": "CatchLaw",
+  "@appTitle": {
+    "description": "The application name, shown by the OS task switcher. The one key that is legitimately identical in all six locales: it is a product name, not a sentence."
+  },
+  "searchResultCount": "{count, plural, one{{count} match} other{{count} matches}}",
+  "@searchResultCount": {
+    "description": "Count of species matching the S5 search term. The list is capped at 40 (SPEC.md §13), so the number is always small — but the plural categories are the locale's, not the number's.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "S14's label for the language control. Its value differs per locale, which is what lets a test prove the ar bundle loaded rather than silently falling back to this template."
+  },
+  "settingsLanguageSystemDefault": "Device language",
+  "@settingsLanguageSystemDefault": {
+    "description": "The null-override state: no language has been pinned, so the device decides. Phrased as a noun, not as `Follow the device` — every string in this app states what is, and never tells the reader to do something."
+  },
+  "settingsNumeralSystem": "Digits",
+  "@settingsNumeralSystem": {
+    "description": "S14's label for the numeral-system control. Not `numbers`: what the fisher picks is which digit shapes render, not whether numbers appear."
+  },
+  "settingsNumeralSystemAuto": "Device language default",
+  "@settingsNumeralSystemAuto": {
+    "description": "The `auto` value of user_profile.numeral_system: defer to whatever CLDR says for the resolved locale. Phrased as a statement about where the value comes from, never as an instruction."
+  },
+  "settingsNumeralSystemLatn": "Western — 0 1 2 3",
+  "@settingsNumeralSystemLatn": {
+    "description": "The `latn` value: Western digits always, regardless of locale. The sample digits are part of the label so the choice is visible without applying it."
+  },
+  "settingsNumeralSystemArab": "Arabic-Indic — ٠ ١ ٢ ٣",
+  "@settingsNumeralSystemArab": {
+    "description": "The `arab` value: Arabic-Indic digits (U+0660-U+0669) always. Distinct from the Persian block U+06F0-U+06F9, which this app does not offer."
+  },
+  "legalTextLanguageNotice": "The verbatim text of this instrument exists only in {language}.",
+  "@legalTextLanguageNotice": {
+    "description": "Shown beside a verbatim legal text when the reader's locale is not among the jurisdiction's legal_text_locales. A STATEMENT ABOUT THE DATA, never an instruction: it must not tell the reader to switch language, change a setting, or do anything at all. SPEC.md §9.6 — we do not translate legal text, because an unofficial translation of a penal instrument is a liability.",
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "languageName": "{code, select, ar{Arabic} en{English} es{Spanish} gl{Galician} ca{Catalan} ptBR{Brazilian Portuguese} other{English}}",
+  "@languageName": {
+    "description": "The name of one shipped language, IN THE READER'S OWN LANGUAGE — Galician named in Arabic, Arabic named in Galician. A select rather than six keys so the 36 cells stay under the ARB parity gate. The `other` branch exists only because ICU requires one; every shipped code has its own branch.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  }
+}

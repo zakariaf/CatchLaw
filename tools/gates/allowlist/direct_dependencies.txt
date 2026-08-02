@@ -8,7 +8,9 @@ app dependencies convert
 app dependencies crypto
 app dependencies drift
 app dependencies flutter
+app dependencies flutter_localizations
 app dependencies flutter_riverpod
+app dependencies intl
 app dependencies meta
 app dependencies path
 app dependencies path_provider

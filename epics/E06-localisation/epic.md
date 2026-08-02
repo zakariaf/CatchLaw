@@ -46,7 +46,7 @@ handling, any golden harness, and any font with Arabic coverage in the test tree
 empty directory in the `FLUTTER_GUIDE.md` §2.5 tree.
 
 Two known gaps this epic closes and one it does not. It closes D-3 (the ARB filenames, `ca` not `ur`,
-`app_pt_BR.arb` not `app_pt.arb`) and D-8 (the directional ban is a grep gate, not a lint). It does not
+`app_pt_BR.arb` for the Brazilian text) and D-8 (the directional ban is a grep gate, not a lint). It does not
 close the `lonja-typography` reference-file discrepancy recorded under Risks below — that file is
 outside `epics/E06-localisation/` and is not this epic's to edit.
 
@@ -86,10 +86,12 @@ Every task's own definition of done (`CONVENTIONS.md` §8 plus the task file), p
 checkable once all eight have landed:
 
 - [ ] All 8 tasks committed, one commit each, every `Task: E06/Tnn` trailer present.
-- [ ] `app/lib/l10n/` holds exactly six ARB files: `app_ar.arb`, `app_en.arb`, `app_es.arb`,
-      `app_gl.arb`, `app_ca.arb`, `app_pt_BR.arb`. No `app_ur.arb`, no `app_pt.arb` (D-3).
-- [ ] Every ARB key exists in all six files, with identical placeholder names — `SPEC.md` §14 static
-      row 5, enforced by `check_arb_parity.sh app/lib/l10n` in CI.
+- [ ] `app/lib/l10n/` holds seven ARB files for six languages: `app_ar.arb`, `app_en.arb`,
+      `app_es.arb`, `app_gl.arb`, `app_ca.arb`, `app_pt_BR.arb`, and `app_pt.arb` — the base fallback
+      `gen-l10n` refuses to build without (**D-18**, amending D-3's count). No `app_ur.arb` (D-3).
+- [ ] Every ARB key exists in all seven files, with identical placeholder names — `SPEC.md` §14 static
+      row 5, enforced by `check_arb_parity.sh app/lib/l10n` in CI, which globs and so cannot be
+      satisfied by six.
 - [ ] Every `ar` plural message carries all six ICU categories; `es`, `ca` and `pt_BR` carry `many`;
       `gl` and `en` are `one`/`other` (`SPEC.md` §9.5, corrected against CLDR 48).
 - [ ] `packages/rule_engine/` still holds no user-visible sentence in any language (D-7) — this epic

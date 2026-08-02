@@ -10,6 +10,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # The Global* delegates of SPEC.md §9.3. They are what map a resolved locale
+  # to a TextDirection, which is why no Directionality is constructed anywhere
+  # in app/lib — RTL is a consequence of `ar`, never a switch.
+  flutter_localizations:
+    sdk: flutter
+
+  # NumberFormat and the numeral-system lever of §9.3. Deliberately unpinned:
+  # flutter_localizations pins intl exactly, so a caret here resolves to a
+  # conflict rather than to a choice. SPEC.md §10's `^0.19` is a floor the SDK
+  # already exceeds; E06/T04 asserts the emitted digit block rather than the
+  # version, so whichever one resolves, the test states the truth.
+  intl: any
+
   # D-5 pins the version; D-12 is why it arrives in E01 rather than later.
   flutter_riverpod: ^3.4.1
 
@@ -85,6 +99,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  # gen-l10n refuses to run without it, and `flutter run` regenerates from the
+  # ARB on top of the committed output rather than instead of it: synthetic
+  # packages are gone on 3.44.6, so `output-dir: lib/l10n/gen` is a real
+  # directory in the tree and stays diffable.
+  generate: true
+
   assets:
     # The shipping rule book (D-6 item 1). The uncompressed reference.db is
     # git-ignored and is a build artefact; this is the file that goes into the
@@ -97,3 +117,24 @@ flutter:
     # E18's "about the rule book" screen reads for the counts — neither of
     # which should require opening ten megabytes of SQLite.
     - assets/content_build.json
+    # The SIL OFL 1.1 text for both bundled families. An asset rather than a
+    # bare repository file because S17 renders it in full (E18) — SPEC.md §8
+    # makes shipping it the CONDITION under which the fonts may be bundled.
+    - assets/fonts/OFL.txt
+
+  # Two regular faces, under their original filenames (SPEC.md §8). Bundled, not
+  # fetched: google_fonts downloads at runtime, which invariant 1 forbids and
+  # two separate gates grep for.
+  #
+  # E07 owns the Lonja type ramp, the additional weights and the ~8 MB subset.
+  # These land here because a golden harness with no Arabic glyph coverage is
+  # not a harness — an `ar` golden taken under the default test font is
+  # byte-identical to the `en` one (FLUTTER_GUIDE.md §6.4 point 1) — and E07
+  # sits after this epic.
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+    - family: NotoNaskhArabic
+      fonts:
+        - asset: assets/fonts/NotoNaskhArabic-Regular.ttf

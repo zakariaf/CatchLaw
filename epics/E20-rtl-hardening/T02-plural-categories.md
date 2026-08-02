@@ -29,7 +29,7 @@
 | `.claude/skills/i18n-rtl-l10n/references/arb-and-icu.md` | "ICU — always, never concatenation" | Branch shapes must be identical across locales while bodies differ; `=0`/`=1` are exact-value matches that win over the category branches |
 | `.claude/skills/i18n-rtl-l10n/SKILL.md` | rules 2, 3 | Key + placeholder parity; a two-way ternary cannot hold Arabic `few`/`many` |
 | `.claude/skills/catchlaw-conventions-index/references/product-invariants.md` | invariant 2 | The banned lexicon applies to every ARB value in all six files, plural branches included |
-| `epics/DECISIONS.md` | D-3 | Six locales, and the filename is `app_pt_BR.arb` — never `app_pt.arb`, never `app_ur.arb` |
+| `epics/DECISIONS.md` | D-3, D-18 | Six languages in seven files: the Brazilian text is `app_pt_BR.arb`, `app_pt.arb` is the base `gen-l10n` requires beside it, and `app_ur.arb` does not exist |
 
 ## What this delivers
 
