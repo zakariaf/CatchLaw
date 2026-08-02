@@ -25,7 +25,7 @@ void main() {
         .where((File f) => _withoutComments(f.readAsStringSync()).contains('kNominalPxPerMm'))
         .toList();
 
-    for (final File file in readers) {
+    for (final file in readers) {
       final String source = _withoutComments(file.readAsStringSync());
       expect(
         source.contains('millimetresFor') || source.contains('/ pxPerMm'),

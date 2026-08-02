@@ -24,10 +24,7 @@ void main() {
   });
 
   test('DriftCalibrationRepository round-trips a calibration through user.db', () async {
-    final RulerCalibration written = RulerCalibration(
-      pxPerMm: 6.299,
-      capturedOn: DateTime.utc(2026, 8, 1, 5, 40),
-    );
+    final written = RulerCalibration(pxPerMm: 6.299, capturedOn: DateTime.utc(2026, 8, 1, 5, 40));
     await repo.save(written);
     expect(await repo.read(), written);
   });

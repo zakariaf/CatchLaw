@@ -33,7 +33,7 @@ void main() {
     // readout doing its own agree until one is changed, and the day they
     // disagree the ruler draws 45 cm while the number under it says 44.
     final RulerCalibration calibration = _at(6.299);
-    for (final int mm in const <int>[1, 45, 450, 1200]) {
+    for (final mm in const <int>[1, 45, 450, 1200]) {
       expect(calibration.millimetresFor(calibration.pixelsForMillimetres(mm)), mm);
     }
   });
