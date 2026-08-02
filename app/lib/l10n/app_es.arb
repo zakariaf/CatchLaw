@@ -33,5 +33,16 @@
   "lookAlikeSectionLabel": "Se confunde fácilmente con",
   "lookAlikeConfusedWith": "Qué las diferencia",
   "recentsStripLabel": "Recientes aquí",
-  "recentsEmptyBody": "Las especies que abras en esta zona aparecen aquí."
+  "recentsEmptyBody": "Las especies que abras en esta zona aparecen aquí.",
+  "calibrationTitle": "Mide tu pantalla",
+  "calibrationCardExplainer": "Coloca cualquier tarjeta bancaria, carné o DNI sobre el cristal y arrastra el borde hasta hacerlo coincidir.",
+  "calibrationHandleLabel": "Borde de la tarjeta",
+  "calibrationVerifyExplainer": "Esta barra mide {measurement}. Compárala con el lado corto de la misma tarjeta.",
+  "calibrationVerifyBarLabel": "{measurement}",
+  "calibrationSaveAction": "Guardar esta medida",
+  "calibrationCancelAction": "Un paso atrás",
+  "calibrationTooSmallScreen": "Esta pantalla es más estrecha que una tarjeta. La entrada manual está disponible.",
+  "calibrationImplausible": "Ese arrastre midió {measurement} de pantalla, que no es una tarjeta.",
+  "unitMillimetres": "mm",
+  "unitCentimetres": "cm"
 }

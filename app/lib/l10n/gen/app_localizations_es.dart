@@ -142,4 +142,45 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get recentsEmptyBody => 'Las especies que abras en esta zona aparecen aquí.';
+
+  @override
+  String get calibrationTitle => 'Mide tu pantalla';
+
+  @override
+  String get calibrationCardExplainer =>
+      'Coloca cualquier tarjeta bancaria, carné o DNI sobre el cristal y arrastra el borde hasta hacerlo coincidir.';
+
+  @override
+  String get calibrationHandleLabel => 'Borde de la tarjeta';
+
+  @override
+  String calibrationVerifyExplainer(String measurement) {
+    return 'Esta barra mide $measurement. Compárala con el lado corto de la misma tarjeta.';
+  }
+
+  @override
+  String calibrationVerifyBarLabel(String measurement) {
+    return '$measurement';
+  }
+
+  @override
+  String get calibrationSaveAction => 'Guardar esta medida';
+
+  @override
+  String get calibrationCancelAction => 'Un paso atrás';
+
+  @override
+  String get calibrationTooSmallScreen =>
+      'Esta pantalla es más estrecha que una tarjeta. La entrada manual está disponible.';
+
+  @override
+  String calibrationImplausible(String measurement) {
+    return 'Ese arrastre midió $measurement de pantalla, que no es una tarjeta.';
+  }
+
+  @override
+  String get unitMillimetres => 'mm';
+
+  @override
+  String get unitCentimetres => 'cm';
 }

@@ -33,5 +33,16 @@
   "lookAlikeSectionLabel": "Confúndese doadamente con",
   "lookAlikeConfusedWith": "Que as diferencia",
   "recentsStripLabel": "Recentes aquí",
-  "recentsEmptyBody": "As especies que abras nesta zona aparecen aquí."
+  "recentsEmptyBody": "As especies que abras nesta zona aparecen aquí.",
+  "calibrationTitle": "Mide a túa pantalla",
+  "calibrationCardExplainer": "Pon calquera tarxeta bancaria, carné ou DNI sobre o cristal e arrastra o bordo ata facelo coincidir.",
+  "calibrationHandleLabel": "Bordo da tarxeta",
+  "calibrationVerifyExplainer": "Esta barra mide {measurement}. Compáraa co lado curto da mesma tarxeta.",
+  "calibrationVerifyBarLabel": "{measurement}",
+  "calibrationSaveAction": "Gardar esta medida",
+  "calibrationCancelAction": "Un paso atrás",
+  "calibrationTooSmallScreen": "Esta pantalla é máis estreita ca unha tarxeta. A entrada manual está dispoñible.",
+  "calibrationImplausible": "Ese arrastre mediu {measurement} de pantalla, que non é unha tarxeta.",
+  "unitMillimetres": "mm",
+  "unitCentimetres": "cm"
 }

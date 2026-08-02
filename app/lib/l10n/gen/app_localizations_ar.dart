@@ -147,4 +147,44 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get recentsEmptyBody => 'تظهر هنا الأنواع التي تفتحها في هذه المنطقة.';
+
+  @override
+  String get calibrationTitle => 'قياس شاشتك';
+
+  @override
+  String get calibrationCardExplainer =>
+      'ضع أي بطاقة مصرفية أو رخصة أو هوية على الزجاج واسحب الحافة لتطابقها.';
+
+  @override
+  String get calibrationHandleLabel => 'حافة البطاقة';
+
+  @override
+  String calibrationVerifyExplainer(String measurement) {
+    return 'طول هذا الشريط $measurement. قارنه بالضلع القصير للبطاقة نفسها.';
+  }
+
+  @override
+  String calibrationVerifyBarLabel(String measurement) {
+    return '$measurement';
+  }
+
+  @override
+  String get calibrationSaveAction => 'حفظ هذا القياس';
+
+  @override
+  String get calibrationCancelAction => 'خطوة للخلف';
+
+  @override
+  String get calibrationTooSmallScreen => 'هذه الشاشة أضيق من بطاقة. الإدخال اليدوي متاح.';
+
+  @override
+  String calibrationImplausible(String measurement) {
+    return 'قاس هذا السحب $measurement عبر الشاشة، وهذا ليس بطاقة.';
+  }
+
+  @override
+  String get unitMillimetres => 'مم';
+
+  @override
+  String get unitCentimetres => 'سم';
 }

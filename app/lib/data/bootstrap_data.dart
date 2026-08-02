@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:catchlaw/data/providers.dart';
+import 'package:catchlaw/data/repositories/calibration_repository_drift.dart';
 import 'package:catchlaw/data/repositories/content_string_repository_drift.dart';
 import 'package:catchlaw/data/repositories/look_alike_repository_drift.dart';
 import 'package:catchlaw/data/repositories/measurement_repository_drift.dart';
@@ -66,6 +67,9 @@ List<Override> dataOverrides({required AppDirectories directories}) {
     ),
     speciesFactsRepositoryProvider.overrideWith(
       (Ref ref) => DriftSpeciesFactsRepository(ref.watch(referenceDatabaseProvider)),
+    ),
+    calibrationRepositoryProvider.overrideWith(
+      (Ref ref) => DriftCalibrationRepository(ref.watch(userDatabaseProvider)),
     ),
     speciesRecentRepositoryProvider.overrideWith(
       (Ref ref) => DriftSpeciesRecentRepository(
