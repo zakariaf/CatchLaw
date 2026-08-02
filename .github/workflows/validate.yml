@@ -278,6 +278,13 @@ jobs:
       - name: Golden lane
         run: cd app && flutter test --tags golden --reporter expanded
 
+      # E07's six Lonja gates. E01 wired the sixteen skill gates as a set; these
+      # are named individually here because this is the first epic in which they
+      # have anything to find — check_lonja_tokens.sh app/lib was green from E01
+      # over a tree with almost no colour in it, and a gate that scans an empty
+      # path reports success (CONVENTIONS.md §7). gate_targets_test.dart asserts
+      # the targets are non-empty; only then is a green worth reading.
+
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
