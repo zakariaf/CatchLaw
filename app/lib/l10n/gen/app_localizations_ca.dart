@@ -59,4 +59,51 @@ class AppLocalizationsCa extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get speciesSearchLabel => 'Espècies';
+
+  @override
+  String get speciesSearchHint => 'anfós, mero, Epinephelus';
+
+  @override
+  String get speciesGroupInYourZone => 'A la teva zona';
+
+  @override
+  String get speciesGroupElsewhere => 'En un altre lloc d’aquesta jurisdicció';
+
+  @override
+  String get speciesHintProtected => 'protegida';
+
+  @override
+  String get speciesHintClosed => 'veda';
+
+  @override
+  String get speciesNoMatchHeadline => 'Cap espècie amb aquest nom';
+
+  @override
+  String get speciesNoMatchBody =>
+      'El nom es pot escriure d’una altra manera aquí, o l’espècie pot no estar transcrita encara.';
+
+  @override
+  String get identifyThisFish => 'Identificar aquest peix';
+
+  @override
+  String get browseByShape => 'Explorar per forma';
+
+  @override
+  String get rulePackExpired =>
+      'Aquestes normes han superat la data de fi declarada. Es mostren tal com es van publicar.';
+
+  @override
+  String speciesSearchResultCount(int count, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count de $total',
+      many: '$count de $total',
+      one: '$count de $total',
+    );
+    return '$_temp0';
+  }
 }

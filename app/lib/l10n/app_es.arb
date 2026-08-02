@@ -9,5 +9,17 @@
   "settingsNumeralSystemLatn": "Occidentales — 0 1 2 3",
   "settingsNumeralSystemArab": "Arábigo-índicas — ٠ ١ ٢ ٣",
   "legalTextLanguageNotice": "El texto literal de este instrumento existe únicamente en {language}.",
-  "languageName": "{code, select, ar{árabe} en{inglés} es{español} gl{gallego} ca{catalán} ptBR{portugués de Brasil} other{inglés}}"
+  "languageName": "{code, select, ar{árabe} en{inglés} es{español} gl{gallego} ca{catalán} ptBR{portugués de Brasil} other{inglés}}",
+  "speciesSearchLabel": "Especies",
+  "speciesSearchHint": "mero, hamour, Epinephelus",
+  "speciesGroupInYourZone": "En tu zona",
+  "speciesGroupElsewhere": "En otro lugar de esta jurisdicción",
+  "speciesHintProtected": "protegida",
+  "speciesHintClosed": "veda",
+  "speciesNoMatchHeadline": "Ninguna especie con ese nombre",
+  "speciesNoMatchBody": "El nombre puede escribirse de otra forma aquí, o la especie puede no estar transcrita todavía.",
+  "identifyThisFish": "Identificar este pez",
+  "browseByShape": "Explorar por forma",
+  "rulePackExpired": "Estas normas superaron su fecha de fin declarada. Se muestran tal como se publicaron.",
+  "speciesSearchResultCount": "{count, plural, one{{count} de {total}} many{{count} de {total}} other{{count} de {total}}}"
 }

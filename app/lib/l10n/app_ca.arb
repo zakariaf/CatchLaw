@@ -9,5 +9,17 @@
   "settingsNumeralSystemLatn": "Occidentals — 0 1 2 3",
   "settingsNumeralSystemArab": "Aràbigo-índiques — ٠ ١ ٢ ٣",
   "legalTextLanguageNotice": "El text literal d’aquest instrument existeix únicament en {language}.",
-  "languageName": "{code, select, ar{àrab} en{anglès} es{castellà} gl{gallec} ca{català} ptBR{portuguès del Brasil} other{anglès}}"
+  "languageName": "{code, select, ar{àrab} en{anglès} es{castellà} gl{gallec} ca{català} ptBR{portuguès del Brasil} other{anglès}}",
+  "speciesSearchLabel": "Espècies",
+  "speciesSearchHint": "anfós, mero, Epinephelus",
+  "speciesGroupInYourZone": "A la teva zona",
+  "speciesGroupElsewhere": "En un altre lloc d’aquesta jurisdicció",
+  "speciesHintProtected": "protegida",
+  "speciesHintClosed": "veda",
+  "speciesNoMatchHeadline": "Cap espècie amb aquest nom",
+  "speciesNoMatchBody": "El nom es pot escriure d’una altra manera aquí, o l’espècie pot no estar transcrita encara.",
+  "identifyThisFish": "Identificar aquest peix",
+  "browseByShape": "Explorar per forma",
+  "rulePackExpired": "Aquestes normes han superat la data de fi declarada. Es mostren tal com es van publicar.",
+  "speciesSearchResultCount": "{count, plural, one{{count} de {total}} many{{count} de {total}} other{{count} de {total}}}"
 }

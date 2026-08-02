@@ -9,5 +9,17 @@
   "settingsNumeralSystemLatn": "غربية — 0 1 2 3",
   "settingsNumeralSystemArab": "عربية هندية — ٠ ١ ٢ ٣",
   "legalTextLanguageNotice": "النص الحرفي لهذا الصك موجود بـ{language} فقط.",
-  "languageName": "{code, select, ar{العربية} en{الإنجليزية} es{الإسبانية} gl{الغاليسية} ca{الكتالونية} ptBR{البرتغالية البرازيلية} other{الإنجليزية}}"
+  "languageName": "{code, select, ar{العربية} en{الإنجليزية} es{الإسبانية} gl{الغاليسية} ca{الكتالونية} ptBR{البرتغالية البرازيلية} other{الإنجليزية}}",
+  "speciesSearchLabel": "الأنواع",
+  "speciesSearchHint": "هامور، كنعد، Epinephelus",
+  "speciesGroupInYourZone": "في منطقتك",
+  "speciesGroupElsewhere": "في مكان آخر ضمن هذه الولاية",
+  "speciesHintProtected": "محمي",
+  "speciesHintClosed": "موسم مغلق",
+  "speciesNoMatchHeadline": "لا يوجد نوع بهذا الاسم",
+  "speciesNoMatchBody": "قد يُكتب الاسم بصورة مختلفة هنا، أو قد لا يكون النوع مُدوَّنًا بعد.",
+  "identifyThisFish": "تحديد هذه السمكة",
+  "browseByShape": "التصفح حسب الشكل",
+  "rulePackExpired": "انقضى تاريخ انتهاء هذه القواعد المعلن. تُعرض كما نُشرت.",
+  "speciesSearchResultCount": "{count, plural, zero{{count} من {total}} one{{count} من {total}} two{{count} من {total}} few{{count} من {total}} many{{count} من {total}} other{{count} من {total}}}"
 }

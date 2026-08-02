@@ -58,4 +58,50 @@ class AppLocalizationsEn extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get speciesSearchLabel => 'Species';
+
+  @override
+  String get speciesSearchHint => 'hamour, mero, Epinephelus';
+
+  @override
+  String get speciesGroupInYourZone => 'In your zone';
+
+  @override
+  String get speciesGroupElsewhere => 'Elsewhere in this jurisdiction';
+
+  @override
+  String get speciesHintProtected => 'protected';
+
+  @override
+  String get speciesHintClosed => 'closed';
+
+  @override
+  String get speciesNoMatchHeadline => 'No species by that name';
+
+  @override
+  String get speciesNoMatchBody =>
+      'The name may be spelled differently here, or the species may not be transcribed yet.';
+
+  @override
+  String get identifyThisFish => 'Identify this fish';
+
+  @override
+  String get browseByShape => 'Browse by shape';
+
+  @override
+  String get rulePackExpired =>
+      'These rules passed their stated end date. They are shown as published.';
+
+  @override
+  String speciesSearchResultCount(int count, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count of $total',
+      one: '$count of $total',
+    );
+    return '$_temp0';
+  }
 }

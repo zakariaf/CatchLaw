@@ -54,5 +54,61 @@
         "type": "String"
       }
     }
+  },
+  "speciesSearchLabel": "Species",
+  "@speciesSearchLabel": {
+    "description": "S5's persistent field label. A noun, above the rule, never a placeholder that vanishes on focus."
+  },
+  "speciesSearchHint": "hamour, mero, Epinephelus",
+  "@speciesSearchHint": {
+    "description": "Illustrative examples inside the empty field, chosen to show that a LOCAL name works — not only a scientific one."
+  },
+  "speciesGroupInYourZone": "In your zone",
+  "@speciesGroupInYourZone": {
+    "description": "The first result group. Shown first because it is the answer to the question actually being asked."
+  },
+  "speciesGroupElsewhere": "Elsewhere in this jurisdiction",
+  "@speciesGroupElsewhere": {
+    "description": "The second result group. Never hidden: a fisher who picked the wrong zone must be able to see that his fish exists, rather than being told it does not."
+  },
+  "speciesHintProtected": "protected",
+  "@speciesHintProtected": {
+    "description": "One-word row hint. A STATEMENT about the species' status under an instrument, never an instruction: no imperative, no advice about what to do with the fish. The banned lexicon is product-invariants.md §2, and it is not quoted here — check_lonja_verdict reads this file and cannot tell a prohibition from an example of one, and ARB values are never exempt."
+  },
+  "speciesHintClosed": "closed",
+  "@speciesHintClosed": {
+    "description": "One-word row hint: a closure covers today. A statement of fact, never an instruction."
+  },
+  "speciesNoMatchHeadline": "No species by that name",
+  "@speciesNoMatchHeadline": {
+    "description": "S5's empty state. States what happened; the two actions beside it are the way onward."
+  },
+  "speciesNoMatchBody": "The name may be spelled differently here, or the species may not be transcribed yet.",
+  "@speciesNoMatchBody": {
+    "description": "Why a name might not match, without blaming the reader and without promising the species is absent. Never an instruction."
+  },
+  "identifyThisFish": "Identify this fish",
+  "@identifyThisFish": {
+    "description": "The primary way onward from an empty search — S7's key. One of the three entry points §4.3 requires."
+  },
+  "browseByShape": "Browse by shape",
+  "@browseByShape": {
+    "description": "The secondary way onward from an empty search — S6."
+  },
+  "rulePackExpired": "These rules passed their stated end date. They are shown as published.",
+  "@rulePackExpired": {
+    "description": "The ochre stale bar. A STATEMENT that the data passed its end date and is shown as published. It must not tell the reader to update, check elsewhere, or do anything at all — invariant 5 shows the finding anyway."
+  },
+  "speciesSearchResultCount": "{count, plural, one{{count} of {total}} other{{count} of {total}}}",
+  "@speciesSearchResultCount": {
+    "description": "How many species matched, out of how many the jurisdiction carries. The second number is what makes the empty state's claim honest.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
   }
 }
