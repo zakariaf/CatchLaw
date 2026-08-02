@@ -2,6 +2,7 @@ import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/l10n/locale_notifier.dart';
 import 'package:catchlaw/l10n/numeral_system_notifier.dart';
 import 'package:catchlaw/l10n/resolve_locale.dart';
+import 'package:catchlaw/theme/lonja_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -42,6 +43,12 @@ class CatchlawApp extends ConsumerWidget {
 
     return MaterialApp(
       onGenerateTitle: (BuildContext context) => AppLocalizations.of(context).appTitle,
+      // SPEC.md §11 "Both": the booklet indoors and the same booklet under a
+      // deck lamp. Sunlight is a THIRD theme rather than a variant of either,
+      // and it is reached by a control in S14 (E16) and by a long-press on the
+      // result (E10) — not by the platform, which has no signal for 100 000 lux.
+      theme: LonjaTheme.paper(),
+      darkTheme: LonjaTheme.night(),
       locale: locale ?? ref.watch(localeNotifierProvider).value,
       // gen-l10n emits this list already carrying the three Global delegates, so
       // a hand-written copy is one that drifts.
