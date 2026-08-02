@@ -40,4 +40,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsNumeralSystemArab => 'Arábigo-índicas — ٠ ١ ٢ ٣';
+
+  @override
+  String legalTextLanguageNotice(String language) {
+    return 'El texto literal de este instrumento existe únicamente en $language.';
+  }
+
+  @override
+  String languageName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ar': 'árabe',
+      'en': 'inglés',
+      'es': 'español',
+      'gl': 'gallego',
+      'ca': 'catalán',
+      'ptBR': 'portugués de Brasil',
+      'other': 'inglés',
+    });
+    return '$_temp0';
+  }
 }

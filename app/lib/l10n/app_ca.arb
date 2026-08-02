@@ -7,5 +7,7 @@
   "settingsNumeralSystem": "Xifres",
   "settingsNumeralSystemAuto": "Valor predeterminat de l’idioma",
   "settingsNumeralSystemLatn": "Occidentals — 0 1 2 3",
-  "settingsNumeralSystemArab": "Aràbigo-índiques — ٠ ١ ٢ ٣"
+  "settingsNumeralSystemArab": "Aràbigo-índiques — ٠ ١ ٢ ٣",
+  "legalTextLanguageNotice": "El text literal d’aquest instrument existeix únicament en {language}.",
+  "languageName": "{code, select, ar{àrab} en{anglès} es{castellà} gl{gallec} ca{català} ptBR{portuguès del Brasil} other{anglès}}"
 }

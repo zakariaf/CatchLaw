@@ -43,4 +43,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsNumeralSystemArab => 'عربية هندية — ٠ ١ ٢ ٣';
+
+  @override
+  String legalTextLanguageNotice(String language) {
+    return 'النص الحرفي لهذا الصك موجود بـ$language فقط.';
+  }
+
+  @override
+  String languageName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ar': 'العربية',
+      'en': 'الإنجليزية',
+      'es': 'الإسبانية',
+      'gl': 'الغاليسية',
+      'ca': 'الكتالونية',
+      'ptBR': 'البرتغالية البرازيلية',
+      'other': 'الإنجليزية',
+    });
+    return '$_temp0';
+  }
 }

@@ -152,6 +152,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Arabic-Indic — ٠ ١ ٢ ٣'**
   String get settingsNumeralSystemArab;
+
+  /// Shown beside a verbatim legal text when the reader's locale is not among the jurisdiction's legal_text_locales. A STATEMENT ABOUT THE DATA, never an instruction: it must not tell the reader to switch language, change a setting, or do anything at all. SPEC.md §9.6 — we do not translate legal text, because an unofficial translation of a penal instrument is a liability.
+  ///
+  /// In en, this message translates to:
+  /// **'The verbatim text of this instrument exists only in {language}.'**
+  String legalTextLanguageNotice(String language);
+
+  /// The name of one shipped language, IN THE READER'S OWN LANGUAGE — Galician named in Arabic, Arabic named in Galician. A select rather than six keys so the 36 cells stay under the ARB parity gate. The `other` branch exists only because ICU requires one; every shipped code has its own branch.
+  ///
+  /// In en, this message translates to:
+  /// **'{code, select, ar{Arabic} en{English} es{Spanish} gl{Galician} ca{Catalan} ptBR{Brazilian Portuguese} other{English}}'**
+  String languageName(String code);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

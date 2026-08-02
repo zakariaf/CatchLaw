@@ -7,5 +7,7 @@
   "settingsNumeralSystem": "Cifras",
   "settingsNumeralSystemAuto": "Valor predeterminado do idioma",
   "settingsNumeralSystemLatn": "Occidentais — 0 1 2 3",
-  "settingsNumeralSystemArab": "Arábigo-índicas — ٠ ١ ٢ ٣"
+  "settingsNumeralSystemArab": "Arábigo-índicas — ٠ ١ ٢ ٣",
+  "legalTextLanguageNotice": "O texto literal deste instrumento existe unicamente en {language}.",
+  "languageName": "{code, select, ar{árabe} en{inglés} es{castelán} gl{galego} ca{catalán} ptBR{portugués do Brasil} other{inglés}}"
 }

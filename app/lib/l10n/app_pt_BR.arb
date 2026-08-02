@@ -7,5 +7,7 @@
   "settingsNumeralSystem": "Algarismos",
   "settingsNumeralSystemAuto": "Padrão do idioma",
   "settingsNumeralSystemLatn": "Ocidentais — 0 1 2 3",
-  "settingsNumeralSystemArab": "Arábico-índicos — ٠ ١ ٢ ٣"
+  "settingsNumeralSystemArab": "Arábico-índicos — ٠ ١ ٢ ٣",
+  "legalTextLanguageNotice": "O texto literal deste instrumento existe apenas em {language}.",
+  "languageName": "{code, select, ar{árabe} en{inglês} es{espanhol} gl{galego} ca{catalão} ptBR{português do Brasil} other{inglês}}"
 }

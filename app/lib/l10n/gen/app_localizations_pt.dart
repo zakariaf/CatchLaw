@@ -40,6 +40,25 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get settingsNumeralSystemArab => 'Arábico-índicos — ٠ ١ ٢ ٣';
+
+  @override
+  String legalTextLanguageNotice(String language) {
+    return 'O texto literal deste instrumento existe apenas em $language.';
+  }
+
+  @override
+  String languageName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ar': 'árabe',
+      'en': 'inglês',
+      'es': 'espanhol',
+      'gl': 'galego',
+      'ca': 'catalão',
+      'ptBR': 'português do Brasil',
+      'other': 'inglês',
+    });
+    return '$_temp0';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -78,4 +97,23 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get settingsNumeralSystemArab => 'Arábico-índicos — ٠ ١ ٢ ٣';
+
+  @override
+  String legalTextLanguageNotice(String language) {
+    return 'O texto literal deste instrumento existe apenas em $language.';
+  }
+
+  @override
+  String languageName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ar': 'árabe',
+      'en': 'inglês',
+      'es': 'espanhol',
+      'gl': 'galego',
+      'ca': 'catalão',
+      'ptBR': 'português do Brasil',
+      'other': 'inglês',
+    });
+    return '$_temp0';
+  }
 }
