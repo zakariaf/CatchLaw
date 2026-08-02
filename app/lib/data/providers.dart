@@ -14,6 +14,7 @@ library;
 import 'package:catchlaw/data/repositories/measurement_repository.dart';
 import 'package:catchlaw/data/repositories/reference_repository.dart';
 import 'package:catchlaw/data/repositories/settings_repository.dart';
+import 'package:catchlaw/data/repositories/species_search_repository.dart';
 import 'package:catchlaw/data/services/reference_database_service.dart';
 import 'package:catchlaw/data/services/user_database_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,6 +48,12 @@ final Provider<SettingsRepository> settingsRepositoryProvider = Provider<Setting
   (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
 );
 
+/// What S5's search box asks the rule book.
+final Provider<SpeciesSearchRepository> speciesSearchRepositoryProvider =
+    Provider<SpeciesSearchRepository>(
+      (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
+    );
+
 /// Every seam `dataOverrides` must fill.
 ///
 /// A list rather than a comment, so "is this one wired?" is a test rather than
@@ -58,4 +65,5 @@ final List<ProviderBase<Object?>> kDataSeams = <ProviderBase<Object?>>[
   referenceRepositoryProvider,
   measurementRepositoryProvider,
   settingsRepositoryProvider,
+  speciesSearchRepositoryProvider,
 ];
