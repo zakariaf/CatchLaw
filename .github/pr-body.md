@@ -1,85 +1,73 @@
 ### What changed
 
-Six-locale localisation infrastructure, end to end, with no screen work.
+`app/lib/theme/` in full, and the first four Lonja components.
 
-- `app/lib/l10n/` — **seven** ARB files for six languages, `l10n.yaml`, `gen-l10n` output committed
-  to git (`FLUTTER_GUIDE.md` §7.4), `MaterialApp` wired with `supportedLocales` and the `Global*`
-  delegates. The seventh file is **D-18**, raised in this PR: `gen-l10n` on the Flutter D-5 pins
-  throws before it generates a line when a region locale has no base beside it, so `app_pt_BR.arb`
-  cannot ship alone. D-3's substance is untouched.
-- CI now fails on a missing ARB key, a mismatched placeholder, or an `ar` plural message missing one
-  of the six ICU categories (`SPEC.md` §14, static row 5).
-- `ContentStringResolver` implements the §9.2 fallback chain: requested locale → jurisdiction
-  `default_locale` → `en` → scientific name. A missing string throws with its key; it never renders
-  one.
-- `applyNumeralSystem` swaps `numberFormatSymbols['ar']`, driven by `user_profile.numeral_system` —
-  not by a `-u-nu-` locale extension, which `intl` accepts as a string and discards.
-- `tools/gates/no_directional_geometry.sh` bans physical-side geometry across `app/lib` (D-8).
-- `LocaleNotifier` persists the S14 override in `user_profile.locale_override`, independently of the
-  system locale (`SPEC.md` §11).
-- `LegalTextAvailability` states which language a verbatim instrument exists in and never substitutes
-  another (`SPEC.md` §9.6).
-- `app/test/flutter_test_config.dart` loads Noto Naskh Arabic via `FontLoader` and guards the numeral
-  symbol map; the golden lane is tagged and pinned to Linux CI.
+- `lonja_primitives.dart` — 25 pigments, each named for its measured CIE L\*, read by nothing
+  outside `lib/theme/`.
+- `lonja_tokens.dart` — the 4 pt spine, the four rule weights, the radius ceiling of 2, the motion
+  durations, `LonjaDensity`, and the `LonjaTokens` `ThemeExtension`: thirteen semantic slots plus
+  density, value equality over every field, an asserting `of(context)`, a `copyWith` **narrowed to
+  density**, and a `lerp` in which density snaps rather than interpolating.
+- `lonja_theme.dart` — `LonjaPalettes.paper`, `.night`, `.sunlight`, each with all thirteen slots
+  written out; the three builders, `LonjaSkin`, and `resolveLonjaTheme(skin:, gloved:)`.
+- `lonja_faces.dart`, `lonja_typography.dart` — four system stacks, sixteen named steps, tabular
+  figures on every mono step, and the `ar` variant resolved at `of(context)` time.
+- `lonja_button_style.dart`, and `app/lib/ui/core/ui/`: **`LonjaRule`, `LonjaPanel`,
+  `LonjaPlateSurface`, `LonjaButton` and `showLonjaConfirm`** — four components, named by path here
+  because E08's epic file states none exist after E07 and will otherwise re-author them.
+- `app/testing/theme/` — the transcribed pigment, palette, contrast and ramp tables, the CIE
+  arithmetic the proofs use, the `pumpLonja` harness, and the specimen sheet the goldens render.
 
 ### Why
 
-`SPEC.md` §15 step 5 puts this fifth on purpose. Directional geometry, plural categories and a numeral
-lever are all cheap to establish and expensive to retrofit, and each of them fails in exactly one locale
-out of six — the one nobody develops in.
+`SPEC.md` §11 "Both" makes sunlight a third theme and not a variant; §4.9 makes glove mode a target
+size requirement and colour independence a correctness requirement; §13 puts numbers on both. D-2
+puts the palette at `app/lib/theme/` because every `lonja-*` gate exempts token constructs by the
+path fragment `/theme/`.
 
-Two findings drove the shape of the work. `FLUTTER_GUIDE.md` Part 9.1: `intl` has **no**
-numbering-system API, its `number_symbols_data.dart` carries only `ar`, `ar_DZ` and `ar_EG`, so `ar_AE`
-silently falls back to `ar` and renders Latin digits — which CLDR 48 says is **correct** for Khalid, and
-which the first draft of the spec asserted backwards. `SPEC.md` §9.5: `es`, `ca` and `pt` each carry a
-CLDR `many` category. Both corrections are now assertions in the suite rather than sentences in a
-document, checked against `Intl.plural` itself rather than against the table.
+Two decisions carry the epic. **Sunlight is authored, not derived** — the tempting
+`paper.copyWith(...)` leaves `onSurfaceFaint` at 4.60:1 and `hairline` at 1.75:1, both of which are a
+measured pass on a bench and a failure in the hand. At ~100,000 lux the *middle* of the tonal range
+disappears first, so sunlight deletes the middle rather than compressing it, and what survives is the
+verdict. **And the action ladder is graded by field, outline and rule weight, never by hue** — in
+greyscale the primary and destructive fields are 2.3 L\* apart, which is visually the same box.
 
 ### How it was verified
 
-- `flutter test` across `app/` — 497 rows, run twice and once under a random seed, because a leaked
-  process-wide symbol map is order-dependent by nature.
-- `check_arb_parity.sh app/lib/l10n`, `check_i18n_bans.sh app/lib`, `check_app_invariants.sh app/lib`,
-  `no_directional_geometry.sh app/lib`, and all seventeen skill-gate invocations, each with an explicit
-  target directory (D-1: they exit 2 on a missing directory).
-- Both new gates were **watched failing** before being trusted: `app_es.arb` lost its `many` branch and
-  `app_ar.arb` lost a key, and each gate named the file and the key. The directional gate is tested
-  over fourteen fixtures.
-- The font-coverage row was watched failing with `loadCatchlawFonts()` disabled: the Naskh string and
-  the fallback string lay out at exactly 240.0 pixels each, which is the worthless-`ar`-golden state
-  `FLUTTER_GUIDE.md` §6.4 warns about.
+- CIE L\* computed from every hex and compared with the tabled decimal (±0.05) and with the integer
+  in the pigment's own name (±0.6). The proof was shown to discriminate by nudging `ink11` one hex
+  digit and watching the ARGB row fail.
+- All 33 published contrast ratios re-derived from the WCAG formula and compared to two decimal
+  places, then checked against their own floors — which are deliberately **not** flattened:
+  `onSurfaceFaint` at 3.62:1 and `ochre47` at 3.97:1 are asserted as documented sub-floor values.
+- 39 binding assertions, one per slot per palette; sunlight proved authored by sharing **exactly two**
+  slot values with paper, where a `copyWith` sunlight would share six neutrals and both hairlines.
+- All sixteen type steps compared against the transcribed ramp; every Arabic step proved to be ×1.12
+  at zero tracking on the Naskh stack, with `binomial` the one step that keeps the Latin serif.
+- Eight golden lanes plus four greyscale assertions, and a row proving each gate target is non-empty
+  before any green is read.
+- Every gate clean with an explicit target directory, checked by exit code rather than through a pipe.
 
 ### Product invariants touched
 
-None weakened. `CONVENTIONS.md` §9:
+None weakened.
 
-1. **No network path** — nothing added opens a socket; `google_fonts` is banned by two gates and the
-   fonts are bundled assets. The two new dependencies are `flutter_localizations` (SDK) and `intl`,
-   whose only children are `clock`, `meta` and `path`.
-2. **A verdict states a fact** — T07's language-availability notice is a statement about the data
-   ("this text exists only in Arabic"), checked against the banned-imperative lexicon in every locale.
-   `settingsLanguageSystemDefault` reads "Device language" rather than "Follow the device" for the same
-   reason.
-3. **Citation required** — untouched. Citation dates are ISO strings, not `NumberFormat` output, so no
-   symbol swap can reach them. E10 owns the assertion; this epic owns not breaking it.
-4. **Colour is never the only signal** — untouched.
-5. **An expired ruleset is still evaluated** — untouched. An unresolvable `content_string` is **absent**,
-   not stale, and the two are kept as separate words here as everywhere.
+1. **No network path** — the four faces are system stacks; nothing is fetched, and two gates grep for
+   the runtime-webfont package.
+2. **A verdict states a fact** — no verdict wording ships here. `showLonjaConfirm` requires its
+   `cancelLabel` and supplies no default precisely because every wording
+   `lonja-dialogs-and-surfaces` rule 3 tables opens with a verb `check_app_invariants.sh` check 3
+   fails (epic risk 2).
+3. **Citation required** — untouched.
+4. **Colour is never the only signal** — this is the epic that makes it enforceable, and T08 is where
+   it stops being a slogan.
+5. **An expired ruleset is still shown** — untouched; the ochre bar is E10's.
 
-### Known gap, deliberately visible
+### Known gaps, deliberately visible
 
-The committed golden PNGs were blessed on macOS and are placeholders — no Linux host or container is
-available in this environment. The pixel rows **skip out loud** off Linux rather than reporting a green
-tick for bytes nobody verified, and the golden job uploads the actual images on failure. The follow-up
-commit on this branch replaces them with the bytes that job produces.
-
-### Follow-ups deliberately not in this PR
-
-- **E07** — the Lonja type ramp, the Naskh optical uplift and the font subset. This epic lands the faces
-  the goldens need; the ramp that consumes them is E07's.
-- **E16** — S14's language and numeral-system controls, and D5's first-run language dialog. T04 and T06
-  land the state and the persistence; the screens are E16's and E12's.
-- **E15** — S13's rule-text reader. T07 lands the availability rule and its notice string.
-- **E20** — the full golden matrix across screens, and the §9.4 acceptance test on real content.
-- **E22** — native-speaker review of every ARB value. The gates enforce **structure** — key parity,
-  plural categories, no imperative — never wording quality.
+- The committed golden PNGs were blessed on macOS and are placeholders; no Linux host is available
+  here. The pixel rows **skip out loud** off Linux, and the follow-up commit on this branch replaces
+  them with the bytes the Linux lane produces.
+- Epic risks 1, 2, 3 and 5 are unreconciled skill-file disagreements. Each is resolved in this epic
+  by taking `lonja-design-tokens` as the owner of values (the routing table's own rule) and is
+  recorded rather than re-argued; none is edited here, because they are outside this epic's files.
