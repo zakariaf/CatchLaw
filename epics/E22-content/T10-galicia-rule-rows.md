@@ -26,7 +26,7 @@
 | `content/README.md` | the citation block, the computed fields | The authored spellings, and the two columns the build computes rather than reads |
 | `content/es-ga/jurisdiction.yaml` | whole | What is already seeded: `default_locale: gl`, `legal_text_locales: gl`, `has_zone_polygons: false` |
 | `content/shared/strings.yaml` | `measurement.shl.*` | The one measurement method the seeded species uses |
-| `.claude/skills/catchlaw-content-pipeline/references/build-assertions.md` | all ten | Each one fails the build; there is no warning tier |
+| `.claude/skills/catchlaw-content-pipeline/references/build-assertions.md` | all of them | Each one fails the build; there is no warning tier |
 | `.claude/skills/catchlaw-content-pipeline/references/licence-provenance.md` | gazette-only sourcing | Why an NGO summary is rejected even when it is correct |
 
 ## What this delivers

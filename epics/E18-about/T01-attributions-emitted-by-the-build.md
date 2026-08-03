@@ -25,7 +25,7 @@
 | `SPEC.md` | §8, "The public-domain test for plates — corrected" | The death-year test, the 80-years-pma reason, and the rule that an unattributable plate is dropped |
 | `SPEC.md` | §9.2 point 2 | Why English vernacular names come solely from the CoL extension, and the FAO ASFIS refusal with its non-commercial reason |
 | `.claude/skills/catchlaw-content-pipeline/references/licence-provenance.md` | "Legal text: the statutory carve-outs", "Plates: the illustrator death-year test", "`plates.yaml` required fields", "Taxonomy: the Catalogue of Life extract" | The per-jurisdiction statute table, the term ladder, the exact field list a plate row must carry, and the `credit.col` attribution requirement |
-| `.claude/skills/catchlaw-content-pipeline/references/build-assertions.md` | "The ten assertions", "Failure format" | The assertion id / file:line / message shape this task's new assertion must match, and the "no partial emit" rule |
+| `.claude/skills/catchlaw-content-pipeline/references/build-assertions.md` | "The build assertions", "Failure format" | The assertion id / file:line / message shape this task's new assertion must match, and the "no partial emit" rule |
 | `epics/DECISIONS.md` | D-4, D-3, D-1 | `tools/content_builder/`, package `content_builder`, executable `dart run content_builder:build`; six locales `ar en es gl ca pt_BR`; the workspace layout |
 | `FLUTTER_GUIDE.md` | §7.4 | Generated files are checked **into** git — which is what makes the drift guard a reviewable diff rather than an invisible rebuild |
 | `FLUTTER_GUIDE.md` | §3.4 | Doc comments on the emitter's public API: noun phrase for the document type, third-person verb for the emit function |

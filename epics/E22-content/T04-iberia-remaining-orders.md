@@ -66,7 +66,7 @@ as `legal_text` while T05's proves a Brazilian diagram ships as originated art.
 
 **`legal_text_locales` must equal what is actually in the corpus, so A12 exists.** §9.6 gives the
 column one job — *records what exists* — and S13 renders a language-availability notice from it
-(E06/T07). Nothing in E04's ten assertions compares the column against the rows, because Galicia
+(E06/T07). Nothing in E04's assertions compares the column against the rows, because Galicia
 alone could not disagree with itself. Iberia is where it starts to: an author adds a Catalan article,
 forgets the column, and S13 tells a Catalan speaker no Catalan text exists while the text sits in the
 database. A12 compares the two sets in both directions and fails on either mismatch.

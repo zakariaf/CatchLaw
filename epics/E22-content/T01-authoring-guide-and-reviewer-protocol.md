@@ -28,7 +28,7 @@
 | `SPEC.md` | §9.2, steps 1–4 | The sourcing order, and step 3 verbatim: *a wrong vernacular name is worse than no name, because it produces a confident wrong finding* |
 | `SPEC.md` | §17 step 5 | The disconfirming-question discipline: *"What do you use today when you're not sure, and what would have to be true for you to stop using it?"* — a group that answers "I just know" has told you something |
 | `SPEC.md` | §4.7 | What the app promises about currency: the content-version banner, the per-jurisdiction changelog, "checked <date>" |
-| `.claude/skills/catchlaw-content-pipeline/references/build-assertions.md` | "The ten assertions", "Failure format", "rules.yaml schema" | The `<assertion-id> <file>:<line> <message>` shape A11 joins, and the field list the guide documents |
+| `.claude/skills/catchlaw-content-pipeline/references/build-assertions.md` | "The build assertions", "Failure format", "rules.yaml schema" | The `<assertion-id> <file>:<line> <message>` shape A11 joins, and the field list the guide documents |
 | `.claude/skills/catchlaw-content-pipeline/references/licence-provenance.md` | "Sourcing: the gazette, and nothing else"; "The two translation tiers" | What a `source_url` may point at, why `retrieved_on` is human-entered, and which table a verbatim article may never enter |
 | `.claude/skills/catchlaw-content-pipeline/scripts/check_content_pipeline.sh` | checks 1, 2 and the `OK_RE` line | Which checks honour `content-pipeline-ok` and which do not — the guide must tell an author where a fixture may live |
 | `epics/CONVENTIONS.md` | §7, §8, §9 | The gate-is-a-floor rule, the definition of done under every task, and the five invariants an authored row can weaken |

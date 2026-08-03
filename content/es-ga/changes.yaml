@@ -18,7 +18,7 @@ changes:
     from_version: ''
     to_version: '2026.08.0'
     summary_key: change.es_ga.first_pack
-    changed_on: '2026-08-12'
+    changed_on: '2026-08-03'
     rule_ids:
       - ES-GA
       - es-ga-rias-baixas

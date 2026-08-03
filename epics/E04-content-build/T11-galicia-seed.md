@@ -13,7 +13,7 @@
 
 | Skill | Why this task needs it |
 |---|---|
-| `catchlaw-content-pipeline` | Every rule at once — this is the first corpus that must satisfy all ten assertions, and `references/licence-provenance.md` names the accepted Spanish sources |
+| `catchlaw-content-pipeline` | Every rule at once — this is the first corpus that must satisfy every assertion, and `references/licence-provenance.md` names the accepted Spanish sources |
 | `catchlaw-reference-database` | What the emitted file must satisfy downstream: read-only open, wholesale replacement, the extraction contract E05 builds on |
 | `catchlaw-rule-engine` | The resolution semantics the seed's rows will be evaluated under, including the Galician *orde de vedas* expiry hazard |
 | `catchlaw-conventions-index` | Rule 9 — route before editing; and rule 12, six locales in one PR |
@@ -118,9 +118,9 @@ because there is no corpus yet, which is the correct red.
 
 | # | Test name | Input | Expected | Why this case exists |
 |---|---|---|---|---|
-| 1 | `content_builder exits 0 on the Galicia corpus` | `--in content/ --out <tmp>` | exit 0, output file present | The headline: the seed satisfies all ten assertions |
+| 1 | `content_builder exits 0 on the Galicia corpus` | `--in content/ --out <tmp>` | exit 0, output file present | The headline: the seed satisfies every assertion |
 | 2 | `content_builder writes no database when one Galician row is corrupted` | corpus with `measurement_method_id` removed from one rule | exit 1, no output file | The assertions are live against real content, not only against fixtures |
-| 3 | `The Galicia build reports every assertion as run` | the build's stdout | ten assertion ids in the summary | An assertion that silently skipped an empty collection is the failure mode `CONVENTIONS.md` §7 warns about |
+| 3 | `The Galicia build reports every assertion as run` | the build's stdout | every registered assertion id in the summary | An assertion that silently skipped an empty collection is the failure mode `CONVENTIONS.md` §7 warns about |
 | 4 | `reference.db holds at least one row in every table the Galician model uses` (loop over the tables) | emitted db | `count > 0` for `$table` | Structural completeness; a table with no rows reaches E05 untested |
 | 5 | `reference.db holds a jurisdiction row for ES-GA with legal_text_locales set` | emitted db | `code = 'ES-GA'`, non-empty `legal_text_locales` | §9.6 and S13's availability notice depend on it |
 | 6 | `reference.db holds one species_name row per shipped locale for every rule species` (loop over the six) | emitted db | no rule species missing `$locale` | A5, verified on the emitted bytes rather than on the model |
@@ -217,7 +217,7 @@ that is a defect in T01's loader, not a green light.
 
 - [ ] All 17 rows pass, and each failed first.
 - [ ] `dart run content_builder:build --in content/ --out app/assets/db/reference.db --build-date
-      <date> --generator-commit <sha>` exits 0, and all ten assertion ids appear in the summary.
+      <date> --generator-commit <sha>` exits 0, and every registered assertion id appears in the summary.
 - [ ] Removing any single required field from any single Galician row makes the build exit 1 and
       write nothing — spot-checked against at least three different assertions.
 - [ ] Every citation id in the corpus has a line in `content/es-ga/SOURCES.md` naming the DOG or BOE

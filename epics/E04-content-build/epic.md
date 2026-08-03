@@ -74,6 +74,7 @@ deliverable here and not just the tool.
 | T09 | The per-jurisdiction diff into `content_change` | `T09-content-change-diff.md` | M | T02 |
 | T10 | Emit SQLite: schema, FTS5, determinism, sha256 | `T10-emit-sqlite.md` | L | T03, T07 |
 | T11 | The Galicia seed and the end-to-end build | `T11-galicia-seed.md` | L | T02–T10 |
+| T12 | A12 — authored dates a human could have established ⭑ | `T12-authored-dates-are-past.md` | S | T05, T11 |
 
 The assertion ids `A1`–`A10` are the stable ones from
 `.claude/skills/catchlaw-content-pipeline/references/build-assertions.md`. This epic lands them in
@@ -89,7 +90,7 @@ Every task's own definition of done, plus what is only checkable once all eleven
       <date> --generator-commit <sha>` exits 0 on the Galicia seed and writes
       `app/assets/db/reference.db`, `app/assets/db/reference.db.gz` and
       `app/assets/db/reference.build.json`.
-- [ ] Ten assertions exist, all ten are fatal, and a fabricated failure of each one exits 1 and leaves
+- [ ] Every registered assertion exists, all are fatal, and a fabricated failure of each one exits 1 and leaves
       **no** `.db` behind. No `--force`, `--skip-assertions` or `--allow-missing-locale` exists, and
       passing one of those three names exits 2 with an explanation.
 - [ ] `(cd tools/content_builder && dart test)` green, with **100 % branch coverage on
