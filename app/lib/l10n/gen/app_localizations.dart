@@ -823,6 +823,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get navSettings;
+
+  /// The masthead label above the active place. It says what the app is answering FOR, because a verdict read without knowing which jurisdiction produced it is a verdict about nowhere.
+  ///
+  /// In en, this message translates to:
+  /// **'Answering for'**
+  String get checkPlaceLabel;
+
+  /// Reopens S9. The place is asked once and remembered, and this is the way back to it.
+  ///
+  /// In en, this message translates to:
+  /// **'Change place'**
+  String get checkChangePlace;
+
+  /// Heading over the species he has opened here before. "Here" is load-bearing: recency is per zone, so the one unusual fish he looked up in another place does not reshuffle this one.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent here'**
+  String get checkRecentsLabel;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. When a human last verified this jurisdiction transcription. ISO and unlocalised, like every other date quoted from an instrument, so it can be compared against the gazette by eye.
+  ///
+  /// In en, this message translates to:
+  /// **'checked {date}'**
+  String checkPackChecked(String date);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

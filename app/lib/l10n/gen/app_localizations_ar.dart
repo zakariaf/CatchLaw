@@ -503,4 +503,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get navSettings => 'الإعدادات';
+
+  @override
+  String get checkPlaceLabel => 'الإجابة عن';
+
+  @override
+  String get checkChangePlace => 'تغيير المكان';
+
+  @override
+  String get checkRecentsLabel => 'الأحدث هنا';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'تم التحقق $date';
+  }
 }

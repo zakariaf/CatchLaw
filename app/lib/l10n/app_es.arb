@@ -121,5 +121,9 @@
   "navToday": "Hoy",
   "navTrips": "Mareas",
   "navReference": "Referencia",
-  "navSettings": "Ajustes"
+  "navSettings": "Ajustes",
+  "checkPlaceLabel": "Respondiendo para",
+  "checkChangePlace": "Cambiar lugar",
+  "checkRecentsLabel": "Recientes aquí",
+  "checkPackChecked": "verificado {date}"
 }

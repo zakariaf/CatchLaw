@@ -508,4 +508,18 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get navSettings => 'Configuració';
+
+  @override
+  String get checkPlaceLabel => 'Responent per a';
+
+  @override
+  String get checkChangePlace => 'Canvia el lloc';
+
+  @override
+  String get checkRecentsLabel => 'Recents aquí';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'verificat $date';
+  }
 }

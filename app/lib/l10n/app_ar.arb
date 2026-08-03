@@ -121,5 +121,9 @@
   "navToday": "اليوم",
   "navTrips": "الرحلات",
   "navReference": "المرجع",
-  "navSettings": "الإعدادات"
+  "navSettings": "الإعدادات",
+  "checkPlaceLabel": "الإجابة عن",
+  "checkChangePlace": "تغيير المكان",
+  "checkRecentsLabel": "الأحدث هنا",
+  "checkPackChecked": "تم التحقق {date}"
 }

@@ -500,4 +500,18 @@ class AppLocalizationsGl extends AppLocalizations {
 
   @override
   String get navSettings => 'Axustes';
+
+  @override
+  String get checkPlaceLabel => 'Respondendo para';
+
+  @override
+  String get checkChangePlace => 'Cambiar lugar';
+
+  @override
+  String get checkRecentsLabel => 'Recentes aquí';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'verificado $date';
+  }
 }

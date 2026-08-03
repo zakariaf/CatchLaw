@@ -502,6 +502,20 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get navSettings => 'Configurações';
+
+  @override
+  String get checkPlaceLabel => 'Respondendo para';
+
+  @override
+  String get checkChangePlace => 'Mudar de lugar';
+
+  @override
+  String get checkRecentsLabel => 'Recentes aqui';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'verificado $date';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1002,4 +1016,18 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get navSettings => 'Configurações';
+
+  @override
+  String get checkPlaceLabel => 'Respondendo para';
+
+  @override
+  String get checkChangePlace => 'Mudar de lugar';
+
+  @override
+  String get checkRecentsLabel => 'Recentes aqui';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'verificado $date';
+  }
 }

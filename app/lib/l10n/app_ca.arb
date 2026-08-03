@@ -121,5 +121,9 @@
   "navToday": "Avui",
   "navTrips": "Sortides",
   "navReference": "Referència",
-  "navSettings": "Configuració"
+  "navSettings": "Configuració",
+  "checkPlaceLabel": "Responent per a",
+  "checkChangePlace": "Canvia el lloc",
+  "checkRecentsLabel": "Recents aquí",
+  "checkPackChecked": "verificat {date}"
 }

@@ -502,4 +502,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get navSettings => 'Ajustes';
+
+  @override
+  String get checkPlaceLabel => 'Respondiendo para';
+
+  @override
+  String get checkChangePlace => 'Cambiar lugar';
+
+  @override
+  String get checkRecentsLabel => 'Recientes aquí';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'verificado $date';
+  }
 }

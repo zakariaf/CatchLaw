@@ -500,4 +500,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navSettings => 'Settings';
+
+  @override
+  String get checkPlaceLabel => 'Answering for';
+
+  @override
+  String get checkChangePlace => 'Change place';
+
+  @override
+  String get checkRecentsLabel => 'Recent here';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'checked $date';
+  }
 }

@@ -121,5 +121,9 @@
   "navToday": "Hoxe",
   "navTrips": "Mareas",
   "navReference": "Referencia",
-  "navSettings": "Axustes"
+  "navSettings": "Axustes",
+  "checkPlaceLabel": "Respondendo para",
+  "checkChangePlace": "Cambiar lugar",
+  "checkRecentsLabel": "Recentes aquí",
+  "checkPackChecked": "verificado {date}"
 }

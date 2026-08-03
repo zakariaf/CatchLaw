@@ -801,5 +801,26 @@
   "navSettings": "Settings",
   "@navSettings": {
     "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
+  },
+  "checkPlaceLabel": "Answering for",
+  "@checkPlaceLabel": {
+    "description": "The masthead label above the active place. It says what the app is answering FOR, because a verdict read without knowing which jurisdiction produced it is a verdict about nowhere."
+  },
+  "checkChangePlace": "Change place",
+  "@checkChangePlace": {
+    "description": "Reopens S9. The place is asked once and remembered, and this is the way back to it."
+  },
+  "checkRecentsLabel": "Recent here",
+  "@checkRecentsLabel": {
+    "description": "Heading over the species he has opened here before. \"Here\" is load-bearing: recency is per zone, so the one unusual fish he looked up in another place does not reshuffle this one."
+  },
+  "checkPackChecked": "checked {date}",
+  "@checkPackChecked": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. When a human last verified this jurisdiction transcription. ISO and unlocalised, like every other date quoted from an instrument, so it can be compared against the gazette by eye.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }
