@@ -11,7 +11,7 @@ import '../../testing/theme/pump_lonja.dart';
 void main() {
   group('LonjaIcons', () {
     test('draws every glyph on the 24-unit grid', () {
-      for (final LonjaGlyph glyph in <LonjaGlyph>[
+      for (final glyph in <LonjaGlyph>[
         LonjaIcons.tick,
         LonjaIcons.cross,
         LonjaIcons.ban,
@@ -30,7 +30,7 @@ void main() {
       // A tick, a cross and a ban are fixed-meaning marks. Mirroring them makes
       // an Arabic screen look like a different app rather than the same one
       // read the other way.
-      for (final LonjaGlyph glyph in <LonjaGlyph>[
+      for (final glyph in <LonjaGlyph>[
         LonjaIcons.tick,
         LonjaIcons.cross,
         LonjaIcons.ban,

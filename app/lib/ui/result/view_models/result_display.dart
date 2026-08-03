@@ -104,7 +104,7 @@ class CitationDisplay {
 @immutable
 class RuleFact {
   /// A label and the fact under it.
-  const RuleFact({required this.label, required this.value});
+  const RuleFact({required this.label, required this.value, this.isOutcome = false});
 
   /// The row label.
   final String label;
@@ -112,12 +112,23 @@ class RuleFact {
   /// The fact, with its unit where it has one.
   final String value;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) || other is RuleFact && other.label == label && other.value == value;
+  /// Whether this cell states a rule OUTCOME rather than a number.
+  ///
+  /// Only an outcome cell takes the semantic ink. A table where every value is
+  /// coloured turns the verdict inks into decoration, and once an ordinary cell
+  /// can look like a verdict, no colour on the screen is evidence of anything.
+  final bool isOutcome;
 
   @override
-  int get hashCode => Object.hash(label, value);
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RuleFact &&
+          other.label == label &&
+          other.value == value &&
+          other.isOutcome == isOutcome;
+
+  @override
+  int get hashCode => Object.hash(label, value, isOutcome);
 }
 
 /// One rule that fired, as the screen states it.

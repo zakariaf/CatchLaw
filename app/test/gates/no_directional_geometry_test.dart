@@ -73,15 +73,20 @@ void main() {
     expect(_run('lib').stdout.toString(), matches(RegExp(r'scanned [1-9][0-9]* dart files')));
   });
 
-  test('the only directional escape hatch in app/lib is the ruler instrument', () {
+  test('the only directional escape hatches in app/lib are the two instruments', () {
     // E06/T05 asserted this was EMPTY and named the file that would first earn
-    // a marker. E09/T04 is that file: SPEC.md §9.3's one documented exception,
-    // the ruler, which is an instrument rather than a layout — a mirrored scale
-    // puts zero at the tail of a real fish.
+    // a marker. E09/T04 is that file: the ruler, which is an instrument rather
+    // than a layout — a mirrored scale puts zero at the tail of a real fish.
     //
-    // The assertion is now "exactly this one file", which is stronger than
-    // "none": a second hatch anywhere is a physical inset swept under a rug,
-    // and it fails here rather than in a golden six epics later.
+    // E10/T04 is the second and last one SPEC.md §9.3 names: the measurement
+    // diagram. A mirrored fork-length arrow points at the snout, and the fisher
+    // measures to the wrong point on the fish while reading a verdict that says
+    // he did not. Its CAPTION is outside the island and mirrors normally,
+    // because the exception is the drawing and not the words about it.
+    //
+    // The assertion is "exactly these files", which is stronger than "none": a
+    // third hatch is a physical inset swept under a rug, and it fails here
+    // rather than in a golden six epics later.
     final List<String> hatched = Directory('lib')
         .listSync(recursive: true)
         .whereType<File>()
@@ -89,6 +94,9 @@ void main() {
         .where((File f) => f.readAsStringSync().contains('catchlaw-directional-ok'))
         .map((File f) => f.path)
         .toList();
-    expect(hatched, <String>['lib/ui/ruler/widgets/ltr_instrument.dart']);
+    expect(hatched..sort(), <String>[
+      'lib/ui/result/widgets/result_method_diagram.dart',
+      'lib/ui/ruler/widgets/ltr_instrument.dart',
+    ]);
   });
 }

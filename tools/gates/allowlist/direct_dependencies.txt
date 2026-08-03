@@ -10,6 +10,7 @@ app dependencies drift
 app dependencies flutter
 app dependencies flutter_localizations
 app dependencies flutter_riverpod
+app dependencies flutter_svg
 app dependencies intl
 app dependencies meta
 app dependencies path

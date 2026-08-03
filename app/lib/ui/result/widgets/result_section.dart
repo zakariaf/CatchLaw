@@ -2,6 +2,7 @@ import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/widgets/result_findings_list.dart';
 import 'package:catchlaw/ui/result/widgets/result_haptics.dart';
+import 'package:catchlaw/ui/result/widgets/result_rule_facts_table.dart';
 import 'package:catchlaw/ui/result/widgets/result_verdict_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -63,6 +64,12 @@ class _ResultSectionState extends State<ResultSection> {
   Widget build(BuildContext context) {
     final ResultDisplay display = widget.display;
     final VerdictStampDisplay? stamp = display.stamp;
+    // The numbers behind the answer, from the finding the stamp states. The
+    // secondary findings carry their own facts, and T04's table is per finding
+    // rather than per page — the slot below states the headline's.
+    final List<RuleFact> headlineFacts = display.findings.isEmpty
+        ? const <RuleFact>[]
+        : display.findings.first.facts;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,6 +78,10 @@ class _ResultSectionState extends State<ResultSection> {
         if (stamp != null) ResultVerdictPanel(stamp: stamp, citation: stamp.citation),
         if (display.secondary.isNotEmpty) const SizedBox(height: LonjaSpace.s5),
         ResultFindingsList(findings: display.secondary),
+        if (headlineFacts.isNotEmpty) ...<Widget>[
+          const SizedBox(height: LonjaSpace.s5),
+          ResultRuleFactsTable(facts: headlineFacts),
+        ],
       ],
     );
   }

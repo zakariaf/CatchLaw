@@ -70,6 +70,7 @@ dependencies:
   # digest into reference.build.json, so the two halves agree on the algorithm
   # and not merely on the word.
   crypto: ^3.0.6
+  flutter_svg: ^2.0.0
 
 dev_dependencies:
   # Workspace-resolved: it makes package:flutter_lints/flutter.yaml load for

@@ -116,7 +116,7 @@ void main() {
 
       // Colour alone fails greyscale and eight percent of readers.
       expect(_glyphs(tester).toSet(), hasLength(3));
-      for (final FindingDisplay finding in const <FindingDisplay>[
+      for (final finding in const <FindingDisplay>[
         kFindingMinSizeFails,
         kFindingMaxSizeSatisfied,
         kFindingBagLimitIndeterminate,

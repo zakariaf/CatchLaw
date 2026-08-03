@@ -645,3 +645,43 @@ skill correction E07 risk 5 asked for, still needing a task ID, like `product-in
 **Applied by:** E10/T02.
 
 ---
+## D-21 — `flutter_svg` reaches `http` through `vector_graphics` too, and a recorded edge whose PARENT does not ship is a failure
+
+**Decision.** `tools/gates/allowlist/transitive_edges.txt` records, from this commit:
+
+```
+http <- flutter_svg
+http <- vector_graphics
+url_launcher_platform_interface <- share_plus
+```
+
+`http <- printing` is **commented out** and is re-recorded by E17, in the commit that adds
+`printing`. A line is added by the epic that lands its package, not before.
+
+**Losing sources.**
+
+| Source | What loses |
+|---|---|
+| `SPEC.md` §14 and §10 | their http-edge list. Both name `flutter_svg` as the parent; the resolved graph on `flutter_svg ^2.0` has **two** — `flutter_svg` directly, and its own `vector_graphics`. The recorded set was incomplete rather than wrong |
+| `tools/gates/allowlist/transitive_edges.txt`'s own E01 header | *"A recorded edge whose package is not in the shipping set is simply not checked, so the lines are inert until the package lands."* True of the **child**, false of the **parent** |
+
+**Why the header was wrong.** The gate skips an edge only when its *child* is absent
+(`if pkg not in ships: continue`, line 272). Once `http` ships, it compares the whole recorded parent
+set against the shipping one, so `http <- printing` becomes a failure the moment any other package
+pulls `http` in — which is exactly what adding `flutter_svg` did. The claim was never checked against
+the gate, and D-2's rule of thumb settles it: the gate wins.
+
+**Why the second parent is not a hole in invariant 1.** `vector_graphics` is inside `flutter_svg`'s
+own package family — `flutter_svg → vector_graphics → http` — and both entry points that would use it
+are grep-banned by `catchlaw-offline-guarantee` and by `check_no_network.sh`, which is green over
+`app/lib`. What widened is the RECORD of the graph, not the guarantee: no HTTP client is constructed,
+no fetching symbol is reachable, and the release Android manifest still grants no INTERNET permission.
+
+**What this obliges.** The epic that adds `printing` or `share_plus` re-records its edge in the same
+commit, regenerates `tools/gates/testdata/deps/deps_clean.json` from `dart pub deps --json`, and
+re-runs `dart pub deps --json | python3 tools/gates/check_dependency_allowlist.py --write`. A resolver
+upgrade that adds a third parent for `http` fails the gate, and that is the point.
+
+**Applied by:** E10/T04, which adds `flutter_svg` for the measurement diagram.
+
+---
