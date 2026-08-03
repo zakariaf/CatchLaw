@@ -781,5 +781,25 @@
   "zoneWaterChoiceRequired": "Sea or inland water has to be chosen before this place can answer.",
   "@zoneWaterChoiceRequired": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Why the place cannot be confirmed yet. The authority publishes rules for both waters and they are different rules, so a place that has not said which one answers with the wrong instrument — this states the condition, not an instruction to the reader."
+  },
+  "navCheck": "Check",
+  "@navCheck": {
+    "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
+  },
+  "navToday": "Today",
+  "@navToday": {
+    "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
+  },
+  "navTrips": "Trips",
+  "@navTrips": {
+    "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
+  },
+  "navReference": "Reference",
+  "@navReference": {
+    "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
+  },
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
   }
 }

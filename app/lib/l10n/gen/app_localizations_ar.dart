@@ -488,4 +488,19 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get zoneWaterChoiceRequired =>
       'يجب اختيار البحر أو المياه الداخلية قبل أن يجيب هذا المكان.';
+
+  @override
+  String get navCheck => 'فحص';
+
+  @override
+  String get navToday => 'اليوم';
+
+  @override
+  String get navTrips => 'الرحلات';
+
+  @override
+  String get navReference => 'المرجع';
+
+  @override
+  String get navSettings => 'الإعدادات';
 }

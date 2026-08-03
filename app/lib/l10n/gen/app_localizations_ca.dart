@@ -493,4 +493,19 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get zoneWaterChoiceRequired =>
       'Cal triar mar o aigües continentals abans que aquest lloc pugui respondre.';
+
+  @override
+  String get navCheck => 'Comprova';
+
+  @override
+  String get navToday => 'Avui';
+
+  @override
+  String get navTrips => 'Sortides';
+
+  @override
+  String get navReference => 'Referència';
+
+  @override
+  String get navSettings => 'Configuració';
 }

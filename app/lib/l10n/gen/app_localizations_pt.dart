@@ -487,6 +487,21 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get zoneWaterChoiceRequired =>
       'É preciso escolher mar ou águas interiores antes que este lugar possa responder.';
+
+  @override
+  String get navCheck => 'Verificar';
+
+  @override
+  String get navToday => 'Hoje';
+
+  @override
+  String get navTrips => 'Pescarias';
+
+  @override
+  String get navReference => 'Referência';
+
+  @override
+  String get navSettings => 'Configurações';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -972,4 +987,19 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get zoneWaterChoiceRequired =>
       'É preciso escolher mar ou águas interiores antes que este lugar possa responder.';
+
+  @override
+  String get navCheck => 'Verificar';
+
+  @override
+  String get navToday => 'Hoje';
+
+  @override
+  String get navTrips => 'Pescarias';
+
+  @override
+  String get navReference => 'Referência';
+
+  @override
+  String get navSettings => 'Configurações';
 }

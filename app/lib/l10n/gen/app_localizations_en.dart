@@ -485,4 +485,19 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get zoneWaterChoiceRequired =>
       'Sea or inland water has to be chosen before this place can answer.';
+
+  @override
+  String get navCheck => 'Check';
+
+  @override
+  String get navToday => 'Today';
+
+  @override
+  String get navTrips => 'Trips';
+
+  @override
+  String get navReference => 'Reference';
+
+  @override
+  String get navSettings => 'Settings';
 }

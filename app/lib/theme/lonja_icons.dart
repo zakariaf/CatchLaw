@@ -109,6 +109,21 @@ abstract final class LonjaIcons {
   /// A closure is in force.
   static const LonjaGlyph closedSeason = LonjaGlyph('closedSeason', _closedSeason);
 
+  /// The Check branch — a fish, seen from the side.
+  static const LonjaGlyph fish = LonjaGlyph('fish', _fish);
+
+  /// The Today branch — a day's tally.
+  static const LonjaGlyph tally = LonjaGlyph('tally', _tally);
+
+  /// The Trips branch — a hull.
+  static const LonjaGlyph boat = LonjaGlyph('boat', _boat);
+
+  /// The Reference branch — a bound volume.
+  static const LonjaGlyph book = LonjaGlyph('book', _book);
+
+  /// The Settings branch — a rule with a set mark.
+  static const LonjaGlyph adjust = LonjaGlyph('adjust', _adjust);
+
   /// The question could not be answered from what the fisher supplied.
   ///
   /// Its own mark rather than a faded tick: an open question rendered as a pale
@@ -151,3 +166,57 @@ Path _openQuestion() => Path()
   ..lineTo(15, 9.5)
   ..moveTo(15, 9.5)
   ..lineTo(12, 13.5);
+
+Path _fish() => Path()
+  ..moveTo(3, 12)
+  ..lineTo(9, 6.5)
+  ..lineTo(17, 6.5)
+  ..lineTo(21, 12)
+  ..lineTo(17, 17.5)
+  ..lineTo(9, 17.5)
+  ..close()
+  ..moveTo(3, 12)
+  ..lineTo(1.5, 8.5)
+  ..moveTo(3, 12)
+  ..lineTo(1.5, 15.5);
+
+Path _tally() => Path()
+  ..moveTo(5, 5)
+  ..lineTo(5, 19)
+  ..moveTo(9.5, 5)
+  ..lineTo(9.5, 19)
+  ..moveTo(14, 5)
+  ..lineTo(14, 19)
+  ..moveTo(18.5, 5)
+  ..lineTo(18.5, 19)
+  ..moveTo(3.5, 17)
+  ..lineTo(20, 7);
+
+Path _boat() => Path()
+  ..moveTo(3, 14.5)
+  ..lineTo(21, 14.5)
+  ..lineTo(17.5, 20)
+  ..lineTo(6.5, 20)
+  ..close()
+  ..moveTo(12, 14.5)
+  ..lineTo(12, 3.5)
+  ..moveTo(12, 5)
+  ..lineTo(18, 10)
+  ..lineTo(12, 10);
+
+Path _book() => Path()
+  ..addRect(const Rect.fromLTWH(4, 4, 16, 16))
+  ..moveTo(8, 4)
+  ..lineTo(8, 20)
+  ..moveTo(11, 9)
+  ..lineTo(17, 9)
+  ..moveTo(11, 13)
+  ..lineTo(17, 13);
+
+Path _adjust() => Path()
+  ..moveTo(3.5, 8)
+  ..lineTo(20.5, 8)
+  ..moveTo(3.5, 16)
+  ..lineTo(20.5, 16)
+  ..addOval(Rect.fromCircle(center: const Offset(9, 8), radius: 2.5))
+  ..addOval(Rect.fromCircle(center: const Offset(15, 16), radius: 2.5));

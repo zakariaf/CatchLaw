@@ -116,5 +116,10 @@
   "zonePickerLoadFailed": "No s’ha pogut llegir el paquet de normes inclòs.",
   "countryName": "{code, select, ES{Espanya} AE{Emirats Àrabs Units} BR{Brasil} other{{code}}}",
   "zoneNoPublishedBoundaries": "{authority} no publica límits de coordenades. Les normes registrades aquí s’apliquen a tota la jurisdicció.",
-  "zoneWaterChoiceRequired": "Cal triar mar o aigües continentals abans que aquest lloc pugui respondre."
+  "zoneWaterChoiceRequired": "Cal triar mar o aigües continentals abans que aquest lloc pugui respondre.",
+  "navCheck": "Comprova",
+  "navToday": "Avui",
+  "navTrips": "Sortides",
+  "navReference": "Referència",
+  "navSettings": "Configuració"
 }

@@ -116,5 +116,10 @@
   "zonePickerLoadFailed": "No se pudo leer el paquete de normas incluido.",
   "countryName": "{code, select, ES{España} AE{Emiratos Árabes Unidos} BR{Brasil} other{{code}}}",
   "zoneNoPublishedBoundaries": "{authority} no publica límites de coordenadas. Las normas registradas aquí se aplican a toda la jurisdicción.",
-  "zoneWaterChoiceRequired": "Hay que elegir mar o aguas continentales antes de que este lugar pueda responder."
+  "zoneWaterChoiceRequired": "Hay que elegir mar o aguas continentales antes de que este lugar pueda responder.",
+  "navCheck": "Comprobar",
+  "navToday": "Hoy",
+  "navTrips": "Mareas",
+  "navReference": "Referencia",
+  "navSettings": "Ajustes"
 }

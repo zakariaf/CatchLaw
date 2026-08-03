@@ -729,3 +729,39 @@ the second one is deferred.
 a `Release:` line to each unmerged epic, and a deferral line to each v2 task inside a split epic.
 
 ---
+## D-23 — v1's navigation shell is Flutter's own, and `go_router` is deferred to v2
+
+**Decision.** `E12/T01` builds the five-branch shell from an `IndexedStack` of `Navigator`s and a
+bottom strip. **No `go_router`, and no new dependency.** The route constants ship as plain strings so
+the v2 task that adopts a router has names to bind rather than paths to invent.
+
+**Losing source.** `epics/E12-check-home/T01-bottom-navigation.md`, which specifies
+`StatefulShellRoute.indexedStack`, `app/lib/routing/router.dart` and a `GoRouter` — and
+`catchlaw-conventions-index`'s routing table, which routes navigation questions to a skill whose
+mechanics are `go_router`'s.
+
+**Why the task could not simply be followed.** `SPEC.md` §10's dependency table does not list
+`go_router`. It lists twelve packages and `go_router` is not among them, and `CLAUDE.md` is explicit
+that **every version comes from §10** — not from `pub add`, not from memory, and not from a task file.
+Adding it would be a dependency this product never sanctioned, arriving through a task rather than
+through a decision.
+
+**Why not raise it as a dependency instead.** `go_router` earns its place with deep links, typed
+routes and a URL strategy. v1 has no network, no share-in, no notification tap-through and no external
+entry point of any kind — there is nothing to link deeply *from*. Five branches that each keep their
+own navigator is a `List<Navigator>` in an `IndexedStack`, which is the mechanism `StatefulShellRoute`
+is built on. Taking the dependency for what v1 uses would be paying for the parts v2 needs, in the
+release that has the least to spend.
+
+**What this obliges.** The v2 task that adds `go_router` — most likely with E13's catch-log
+tap-through or E17's share-in — adds it to `SPEC.md` §10 and to
+`tools/gates/allowlist/direct_dependencies.txt` in the same change, and it replaces the shell rather
+than wrapping it. Until then `check_routing.sh` stays where D-13 put it, in `.claude/skills-flutter/`,
+where the sixteen-gate runner does not reach it: it fails for want of a `GoRouter`, and it is right to.
+
+**What this does not license.** Branch state is still preserved across taps — that is the property
+`StatefulShellRoute` exists for, and it is asserted by a test rather than assumed.
+
+**Applied by:** E12/T01.
+
+---

@@ -485,4 +485,19 @@ class AppLocalizationsGl extends AppLocalizations {
   @override
   String get zoneWaterChoiceRequired =>
       'Hai que escoller mar ou augas continentais antes de que este lugar poida responder.';
+
+  @override
+  String get navCheck => 'Comprobar';
+
+  @override
+  String get navToday => 'Hoxe';
+
+  @override
+  String get navTrips => 'Mareas';
+
+  @override
+  String get navReference => 'Referencia';
+
+  @override
+  String get navSettings => 'Axustes';
 }

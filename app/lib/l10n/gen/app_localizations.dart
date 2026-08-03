@@ -793,6 +793,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sea or inland water has to be chosen before this place can answer.'**
   String get zoneWaterChoiceRequired;
+
+  /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get navCheck;
+
+  /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get navToday;
+
+  /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips'**
+  String get navTrips;
+
+  /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get navReference;
+
+  /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get navSettings;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
