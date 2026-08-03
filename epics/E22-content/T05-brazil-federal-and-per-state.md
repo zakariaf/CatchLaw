@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E22 — Content authoring at scale |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/22-content/T05-brazil` (cut from a current `main`) |
 | **Commit** | `feat(content): author the Brazilian federal and state rules, with every graphic annex originated` |
 | **Depends on** | T01 (the authoring guide and A11), T03 (`applies_to` expansion and the provenance evidence fields) |

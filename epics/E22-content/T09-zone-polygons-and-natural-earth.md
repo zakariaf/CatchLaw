@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E22 — Content authoring at scale |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/22-content/T09-zone-polygons` (cut from a current `main`) |
 | **Commit** | `feat(content): author the zone polygons and assert their provenance (A15)` |
 | **Depends on** | T04 (the Iberian jurisdictions and their zones), T05 (the Brazilian ones) |

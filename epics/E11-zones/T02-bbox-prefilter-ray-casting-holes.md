@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E11 — Zones and point-in-polygon |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/11-zones` (shared) |
 | **Commit** | `feat(rule_engine): match a point to a zone by bbox prefilter then half-open ray casting` |
 | **Depends on** | T01 (`ZoneRing`, `LatLon`, `GeometryFailure`) |

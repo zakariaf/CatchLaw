@@ -1,6 +1,7 @@
 # Epics — building CATCHLAW
 
-The complete application, decomposed into 22 epics and 181 tasks. Derived from `SPEC.md` §15 (build
+The complete application, decomposed into 22 epics and 183 tasks — 181 planned, plus the two
+D-22 added because nothing in the original plan owned them. Derived from `SPEC.md` §15 (build
 order), constrained by `FLUTTER_GUIDE.md` (how the code is written) and `.claude/skills/` (what the
 gates enforce).
 
@@ -23,30 +24,30 @@ no v2; the epics are the order in which it becomes true. Nothing here is a phase
 
 Dependencies are hard: an epic may not start until every epic in its **After** column is merged.
 
-| # | Epic | Branch | Tasks | After | Delivers |
-|---|---|---|---|---|---|
-| **E01** | Foundation, workspace and the offline gates | `epic/01-foundation` | 9 | — | A workspace that builds, and every §14 static check failing loudly from commit one |
-| **E02** | Rule engine — text normalisation | `epic/02-normalisation` | 8 | E01 | `هامور`, `هامورة`, `الهامور`, `hamour` and `Epinephelus` reach one species id |
-| **E03** | Rule engine — resolution, findings, verdicts | `epic/03-rule-engine` | 11 | E02 | The §7.3 algorithm, expiry semantics, D4 ambiguity, sealed verdicts |
-| **E04** | Content builder and the Galicia seed | `epic/04-content-build` | 11 | E03 | `reference.db` built from authored YAML, with every §8 assertion |
-| **E05** | Data layer — two drift databases | `epic/05-data-layer` | 10 | E04 | Read-only reference, writable `user.db`, atomic first-launch extraction |
-| **E06** | Localisation infrastructure | `epic/06-localisation` | 8 | E05 | Six locales, the fallback chain, the numeral-system lever, RTL harness |
-| **E07** | Lonja design system foundation | `epic/07-lonja-theme` | 8 | E06 | Three themes, glove density, the type ramp, tokens gate green |
-| **E08** | Species — search, browse, detail (static) | `epic/08-species` | 8 | E07 | S5, S6, and the static half of S2 |
-| **E09** | Ruler and calibration | `epic/09-ruler` | 8 | E07 | S3, S4, step-and-mark, manual entry before calibration |
-| **E10** | Result screen | `epic/10-result` | 10 | E08, E09 | S2 complete: verdict, findings, citation, stale bar, flag, disclaimer |
-| **E11** | Zones and point-in-polygon | `epic/11-zones` | 8 | E05 | S9, bbox prefilter, ray casting, GPS as suggestion only |
-| **E12** | Check home and navigation shell | `epic/12-check-home` | 7 | E10, E11 | S1 and the bottom nav — the first point the 5-second target is testable |
-| **E13** | Catch log | `epic/13-catch-log` | 8 | E12 | S8, S10, S11: trips, catches, tally, in-app camera |
-| **E14** | Identification key | `epic/14-identify` | 7 | E08 | S7, multi-candidate results, dead ends, three entry points |
-| **E15** | Reference section | `epic/15-reference` | 9 | E06 | S12, S13 with Arabic FTS, S18–S23 |
-| **E16** | Settings | `epic/16-settings` | 7 | E09, E13 | S14, including storage usage and bulk photo purge |
-| **E17** | Export and import | `epic/17-portability` | 8 | E13 | S15, S16: JSON, CSV, PDF, zip, transactional import |
-| **E18** | About and attributions | `epic/18-about` | 6 | E15 | S17, `ATTRIBUTIONS.md` in full, every plate's illustrator |
-| **E19** | Accessibility, sunlight and glove | `epic/19-accessibility` | 7 | all UI | Semantics, 200% scale, contrast, greyscale proof, haptics |
-| **E20** | RTL and locale hardening | `epic/20-rtl-hardening` | 6 | E19 | The golden matrix in six locales, Arabic plurals, numerals end-to-end |
-| **E21** | Offline verification and release readiness | `epic/21-release` | 8 | E20 | §14 executed on device, packet capture, store presence |
-| **E22** | Content authoring at scale | `epic/22-content` | 9 | E04 | The remaining jurisdictions. **Runs in parallel from E04 onward — the long pole** |
+| # | Epic | Branch | Tasks | After | Delivers | Release |
+|---|---|---|---|---|---|---|
+| **E01** | Foundation, workspace and the offline gates | `epic/01-foundation` | 9 | — | A workspace that builds, and every §14 static check failing loudly from commit one | shipped |
+| **E02** | Rule engine — text normalisation | `epic/02-normalisation` | 8 | E01 | `هامور`, `هامورة`, `الهامور`, `hamour` and `Epinephelus` reach one species id | shipped |
+| **E03** | Rule engine — resolution, findings, verdicts | `epic/03-rule-engine` | 11 | E02 | The §7.3 algorithm, expiry semantics, D4 ambiguity, sealed verdicts | shipped |
+| **E04** | Content builder and the Galicia seed | `epic/04-content-build` | 11 | E03 | `reference.db` built from authored YAML, with every §8 assertion | shipped |
+| **E05** | Data layer — two drift databases | `epic/05-data-layer` | 10 | E04 | Read-only reference, writable `user.db`, atomic first-launch extraction | shipped |
+| **E06** | Localisation infrastructure | `epic/06-localisation` | 8 | E05 | Six locales, the fallback chain, the numeral-system lever, RTL harness | shipped |
+| **E07** | Lonja design system foundation | `epic/07-lonja-theme` | 8 | E06 | Three themes, glove density, the type ramp, tokens gate green | shipped |
+| **E08** | Species — search, browse, detail (static) | `epic/08-species` | 8 | E07 | S5, S6, and the static half of S2 | shipped |
+| **E09** | Ruler and calibration | `epic/09-ruler` | 8 | E07 | S3, S4, step-and-mark, manual entry before calibration | shipped |
+| **E10** | Result screen | `epic/10-result` | 10 | E08, E09 | S2 complete: verdict, findings, citation, stale bar, flag, disclaimer | shipped |
+| **E11** | Zones and point-in-polygon | `epic/11-zones` | 8 | E05 | S9, bbox prefilter, ray casting, GPS as suggestion only | **v1** + v2 |
+| **E12** | Check home and navigation shell | `epic/12-check-home` | 8 | E10, E11 | S1 and the bottom nav — the first point the 5-second target is testable | **v1** + v2 |
+| **E13** | Catch log | `epic/13-catch-log` | 8 | E12 | S8, S10, S11: trips, catches, tally, in-app camera | v2 |
+| **E14** | Identification key | `epic/14-identify` | 7 | E08 | S7, multi-candidate results, dead ends, three entry points | v2 |
+| **E15** | Reference section | `epic/15-reference` | 9 | E06 | S12, S13 with Arabic FTS, S18–S23 | v2 |
+| **E16** | Settings | `epic/16-settings` | 7 | E09, E13 | S14, including storage usage and bulk photo purge | v2 |
+| **E17** | Export and import | `epic/17-portability` | 8 | E13 | S15, S16: JSON, CSV, PDF, zip, transactional import | v2 |
+| **E18** | About and attributions | `epic/18-about` | 6 | E15 | S17, `ATTRIBUTIONS.md` in full, every plate's illustrator | v2 |
+| **E19** | Accessibility, sunlight and glove | `epic/19-accessibility` | 7 | all UI | Semantics, 200% scale, contrast, greyscale proof, haptics | v2 |
+| **E20** | RTL and locale hardening | `epic/20-rtl-hardening` | 6 | E19 | The golden matrix in six locales, Arabic plurals, numerals end-to-end | v2 |
+| **E21** | Offline verification and release readiness | `epic/21-release` | 8 | E20 | §14 executed on device, packet capture, store presence | v2 |
+| **E22** | Content authoring at scale | `epic/22-content` | 10 | E04 | The remaining jurisdictions. **Runs in parallel from E04 onward — the long pole** | **v1** + v2 |
 
 **E22 is the exception to the sequence.** `SPEC.md` §15 step 19 says content authoring "runs in
 parallel from step 3 onward and is the long pole", and §8 puts it plainly: *the code is a fortnight;
@@ -55,9 +56,36 @@ other epic is strictly sequential.
 
 ---
 
+## Release order
+
+`epics/RELEASES.md` splits the remaining ninety tasks into **v1 (thirteen)** and **v2
+(seventy-nine)**, and D-22 makes it authoritative where it and the build order below disagree. The
+dependency edges in the table are unchanged and still hold; what the release order changes is the
+assumption that every task of an epic is built before the next epic starts.
+
+**v1, in build order.** Two of the thirteen are new files — `E12/T08` and `E22/T10` — written because
+nothing in the original plan owned them.
+
+```
+E12/T08   the evaluation seam          ← the keystone; nothing routes to a Resolution without it
+E22/T01   authoring guide
+E22/T10   Galicia rule rows            ← the pack carries zero rule rows today
+E11/T04   S9 place picker
+E11/T05   no polygons, no subzone level
+E11/T08   water type belongs to the zone
+E11/T07   saved zones
+E12/T01   bottom navigation            ← `home:` stops being an empty box
+E12/T05   no jurisdiction set
+E12/T02   the Check screen
+E12/T04   empty state and keyboard
+E12/T06   cold-start budget
+E12/T07   the five-second core loop    ← the acceptance test
+```
+
 ## Status
 
-**E01 through E10 are merged.** Every epic below them is `not started`.
+**E01 through E10 are merged.** Every epic below them is `not started`; `epics/RELEASES.md`
+says which of their tasks v1 needs and which wait for v2.
 
 | Epic | Branch | PR | Checks | Merged |
 |---|---|---|---|---|

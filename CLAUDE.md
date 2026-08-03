@@ -191,9 +191,17 @@ list kept elsewhere; if you must add a line, it is a correction with an owner, n
 D-1's path staleness is a separate, open item — see *Not yet settled* on the routing table's
 root-relative `lib/` paths.
 
-There is no application code. `epics/README.md` is the order in which it appears — 22 epics, 181 tasks,
-hard dependencies, **E22** the one that runs in parallel from E04 onward. Building starts at **E01**.
-Merging an epic's PR includes updating its row in that file's status table.
+There is no application code under `app/lib/ui/check/` yet, and nothing routes to what is built.
+`epics/README.md` is the order in which the rest appears — 22 epics, 183 tasks, hard dependencies,
+**E22** the one that runs in parallel from E04 onward. Merging an epic's PR includes updating its row
+in that file's status table.
+
+**`epics/RELEASES.md` is the release order and it overrules that build order (D-22).** E01–E10 are
+merged; the remaining ninety tasks are **v1 (thirteen)** and **v2 (seventy-nine)**. v1 is one
+jurisdiction answered offline, and two of its thirteen tasks are new — `E12/T08`, the evaluation seam
+nobody owned, and `E22/T10`, the first rule rows this repository has ever carried. Read `RELEASES.md`
+before picking up a task: a task file carrying **`Release: v2 — deferred`** is not the next thing to
+build.
 
 ## Which skill owns this
 

@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E11 — Zones and point-in-polygon |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/11-zones` (shared) |
 | **Commit** | `feat(zones): take one GPS fix behind a typed service and offer a zone rather than switching` |
 | **Depends on** | T03 (`LocateZone`), T04 (the picker and its view model) |

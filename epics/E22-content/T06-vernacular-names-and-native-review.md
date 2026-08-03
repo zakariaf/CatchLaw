@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E22 — Content authoring at scale |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/22-content/T06-vernacular-names` (cut from a current `main`) |
 | **Commit** | `feat(content): author ~2,400 vernacular names under the §9.2 sourcing order (A13)` |
 | **Depends on** | T03, T04, T05 (the instruments are the primary source, so they must be transcribed first), T01 (A11) |

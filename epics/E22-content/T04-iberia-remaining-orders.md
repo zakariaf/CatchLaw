@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E22 — Content authoring at scale |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/22-content/T04-iberia-orders` (cut from a current `main`) |
 | **Commit** | `feat(content): author the remaining comunidad autónoma orders, with Catalan legal text (A12)` |
 | **Depends on** | T01 (the authoring guide and A11) |

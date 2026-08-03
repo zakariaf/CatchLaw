@@ -3,8 +3,9 @@
 | | |
 |---|---|
 | **Branch** | `epic/22-content` (a series, not one PR — see "The epic loop") |
+| **Release** | **v1** (T01, T10) and v2 (the rest) — `epics/RELEASES.md`, D-22 |
 | **After** | E04 merged, then **in parallel with every other epic** |
-| **Tasks** | 9 |
+| **Tasks** | 10 |
 | **Spec** | `SPEC.md` §8 in full (every licence row and its verification status, "The public-domain test for plates — corrected", and the authoring-volume paragraph), §9.1, §9.2, §9.6, §16 R1, §7.1, §4.4, §15 step 19 |
 | **Package** | `content/` (authored), `app/assets/sil/` and `app/assets/plate/` (originated art), `tools/content_builder/` (five new assertions and one audit CLI) |
 

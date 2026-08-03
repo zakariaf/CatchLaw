@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Branch** | `epic/13-catch-log` |
+| **Release** | **v2** — `epics/RELEASES.md`, D-22 |
 | **After** | E12 merged |
 | **Tasks** | 8 |
 | **Spec** | `SPEC.md` §4.5 in full, §6 S8, S10, S11 and dialog D1, §7.2 (`trip`, `catch`, the denormalisation rationale), §11 (camera, no storage permission, app-private files), §13 (instant at 10,000 catches, 8,000 rows under 4 MB, crash safety) |

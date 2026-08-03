@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Branch** | `epic/18-about` |
+| **Release** | **v2** — `epics/RELEASES.md`, D-22 |
 | **After** | E15 merged |
 | **Tasks** | 6 |
 | **Spec** | `SPEC.md` §6 S17, §8 (every licence row, the plate death-year test, the fonts row), §11 (both backup postures), §5 (what is excluded, and §5.3), §7.1 (`content_meta`, `jurisdiction.content_version`) |

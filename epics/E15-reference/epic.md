@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Branch** | `epic/15-reference` |
+| **Release** | **v2** — `epics/RELEASES.md`, D-22 |
 | **After** | E06 merged (the hard dependency). In `epics/README.md`'s published order this is the fifteenth epic, so E07–E14 are merged when the branch is cut |
 | **Tasks** | 9 |
 | **Spec** | `SPEC.md` §4.6 in full, §6 S12, S13, S18, S19, S20, S21, S22, S23, §9.6, §7.1 (`legal_text`, `legal_text_fts`, `penalty`, `gear_rule`, `licence_type`, `glossary_term`, `content_change`), §13 (FTS < 200 ms) |

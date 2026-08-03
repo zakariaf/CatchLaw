@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Branch** | `epic/11-zones` |
+| **Release** | **v1** (T04, T05, T07, T08) and v2 (the rest) — `epics/RELEASES.md`, D-22 |
 | **After** | E05 merged (hard dependency); in the published order the branch is cut once E10 has merged |
 | **Tasks** | 8 |
 | **Spec** | `SPEC.md` §4.4 in full, §6 S9, §7.1 (`zone`, `zone_ring`), §8 (the four polygon rows, including the Gulf row), §11 (single-shot GPS, no background location), §13 (< 100 ms point-in-polygon) |
