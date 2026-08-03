@@ -279,6 +279,12 @@ abstract class AppLocalizations {
   /// **'Engraved plate'**
   String get speciesPlateSemanticLabel;
 
+  /// What a screen reader announces the species line art as. A STATEMENT OF FACT naming what the drawing is — originated line art, not a photograph and not an engraved plate — so a fisher who cannot see it knows what he is missing rather than assuming an image failed to load.
+  ///
+  /// In en, this message translates to:
+  /// **'Line drawing'**
+  String get speciesSilhouetteSemanticLabel;
+
   /// S2's protection mark. A STATEMENT about where a protection exists, not a verdict about this catch and not an instruction — E10's finding is what states the rule with its citation. It says SOMEWHERE on purpose: the account page is reached before a zone is known.
   ///
   /// In en, this message translates to:

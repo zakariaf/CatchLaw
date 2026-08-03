@@ -1,10 +1,10 @@
 # Build Assertions
 
-Scope: the ten assertions `tools/content_builder` runs over `content/*.yaml` plus `col_extract.tsv`
+Scope: the assertions `tools/content_builder` runs over `content/*.yaml` plus `col_extract.tsv`
 before a single byte of `app/assets/db/reference.db` is written, their exact failure messages, the schema
 they validate against, and the edge cases each one has already caught.
 
-## The ten assertions
+## The build assertions
 
 Every one of them is fatal. There is no warning tier, no `--force`, and no partial emit.
 
@@ -20,6 +20,28 @@ Every one of them is fatal. There is no warning tier, no `--force`, and no parti
 | A8 | The engine resolves the authored grid with no conflict | `A8 (lethrinus-nebulosus, es-rias-baixas, 03) two rules bite: [r-088, r-141]` | a national and a regional closure overlapping |
 | A9 | Licence provenance complete per jurisdiction | `A9 citations.yaml:40 source_url is not an official gazette host` | text taken from an NGO summary |
 | A10 | A changelog diff exists for every touched jurisdiction | `A10 AE-RAK changed but content/CHANGELOG/ae-rak.md is unchanged` | a rule edited without regenerating |
+| A11 | *reserved by E18/T01* — the attributions file is not stale | `A11 app/assets/legal/ATTRIBUTIONS.md is stale` | not implemented; lands with the About screen |
+| A12 | Every authored date is one a human could have established | `A12 es-ga/jurisdiction.yaml:18 checked_on '2026-08-12' is after the build date 2026-08-03 — no human can have done this yet` | a template copied forward, or a date typed from the wrong month |
+
+**A11 is a hole on purpose.** E18/T01 claimed the id before A12 was written, and renumbering a
+deferred task is churn for no gain. The registry in `assertion.dart` says the same thing.
+
+**A12 covers what A4 does not.** A4 owns `citations.retrieved_on` and `citations.published_on`
+— parse, order, not after the build date. A12 takes every OTHER authored date: `jurisdiction`'s
+`published_on` and `checked_on`, and `changes.changed_on`. Two assertions on one field would mean two
+failures for one typo, so the citation pair is deliberately absent from A12's list.
+
+**Two classes of date, and only one may not be in the future.** A date recording a HUMAN ACT —
+checked, changed, published — cannot be ahead of the build, because the act has not happened. A date
+naming an INSTRUMENT'S REACH — `valid_from`, `valid_to` — routinely is: a closure authored in July
+that bites in September is correct data, and rejecting it would leave the corpus unable to state a
+season before it starts. Those two get format and ordering only.
+
+**Why it exists.** v1 shipped `jurisdiction.checked_on: '2026-08-12'` against an 2026-08-03 build.
+`checked_on` is what the Check screen prints under the place, and it is the fisher's only handle on
+whether the rule book is current — so a future value says the book was verified more recently than it
+can have been. That is the one direction the error must never point: it reads as fresher than it is,
+and the whole purpose of showing the date is to let him distrust a stale one.
 
 ## rules.yaml schema
 

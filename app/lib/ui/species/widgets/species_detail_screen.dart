@@ -9,6 +9,7 @@ import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/core/ui/lonja_plate.dart';
 import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
 import 'package:catchlaw/ui/core/ui/lonja_section_label.dart';
+import 'package:catchlaw/ui/core/ui/lonja_silhouette.dart';
 import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
 import 'package:catchlaw/ui/result/view_models/result_context.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
@@ -137,21 +138,30 @@ class _SpeciesArtPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context);
-    final LonjaTokens tokens = LonjaTokens.of(context);
     // `null` is the NORMAL case: a plate ships only when its illustrator died
     // long enough ago to clear the longest term among the four jurisdictions
     // this app bundles, and an unattributable plate is dropped rather than
     // bundled pending.
+    // A plate when one cleared, the originated silhouette otherwise. The
+    // silhouette is NOT a fallback for a missing plate: `silhouette_asset` is
+    // NOT NULL and A5 requires one for every species carrying a rule, so this
+    // panel always has something to draw. It drew nothing for one release
+    // because the resolver was never built and `assets/sil/` was never bundled,
+    // and an empty framed box on a printed-reference screen reads as a
+    // photograph that failed to load.
+    final String art = account.plateAsset ?? account.silhouetteAsset;
     return Semantics(
       image: true,
-      label: account.plateAsset == null ? null : l10n.speciesPlateSemanticLabel,
+      label: account.plateAsset == null
+          ? l10n.speciesSilhouetteSemanticLabel
+          : l10n.speciesPlateSemanticLabel,
       child: LonjaPlateSurface(
-        child: SizedBox(
+        child: LonjaSilhouette(
+          assetKey: art,
+          semanticsLabel: account.plateAsset == null
+              ? l10n.speciesSilhouetteSemanticLabel
+              : l10n.speciesPlateSemanticLabel,
           height: 160,
-          child: DecoratedBox(
-            decoration: BoxDecoration(color: tokens.surface),
-            child: const SizedBox.expand(),
-          ),
         ),
       ),
     );

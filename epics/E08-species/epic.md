@@ -90,6 +90,7 @@ S2. E12 mounts the recents strip and is the first point at which §3's five-seco
 | T06 | The look-alike card | `T06-look-alike-card.md` | S | T05 |
 | T07 | Recents | `T07-recents.md` | M | T03, T05 |
 | T08 | Widget and golden tests for S5, S6 and S2 | `T08-widget-and-golden-tests.md` | L | T03, T04, T05, T06, T07 |
+| T11 | The silhouette is drawn, and the art is bundled ⭑ | `T11-the-silhouette-is-drawn.md` | S | T05, T06 |
 
 **Reading the reference tables.** A path beginning `.claude/skills/` is a `catchlaw-*` or `lonja-*`
 bundle in this repository. A path prefixed `Flutter-Skills:` is one of the 33 general skills in the

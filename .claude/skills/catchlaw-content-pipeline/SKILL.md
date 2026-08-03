@@ -22,7 +22,7 @@ owns the authoring formats, the `tools/content_builder` CLI, the assertions that
 provenance and the changelog. It does not own the runtime schema, resolution semantics, or wording.
 
 Read the reference for the task at hand:
-- `references/build-assertions.md` — the ten assertions, the rules.yaml schema, required-when
+- `references/build-assertions.md` — the build assertions, the rules.yaml schema, required-when
   matrix, locale and gender coverage, normalisation parity, contradiction classes, failure format.
 - `references/licence-provenance.md` — per-jurisdiction statutes, gazette-only sourcing, the
   death-year term ladder, the plate ledger, drop rules, the two translation tiers, COL attribution.
@@ -266,7 +266,7 @@ Full worked file: `examples/content_builder_assertions.dart`.
   a human opened the gazette, which is the only fact the footnote claims.
 - **`gender: null` on an `es` `species_name`** — "la mero" destroys the printed-document register
   that is the entire reason the verdict is believed at all.
-- **A rule hand-written into a drift migration** — bypasses all ten assertions, cannot be diffed per
+- **A rule hand-written into a drift migration** — bypasses every assertion, cannot be diffed per
   jurisdiction, and is invisible to the contradiction pass.
 
 ## Definition of done

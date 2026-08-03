@@ -67,7 +67,7 @@ unedited.
 | Absent | Why it costs nothing yet |
 |---|---|
 | the catch log | a bag-limit finding prints *"Nothing recorded for this period"*, which is already implemented, already tested, and already true |
-| plates and silhouettes | E08 treats a null plate as the NORMAL case, because a plate ships only when its illustrator died in 1945 or earlier |
+| plates (~~and silhouettes~~) | E08 treats a null plate as the NORMAL case, because a plate ships only when its illustrator died in 1945 or earlier. **Silhouettes were wrongly bundled into this row and are not deferred** — `species.silhouette_asset` is NOT NULL, A5 requires one per rule-bearing species, and the art is originated with no copyright question at all. E08/T11 corrects it |
 | the About screen | nothing is bundled that needs attributing until the plates are |
 | Settings | the locale follows the device, and the ruler carries its own calibration |
 | GPS | §11 makes it a suggestion whose denial must cost nothing; its absence costs the same |

@@ -157,6 +157,10 @@ void main() {
         'A6',
         'A8',
         'A10',
+        // A11 is reserved by E18/T01 and is deliberately absent: renumbering a
+        // deferred task across ten mentions buys nothing, so the gap is
+        // documented in build-assertions.md rather than closed.
+        'A12',
       ]);
     });
 

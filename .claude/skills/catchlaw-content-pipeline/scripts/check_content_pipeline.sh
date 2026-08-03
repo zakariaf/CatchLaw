@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 # check_content_pipeline.sh — proves the authored content and its build tool cannot ship a row
-# that the ten build assertions would have rejected.
+# that the build assertions would have rejected.
 # Usage: scripts/check_content_pipeline.sh [TARGET_DIR]   (TARGET_DIR defaults to lib/;
 #        pass . to cover content/, tools/ and packages/ as well)
 #

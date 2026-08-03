@@ -23,4 +23,4 @@ const int kContentBuildBytes = 196608;
 
 /// The UNCOMPRESSED sha256, verified after decompression and before the rename.
 const String kContentBuildSha256 =
-    '09dd55213b059cd92a8407715d7132e266abf94450f473ef5d25ad80e021b5c6';
+    '0845bcd18f906b12256e204e7b6772e8b1a8fe179fdf4fd7da3ed676beb05649';
