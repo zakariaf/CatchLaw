@@ -9,6 +9,7 @@ library;
 
 import 'package:catchlaw/domain/models/content_strings.dart';
 import 'package:catchlaw/ui/result/view_models/result_context.dart';
+import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:rule_engine/rule_engine.dart';
 
 /// Ministerial Decision 580/2015, Art. 3 — the Gulf instrument.
@@ -278,3 +279,50 @@ const ContentStrings kContentAr = ContentStrings(<String, String>{
   'jurisdiction.ae_rak.authority': 'وزارة التغير المناخي والبيئة',
   'jurisdiction.es_ga.authority': 'حكومة غاليسيا — وزارة البحر',
 });
+
+/// A below-minimum stamp, already localised, as the panel receives it.
+const VerdictStampDisplay kStampBelowMinimum = VerdictStampDisplay(
+  headline: 'Below the minimum — 38\u00A0cm measured, minimum 45\u00A0cm (Total length)',
+  category: VerdictCategory.belowMinimum,
+  kind: FindingKind.minSize,
+  citation: kCitationDisplayMd580,
+  subLine: 'Short of the minimum by 7\u00A0cm',
+);
+
+/// A meets stamp, with its margin.
+const VerdictStampDisplay kStampMeets = VerdictStampDisplay(
+  headline: 'Meets the minimum — 70\u00A0cm measured, minimum 65\u00A0cm (Fork length)',
+  category: VerdictCategory.meets,
+  kind: FindingKind.minSize,
+  citation: kCitationDisplayMd580,
+  subLine: 'Over the minimum by 5\u00A0cm',
+);
+
+/// A protected stamp, carrying a sub-line the panel must refuse to draw.
+///
+/// The sub-line is supplied ON PURPOSE: the rule is that the CATEGORY drops it,
+/// not that the caller happened to leave it null.
+const VerdictStampDisplay kStampProtected = VerdictStampDisplay(
+  headline: 'Protected species — taking prohibited.',
+  category: VerdictCategory.protected,
+  kind: FindingKind.protected,
+  citation: kCitationDisplayMd580,
+  subLine: 'Short of the minimum by 7\u00A0cm',
+);
+
+/// A closed-season stamp, likewise carrying a sub-line it must not draw.
+const VerdictStampDisplay kStampClosedSeason = VerdictStampDisplay(
+  headline: 'Closed season — 1 March to 30 April. In force today, day 14 of 61.',
+  category: VerdictCategory.closedSeason,
+  kind: FindingKind.closedSeason,
+  citation: kCitationDisplayMd580,
+  subLine: 'Short of the minimum by 7\u00A0cm',
+);
+
+/// The Gulf instrument, as the footnote prints it.
+const CitationDisplay kCitationDisplayMd580 = CitationDisplay(
+  instrument: 'Ministerial Decision 580/2015',
+  article: 'Art. 3',
+  publishedOn: '2015-11-03',
+  checkedOn: '2026-07-14',
+);

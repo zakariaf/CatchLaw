@@ -599,3 +599,49 @@ of what was done rather than a live instruction.
 **Applied by:** E10/T01, which ships the first `verdict*` keys and amends the test.
 
 ---
+## D-20 — E10/T02 owns the authored icon family, and the verdict stamp is the one widget allowed to branch on the skin
+
+**Decision.** Three things land together, in `app/lib/theme/`:
+
+1. **`LonjaIcons`, `LonjaIcon` and `LonjaGlyphPainter`** — the authored, stroked family
+   `lonja-icons-and-plates` rule 1 requires and no epic owned. E10/T02 ships the four glyphs the
+   verdict stamp needs (`tick`, `cross`, `ban`, `closedSeason`); a later task adds a glyph when it has
+   a consumer, never before.
+2. **`LonjaIconTheme.stroke`** — 1.45 on paper and night, 1.95 in sunlight, constant across all four
+   sizes. Plus **`LonjaMotion.haptic`**, 120 ms, because `check_lonja_tokens.sh` check 3 fails a
+   literal `Duration` outside `lib/theme/`.
+3. **`LonjaSkinScope`** — which skin the subtree renders in, read by exactly one file in the app and
+   held to one by `app/test/theme/lonja_icons_test.dart`.
+
+**Losing sources.**
+
+| Source | What loses |
+|---|---|
+| `epics/E10-result/T02-the-verdict-panel.md` | `Icons.check`, `Icons.block`, `Icons.close` in its test table and outline. `check_lonja_icons.sh` check 5 bans the Material namespace outright, and the task file names that gate itself |
+| `catchlaw-conventions-index/references/routing-table.md` | `lib/design/` as the home of icon paths. D-2 puts the design system at `app/lib/theme/`, E07 built it there, and D-1 already overrules the routing table's root-relative `lib/` paths |
+| `lonja-verdict-and-status/references/states-and-signals.md` | its sunlight claim of "exactly one chromatic value (`#8E0F0C`)". E07's shipped sunlight palette carries three verdict chromas — `verdant36`, `oxblood28`, `ochre38` — and E07 argued each against `SPEC.md` §13's 7:1 floor. **The palette wins; the sentence is stale.** No greyscale-count test is written against the stale claim |
+
+**Why the family could not be deferred again.** E07 risk 5 left it unowned and named E08 as its first
+consumer; E08 shipped one-word text hints and needed no glyph. The verdict stamp cannot: invariant 4
+is that colour is never the only signal, and protected and below-minimum share one ink by design —
+`states-and-signals.md` spends a whole section on it. Hue therefore carries **zero** information
+between them, and what separates them is the glyph, the words and the presence of the measurement
+sub-line. Deferring the glyph would have shipped the one screen the product exists for with two of its
+three signals.
+
+**Why the skin branch is sanctioned exactly once.** E07's doctrine is that a widget never branches on
+the skin — the palette does the work, and a block leaning on `surfaceSunk` also carries a rule because
+in sunlight the change of stock does not exist. The sunlight stamp is not a colour swap: it reverses
+out onto a solid ground and gives up its tilt, because at 100 000 lux a hairline frame around tilted
+ink is absent rather than dim. That is a change of **construction**, and no palette entry can express
+one. A fifteenth token was rejected: E07 froze fourteen against a test, and "stamp ground" would be a
+slot that is transparent in two of three themes — a token whose value is "do not use me here".
+
+**What this obliges.** A glyph is added to `LonjaIcons` by the task that renders it. A second reader of
+`LonjaSkinScope.of` fails `lonja_icons_test.dart`, and the right answer is nearly always a palette
+entry instead. `token-tables.md` has no row for the icon stroke or the haptic gap — the outstanding
+skill correction E07 risk 5 asked for, still needing a task ID, like `product-invariants.md` §1.
+
+**Applied by:** E10/T02.
+
+---
