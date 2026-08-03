@@ -1,0 +1,21 @@
+# citation — the instruments behind Galicia's rules.
+#
+# Gazette or nothing. Every source_url points at the DOG, with the sha256 of the
+# document actually fetched: an NGO species guide is copyrighted, paraphrased,
+# and out of date the moment the Xunta amends the article — and a paraphrased
+# minimum size is a wrong number that reads entirely plausibly in review.
+#
+# `retrieved_on` is the day the text was read, not the day the build ran. The
+# footnote on the result screen claims somebody opened the gazette on that date,
+# and that claim has to be true.
+citations:
+  - id: es-ga-orde-2012-07-27-art6
+    jurisdiction: ES-GA
+    instrument_type_key: instrument.orde
+    instrument: Orde do 27 de xullo de 2012
+    article: Art. 6
+    published_on: 2012-11-27
+    retrieved_on: 2026-08-03
+    source_url: https://www.xunta.gal/dog/Publicados/2012/20121127/AnuncioG0165-191112-0006_gl.html
+    sha256: 6452365e422a9f3146c3220afd5b658843a4197b902bae1dc3c7ee8581c3344b
+    lineage_id: es-ga-orde-2012-07-27

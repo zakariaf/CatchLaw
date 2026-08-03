@@ -1,0 +1,22 @@
+# rule — Galicia's bivalve minimum sizes, from Anexo I-B of the 2012 order.
+#
+# `zone_id` is absent on every row: `has_zone_polygons: false` for ES-GA, the
+# order prints no coordinate list, and SPEC.md §8 says that where none is
+# published the rules apply jurisdiction-wide. We do not invent boundaries.
+#
+# The sizes are the ANEXO I-B column, transcribed as printed. Ameixa babosa
+# reads "38 ou 35 mm (1)": 38 is the rule, and 35 is the exception note (1)
+# grants to banks named in an approved management plan (Anexo III). Only the 38
+# is transcribed here — the 35 depends on a plan this corpus has not read, and a
+# lower threshold authored on a note nobody has checked is exactly the direction
+# that costs a fisher a fine.
+rules:
+  - id: es-ga-ameixa-babosa-min
+    jurisdiction_id: ES-GA
+    species_id: venerupis-corrugata
+    water_type: salt
+    min_size_mm: 38
+    measurement_method_id: SHL
+    citation_id: es-ga-orde-2012-07-27-art6
+    valid_from: 2012-11-27
+    specificity: 0

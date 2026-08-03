@@ -27,3 +27,13 @@ changes:
       - venerupis-corrugata-gl
       - venerupis-corrugata-es
       - venerupis-corrugata-en
+
+  - id: es-ga-ch-2026-08-1
+    jurisdiction_id: ES-GA
+    from_version: '2026.08.0'
+    to_version: '2026.08.1'
+    summary_key: change.es_ga.first_rules
+    changed_on: '2026-08-03'
+    rule_ids:
+      - es-ga-orde-2012-07-27-art6
+      - es-ga-ameixa-babosa-min

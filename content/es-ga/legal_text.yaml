@@ -1,0 +1,23 @@
+# legal_text — the verbatim article, in the language the Xunta published it.
+#
+# SINGLE-LOCALE by construction (§9.6): `gl`, and no translation. An unofficial
+# rendering of a fisheries instrument is a liability and falls outside Spain's
+# Art. 13 LPI carve-out entirely — so no content_string row may key a
+# `legal_text.*` id, and none does.
+legal_texts:
+  - id: es-ga-orde-2012-07-27-art6
+    jurisdiction_id: ES-GA
+    citation_id: es-ga-orde-2012-07-27-art6
+    locale: gl
+    article_ref: Artigo 6
+    sort_order: 1
+    body: |-
+      Artigo 6. Dos moluscos
+
+      1. Os tamaños mínimos dos moluscos son os que se recollen no anexo I-B
+      desta orde.
+
+      4. O tamaño medirase tal e como se indica no anexo II-B e da seguinte
+      maneira: a) No caso dos moluscos bivalvos, medindo o eixe maior ou
+      anteroposterior (LAP), excepto a ostra e a ostra rizada, que se medirán no
+      eixe dorsoventral (LDV).

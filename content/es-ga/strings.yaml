@@ -37,3 +37,12 @@ strings:
       es: Primer paquete de Galicia — jurisdicción, zona y especie; aún sin reglas
       gl: Primeiro paquete de Galicia — xurisdición, zona e especie; aínda sen regras
       pt_BR: Primeiro pacote da Galiza — jurisdição, zona e espécie; ainda sem regras
+
+  - key: change.es_ga.first_rules
+    values:
+      ar: أول قاعدة مسجّلة لغاليسيا — الحد الأدنى لحجم أصداف الفينوس من أمر 27 يوليو 2012
+      ca: Primera norma registrada de Galícia — la mida mínima de les cloïsses de l’Ordre del 27 de juliol de 2012
+      en: First recorded Galicia rule — the Venus clam minimum size from the Order of 27 July 2012
+      es: Primera norma registrada de Galicia — la talla mínima de las almejas de la Orden del 27 de julio de 2012
+      gl: Primeira norma rexistrada de Galicia — a talla mínima das ameixas da Orde do 27 de xullo de 2012
+      pt_BR: Primeira norma registrada da Galiza — o tamanho mínimo dos vôngoles da Ordem de 27 de julho de 2012
