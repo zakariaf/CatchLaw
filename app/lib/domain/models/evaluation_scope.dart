@@ -1,5 +1,5 @@
 import 'package:catchlaw/data/model/enum_codecs.dart';
-import 'package:flutter/foundation.dart' show immutable, listEquals;
+import 'package:meta/meta.dart';
 
 /// Where the fisher is, in the shape the engine needs it.
 ///
@@ -41,8 +41,21 @@ class EvaluationScope {
       other is EvaluationScope &&
           other.jurisdictionCode == jurisdictionCode &&
           other.zoneCode == zoneCode &&
-          listEquals(other.zonePath, zonePath) &&
+          _samePath(other.zonePath) &&
           other.water == water;
+
+  /// Element-wise, by hand.
+  ///
+  /// `listEquals` lives in `package:flutter/foundation.dart`, and this layer is
+  /// pure Dart: `check_app_invariants.sh` check 7 fails a Flutter import here,
+  /// because the domain is shared with a package that has no Flutter to import.
+  bool _samePath(List<String> other) {
+    if (other.length != zonePath.length) return false;
+    for (var i = 0; i < zonePath.length; i++) {
+      if (other[i] != zonePath[i]) return false;
+    }
+    return true;
+  }
 
   @override
   int get hashCode => Object.hash(jurisdictionCode, zoneCode, Object.hashAll(zonePath), water);
