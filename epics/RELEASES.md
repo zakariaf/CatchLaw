@@ -15,6 +15,11 @@ That is the gap v1 closes, and it is much smaller than the ninety tasks left imp
 
 ## v1 — one jurisdiction, one question, answered offline
 
+> **Shipped.** All thirteen tasks are merged: E11 (#19), E12 (#20), E22 (#21). A cold launch opens on
+> Check, asks the place once, and answers a species with a cited verdict from the Orde do 27 de xullo
+> de 2012. One row of that content is **drafted and unreviewed** — a person opens the DOG and answers
+> the four questions in `content/AUTHORING.md` before it goes to a fisher.
+
 **The claim v1 makes:** a fisher in Galicia opens the app, picks his zone once, finds a species,
 measures it, and reads a cited verdict. Offline, in six languages, with the instrument named under it.
 

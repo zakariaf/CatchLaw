@@ -89,8 +89,12 @@ epic/22-content-galicia
 
 ## Status
 
-**E01 through E10 are merged.** Every epic below them is `not started`; `epics/RELEASES.md`
-says which of their tasks v1 needs and which wait for v2.
+**E01 through E10 are merged, and v1 is complete.** E11, E12 and E22 have shipped their v1 tasks;
+their v2 tasks and every epic from E13 onward are `not started`. `epics/RELEASES.md` says which is
+which.
+
+**The app runs.** A cold launch opens on Check, asks where the fisher is once, and answers a species
+with a cited verdict from a real instrument in the DOG. The thirteen v1 tasks are done.
 
 | Epic | Branch | PR | Checks | Merged |
 |---|---|---|---|---|
@@ -104,8 +108,8 @@ says which of their tasks v1 needs and which wait for v2.
 | E08 | `epic/08-species` | [#12](https://github.com/zakariaf/CatchLaw/pull/12) | all green | ☑ |
 | E09 | `epic/09-ruler` | [#14](https://github.com/zakariaf/CatchLaw/pull/14) | all green | ☑ |
 | E10 | `epic/10-result` | [#16](https://github.com/zakariaf/CatchLaw/pull/16) | all green | ☑ |
-| E11 | — | — | — | ☐ |
-| E12 | — | — | — | ☐ |
+| E11 | `epic/11-zones` | [#19](https://github.com/zakariaf/CatchLaw/pull/19) | all green | ☑ v1 |
+| E12 | `epic/12-check-home` | [#20](https://github.com/zakariaf/CatchLaw/pull/20) | all green | ☑ v1 |
 | E13 | — | — | — | ☐ |
 | E14 | — | — | — | ☐ |
 | E15 | — | — | — | ☐ |
@@ -115,7 +119,7 @@ says which of their tasks v1 needs and which wait for v2.
 | E19 | — | — | — | ☐ |
 | E20 | — | — | — | ☐ |
 | E21 | — | — | — | ☐ |
-| E22 | — | — | — | ☐ |
+| E22 | `epic/22-content-galicia` | [#21](https://github.com/zakariaf/CatchLaw/pull/21) | all green | ☑ v1 |
 
 ---
 
