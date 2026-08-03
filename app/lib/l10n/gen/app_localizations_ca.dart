@@ -493,4 +493,40 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get zoneWaterChoiceRequired =>
       'Cal triar mar o aigües continentals abans que aquest lloc pugui respondre.';
+
+  @override
+  String get navCheck => 'Comprova';
+
+  @override
+  String get navToday => 'Avui';
+
+  @override
+  String get navTrips => 'Sortides';
+
+  @override
+  String get navReference => 'Referència';
+
+  @override
+  String get navSettings => 'Configuració';
+
+  @override
+  String get checkPlaceLabel => 'Responent per a';
+
+  @override
+  String get checkChangePlace => 'Canvia el lloc';
+
+  @override
+  String get checkRecentsLabel => 'Recents aquí';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'verificat $date';
+  }
+
+  @override
+  String get checkNoRecentsHeadline => 'Encara no s’ha comprovat res aquí';
+
+  @override
+  String get checkNoRecentsBody =>
+      'Les espècies que cerquis en aquest lloc apareixen aquí, així el següent és un sol toc.';
 }

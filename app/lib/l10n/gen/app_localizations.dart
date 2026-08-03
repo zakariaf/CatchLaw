@@ -793,6 +793,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sea or inland water has to be chosen before this place can answer.'**
   String get zoneWaterChoiceRequired;
+
+  /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get navCheck;
+
+  /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get navToday;
+
+  /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips'**
+  String get navTrips;
+
+  /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get navReference;
+
+  /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get navSettings;
+
+  /// The masthead label above the active place. It says what the app is answering FOR, because a verdict read without knowing which jurisdiction produced it is a verdict about nowhere.
+  ///
+  /// In en, this message translates to:
+  /// **'Answering for'**
+  String get checkPlaceLabel;
+
+  /// Reopens S9. The place is asked once and remembered, and this is the way back to it.
+  ///
+  /// In en, this message translates to:
+  /// **'Change place'**
+  String get checkChangePlace;
+
+  /// Heading over the species he has opened here before. "Here" is load-bearing: recency is per zone, so the one unusual fish he looked up in another place does not reshuffle this one.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent here'**
+  String get checkRecentsLabel;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. When a human last verified this jurisdiction transcription. ISO and unlocalised, like every other date quoted from an instrument, so it can be compared against the gazette by eye.
+  ///
+  /// In en, this message translates to:
+  /// **'checked {date}'**
+  String checkPackChecked(String date);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The first-launch state of the recents strip. It states what this DEVICE has done, never what the reader should do.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing checked here yet'**
+  String get checkNoRecentsHeadline;
+
+  /// What the strip will hold once it holds anything. It explains the mechanism rather than instructing: the fisher is not being asked to look anything up, he is being told what happens when he does.
+  ///
+  /// In en, this message translates to:
+  /// **'Species you look up in this place appear here, so the next one is one tap.'**
+  String get checkNoRecentsBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

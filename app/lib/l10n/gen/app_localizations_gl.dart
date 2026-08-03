@@ -485,4 +485,40 @@ class AppLocalizationsGl extends AppLocalizations {
   @override
   String get zoneWaterChoiceRequired =>
       'Hai que escoller mar ou augas continentais antes de que este lugar poida responder.';
+
+  @override
+  String get navCheck => 'Comprobar';
+
+  @override
+  String get navToday => 'Hoxe';
+
+  @override
+  String get navTrips => 'Mareas';
+
+  @override
+  String get navReference => 'Referencia';
+
+  @override
+  String get navSettings => 'Axustes';
+
+  @override
+  String get checkPlaceLabel => 'Respondendo para';
+
+  @override
+  String get checkChangePlace => 'Cambiar lugar';
+
+  @override
+  String get checkRecentsLabel => 'Recentes aquí';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'verificado $date';
+  }
+
+  @override
+  String get checkNoRecentsHeadline => 'Aínda non se comprobou nada aquí';
+
+  @override
+  String get checkNoRecentsBody =>
+      'As especies que busques neste lugar aparecen aquí, así o seguinte é un só toque.';
 }

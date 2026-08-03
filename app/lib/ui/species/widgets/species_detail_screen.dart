@@ -1,14 +1,21 @@
+import 'package:catchlaw/domain/models/evaluation_scope.dart';
 import 'package:catchlaw/domain/models/species.dart';
 import 'package:catchlaw/domain/models/species_account.dart';
+import 'package:catchlaw/domain/use_cases/evaluate_catch_use_case.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
+import 'package:catchlaw/l10n/locale_codec.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/core/ui/lonja_plate.dart';
 import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
 import 'package:catchlaw/ui/core/ui/lonja_section_label.dart';
 import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
+import 'package:catchlaw/ui/result/view_models/result_context.dart';
+import 'package:catchlaw/ui/result/view_models/result_display.dart';
+import 'package:catchlaw/ui/result/view_models/result_providers.dart';
 import 'package:catchlaw/ui/species/view_models/species_detail_view_model.dart';
 import 'package:catchlaw/ui/species/widgets/species_detail_placeholders.dart';
+import 'package:catchlaw/ui/zones/view_models/zone_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -61,7 +68,10 @@ class SpeciesDetailScreen extends ConsumerWidget {
                 const SizedBox(height: LonjaSpace.s5),
                 const SpeciesMeasurementSlot(),
                 const SizedBox(height: LonjaSpace.s4),
-                const SpeciesVerdictSlot(),
+                // Fed, at last. The slot has been on this page since E08 and
+                // empty since E08: E12/T08 is the seam that gives it something
+                // to draw.
+                SpeciesVerdict(speciesId: speciesId),
               ],
             ),
           ),
@@ -176,6 +186,61 @@ class _OtherNamesBlock extends StatelessWidget {
         ],
         const LonjaRule.row(),
       ],
+    );
+  }
+}
+
+/// The verdict for one species, in the place the fisher last confirmed.
+///
+/// A widget of its own so the slot's asynchrony does not put the whole account
+/// page behind a loading state: the plate, the names and the family are already
+/// on screen and are true whatever the rules say.
+///
+/// **No reading yet.** E09's ruler writes a measurement and nothing joins it to
+/// this screen; until it does, the size finding is indeterminate and the note
+/// says so — which is exactly what an unmeasured fish deserves and is never a
+/// pass.
+class SpeciesVerdict extends ConsumerWidget {
+  /// Answers for [speciesId].
+  const SpeciesVerdict({required this.speciesId, super.key});
+
+  /// Which fish.
+  final int speciesId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final EvaluationScope? scope = ref.watch(evaluationScopeProvider).value;
+    // No place, no verdict. He is asked where he is rather than answered
+    // against a jurisdiction nobody chose.
+    if (scope == null) return const SizedBox.shrink();
+
+    final String locale = encodeLocale(Localizations.localeOf(context)) ?? 'en';
+    final request = ResultRequest(
+      locale: locale,
+      context: ResultContext(
+        authorityKey: scope.authorityKey,
+        defaultLocale: scope.defaultLocale,
+        packId: scope.packVersion,
+        packExpiredOn: scope.packValidUntil,
+      ),
+    );
+    final AsyncValue<ResultDisplay> display = ref.watch(
+      resultDisplayProvider((
+        question: CatchQuestion(scope: scope, speciesId: speciesId, on: scope.checkedOn),
+        request: request,
+      )),
+    );
+
+    return display.when(
+      loading: () => const LonjaListSkeleton(rows: 2),
+      // Said, not swallowed. A pack that would not read is a different fact
+      // from a species with no rule, and only one of them is about the law.
+      error: (Object error, StackTrace _) => Text('$error', textAlign: TextAlign.start),
+      data: (ResultDisplay value) => SpeciesVerdictSlot(
+        display: value,
+        jurisdiction: value.authority,
+        onOpenRuleText: (int _) {},
+      ),
     );
   }
 }

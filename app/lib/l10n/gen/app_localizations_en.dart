@@ -485,4 +485,40 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get zoneWaterChoiceRequired =>
       'Sea or inland water has to be chosen before this place can answer.';
+
+  @override
+  String get navCheck => 'Check';
+
+  @override
+  String get navToday => 'Today';
+
+  @override
+  String get navTrips => 'Trips';
+
+  @override
+  String get navReference => 'Reference';
+
+  @override
+  String get navSettings => 'Settings';
+
+  @override
+  String get checkPlaceLabel => 'Answering for';
+
+  @override
+  String get checkChangePlace => 'Change place';
+
+  @override
+  String get checkRecentsLabel => 'Recent here';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'checked $date';
+  }
+
+  @override
+  String get checkNoRecentsHeadline => 'Nothing checked here yet';
+
+  @override
+  String get checkNoRecentsBody =>
+      'Species you look up in this place appear here, so the next one is one tap.';
 }

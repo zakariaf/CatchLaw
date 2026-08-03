@@ -101,6 +101,11 @@ final class WatchEvaluationScope {
       // one the scope carries `both`, which the engine reads as "no water
       // filter" rather than as a guess.
       water: _waterFor(zone, profileWater),
+      authorityKey: jurisdiction.authorityKey,
+      defaultLocale: jurisdiction.defaultLocale,
+      packVersion: jurisdiction.contentVersion,
+      checkedOn: jurisdiction.checkedOn,
+      packValidUntil: jurisdiction.validUntil,
     );
   }
 

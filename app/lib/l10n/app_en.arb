@@ -781,5 +781,54 @@
   "zoneWaterChoiceRequired": "Sea or inland water has to be chosen before this place can answer.",
   "@zoneWaterChoiceRequired": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Why the place cannot be confirmed yet. The authority publishes rules for both waters and they are different rules, so a place that has not said which one answers with the wrong instrument — this states the condition, not an instruction to the reader."
+  },
+  "navCheck": "Check",
+  "@navCheck": {
+    "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
+  },
+  "navToday": "Today",
+  "@navToday": {
+    "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
+  },
+  "navTrips": "Trips",
+  "@navTrips": {
+    "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
+  },
+  "navReference": "Reference",
+  "@navReference": {
+    "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
+  },
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
+  },
+  "checkPlaceLabel": "Answering for",
+  "@checkPlaceLabel": {
+    "description": "The masthead label above the active place. It says what the app is answering FOR, because a verdict read without knowing which jurisdiction produced it is a verdict about nowhere."
+  },
+  "checkChangePlace": "Change place",
+  "@checkChangePlace": {
+    "description": "Reopens S9. The place is asked once and remembered, and this is the way back to it."
+  },
+  "checkRecentsLabel": "Recent here",
+  "@checkRecentsLabel": {
+    "description": "Heading over the species he has opened here before. \"Here\" is load-bearing: recency is per zone, so the one unusual fish he looked up in another place does not reshuffle this one."
+  },
+  "checkPackChecked": "checked {date}",
+  "@checkPackChecked": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. When a human last verified this jurisdiction transcription. ISO and unlocalised, like every other date quoted from an instrument, so it can be compared against the gazette by eye.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "checkNoRecentsHeadline": "Nothing checked here yet",
+  "@checkNoRecentsHeadline": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The first-launch state of the recents strip. It states what this DEVICE has done, never what the reader should do."
+  },
+  "checkNoRecentsBody": "Species you look up in this place appear here, so the next one is one tap.",
+  "@checkNoRecentsBody": {
+    "description": "What the strip will hold once it holds anything. It explains the mechanism rather than instructing: the fisher is not being asked to look anything up, he is being told what happens when he does."
   }
 }

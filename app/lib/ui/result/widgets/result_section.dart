@@ -5,6 +5,7 @@ import 'package:catchlaw/ui/result/widgets/result_citation_footnote.dart';
 import 'package:catchlaw/ui/result/widgets/result_disclaimer.dart';
 import 'package:catchlaw/ui/result/widgets/result_findings_list.dart';
 import 'package:catchlaw/ui/result/widgets/result_haptics.dart';
+import 'package:catchlaw/ui/result/widgets/result_note.dart';
 import 'package:catchlaw/ui/result/widgets/result_rule_facts_table.dart';
 import 'package:catchlaw/ui/result/widgets/result_verdict_panel.dart';
 import 'package:flutter/material.dart';
@@ -103,9 +104,10 @@ class _ResultSectionState extends State<ResultSection> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         if (stamp != null) ResultVerdictPanel(stamp: stamp, citation: stamp.citation),
-        // Where the stamp would otherwise be struck. The refusal to choose IS
-        // the answer, so the block stands in the stamp's place rather than
-        // beneath it.
+        // Both stand where the stamp would be struck rather than beneath it.
+        // Exactly one of stamp, note and ambiguity is ever non-null, and each
+        // of the three is the whole answer in its own state.
+        if (display.note case final NoteDisplay note) ResultNote(note: note),
         if (display.ambiguity case final AmbiguityDisplay ambiguity)
           ResultAmbiguityBlock(ambiguity: ambiguity),
         if (display.secondary.isNotEmpty) const SizedBox(height: LonjaSpace.s5),

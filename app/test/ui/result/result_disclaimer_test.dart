@@ -21,19 +21,37 @@ const Map<String, ResultDisplay> _states = <String, ResultDisplay>{
   'decided': ResultDisplay(
     findings: <FindingDisplay>[kFindingMinSizeFails],
     disclaimer: '',
+    authority: 'Xunta de Galicia — Consellería do Mar',
     stamp: kStampBelowMinimum,
   ),
-  'protected': ResultDisplay(findings: <FindingDisplay>[], disclaimer: '', stamp: kStampProtected),
+  'protected': ResultDisplay(
+    findings: <FindingDisplay>[],
+    disclaimer: '',
+    authority: 'Xunta',
+    stamp: kStampProtected,
+  ),
   'closed season': ResultDisplay(
     findings: <FindingDisplay>[],
     disclaimer: '',
+    authority: 'Xunta de Galicia — Consellería do Mar',
     stamp: kStampClosedSeason,
   ),
-  'meets': ResultDisplay(findings: <FindingDisplay>[], disclaimer: '', stamp: kStampMeets),
-  'no rule recorded': ResultDisplay(findings: <FindingDisplay>[], disclaimer: '', note: _noRule),
+  'meets': ResultDisplay(
+    findings: <FindingDisplay>[],
+    disclaimer: '',
+    authority: 'Xunta',
+    stamp: kStampMeets,
+  ),
+  'no rule recorded': ResultDisplay(
+    findings: <FindingDisplay>[],
+    disclaimer: '',
+    authority: 'Xunta',
+    note: _noRule,
+  ),
   'open question': ResultDisplay(
     findings: <FindingDisplay>[kFindingBagLimitIndeterminate],
     disclaimer: '',
+    authority: 'Xunta de Galicia — Consellería do Mar',
     note: NoteDisplay(
       sentence: 'Nothing recorded for this period — the bag limit is 6 per day',
       kind: NoteKind.openQuestion,
@@ -43,6 +61,7 @@ const Map<String, ResultDisplay> _states = <String, ResultDisplay>{
   'ambiguous': ResultDisplay(
     findings: <FindingDisplay>[],
     disclaimer: '',
+    authority: 'Xunta de Galicia — Consellería do Mar',
     ambiguity: AmbiguityDisplay(
       sentence: 'Two rules of equal standing apply here.',
       rules: <AmbiguousRuleDisplay>[
@@ -57,6 +76,7 @@ const Map<String, ResultDisplay> _states = <String, ResultDisplay>{
   'expired': ResultDisplay(
     findings: <FindingDisplay>[kFindingMinSizeFails],
     disclaimer: '',
+    authority: 'Xunta de Galicia — Consellería do Mar',
     stamp: kStampBelowMinimum,
     stale: StaleDisplay(sentence: 'These rules passed their end date.', provenance: 'pack v1'),
   ),

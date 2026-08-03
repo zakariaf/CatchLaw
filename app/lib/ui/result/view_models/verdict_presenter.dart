@@ -67,7 +67,8 @@ class VerdictPresenter {
   /// one the verdict was computed from, and the sentence would then state a
   /// number the engine never compared.
   ResultDisplay present(Resolution resolution, ResultContext context) {
-    final String disclaimer = l10n.disclaimerVerdict(content[context.authorityKey]);
+    final String authority = content[context.authorityKey];
+    final String disclaimer = l10n.disclaimerVerdict(authority);
     // A flag beside the answer, never a filter over it: an expired ruleset is
     // still evaluated and still shown, and withholding it would be advice.
     //
@@ -89,11 +90,13 @@ class VerdictPresenter {
         headline,
         secondary,
         disclaimer: disclaimer,
+        authority: authority,
         stale: stale,
       ),
       Ambiguous(:final List<Rule> rules) => ResultDisplay(
         findings: const <FindingDisplay>[],
         disclaimer: disclaimer,
+        authority: authority,
         stale: stale,
         ambiguity: AmbiguityDisplay(
           sentence: l10n.verdictAmbiguous,
@@ -105,6 +108,7 @@ class VerdictPresenter {
         NoteKind.noLimitInInstrument,
         <Citation>[citation],
         disclaimer: disclaimer,
+        authority: authority,
         stale: stale,
       ),
       NoRuleFound(:final List<Citation> searched) => _noted(
@@ -112,6 +116,7 @@ class VerdictPresenter {
         NoteKind.noRuleRecorded,
         searched,
         disclaimer: disclaimer,
+        authority: authority,
         stale: stale,
       ),
       UnknownSpecies(:final List<Citation> searched) => _noted(
@@ -119,6 +124,7 @@ class VerdictPresenter {
         NoteKind.unknownSpecies,
         searched,
         disclaimer: disclaimer,
+        authority: authority,
         stale: stale,
       ),
     };
@@ -135,6 +141,7 @@ class VerdictPresenter {
     Finding headline,
     List<Finding> secondary, {
     required String disclaimer,
+    required String authority,
     required StaleDisplay? stale,
   }) {
     // Headline first, then the engine's own order. The engine ranks once; a
@@ -156,6 +163,7 @@ class VerdictPresenter {
       return ResultDisplay(
         findings: findings,
         disclaimer: disclaimer,
+        authority: authority,
         stale: stale,
         note: NoteDisplay(
           sentence: head.sentence,
@@ -168,6 +176,7 @@ class VerdictPresenter {
     return ResultDisplay(
       findings: findings,
       disclaimer: disclaimer,
+      authority: authority,
       stale: stale,
       stamp: VerdictStampDisplay(
         headline: head.sentence,
@@ -184,10 +193,12 @@ class VerdictPresenter {
     NoteKind kind,
     List<Citation> citations, {
     required String disclaimer,
+    required String authority,
     required StaleDisplay? stale,
   }) => ResultDisplay(
     findings: const <FindingDisplay>[],
     disclaimer: disclaimer,
+    authority: authority,
     stale: stale,
     note: NoteDisplay(
       sentence: sentence,

@@ -488,4 +488,40 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get zoneWaterChoiceRequired =>
       'يجب اختيار البحر أو المياه الداخلية قبل أن يجيب هذا المكان.';
+
+  @override
+  String get navCheck => 'فحص';
+
+  @override
+  String get navToday => 'اليوم';
+
+  @override
+  String get navTrips => 'الرحلات';
+
+  @override
+  String get navReference => 'المرجع';
+
+  @override
+  String get navSettings => 'الإعدادات';
+
+  @override
+  String get checkPlaceLabel => 'الإجابة عن';
+
+  @override
+  String get checkChangePlace => 'تغيير المكان';
+
+  @override
+  String get checkRecentsLabel => 'الأحدث هنا';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'تم التحقق $date';
+  }
+
+  @override
+  String get checkNoRecentsHeadline => 'لم يُفحص شيء هنا بعد';
+
+  @override
+  String get checkNoRecentsBody =>
+      'الأنواع التي تبحث عنها في هذا المكان تظهر هنا، فيصبح التالي بلمسة واحدة.';
 }

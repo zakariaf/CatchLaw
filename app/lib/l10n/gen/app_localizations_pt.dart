@@ -487,6 +487,42 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get zoneWaterChoiceRequired =>
       'É preciso escolher mar ou águas interiores antes que este lugar possa responder.';
+
+  @override
+  String get navCheck => 'Verificar';
+
+  @override
+  String get navToday => 'Hoje';
+
+  @override
+  String get navTrips => 'Pescarias';
+
+  @override
+  String get navReference => 'Referência';
+
+  @override
+  String get navSettings => 'Configurações';
+
+  @override
+  String get checkPlaceLabel => 'Respondendo para';
+
+  @override
+  String get checkChangePlace => 'Mudar de lugar';
+
+  @override
+  String get checkRecentsLabel => 'Recentes aqui';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'verificado $date';
+  }
+
+  @override
+  String get checkNoRecentsHeadline => 'Nada verificado aqui ainda';
+
+  @override
+  String get checkNoRecentsBody =>
+      'As espécies que você buscar neste lugar aparecem aqui, e a próxima fica a um toque.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -972,4 +1008,40 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get zoneWaterChoiceRequired =>
       'É preciso escolher mar ou águas interiores antes que este lugar possa responder.';
+
+  @override
+  String get navCheck => 'Verificar';
+
+  @override
+  String get navToday => 'Hoje';
+
+  @override
+  String get navTrips => 'Pescarias';
+
+  @override
+  String get navReference => 'Referência';
+
+  @override
+  String get navSettings => 'Configurações';
+
+  @override
+  String get checkPlaceLabel => 'Respondendo para';
+
+  @override
+  String get checkChangePlace => 'Mudar de lugar';
+
+  @override
+  String get checkRecentsLabel => 'Recentes aqui';
+
+  @override
+  String checkPackChecked(String date) {
+    return 'verificado $date';
+  }
+
+  @override
+  String get checkNoRecentsHeadline => 'Nada verificado aqui ainda';
+
+  @override
+  String get checkNoRecentsBody =>
+      'As espécies que você buscar neste lugar aparecem aqui, e a próxima fica a um toque.';
 }

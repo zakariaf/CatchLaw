@@ -1,14 +1,18 @@
 import 'package:catchlaw/data/providers.dart';
+import 'package:catchlaw/domain/models/content_string_missing.dart';
 import 'package:catchlaw/domain/models/content_strings.dart';
 import 'package:catchlaw/domain/use_cases/content_string_resolver.dart';
+import 'package:catchlaw/domain/use_cases/evaluate_catch_use_case.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/l10n/locale_codec.dart';
 import 'package:catchlaw/l10n/numeral_system_notifier.dart';
 import 'package:catchlaw/ui/result/view_models/result_context.dart';
+import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/view_models/verdict_presenter.dart';
 import 'package:flutter/widgets.dart' show Locale;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rule_engine/rule_engine.dart' show MeasurementMethod;
+import 'package:rule_engine/rule_engine.dart'
+    show Failure, MeasurementMethod, Ok, Resolution, Result;
 
 /// Every `content_string` key a verdict sentence can reach for.
 ///
@@ -30,19 +34,36 @@ final resultContentStringsProvider = FutureProvider.autoDispose
     .family<ContentStrings, ResultRequest>((Ref ref, ResultRequest request) async {
       final resolver = ContentStringResolver(ref.watch(contentStringRepositoryProvider));
       final keys = <String>[...kVerdictContentKeys, request.context.authorityKey];
+
       // Concurrently, not in sequence. Each key is its own statement against
-      // `reference.db`, and ten in a row is ten round trips between the fish and
-      // the answer — on the phone `SPEC.md` §13 budgets for.
-      final List<String> values = await Future.wait(<Future<String>>[
+      // `reference.db`, and ten in a row is ten round trips between the fish
+      // and the answer — on the phone `SPEC.md` §13 budgets for.
+      //
+      // **A method name that does not resolve is SKIPPED, not fatal.** A pack
+      // defines the methods its instruments use and no others — Galicia's
+      // shellfish orders state shell length and nothing else — and the content
+      // build counts an unreferenced key rather than failing it. Resolving all
+      // nine eagerly and throwing on the first absence would make every verdict
+      // in a single-method jurisdiction unreachable.
+      //
+      // The absence still bites where it matters: `ContentStrings` throws for a
+      // key the presenter actually asks for, so a method a RULE uses and the
+      // pack never named is a loud failure on the screen that needed it — which
+      // is the same defect the §8 build assertion would have caught first.
+      final List<String?> values = await Future.wait(<Future<String?>>[
         for (final String key in keys)
-          resolver.resolve(
-            key,
-            requestedLocale: request.locale,
-            defaultLocale: request.context.defaultLocale,
-          ),
+          resolver
+              .resolve(
+                key,
+                requestedLocale: request.locale,
+                defaultLocale: request.context.defaultLocale,
+              )
+              .then<String?>((String v) => v)
+              .onError<ContentStringMissing>((_, _) => null),
       ]);
       return ContentStrings(<String, String>{
-        for (var i = 0; i < keys.length; i++) keys[i]: values[i],
+        for (var i = 0; i < keys.length; i++)
+          if (values[i] case final String value) keys[i]: value,
       });
     });
 
@@ -71,3 +92,39 @@ final verdictPresenterProvider = FutureProvider.autoDispose.family<VerdictPresen
     return VerdictPresenter(l10n: lookupAppLocalizations(locale), content: content, locale: locale);
   },
 );
+
+/// The engine's answer for one question.
+///
+/// The provider E10/T01 deliberately did not build, because the thing it would
+/// have watched did not exist. `CatchQuestion` compares by value, so a ruler
+/// drag that does not move the millimetre re-reads nothing.
+final resolutionProvider = FutureProvider.autoDispose.family<Resolution, CatchQuestion>((
+  Ref ref,
+  CatchQuestion question,
+) async {
+  final Result<Resolution> result = await EvaluateCatchUseCase(
+    reference: ref.watch(referenceRepositoryProvider),
+  )(question);
+  return switch (result) {
+    Ok<Resolution>(:final Resolution value) => value,
+    // Surfaced as an error, never as an absence: the screen says the pack could
+    // not be read, and does not say the law is silent.
+    Failure<Resolution>(:final Exception exception) => throw exception,
+  };
+});
+
+/// The answer, in words, for one question in one place.
+///
+/// The join the whole epic was for: E03's numbers, E05's rows and E10's six
+/// languages, in one value a widget can draw.
+final resultDisplayProvider = FutureProvider.autoDispose
+    .family<ResultDisplay, ({CatchQuestion question, ResultRequest request})>((
+      Ref ref,
+      ({CatchQuestion question, ResultRequest request}) arg,
+    ) async {
+      final Resolution resolution = await ref.watch(resolutionProvider(arg.question).future);
+      final VerdictPresenter presenter = await ref.watch(
+        verdictPresenterProvider(arg.request).future,
+      );
+      return presenter.present(resolution, arg.request.context);
+    });
