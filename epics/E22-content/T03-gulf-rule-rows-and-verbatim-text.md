@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E22 — Content authoring at scale |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/22-content/T03-gulf-rule-rows` (cut from a current `main`) |
 | **Commit** | `feat(content): author the Gulf rule rows and verbatim text, with the exclusion provision quoted per state` |
 | **Depends on** | T02 (the transcription source is decided and recorded), T01 (the authoring guide and A11) |

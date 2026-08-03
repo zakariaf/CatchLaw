@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E22 — Content authoring at scale |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/22-content/T08-plate-clearance` (cut from a current `main`) |
 | **Commit** | `feat(content): clear the species plates one image at a time and cover every protected and look-alike species` |
 | **Depends on** | T07 (the silhouette ledger and the art pipeline), T03–T05 (which species are protected, per jurisdiction) |

@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E22 — Content authoring at scale |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/22-content/T02-gazette-test` (cut from a current `main`) |
 | **Commit** | `feat(content_builder): add the OCR yield audit and record the R1 gazette test` |
 | **Depends on** | T01 (`content/AUTHORING.md`, the sourcing rules an audited document has to satisfy) |

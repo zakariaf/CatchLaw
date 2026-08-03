@@ -3,8 +3,9 @@
 | | |
 |---|---|
 | **Branch** | `epic/12-check-home` |
+| **Release** | **v1** (T01, T02, T04, T05, T06, T07, T08) and v2 (the rest) — `epics/RELEASES.md`, D-22 |
 | **After** | E10 and E11 merged |
-| **Tasks** | 7 |
+| **Tasks** | 8 |
 | **Spec** | `SPEC.md` §3 (the core loop), §6 bottom navigation and S1, §4.1 (species picker, four paths), §4.5 (today's tally), §4.9 (one-handed reach), §13 (< 1.2 s cold start, < 6 s first launch), §15 step 10 |
 | **Package** | `app/` |
 

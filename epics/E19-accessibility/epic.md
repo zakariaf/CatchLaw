@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Branch** | `epic/19-accessibility` |
+| **Release** | **v2** — `epics/RELEASES.md`, D-22 |
 | **After** | E08–E18 merged — every screen S1–S23 and every dialog D1–D5 exists |
 | **Tasks** | 7 |
 | **Spec** | `SPEC.md` §4.9 in full, §13 (the accessibility row: WCAG 2.1 AA equivalent, ≥ 4.5:1 and ≥ 7:1 in sunlight, ≥ 48 dp and ≥ 56 dp, 200% text scale), §6 (every screen and every dialog), §3 (one thumb, in sunlight, wearing wet gloves, under five seconds) |

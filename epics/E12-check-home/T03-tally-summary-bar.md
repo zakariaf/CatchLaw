@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E12 — Check home and the navigation shell |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/12-check-home` (shared) |
 | **Commit** | `feat(check): state today's tally against the bag limit on Check` |
 | **Depends on** | T02 (S1 owns the slot the bar sits in) |

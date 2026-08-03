@@ -685,3 +685,47 @@ upgrade that adds a third parent for `http` fails the gate, and that is the poin
 **Applied by:** E10/T04, which adds `flutter_svg` for the measurement diagram.
 
 ---
+## D-22 — `epics/RELEASES.md` is the release order, and it overrules `README.md`'s build order
+
+**Decision.** The remaining ninety tasks are split into **v1 (thirteen tasks)** and **v2 (seventy-nine)**,
+recorded in `epics/RELEASES.md`. Where the release order and the build order disagree, the release
+order wins. Two tasks are added — `E12/T08` and `E22/T10` — and nothing is renumbered.
+
+**Losing source.** `epics/README.md`'s *"22 epics, 181 tasks, hard dependencies… Building starts at
+E01"* and the strict epic-by-epic order it implies, restated in `CLAUDE.md`. Its **substance** is
+untouched: the dependency edges are real, E22 still runs in parallel from E04, and no v1 task is built
+before an epic it depends on. What loses is the assumption that every task of an epic is built before
+the next epic begins.
+
+**Why the order had to bend.** Ten epics are merged and there is no application. `flutter run` opens a
+window holding a `SizedBox.shrink()`. Everything E06 through E10 built is unreachable, and three
+things stand between the tree and a working app:
+
+1. **Nothing evaluates a rule.** No provider, no use case and no screen turns a species, a zone and a
+   date into a `Resolution`. `E12/T02` and `E12/T07` both assume the seam exists; neither delivers it,
+   and no other task in the plan does either. It is now `E12/T08`, and it is built first.
+2. **The pack carries one species and no rule rows at all.** Every answer the app can currently give
+   is `NoRuleFound` — which is honest, and useless. It is now `E22/T10`.
+3. **`home:` is an empty box.** `E12/T01`.
+
+Under a strict epic-by-epic order, reaching those three means building E11 whole (polygons with no
+coordinate lists to test against, GPS whose denial must cost nothing) before E12 starts. Under the
+release order it means thirteen tasks.
+
+**Why v1 is Galicia and not the Gulf.** The product's headline case is Khalid in Ras Al Khaimah, and
+v1 does not serve him. It ships Galicia because Galicia is what the repository already has seeded — a
+jurisdiction, a zone, strings and a species — so the distance from here to a cited verdict is one
+`rules.yaml` and its verbatim text. The Gulf pack is the first task of v2, and `RELEASES.md` says so
+where it can be read rather than discovered.
+
+**What this does not license.** No invariant is deferred. v1 has no network code, states facts and
+never instructs, carries a required `Citation` on every finding, never spends colour as its only
+signal, and evaluates an expired ruleset rather than withholding it — all five hold in the thirteen
+tasks exactly as they hold in the ten merged epics. What v2 adds is *proof*: the greyscale golden, the
+six-locale matrix, the packet capture. Writing a guarantee and proving it are different jobs, and only
+the second one is deferred.
+
+**Applied by:** this change, which adds `epics/RELEASES.md`, a `Release` column to `epics/README.md`,
+a `Release:` line to each unmerged epic, and a deferral line to each v2 task inside a split epic.
+
+---

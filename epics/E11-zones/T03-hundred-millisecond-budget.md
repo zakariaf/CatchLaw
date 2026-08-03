@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E11 — Zones and point-in-polygon |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/11-zones` (shared) |
 | **Commit** | `feat(data): assemble the zone lookup and hold it to the 100 ms budget by test` |
 | **Depends on** | T02 (`ZoneLocator`, `ZoneGeometry`), E05/T07 (`ZoneDao`), E05/T09 (`ReferenceRepository`, `DataFailure`) |

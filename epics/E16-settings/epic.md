@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Branch** | `epic/16-settings` |
+| **Release** | **v2** — `epics/RELEASES.md`, D-22 |
 | **After** | E09 and E13 merged |
 | **Tasks** | 7 |
 | **Spec** | `SPEC.md` §6 S14, §7.2 (`user_profile`), §9.3 (numeral system), §9.5 (units), §4.5 (storage management), §12 (the manual escape hatch), §11 Both (locale follows the system; the override persists independently), §13 (the byte budgets S14 reports against) |

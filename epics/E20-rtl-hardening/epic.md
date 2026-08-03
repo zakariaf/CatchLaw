@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Branch** | `epic/20-rtl-hardening` |
+| **Release** | **v2** — `epics/RELEASES.md`, D-22 |
 | **After** | E19 merged |
 | **Tasks** | 6 |
 | **Spec** | `SPEC.md` §9.3 (RTL and numerals), §9.4 (the acceptance test), §9.5 (plurals and gender), §9.6, §13 (localisation completeness is enforced), §14 (the `ar`-locale walkthrough) |

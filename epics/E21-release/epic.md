@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Branch** | `epic/21-release` |
+| **Release** | **v2** — `epics/RELEASES.md`, D-22 |
 | **After** | E20 merged |
 | **Tasks** | 8 |
 | **Spec** | `SPEC.md` §14 in full (5 static + 16 dynamic), §5.3, §11 (both platforms), §15 step 20, §13 |

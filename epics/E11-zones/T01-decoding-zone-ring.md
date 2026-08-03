@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Epic** | E11 — Zones and point-in-polygon |
+| **Release** | **v2 — deferred.** Not built for v1; see `epics/RELEASES.md` |
 | **Branch** | `epic/11-zones` (shared) |
 | **Commit** | `feat(rule_engine): decode zone_ring as little-endian Float64 lat/lon pairs` |
 | **Depends on** | E05/T07 (`ZoneDao.ringsFor` returns `coords` as raw bytes and interprets nothing) |

@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Branch** | `epic/14-identify` |
+| **Release** | **v2** — `epics/RELEASES.md`, D-22 |
 | **After** | E08 merged |
 | **Tasks** | 7 |
 | **Spec** | `SPEC.md` §4.3 (in full), §5.2 (why photo-AI is excluded), §6 S7, §7.1 (`key_node`, `key_option`, `key_leaf_species`), §14 (the S7 reachability check) |

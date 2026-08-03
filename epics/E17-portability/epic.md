@@ -3,6 +3,7 @@
 | | |
 |---|---|
 | **Branch** | `epic/17-portability` |
+| **Release** | **v2** — `epics/RELEASES.md`, D-22 |
 | **After** | E13 merged |
 | **Tasks** | 8 |
 | **Spec** | `SPEC.md` §12 in full, §6 S15/S16, §5.3, §10 (`pdf` · `printing` · `share_plus` · `file_picker`), §14 (export and import in airplane mode), §4.7 (Flag a wrong rule) |
