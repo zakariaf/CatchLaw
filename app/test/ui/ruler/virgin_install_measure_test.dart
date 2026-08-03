@@ -89,7 +89,7 @@ void main() {
     container.read(manualEntryViewModelProvider.notifier).digit(4);
     // The calibration provider is still a throwing placeholder in a container
     // that never overrode it — reached, this would have thrown.
-    final ProviderContainer bare = ProviderContainer(retry: noRetry);
+    final bare = ProviderContainer(retry: noRetry);
     addTearDown(bare.dispose);
     final ProviderSubscription<ManualEntryState> bareSub = bare.listen(
       manualEntryViewModelProvider,
