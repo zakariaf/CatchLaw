@@ -217,6 +217,16 @@ jobs:
       - name: Skill gates (all sixteen, with a non-empty scan asserted)
         run: bash tools/gates/run_skill_gates.sh tools/gates/skill_gates.tsv
 
+      # The two the result screen is judged by, run AGAIN and on their own, with
+      # the target passed explicitly (D-1). Redundant with the row above by
+      # design: the runner reads a TSV, and a row edited out of it would take
+      # the only check on every user-facing sentence about the law with it —
+      # silently, and in the same commit that made the sentence wrong.
+      - name: Verdict contract (explicit target)
+        run: |
+          .claude/skills/catchlaw-verdict-contract/scripts/check_verdict_contract.sh app/lib
+          .claude/skills/lonja-verdict-and-status/scripts/check_lonja_verdict.sh app/lib
+
       # On Linux `flutter test` runs in a plain Dart VM where sqlite3_flutter_libs
       # does nothing, so an E05 database suite fails in a way that reads as a
       # broken repository. Four seconds now removes that whole class of failure.

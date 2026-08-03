@@ -14,6 +14,7 @@ Color _fieldOf(WidgetTester tester) => _styleOf(tester).backgroundColor!.resolve
 BorderSide _sideOf(WidgetTester tester) => _styleOf(tester).side!.resolve(<WidgetState>{})!;
 
 void main() {
+  _keyForwarding();
   testWidgets('LonjaButton.primary is the only filled rung', (WidgetTester tester) async {
     await pumpLonja(tester, LonjaButton.primary(label: 'Measure again', onPressed: () {}));
     expect(_fieldOf(tester), LonjaPalettes.paper.accent);
@@ -90,5 +91,22 @@ void main() {
     );
     expect(_fieldOf(tester), LonjaPalettes.sunlight.accent);
     expect(_sideOf(tester).width, LonjaRules.rule);
+  });
+}
+
+/// Regression, found by E10/T06: every named constructor accepted a `Key` and
+/// dropped it, so `find.byKey` matched nothing and the miss read as a widget
+/// bug rather than as plumbing.
+void _keyForwarding() {
+  group('LonjaButton', () {
+    testWidgets('forwards the key its caller passed', (WidgetTester tester) async {
+      const key = Key('lonja-button-key');
+      await pumpLonja(
+        tester,
+        LonjaButton.secondary(key: key, label: 'Close this note', onPressed: () {}),
+      );
+
+      expect(find.byKey(key), findsOneWidget);
+    });
   });
 }

@@ -5,11 +5,20 @@
 # catchlaw-offline-guarantee. `share_plus` is the only sanctioned path to
 # url_launcher_platform_interface.
 #
-# The three lines below are ACTIVE from this commit even though printing and
-# share_plus arrive in E17 and flutter_svg in E08. A recorded edge whose package
-# is not in the shipping set is simply not checked, so the lines are inert until
-# the package lands — and stating the contract now is what lets E01 prove the
-# exception instead of discovering it three epics later.
+# A recorded edge is skipped only when its CHILD is absent from the resolved
+# graph. A recorded PARENT that does not ship is a failure, because the gate
+# compares the whole recorded parent set against the shipping one — so a line is
+# added by the epic that lands its package, not before (D-21). E01's header
+# claimed otherwise and was wrong about parents; the gate is what the claim was
+# checked against, and the gate wins.
+#
+# flutter_svg reaches http twice: directly, and through its own vector_graphics.
+# SPEC.md §14 records only the first. Both entry points — SvgPicture.network and
+# the vector_graphics loader — are grep-banned by catchlaw-offline-guarantee, so
+# the second parent widens the recorded graph and not the guarantee (D-21).
 http <- flutter_svg
-http <- printing
+http <- vector_graphics
 url_launcher_platform_interface <- share_plus
+
+# E17 adds, with printing:
+#   http <- printing

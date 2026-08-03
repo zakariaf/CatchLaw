@@ -39,6 +39,7 @@ class LonjaButton extends StatelessWidget {
     this.busy = false,
     this.disabledReason,
     this.onConfirmed,
+    super.key,
   });
 
   /// The one primary action on a screen.
@@ -56,6 +57,7 @@ class LonjaButton extends StatelessWidget {
          leading: leading,
          busy: busy,
          disabledReason: disabledReason,
+         key: key,
        );
 
   /// Everything else.
@@ -73,6 +75,7 @@ class LonjaButton extends StatelessWidget {
          leading: leading,
          busy: busy,
          disabledReason: disabledReason,
+         key: key,
        );
 
   /// Deletes or replaces something. **Always confirms.**
@@ -95,6 +98,7 @@ class LonjaButton extends StatelessWidget {
          busy: busy,
          disabledReason: disabledReason,
          onConfirmed: onConfirmed,
+         key: key,
        );
 
   /// Already localised. This widget never reaches for an ARB key.

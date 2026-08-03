@@ -69,6 +69,15 @@ abstract final class LonjaMotion {
 
   /// 140 ms — a route transition.
   static const Duration page = Duration(milliseconds: 140);
+
+  /// 120 ms — the gap between the two impacts of an adverse verdict haptic.
+  ///
+  /// Not motion, and here anyway: `lonja-design-tokens` owns every duration in
+  /// the build and `check_lonja_tokens.sh` check 3 fails a literal `Duration`
+  /// outside `lib/theme/`, which is the rule that keeps a second timing table
+  /// from growing inside a feature. `token-tables.md` has no row for it — the
+  /// same outstanding skill correction D-20 records for the icon stroke.
+  static const Duration haptic = Duration(milliseconds: 120);
 }
 
 /// How big a target is and how far it sits from the next one.

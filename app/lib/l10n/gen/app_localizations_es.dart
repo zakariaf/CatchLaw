@@ -206,4 +206,234 @@ class AppLocalizationsEs extends AppLocalizations {
   String measurementInch(String value, String method) {
     return '$value pulg ($method)';
   }
+
+  @override
+  String massKg(String value) {
+    return '$value kg';
+  }
+
+  @override
+  String get limitPeriodDay => 'día';
+
+  @override
+  String get limitPeriodTrip => 'marea';
+
+  @override
+  String get limitPeriodSeason => 'temporada';
+
+  @override
+  String monthName(String month) {
+    String _temp0 = intl.Intl.selectLogic(month, {
+      '1': 'enero',
+      '2': 'febrero',
+      '3': 'marzo',
+      '4': 'abril',
+      '5': 'mayo',
+      '6': 'junio',
+      '7': 'julio',
+      '8': 'agosto',
+      '9': 'septiembre',
+      '10': 'octubre',
+      '11': 'noviembre',
+      '12': 'diciembre',
+      'other': '$month',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String dateDayMonth(String day, String month) {
+    return '$day de $month';
+  }
+
+  @override
+  String verdictMeetsMinimum(String measured, String unit, String threshold, String method) {
+    return 'Cumple el mínimo — $measured $unit medidos, mínimo $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictBelowMinimum(String measured, String unit, String threshold, String method) {
+    return 'Por debajo del mínimo — $measured $unit medidos, mínimo $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictWithinMaximum(String measured, String unit, String threshold, String method) {
+    return 'Dentro del máximo — $measured $unit medidos, máximo $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictAboveMaximum(String measured, String unit, String threshold, String method) {
+    return 'Por encima del máximo — $measured $unit medidos, máximo $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictMinimumNotMeasured(String threshold, String unit, String method) {
+    return 'Sin medición — el mínimo es $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictMaximumNotMeasured(String threshold, String unit, String method) {
+    return 'Sin medición — el máximo es $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictSizeMethodMismatch(
+    String measuredMethod,
+    String threshold,
+    String unit,
+    String method,
+  ) {
+    return 'Medido por $measuredMethod — la norma indica $threshold $unit ($method). No se realiza ninguna comparación.';
+  }
+
+  @override
+  String verdictMarginShortOfMinimum(String margin, String unit) {
+    return 'Por debajo del mínimo en $margin $unit';
+  }
+
+  @override
+  String verdictMarginOverMinimum(String margin, String unit) {
+    return 'Por encima del mínimo en $margin $unit';
+  }
+
+  @override
+  String verdictMarginOverMaximum(String margin, String unit) {
+    return 'Por encima del máximo en $margin $unit';
+  }
+
+  @override
+  String verdictMarginUnderMaximum(String margin, String unit) {
+    return 'Por debajo del máximo en $margin $unit';
+  }
+
+  @override
+  String verdictClosedSeasonInForce(String starts, String ends, String day, String total) {
+    return 'Veda — del $starts al $ends. En vigor hoy, día $day de $total.';
+  }
+
+  @override
+  String verdictClosedSeasonNotInForce(String starts, String ends) {
+    return 'Veda — del $starts al $ends. Hoy no está en vigor.';
+  }
+
+  @override
+  String get verdictProtected => 'Especie protegida — captura prohibida.';
+
+  @override
+  String verdictWithinBagLimit(String recorded, String limit, String period) {
+    return 'Dentro del cupo — $recorded registrados, límite $limit por $period';
+  }
+
+  @override
+  String verdictAboveBagLimit(String recorded, String limit, String period) {
+    return 'Por encima del cupo — $recorded registrados, límite $limit por $period';
+  }
+
+  @override
+  String verdictBagLimitNotRecorded(String limit, String period) {
+    return 'Nada registrado en este periodo — el cupo es $limit por $period';
+  }
+
+  @override
+  String verdictWithinVesselLimit(String recorded, String limit) {
+    return 'Dentro del límite por embarcación — $recorded registrados, límite $limit';
+  }
+
+  @override
+  String verdictAboveVesselLimit(String recorded, String limit) {
+    return 'Por encima del límite por embarcación — $recorded registrados, límite $limit';
+  }
+
+  @override
+  String verdictVesselLimitNotRecorded(String limit) {
+    return 'Nada registrado para esta embarcación — el límite es $limit';
+  }
+
+  @override
+  String get verdictNoRuleRecorded =>
+      'No hay ninguna norma registrada para esta especie aquí. Esto no significa que sea legal.';
+
+  @override
+  String get verdictNoLimitInInstrument =>
+      'La norma fue consultada y no registra ningún límite para esta especie aquí.';
+
+  @override
+  String get verdictUnknownSpecies =>
+      'Esta especie no está registrada en esta jurisdicción. Esto no significa que sea legal.';
+
+  @override
+  String get verdictAmbiguous => 'Aquí se aplican dos normas del mismo rango.';
+
+  @override
+  String get findingFactMeasured => 'Medido';
+
+  @override
+  String get findingFactMinimum => 'Mínimo';
+
+  @override
+  String get findingFactMaximum => 'Máximo';
+
+  @override
+  String get findingFactDates => 'Fechas';
+
+  @override
+  String get findingFactToday => 'Hoy';
+
+  @override
+  String get findingFactRecorded => 'Registrado';
+
+  @override
+  String get findingFactLimit => 'Límite';
+
+  @override
+  String get findingFactPeriod => 'Periodo';
+
+  @override
+  String findingDayOfWindow(String day, String total) {
+    return 'día $day de $total';
+  }
+
+  @override
+  String findingWindowRange(String starts, String ends) {
+    return 'del $starts al $ends';
+  }
+
+  @override
+  String disclaimerVerdict(String authority) {
+    return 'CatchLaw cita normas publicadas. No es asesoramiento jurídico ni autoriza ninguna captura. Conviene verificarlo con $authority antes de basarse en ello.';
+  }
+
+  @override
+  String get citationCopyAction => 'Copiar la cita';
+
+  @override
+  String rulePackExpiredOn(String date) {
+    return 'Estas normas pasaron su fecha de fin el $date. Se muestran tal como se publicaron.';
+  }
+
+  @override
+  String rulePackProvenance(String pack, String date) {
+    return 'El paquete de normas incluido $pack pasó su fecha de validez el $date. El texto anterior es la última redacción verificada.';
+  }
+
+  @override
+  String get staleDetailClose => 'Cerrar esta nota';
+
+  @override
+  String get flagRuleAction => 'Marcar esta norma';
+
+  @override
+  String get flagRuleNoteLabel => 'Qué dice la norma';
+
+  @override
+  String get flagRuleSaveAction => 'Guardar esta nota en este dispositivo';
+
+  @override
+  String get flagRuleRecorded => 'Guardada en este dispositivo.';
+
+  @override
+  String get flagRuleEmptyNote => 'La nota está vacía.';
+
+  @override
+  String get disclaimerNotDismissable => 'No se puede descartar.';
 }

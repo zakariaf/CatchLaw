@@ -404,6 +404,317 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{value} in ({method})'**
   String measurementInch(String value, String method);
+
+  /// A mass in kilograms, for a bag limit an instrument states by weight.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} kg'**
+  String massKg(String value);
+
+  /// The period a bag limit is stated over. A noun, used inside a verdict sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'day'**
+  String get limitPeriodDay;
+
+  /// The period a bag limit is stated over. A noun, used inside a verdict sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'trip'**
+  String get limitPeriodTrip;
+
+  /// The period a bag limit is stated over. A noun, used inside a verdict sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'season'**
+  String get limitPeriodSeason;
+
+  /// The month names, selected by number. Season boundaries print as day and month, never as an ISO date: an ISO date in prose is unreadable to the man holding the fish.
+  ///
+  /// In en, this message translates to:
+  /// **'{month, select, 1{January} 2{February} 3{March} 4{April} 5{May} 6{June} 7{July} 8{August} 9{September} 10{October} 11{November} 12{December} other{{month}}}'**
+  String monthName(String month);
+
+  /// A day and a month, composed per locale. Spanish, Galician, Catalan and Portuguese need a preposition English does not, and Catalan elides it before a vowel.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} {month}'**
+  String dateDayMonth(String day, String month);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Both numbers are mandatory and so is the method: a threshold with no method is a number the reader cannot act on, because total length and fork length differ by 6-9 cm on the same fish. Word order may change; no slot may be dropped. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Meets the minimum — {measured} {unit} measured, minimum {threshold} {unit} ({method})'**
+  String verdictMeetsMinimum(String measured, String unit, String threshold, String method);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The headline sentence of the whole product. Both numbers and the method are mandatory. It states what the instrument requires and what was measured, and says nothing about what to do with the fish. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Below the minimum — {measured} {unit} measured, minimum {threshold} {unit} ({method})'**
+  String verdictBelowMinimum(String measured, String unit, String threshold, String method);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A slot rule read from the other end. Both numbers and the method are mandatory. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Within the maximum — {measured} {unit} measured, maximum {threshold} {unit} ({method})'**
+  String verdictWithinMaximum(String measured, String unit, String threshold, String method);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A maximum, not a minimum: this is a legally distinct statement from the below-minimum one and may never be merged with it. Both numbers and the method are mandatory. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Above the maximum — {measured} {unit} measured, maximum {threshold} {unit} ({method})'**
+  String verdictAboveMaximum(String measured, String unit, String threshold, String method);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Nothing has been measured, so nothing has been compared. This is an OPEN QUESTION and never a pass: an unmeasured fish has not met the minimum, nobody has checked. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Not measured — the minimum is {threshold} {unit} ({method})'**
+  String verdictMinimumNotMeasured(String threshold, String unit, String method);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Nothing has been measured, so nothing has been compared. An OPEN QUESTION, never a pass. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Not measured — the maximum is {threshold} {unit} ({method})'**
+  String verdictMaximumNotMeasured(String threshold, String unit, String method);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The reading and the instrument use different methods, so the two numbers are stated side by side and NO comparison is drawn. A conversion factor here would manufacture a pass at the centimetre that costs AED 3,000. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Measured by {measuredMethod} — the instrument states {threshold} {unit} ({method}). No comparison is made.'**
+  String verdictSizeMethodMismatch(
+    String measuredMethod,
+    String threshold,
+    String unit,
+    String method,
+  );
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The numeric margin under the stamp. It restates the gap the headline already carries; it never advises.
+  ///
+  /// In en, this message translates to:
+  /// **'Short of the minimum by {margin} {unit}'**
+  String verdictMarginShortOfMinimum(String margin, String unit);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The numeric margin under the stamp, for an individual that meets the minimum.
+  ///
+  /// In en, this message translates to:
+  /// **'Over the minimum by {margin} {unit}'**
+  String verdictMarginOverMinimum(String margin, String unit);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The numeric margin under the stamp, for an individual above the maximum.
+  ///
+  /// In en, this message translates to:
+  /// **'Over the maximum by {margin} {unit}'**
+  String verdictMarginOverMaximum(String margin, String unit);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The numeric margin under the stamp, for an individual within the maximum.
+  ///
+  /// In en, this message translates to:
+  /// **'Under the maximum by {margin} {unit}'**
+  String verdictMarginUnderMaximum(String margin, String unit);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Both dates and the position inside the window are mandatory. Never a countdown: days-remaining invites planning, and this app states what the instrument says today.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed season — {starts} to {ends}. In force today, day {day} of {total}.'**
+  String verdictClosedSeasonInForce(String starts, String ends, String day, String total);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The closure exists and is not in force today. It is stated rather than hidden, because the fisher is entitled to see the whole picture.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed season — {starts} to {ends}. Not in force today.'**
+  String verdictClosedSeasonNotInForce(String starts, String ends);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. No measurement slot at all: a measurement beside a prohibition implies a threshold that does not exist, and a reader who sees one looks for a bigger individual of a species that may never be taken.
+  ///
+  /// In en, this message translates to:
+  /// **'Protected species — taking prohibited.'**
+  String get verdictProtected;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. What has been recorded and what the instrument permits. The period is mandatory: a season quota compared against one day passes on every day of a season it has already exhausted.
+  ///
+  /// In en, this message translates to:
+  /// **'Within the bag limit — {recorded} recorded, limit {limit} per {period}'**
+  String verdictWithinBagLimit(String recorded, String limit, String period);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. What has been recorded and what the instrument permits, with the period it is stated over.
+  ///
+  /// In en, this message translates to:
+  /// **'Above the bag limit — {recorded} recorded, limit {limit} per {period}'**
+  String verdictAboveBagLimit(String recorded, String limit, String period);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The catch log is opt-in, so nothing recorded is the common case. An OPEN QUESTION, never a pass.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded for this period — the bag limit is {limit} per {period}'**
+  String verdictBagLimitNotRecorded(String limit, String period);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A per-hull count. It carries no period, because the instrument gives it none and the app may not state one it was not given.
+  ///
+  /// In en, this message translates to:
+  /// **'Within the vessel limit — {recorded} recorded, limit {limit}'**
+  String verdictWithinVesselLimit(String recorded, String limit);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A per-hull count, exceeded. No period, for the same reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Above the vessel limit — {recorded} recorded, limit {limit}'**
+  String verdictAboveVesselLimit(String recorded, String limit);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Nothing recorded against this hull. An OPEN QUESTION, never a pass.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded for this vessel — the limit is {limit}'**
+  String verdictVesselLimitNotRecorded(String limit);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. TWO sentences are mandatory: the second one prevents the absence of a rule from being read as permission. Do not merge, shorten or soften it.
+  ///
+  /// In en, this message translates to:
+  /// **'No rule recorded for this species here. This does not mean it is legal.'**
+  String get verdictNoRuleRecorded;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Legally miles from the no-rule sentence and never merged with it: here the instrument WAS read and positively records no limit, and it is cited. There it was silent.
+  ///
+  /// In en, this message translates to:
+  /// **'The instrument was read and records no limit for this species here.'**
+  String get verdictNoLimitInInstrument;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The species is not in this jurisdiction reference at all — a different state from a species with no rule. TWO sentences, and the second may not be softened.
+  ///
+  /// In en, this message translates to:
+  /// **'This species is not recorded for this jurisdiction. This does not mean it is legal.'**
+  String get verdictUnknownSpecies;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Two instruments of equal standing disagree and the app chooses neither. It states the disagreement and ranks nothing; picking one would be advice.
+  ///
+  /// In en, this message translates to:
+  /// **'Two rules of equal standing apply here.'**
+  String get verdictAmbiguous;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'Measured'**
+  String get findingFactMeasured;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum'**
+  String get findingFactMinimum;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum'**
+  String get findingFactMaximum;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for the two dates of a closure.
+  ///
+  /// In en, this message translates to:
+  /// **'Dates'**
+  String get findingFactDates;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for where today sits inside a closure.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get findingFactToday;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for what the catch log holds.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded'**
+  String get findingFactRecorded;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for what the instrument permits.
+  ///
+  /// In en, this message translates to:
+  /// **'Limit'**
+  String get findingFactLimit;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for the period a limit is stated over.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get findingFactPeriod;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Where today sits inside a closure. Not a countdown.
+  ///
+  /// In en, this message translates to:
+  /// **'day {day} of {total}'**
+  String findingDayOfWindow(String day, String total);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The two dates of a closure, as day and month.
+  ///
+  /// In en, this message translates to:
+  /// **'{starts} to {ends}'**
+  String findingWindowRange(String starts, String ends);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Unconditional and never dismissible. The authority is per jurisdiction: a generic one is a shrug. The wording is fixed by catchlaw-verdict-contract and may not be shortened.
+  ///
+  /// In en, this message translates to:
+  /// **'CatchLaw quotes published instruments. It is not legal advice and does not authorise any catch. Verify with {authority} before relying on it.'**
+  String disclaimerVerdict(String authority);
+
+  /// The accessible name of the copy control on the citation footnote. It copies the CITATION LINE — instrument, article and both dates — and never the verdict sentence: a verdict on the clipboard is a statement about one fish detached from the source that supports it.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the citation'**
+  String get citationCopyAction;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The ochre bar, with the date the pack stated as its end. It must not tell the reader to update, to check elsewhere, or to do anything at all: invariant 5 shows the finding anyway, and there is no network to recover from. The date is ISO and unlocalised, like every citation date.
+  ///
+  /// In en, this message translates to:
+  /// **'These rules passed their stated end date on {date}. They are shown as published.'**
+  String rulePackExpiredOn(String date);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The second citation footnote on an expired pack. It states which pack and when it lapsed, and says nothing about what the reader should do with that.
+  ///
+  /// In en, this message translates to:
+  /// **'Bundled rule pack {pack} passed its validity date on {date}. The text above is the last verified wording.'**
+  String rulePackProvenance(String pack, String date);
+
+  /// The control that puts the stale-pack EXPLANATION away for this app session. It closes the note, never the bar: the bar is the invariant and only the paragraph under it can be put away. It is not persisted, so a reader returning in September sees it again.
+  ///
+  /// In en, this message translates to:
+  /// **'Close this note'**
+  String get staleDetailClose;
+
+  /// Opens the note field. It records a doubt about the TRANSCRIPTION and changes no number and no verdict — the label must not suggest the app will act on it, and there is nowhere for it to be sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Flag this rule'**
+  String get flagRuleAction;
+
+  /// The field label. It asks what the INSTRUMENT says, not what the reader wants the answer to be.
+  ///
+  /// In en, this message translates to:
+  /// **'What the instrument says'**
+  String get flagRuleNoteLabel;
+
+  /// The save target. Its label names the effect and its whole extent: the note stays on this device, because there is no network and nothing is transmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Save this note on this device'**
+  String get flagRuleSaveAction;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The receipt for something already committed, in the past tense. It promises no review, no reply and no upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this device.'**
+  String get flagRuleRecorded;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. States why nothing was written.
+  ///
+  /// In en, this message translates to:
+  /// **'The note is empty.'**
+  String get flagRuleEmptyNote;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The mono line under the disclaimer, which makes the disclaimer’s absence legible in a screenshot: a reader looking at a screen grab can tell whether the sentence above was ever there. It states a property of the screen, never an instruction.
+  ///
+  /// In en, this message translates to:
+  /// **'It cannot be dismissed.'**
+  String get disclaimerNotDismissable;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

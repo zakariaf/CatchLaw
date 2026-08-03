@@ -1,6 +1,6 @@
+import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/theme/lonja_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Mounts [child] inside a real Lonja theme.
@@ -23,7 +23,10 @@ Future<void> pumpLonja(
     MaterialApp(
       theme: resolveLonjaTheme(skin: skin, gloved: gloved),
       locale: locale,
-      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      // AppLocalizations' list already carries the three Global delegates, so
+      // this is the Material set plus the app's own — and a widget that reads
+      // an ARB value can be pumped from the same one place as one that does not.
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: const <Locale>[
         Locale('ar'),
         Locale('en'),

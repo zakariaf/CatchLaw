@@ -12,9 +12,12 @@
 library;
 
 import 'package:catchlaw/data/repositories/calibration_repository.dart';
+import 'package:catchlaw/data/repositories/content_string_repository.dart';
+import 'package:catchlaw/data/repositories/legal_text_repository.dart';
 import 'package:catchlaw/data/repositories/look_alike_repository.dart';
 import 'package:catchlaw/data/repositories/measurement_repository.dart';
 import 'package:catchlaw/data/repositories/reference_repository.dart';
+import 'package:catchlaw/data/repositories/rule_flag_repository.dart';
 import 'package:catchlaw/data/repositories/settings_repository.dart';
 import 'package:catchlaw/data/repositories/species_account_repository.dart';
 import 'package:catchlaw/data/repositories/species_browse_repository.dart';
@@ -95,6 +98,26 @@ final Provider<CalibrationRepository> calibrationRepositoryProvider =
       (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
     );
 
+/// Tier-two content strings — species names, method names, authority names.
+///
+/// A seam of its own rather than a resolver built inside each repository: E10's
+/// presenter needs the same table for a measurement method and an authority,
+/// and it is not a repository, so it has nothing to build one from.
+final Provider<ContentStringRepository> contentStringRepositoryProvider =
+    Provider<ContentStringRepository>(
+      (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
+    );
+
+/// The verbatim law behind a citation.
+final Provider<LegalTextRepository> legalTextRepositoryProvider = Provider<LegalTextRepository>(
+  (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
+);
+
+/// The fisher's disputes with the transcription.
+final Provider<RuleFlagRepository> ruleFlagRepositoryProvider = Provider<RuleFlagRepository>(
+  (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
+);
+
 /// Every seam `dataOverrides` must fill.
 ///
 /// A list rather than a comment, so "is this one wired?" is a test rather than
@@ -113,4 +136,7 @@ final List<ProviderBase<Object?>> kDataSeams = <ProviderBase<Object?>>[
   lookAlikeRepositoryProvider,
   speciesRecentRepositoryProvider,
   calibrationRepositoryProvider,
+  contentStringRepositoryProvider,
+  legalTextRepositoryProvider,
+  ruleFlagRepositoryProvider,
 ];

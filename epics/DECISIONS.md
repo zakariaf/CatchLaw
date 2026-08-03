@@ -556,3 +556,132 @@ done, not a live instruction.
 **Applied by:** E06/T01. Read by every later task that writes an ARB key, and by E20/T02.
 
 ---
+## D-19 — A non-template ARB carries exactly one `@` block, and only to state the verdict constraint to its translator
+
+**Decision.** Every `app_*.arb` that holds a `verdict*` or `finding*` key carries **one** metadata
+block — `@verdictBelowMinimum`, whose `description` opens `STATEMENT OF FACT.` — and no other. The
+template `app_en.arb` keeps a block per key, as before. Nothing else about tier-one authoring changes:
+`app_en.arb` is still where a key is declared, still the only file carrying placeholders, and still the
+file a translator is given alongside the target.
+
+**Losing source.** `app/test/l10n/arb_scaffolding_test.dart`'s *"app_en.arb is the only ARB carrying
+@ metadata blocks"*, written in E06/T01. The test is amended in this change rather than deleted: it
+still fails on a second block, on a block for any other key, and on a block whose description drops the
+constraint.
+
+**Why the test cannot stand as written.** `check_verdict_contract.sh` check 6b globs every `*.arb`
+holding a key matching `"(verdict|finding)[A-Za-z0-9_]*"` and fails any one of them that does not
+contain the literal `STATEMENT OF FACT`. Parity requires every key in seven files (D-18). So the moment
+the first `verdict*` key ships — E10/T01 — six files must carry that string and the test forbids the
+only place ARB has to put it. There is no third option: a non-`@` key becomes a message and breaks
+parity; a `@@x-…` global still starts with `@` and still fails the test.
+
+**Why the gate wins on substance, not merely on the tie-break.** `verdict-copy-rules.md` says it
+outright about the Arabic imperative — «احتفظ به» is short, fluent, exactly what a translator asked for
+good Arabic produces, and invisible to every English-language grep: *"Both are caught only by the
+`@description` shipping with the key."* The gate's rule is that the constraint travels **with the
+translated file**. The test's rule is that duplicated descriptions drift. Both are true, and one block
+per file is the smallest thing that satisfies the first while conceding almost nothing to the second —
+the block carries no placeholders and no per-key wording, so there is nothing in it to drift out of
+step with the template.
+
+D-2's rule of thumb points the same way and is not the argument here: it settles a gate against
+*prose*, and this is a gate against a *test*.
+
+**What this obliges.** A task that adds the first `verdict*` or `finding*` key to a locale file adds
+the constraint block in the same change. A task that adds any other `@` block to a non-template file is
+adding drift, and the amended test still fails it.
+
+**Not amended:** `epics/E06-localisation/T01-arb-scaffolding.md` row 10, on D-18's precedent — its
+statement was true when written, it shipped, and the epic is merged; a completed task file is a record
+of what was done rather than a live instruction.
+
+**Applied by:** E10/T01, which ships the first `verdict*` keys and amends the test.
+
+---
+## D-20 — E10/T02 owns the authored icon family, and the verdict stamp is the one widget allowed to branch on the skin
+
+**Decision.** Three things land together, in `app/lib/theme/`:
+
+1. **`LonjaIcons`, `LonjaIcon` and `LonjaGlyphPainter`** — the authored, stroked family
+   `lonja-icons-and-plates` rule 1 requires and no epic owned. E10/T02 ships the four glyphs the
+   verdict stamp needs (`tick`, `cross`, `ban`, `closedSeason`); a later task adds a glyph when it has
+   a consumer, never before.
+2. **`LonjaIconTheme.stroke`** — 1.45 on paper and night, 1.95 in sunlight, constant across all four
+   sizes. Plus **`LonjaMotion.haptic`**, 120 ms, because `check_lonja_tokens.sh` check 3 fails a
+   literal `Duration` outside `lib/theme/`.
+3. **`LonjaSkinScope`** — which skin the subtree renders in, read by exactly one file in the app and
+   held to one by `app/test/theme/lonja_icons_test.dart`.
+
+**Losing sources.**
+
+| Source | What loses |
+|---|---|
+| `epics/E10-result/T02-the-verdict-panel.md` | `Icons.check`, `Icons.block`, `Icons.close` in its test table and outline. `check_lonja_icons.sh` check 5 bans the Material namespace outright, and the task file names that gate itself |
+| `catchlaw-conventions-index/references/routing-table.md` | `lib/design/` as the home of icon paths. D-2 puts the design system at `app/lib/theme/`, E07 built it there, and D-1 already overrules the routing table's root-relative `lib/` paths |
+| `lonja-verdict-and-status/references/states-and-signals.md` | its sunlight claim of "exactly one chromatic value (`#8E0F0C`)". E07's shipped sunlight palette carries three verdict chromas — `verdant36`, `oxblood28`, `ochre38` — and E07 argued each against `SPEC.md` §13's 7:1 floor. **The palette wins; the sentence is stale.** No greyscale-count test is written against the stale claim |
+
+**Why the family could not be deferred again.** E07 risk 5 left it unowned and named E08 as its first
+consumer; E08 shipped one-word text hints and needed no glyph. The verdict stamp cannot: invariant 4
+is that colour is never the only signal, and protected and below-minimum share one ink by design —
+`states-and-signals.md` spends a whole section on it. Hue therefore carries **zero** information
+between them, and what separates them is the glyph, the words and the presence of the measurement
+sub-line. Deferring the glyph would have shipped the one screen the product exists for with two of its
+three signals.
+
+**Why the skin branch is sanctioned exactly once.** E07's doctrine is that a widget never branches on
+the skin — the palette does the work, and a block leaning on `surfaceSunk` also carries a rule because
+in sunlight the change of stock does not exist. The sunlight stamp is not a colour swap: it reverses
+out onto a solid ground and gives up its tilt, because at 100 000 lux a hairline frame around tilted
+ink is absent rather than dim. That is a change of **construction**, and no palette entry can express
+one. A fifteenth token was rejected: E07 froze fourteen against a test, and "stamp ground" would be a
+slot that is transparent in two of three themes — a token whose value is "do not use me here".
+
+**What this obliges.** A glyph is added to `LonjaIcons` by the task that renders it. A second reader of
+`LonjaSkinScope.of` fails `lonja_icons_test.dart`, and the right answer is nearly always a palette
+entry instead. `token-tables.md` has no row for the icon stroke or the haptic gap — the outstanding
+skill correction E07 risk 5 asked for, still needing a task ID, like `product-invariants.md` §1.
+
+**Applied by:** E10/T02.
+
+---
+## D-21 — `flutter_svg` reaches `http` through `vector_graphics` too, and a recorded edge whose PARENT does not ship is a failure
+
+**Decision.** `tools/gates/allowlist/transitive_edges.txt` records, from this commit:
+
+```
+http <- flutter_svg
+http <- vector_graphics
+url_launcher_platform_interface <- share_plus
+```
+
+`http <- printing` is **commented out** and is re-recorded by E17, in the commit that adds
+`printing`. A line is added by the epic that lands its package, not before.
+
+**Losing sources.**
+
+| Source | What loses |
+|---|---|
+| `SPEC.md` §14 and §10 | their http-edge list. Both name `flutter_svg` as the parent; the resolved graph on `flutter_svg ^2.0` has **two** — `flutter_svg` directly, and its own `vector_graphics`. The recorded set was incomplete rather than wrong |
+| `tools/gates/allowlist/transitive_edges.txt`'s own E01 header | *"A recorded edge whose package is not in the shipping set is simply not checked, so the lines are inert until the package lands."* True of the **child**, false of the **parent** |
+
+**Why the header was wrong.** The gate skips an edge only when its *child* is absent
+(`if pkg not in ships: continue`, line 272). Once `http` ships, it compares the whole recorded parent
+set against the shipping one, so `http <- printing` becomes a failure the moment any other package
+pulls `http` in — which is exactly what adding `flutter_svg` did. The claim was never checked against
+the gate, and D-2's rule of thumb settles it: the gate wins.
+
+**Why the second parent is not a hole in invariant 1.** `vector_graphics` is inside `flutter_svg`'s
+own package family — `flutter_svg → vector_graphics → http` — and both entry points that would use it
+are grep-banned by `catchlaw-offline-guarantee` and by `check_no_network.sh`, which is green over
+`app/lib`. What widened is the RECORD of the graph, not the guarantee: no HTTP client is constructed,
+no fetching symbol is reachable, and the release Android manifest still grants no INTERNET permission.
+
+**What this obliges.** The epic that adds `printing` or `share_plus` re-records its edge in the same
+commit, regenerates `tools/gates/testdata/deps/deps_clean.json` from `dart pub deps --json`, and
+re-runs `dart pub deps --json | python3 tools/gates/check_dependency_allowlist.py --write`. A resolver
+upgrade that adds a third parent for `http` fails the gate, and that is the point.
+
+**Applied by:** E10/T04, which adds `flutter_svg` for the measurement diagram.
+
+---

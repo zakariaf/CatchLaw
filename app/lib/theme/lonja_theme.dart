@@ -1,3 +1,4 @@
+import 'package:catchlaw/theme/lonja_icons.dart';
 import 'package:catchlaw/theme/lonja_primitives.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
@@ -84,6 +85,53 @@ abstract final class LonjaPalettes {
   );
 }
 
+/// Which skin the subtree is rendering in.
+///
+/// **E07's doctrine is that a widget never branches on the skin** — the palette
+/// does the work, and a block that leans on `surfaceSunk` carries a rule as
+/// well, because in sunlight the change of stock does not exist. This extension
+/// exists for the one case that doctrine cannot reach: the verdict stamp
+/// REVERSES OUT in sunlight — solid ground, ground-coloured ink, no tilt —
+/// because at 100 000 lux a hairline frame is absent rather than dim.
+///
+/// That is a change of CONSTRUCTION, not of colour, and no palette entry can
+/// express a change of construction. D-20 records it as the single sanctioned
+/// branch, and `app/test/theme/skin_scope_test.dart` is what keeps it single.
+@immutable
+class LonjaSkinScope extends ThemeExtension<LonjaSkinScope> {
+  /// Records [skin].
+  const LonjaSkinScope({required this.skin});
+
+  /// The skin in scope.
+  final LonjaSkin skin;
+
+  /// The skin the tree renders in.
+  ///
+  /// Asserts rather than falling back, exactly as `LonjaTokens.of` does: a
+  /// default here is a fourth theme nobody authored.
+  static LonjaSkin of(BuildContext context) {
+    final LonjaSkinScope? scope = Theme.of(context).extension<LonjaSkinScope>();
+    assert(scope != null, 'no LonjaSkinScope in scope — mount through resolveLonjaTheme');
+    return scope!.skin;
+  }
+
+  @override
+  LonjaSkinScope copyWith({LonjaSkin? skin}) => LonjaSkinScope(skin: skin ?? this.skin);
+
+  /// Does not interpolate. A skin is a construction, and half a construction is
+  /// not one.
+  @override
+  LonjaSkinScope lerp(covariant LonjaSkinScope? other, double t) =>
+      t < 0.5 ? this : (other ?? this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is LonjaSkinScope && other.skin == skin;
+
+  @override
+  int get hashCode => skin.hashCode;
+}
+
 /// The theme axis, and the only one.
 ///
 /// **Not a `ThemeMode`.** `ThemeMode` has three values and one of them is
@@ -117,11 +165,11 @@ enum LonjaSkin {
 abstract final class LonjaTheme {
   /// The paper theme.
   static ThemeData paper({LonjaDensity density = LonjaDensity.standard}) =>
-      _build(LonjaPalettes.paper, Brightness.light, density);
+      _build(LonjaSkin.paper, LonjaPalettes.paper, Brightness.light, density);
 
   /// The night theme.
   static ThemeData night({LonjaDensity density = LonjaDensity.standard}) =>
-      _build(LonjaPalettes.night, Brightness.dark, density);
+      _build(LonjaSkin.night, LonjaPalettes.night, Brightness.dark, density);
 
   /// The sunlight theme.
   ///
@@ -131,83 +179,100 @@ abstract final class LonjaTheme {
   /// Its ramp carries a `w500` floor. At 100 000 lux a `w400` stem thins to
   /// nothing against white long before its contrast ratio says anything is
   /// wrong — the failure sunlight exists to prevent is not a ratio failure.
-  static ThemeData sunlight({LonjaDensity density = LonjaDensity.standard}) =>
-      _build(LonjaPalettes.sunlight, Brightness.light, density, minWeight: FontWeight.w500);
+  static ThemeData sunlight({LonjaDensity density = LonjaDensity.standard}) => _build(
+    LonjaSkin.sunlight,
+    LonjaPalettes.sunlight,
+    Brightness.light,
+    density,
+    minWeight: FontWeight.w500,
+    // The burin widens at 100 000 lux and nowhere else: a 1.45 stroke in
+    // direct sun is absent rather than thin (D-20).
+    iconStroke: 1.95,
+  );
 
   static ThemeData _build(
+    LonjaSkin skin,
     LonjaTokens palette,
     Brightness brightness,
     LonjaDensity density, {
     FontWeight minWeight = FontWeight.w100,
+    double iconStroke = 1.45,
   }) {
     // The single lever T02 left open, used here and nowhere else.
     final LonjaTokens tokens = palette.copyWith(density: density);
-    return _themeFor(tokens, brightness, minWeight);
+    return _themeFor(skin, tokens, brightness, minWeight, iconStroke);
   }
 
-  static ThemeData _themeFor(LonjaTokens tokens, Brightness brightness, FontWeight minWeight) =>
-      ThemeData(
-        brightness: brightness,
-        scaffoldBackgroundColor: tokens.surface,
-        // Paper does not float. The cheapest way a shadow appears in this app is a
-        // Material default nobody overrode, so it is overridden here once.
-        shadowColor: const Color(0x00000000),
-        colorScheme: ColorScheme(
-          brightness: brightness,
-          primary: tokens.accent,
-          onPrimary: tokens.onAccent,
-          secondary: tokens.accent,
-          onSecondary: tokens.onAccent,
-          error: tokens.verdictFail,
-          onError: tokens.onAccent,
-          surface: tokens.surface,
-          onSurface: tokens.onSurface,
-        ),
-        // A printed page separates things three ways — a rule, a change of stock,
-        // or space — and has no fourth mechanism and no z-axis. The moment a
-        // surface gains elevation, tint or a radius it stops reading as a document
-        // and starts reading as an app overlay, and this app's entire authority
-        // claim is a document claim. One elevated card reframes the screen.
-        dividerTheme: DividerThemeData(
-          color: tokens.hairline,
-          thickness: LonjaRules.rule,
-          space: LonjaSpace.s4,
-        ),
-        cardTheme: CardThemeData(
-          elevation: 0,
-          margin: EdgeInsets.zero,
-          color: tokens.surfaceSunk,
-          surfaceTintColor: const Color(0x00000000),
-          shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
-        ),
-        dialogTheme: DialogThemeData(
-          elevation: 0,
-          backgroundColor: tokens.surface,
-          surfaceTintColor: const Color(0x00000000),
-          shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
-        ),
-        bottomSheetTheme: BottomSheetThemeData(
-          elevation: 0,
-          backgroundColor: tokens.surface,
-          surfaceTintColor: const Color(0x00000000),
-          shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
-        ),
-        snackBarTheme: SnackBarThemeData(
-          elevation: 0,
-          backgroundColor: tokens.surfaceSunk,
-          behavior: SnackBarBehavior.fixed,
-          shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
-        ),
-        // Paper does not ripple.
-        splashFactory: NoSplash.splashFactory,
-        extensions: <ThemeExtension<dynamic>>[
-          tokens,
-          LonjaType(
-            latin: LonjaTypeScale.latin(minWeight: minWeight),
-            arabic: LonjaTypeScale.arabic(minWeight: minWeight),
-          ),
-        ],
-      );
+  static ThemeData _themeFor(
+    LonjaSkin skin,
+    LonjaTokens tokens,
+    Brightness brightness,
+    FontWeight minWeight,
+    double iconStroke,
+  ) => ThemeData(
+    brightness: brightness,
+    scaffoldBackgroundColor: tokens.surface,
+    // Paper does not float. The cheapest way a shadow appears in this app is a
+    // Material default nobody overrode, so it is overridden here once.
+    shadowColor: const Color(0x00000000),
+    colorScheme: ColorScheme(
+      brightness: brightness,
+      primary: tokens.accent,
+      onPrimary: tokens.onAccent,
+      secondary: tokens.accent,
+      onSecondary: tokens.onAccent,
+      error: tokens.verdictFail,
+      onError: tokens.onAccent,
+      surface: tokens.surface,
+      onSurface: tokens.onSurface,
+    ),
+    // A printed page separates things three ways — a rule, a change of stock,
+    // or space — and has no fourth mechanism and no z-axis. The moment a
+    // surface gains elevation, tint or a radius it stops reading as a document
+    // and starts reading as an app overlay, and this app's entire authority
+    // claim is a document claim. One elevated card reframes the screen.
+    dividerTheme: DividerThemeData(
+      color: tokens.hairline,
+      thickness: LonjaRules.rule,
+      space: LonjaSpace.s4,
+    ),
+    cardTheme: CardThemeData(
+      elevation: 0,
+      margin: EdgeInsets.zero,
+      color: tokens.surfaceSunk,
+      surfaceTintColor: const Color(0x00000000),
+      shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
+    ),
+    dialogTheme: DialogThemeData(
+      elevation: 0,
+      backgroundColor: tokens.surface,
+      surfaceTintColor: const Color(0x00000000),
+      shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      elevation: 0,
+      backgroundColor: tokens.surface,
+      surfaceTintColor: const Color(0x00000000),
+      shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
+    ),
+    snackBarTheme: SnackBarThemeData(
+      elevation: 0,
+      backgroundColor: tokens.surfaceSunk,
+      behavior: SnackBarBehavior.fixed,
+      shape: const RoundedRectangleBorder(borderRadius: LonjaRadii.none),
+    ),
+    // Paper does not ripple.
+    splashFactory: NoSplash.splashFactory,
+    extensions: <ThemeExtension<dynamic>>[
+      tokens,
+      LonjaIconTheme(stroke: iconStroke),
+      LonjaSkinScope(skin: skin),
+      LonjaType(
+        latin: LonjaTypeScale.latin(minWeight: minWeight),
+        arabic: LonjaTypeScale.arabic(minWeight: minWeight),
+      ),
+    ],
+  );
 }
 
 /// The one place in the app where the two axes cross.

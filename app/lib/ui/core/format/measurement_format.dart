@@ -31,20 +31,34 @@ String formatMeasurement(
   required String methodLabel,
   required MeasurementPatterns patterns,
 }) {
-  final String value = switch (unit) {
-    // Formatted through LengthDisplay first, so the rounding rule lives in one
-    // place, then through the locale's own NumberFormat so the digits and the
-    // decimal separator are the reader's.
-    LengthUnit.mm => numbers.format(millimetres),
-    LengthUnit.cm => _localise(LengthDisplay.format(millimetres, LengthUnit.cm), numbers),
-    LengthUnit.inches => _localise(LengthDisplay.format(millimetres, LengthUnit.inches), numbers),
-  };
+  final String value = formatLengthValue(millimetres, unit: unit, numbers: numbers);
   return switch (unit) {
     LengthUnit.mm => patterns.mm(value, methodLabel),
     LengthUnit.cm => patterns.cm(value, methodLabel),
     LengthUnit.inches => patterns.inch(value, methodLabel),
   };
 }
+
+/// [millimetres] in [unit], as a localised number with no unit and no method.
+///
+/// Split out of [formatMeasurement] because a verdict sentence needs the bare
+/// number: `catchlaw-verdict-contract`'s skeleton puts the unit after each of
+/// the two numbers and the method once at the end, so the unit is a placeholder
+/// in the ARB message rather than glued on here. It is NOT a way to print a
+/// length on its own — the sentence around it carries the method, which is what
+/// makes the number actionable.
+String formatLengthValue(
+  int millimetres, {
+  required LengthUnit unit,
+  required NumberFormat numbers,
+}) => switch (unit) {
+  // Formatted through LengthDisplay first, so the rounding rule lives in one
+  // place, then through the locale's own NumberFormat so the digits and the
+  // decimal separator are the reader's.
+  LengthUnit.mm => numbers.format(millimetres),
+  LengthUnit.cm => _localise(LengthDisplay.format(millimetres, LengthUnit.cm), numbers),
+  LengthUnit.inches => _localise(LengthDisplay.format(millimetres, LengthUnit.inches), numbers),
+};
 
 /// Re-renders an ASCII decimal through the locale's own formatter.
 ///
