@@ -57,7 +57,7 @@ other epic is strictly sequential.
 
 ## Status
 
-**E01 through E08 are merged.** Every epic below them is `not started`.
+**E01 through E09 are merged.** Every epic below them is `not started`.
 
 | Epic | Branch | PR | Checks | Merged |
 |---|---|---|---|---|
@@ -69,7 +69,7 @@ other epic is strictly sequential.
 | E06 | `epic/06-localisation` | [#8](https://github.com/zakariaf/CatchLaw/pull/8) | all green | ☑ |
 | E07 | `epic/07-lonja-theme` | [#10](https://github.com/zakariaf/CatchLaw/pull/10) | all green | ☑ |
 | E08 | `epic/08-species` | [#12](https://github.com/zakariaf/CatchLaw/pull/12) | all green | ☑ |
-| E09 | — | — | — | ☐ |
+| E09 | `epic/09-ruler` | [#14](https://github.com/zakariaf/CatchLaw/pull/14) | all green | ☑ |
 | E10 | — | — | — | ☐ |
 | E11 | — | — | — | ☐ |
 | E12 | — | — | — | ☐ |
