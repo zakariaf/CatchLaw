@@ -495,6 +495,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get navCheck => 'Verificar';
 
   @override
+  String get destinationNotBuiltYet =>
+      'Esta versão responde a uma única pergunta: se um peixe cumpre as regras no local onde foi desembarcado. Esta parte ainda não foi construída.';
+
+  @override
   String get navToday => 'Hoje';
 
   @override
@@ -1017,6 +1021,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get navCheck => 'Verificar';
+
+  @override
+  String get destinationNotBuiltYet =>
+      'Esta versão responde a uma única pergunta: se um peixe cumpre as regras no local onde foi desembarcado. Esta parte ainda não foi construída.';
 
   @override
   String get navToday => 'Hoje';

@@ -496,6 +496,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navCheck => 'فحص';
 
   @override
+  String get destinationNotBuiltYet =>
+      'هذا الإصدار يجيب عن سؤال واحد: هل تستوفي السمكة القواعد في المكان الذي جرى إنزالها فيه. هذا الجزء لم يُبنَ بعد.';
+
+  @override
   String get navToday => 'اليوم';
 
   @override

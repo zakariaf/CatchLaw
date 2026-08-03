@@ -60,7 +60,7 @@ governs the type VALUES and which role is mandatory where.
    how a 16-step ramp becomes 40 sizes that no reviewer can hold in their head.
 
 5. **Tracking is authored in logical pixels, NEVER em.** Flutter's `letterSpacing` is absolute
-   logical px, so the mockup's `0.14em` on a 10.5px eyebrow is `letterSpacing: 1.47`, not `0.14`.
+   logical px, so the mockup's `0.14em` on a 12.5px eyebrow is `letterSpacing: 1.75`, not `0.14`.
    Copying the CSS number verbatim ships an eyebrow with one hundredth of its intended tracking,
    which looks like a plain bold label rather than a gazette rubric.
 

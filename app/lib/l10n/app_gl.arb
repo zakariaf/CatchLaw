@@ -119,6 +119,7 @@
   "zoneNoPublishedBoundaries": "{authority} non publica límites de coordenadas. As normas rexistradas aquí aplícanse a toda a xurisdición.",
   "zoneWaterChoiceRequired": "Hai que escoller mar ou augas continentais antes de que este lugar poida responder.",
   "navCheck": "Comprobar",
+  "destinationNotBuiltYet": "Esta versión responde a unha soa pregunta: se un peixe cumpre as normas no lugar onde foi desembarcado. Esta parte aínda non está construída.",
   "navToday": "Hoxe",
   "navTrips": "Mareas",
   "navReference": "Referencia",

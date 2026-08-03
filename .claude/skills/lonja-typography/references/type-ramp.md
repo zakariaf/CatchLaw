@@ -25,20 +25,46 @@ px column is what you type. All mono steps carry `FontFeature.tabularFigures()`.
 |-----------------|-------|------|--------|--------|---------------|---------------|---------------------------------------------------------|
 | `verdict`       | serif | 40   | w700   | 1.02   | -0.020        | -0.80         | The verdict stamp, and nothing else                      |
 | `display`       | serif | 30   | w600   | 1.10   | -0.005        | -0.15         | Species vernacular name on the account screen            |
-| `title`         | serif | 23   | w600   | 1.15   |  0.000        |  0.00         | Screen headings, section heads in a species account      |
-| `subtitle`      | serif | 19   | w600   | 1.25   |  0.000        |  0.00         | Sub-heads, zone name on the result screen                |
-| `legal`         | serif | 16   | w400   | 1.62   |  0.005        |  0.08         | Article text, the reason line, the disclaimer            |
-| `legalSmall`    | serif | 14   | w400   | 1.55   |  0.010        |  0.14         | Footnotes, source note, secondary legal prose            |
-| `binomial`      | serif | 15   | w400   | 1.45   |  0.010        |  0.15         | Scientific names ONLY — italic, the app's only italic    |
-| `uiLarge`       | sans  | 17   | w600   | 1.20   |  0.010        |  0.17         | Primary button labels in glove mode                      |
-| `ui`            | sans  | 15   | w500   | 1.35   |  0.010        |  0.15         | Buttons, nav labels, chips                               |
-| `uiSmall`       | sans  | 13   | w500   | 1.40   |  0.020        |  0.26         | Helper text, secondary chrome, zone chips                |
-| `eyebrow`       | sans  | 10.5 | w600   | 1.10   |  0.140        |  1.47         | Tracked uppercase block labels: VERDICT, SPECIES, ZONE   |
-| `microLabel`    | sans  |  9.5 | w600   | 1.10   |  0.200        |  1.90         | Gazette margin rubrics, table column heads               |
+| `title`         | serif | 24   | w600   | 1.15   |  0.000        |  0.00         | Screen headings, section heads in a species account      |
+| `subtitle`      | serif | 20   | w600   | 1.25   |  0.000        |  0.00         | Sub-heads, zone name on the result screen                |
+| `legal`         | serif | 17   | w400   | 1.62   |  0.005        |  0.09         | Article text, the reason line, the disclaimer            |
+| `legalSmall`    | serif | 15   | w400   | 1.55   |  0.010        |  0.15         | Footnotes, source note, secondary legal prose            |
+| `binomial`      | serif | 16   | w400   | 1.45   |  0.010        |  0.16         | Scientific names ONLY — italic, the app's only italic    |
+| `uiLarge`       | sans  | 18   | w600   | 1.20   |  0.010        |  0.18         | Primary button labels in glove mode                      |
+| `ui`            | sans  | 16   | w500   | 1.35   |  0.010        |  0.16         | Buttons, nav labels, chips                               |
+| `uiSmall`       | sans  | 14   | w500   | 1.40   |  0.020        |  0.28         | Helper text, secondary chrome, zone chips                |
+| `eyebrow`       | sans  | 12.5 | w600   | 1.10   |  0.140        |  1.75         | Tracked uppercase block labels: VERDICT, SPECIES, ZONE   |
+| `microLabel`    | sans  | 11.5 | w600   | 1.10   |  0.200        |  2.30         | Gazette margin rubrics, table column heads               |
 | `measure`       | mono  | 34   | w600   | 1.00   | -0.010        | -0.34         | The single large measurement readout (`38 cm`)           |
-| `datum`         | mono  | 15   | w500   | 1.30   |  0.010        |  0.15         | Limits, table cells, `min 45 cm total length`            |
-| `citation`      | mono  | 12   | w400   | 1.50   |  0.020        |  0.24         | Instrument, article, published date, checked date        |
-| `articleNumber` | mono  | 11   | w600   | 1.00   |  0.060        |  0.66         | Margin rail article numbers (`Art. 3`)                   |
+| `datum`         | mono  | 16   | w500   | 1.30   |  0.010        |  0.16         | Limits, table cells, `min 45 cm total length`            |
+| `citation`      | mono  | 14   | w400   | 1.50   |  0.020        |  0.28         | Instrument, article, published date, checked date        |
+| `articleNumber` | mono  | 12.5 | w600   | 1.00   |  0.060        |  0.75         | Margin rail article numbers (`Art. 3`)                   |
+
+### The floor, and why the small end was lifted
+
+**Nothing a fisher must read is set below 11.5.** The first ramp put `eyebrow` at 10.5 and
+`microLabel` at 9.5, and both were unreadable on a phone at arm's length — reported from a real
+device, not from a golden. The values were calibrated as if for a printed page held close; this app
+is held at arm's length, at 05:40, in glare, with wet hands, by eyes that are frequently not young.
+Below about 11.5 the tracked uppercase labels stop resolving as words and become texture.
+
+`citation` moved 12 → 14 for a different reason. It is the instrument, the article and the two dates —
+the text a fisher holds up to an inspector, and the only part of the screen that answers *"says who?"*.
+Setting the provenance smaller than the helper text inverted what matters.
+
+**The top of the ramp did not move.** `verdict`, `display`, `measure` are unchanged, so lifting the
+bottom compressed the ratio rather than inflating the whole page: the stamp is still the largest thing
+on the screen by a wide margin, and the hierarchy reads the same. `title` and `subtitle` moved one step
+each only to keep the gap above `legal` from closing.
+
+**Tracking is recomputed, never carried over.** The `em` column is the design intent and is unchanged;
+the `px` column is `em × size` and every row was recalculated. Keeping the old pixel values would have
+quietly loosened every tracked label in proportion to its lift — which on `eyebrow` is a 19 % size
+increase against tracking that no longer matches it.
+
+**Arabic follows automatically.** Every Arabic step is its Latin counterpart × 1.12 and carries
+`letterSpacing: 0`, because letterspacing breaks Naskh joining. Both scales were rewritten from the
+same table, so the uplift cannot drift between them.
 
 Sixteen steps. If a design needs a seventeenth, it is added here and to
 `lib/theme/lonja_typography.dart` in the same commit — never invented at a call site.

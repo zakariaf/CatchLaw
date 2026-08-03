@@ -493,6 +493,10 @@ class AppLocalizationsGl extends AppLocalizations {
   String get navCheck => 'Comprobar';
 
   @override
+  String get destinationNotBuiltYet =>
+      'Esta versión responde a unha soa pregunta: se un peixe cumpre as normas no lugar onde foi desembarcado. Esta parte aínda non está construída.';
+
+  @override
   String get navToday => 'Hoxe';
 
   @override

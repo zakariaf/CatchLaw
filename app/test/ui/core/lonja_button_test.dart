@@ -6,6 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../testing/theme/pump_lonja.dart';
 
+import '../../../testing/theme/type_ramp_table.dart';
+
 ButtonStyle _styleOf(WidgetTester tester) =>
     tester.widget<TextButton>(find.byType(TextButton)).style!;
 
@@ -60,7 +62,12 @@ void main() {
       LonjaButton.primary(label: 'Measure again', onPressed: () {}),
       gloved: true,
     );
-    expect(_styleOf(tester).textStyle!.resolve(<WidgetState>{})!.fontSize, 17);
+    // uiLarge, read from the ramp rather than typed: a hardcoded number here
+    // is a second copy of the table that silently disagrees with it.
+    expect(
+      _styleOf(tester).textStyle!.resolve(<WidgetState>{})!.fontSize,
+      rampStep('uiLarge').size,
+    );
   });
 
   testWidgets('LonjaButton casts no shadow and sits at zero elevation', (

@@ -806,6 +806,12 @@ abstract class AppLocalizations {
   /// **'Check'**
   String get navCheck;
 
+  /// Shown on the four navigation branches this release does not build. A STATEMENT OF FACT about what this version contains — it does not apologise, does not promise a date, and does not tell the reader to do anything. A branch that renders only its own name reads as a broken screen rather than as one that is not built.
+  ///
+  /// In en, this message translates to:
+  /// **'This version answers one question: whether a fish meets the rules in the place it was landed. This part is not built yet.'**
+  String get destinationNotBuiltYet;
+
   /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
   ///
   /// In en, this message translates to:

@@ -119,6 +119,7 @@
   "zoneNoPublishedBoundaries": "{authority} não publica limites de coordenadas. As normas registradas aqui se aplicam a toda a jurisdição.",
   "zoneWaterChoiceRequired": "É preciso escolher mar ou águas interiores antes que este lugar possa responder.",
   "navCheck": "Verificar",
+  "destinationNotBuiltYet": "Esta versão responde a uma única pergunta: se um peixe cumpre as regras no local onde foi desembarcado. Esta parte ainda não foi construída.",
   "navToday": "Hoje",
   "navTrips": "Pescarias",
   "navReference": "Referência",

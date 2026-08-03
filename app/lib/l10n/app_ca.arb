@@ -119,6 +119,7 @@
   "zoneNoPublishedBoundaries": "{authority} no publica límits de coordenades. Les normes registrades aquí s’apliquen a tota la jurisdicció.",
   "zoneWaterChoiceRequired": "Cal triar mar o aigües continentals abans que aquest lloc pugui respondre.",
   "navCheck": "Comprova",
+  "destinationNotBuiltYet": "Aquesta versió respon una sola pregunta: si un peix compleix les normes al lloc on es va desembarcar. Aquesta part encara no està construïda.",
   "navToday": "Avui",
   "navTrips": "Sortides",
   "navReference": "Referència",

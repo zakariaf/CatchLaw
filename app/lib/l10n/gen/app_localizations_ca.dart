@@ -501,6 +501,10 @@ class AppLocalizationsCa extends AppLocalizations {
   String get navCheck => 'Comprova';
 
   @override
+  String get destinationNotBuiltYet =>
+      'Aquesta versió respon una sola pregunta: si un peix compleix les normes al lloc on es va desembarcar. Aquesta part encara no està construïda.';
+
+  @override
   String get navToday => 'Avui';
 
   @override

@@ -6,9 +6,18 @@ import 'package:flutter/material.dart';
 
 /// A branch this release does not build.
 ///
-/// **One class for all four**, not four classes: it renders the destination's
-/// own translated label and nothing else, so it adds no ARB key that E13, E15
-/// or E16 will have to delete when they replace it.
+/// **One class for all four**, not four classes.
+///
+/// It carried the destination's label and nothing else, on the reasoning that a
+/// label-only screen adds no ARB key for E13, E15 or E16 to delete. That was one
+/// key saved and four screens that looked broken: a single grey word on an empty
+/// page reads as a screen that failed to load, not as one this release does not
+/// build — and the reader cannot tell the difference, which is the whole point
+/// of saying so.
+///
+/// So it states the fact instead, in one key those epics delete along with this
+/// file. The sentence does not apologise, does not promise a date and does not
+/// tell the reader to do anything; it says what this version contains.
 ///
 /// Today and Trips are E13's, Reference is E15's, Settings is E16's — all v2
 /// (`epics/RELEASES.md`). The strip carries five cells in v1 because §6
@@ -31,10 +40,18 @@ class DestinationPlaceholder extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsetsDirectional.all(tokens.density.gutter),
-          child: Text(
-            destination.label(l10n),
-            style: type.title.copyWith(color: tokens.onSurfaceMuted),
-            textAlign: TextAlign.start,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(destination.label(l10n), style: type.title, textAlign: TextAlign.start),
+              SizedBox(height: tokens.density.tapGap),
+              Text(
+                l10n.destinationNotBuiltYet,
+                style: type.legal.copyWith(color: tokens.onSurfaceMuted),
+                textAlign: TextAlign.start,
+              ),
+            ],
           ),
         ),
       ),
