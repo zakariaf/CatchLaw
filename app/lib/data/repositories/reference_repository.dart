@@ -1,3 +1,4 @@
+import 'package:catchlaw/domain/models/jurisdiction.dart';
 import 'package:catchlaw/domain/models/species.dart';
 import 'package:meta/meta.dart';
 import 'package:rule_engine/rule_engine.dart' show Citation, ClosedSeason, Result, Rule;
@@ -55,7 +56,16 @@ abstract interface class ReferenceRepository {
   @useResult
   Future<Result<Map<String, String>>> strings(Iterable<String> keys, String locale);
 
-  /// The zones of one jurisdiction.
+  /// Every jurisdiction the shipped pack carries, in code order.
+  ///
+  /// The picker's top two levels come from this one read: §7.1 has no `country`
+  /// table, so a country is `country_iso2` grouped. One statement rather than a
+  /// query per country — the whole set is a handful of rows, and a query per
+  /// level is a round trip per tap.
+  @useResult
+  Future<Result<List<Jurisdiction>>> jurisdictions();
+
+  /// Every zone of one jurisdiction.
   @useResult
   Future<Result<List<Zone>>> zones(int jurisdictionId);
 

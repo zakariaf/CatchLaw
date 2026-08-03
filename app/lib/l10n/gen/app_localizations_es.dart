@@ -436,4 +436,46 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get disclaimerNotDismissable => 'No se puede descartar.';
+
+  @override
+  String get zonePickerTitle => '¿Dónde pescas?';
+
+  @override
+  String get zoneLevelCountry => 'País';
+
+  @override
+  String get zoneLevelRegion => 'Región';
+
+  @override
+  String get zoneLevelSubZone => 'Subzona';
+
+  @override
+  String get zoneWaterSalt => 'Mar';
+
+  @override
+  String get zoneWaterFresh => 'Aguas continentales';
+
+  @override
+  String get zonePickerConfirm => 'Usar este lugar';
+
+  @override
+  String get zonePickerEmptyHeadline => 'No hay normas incluidas para este país';
+
+  @override
+  String get zonePickerEmptyBody =>
+      'Esta versión no lleva ninguna norma transcrita. Esto no significa que no existan.';
+
+  @override
+  String get zonePickerLoadFailed => 'No se pudo leer el paquete de normas incluido.';
+
+  @override
+  String countryName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ES': 'España',
+      'AE': 'Emiratos Árabes Unidos',
+      'BR': 'Brasil',
+      'other': '$code',
+    });
+    return '$_temp0';
+  }
 }

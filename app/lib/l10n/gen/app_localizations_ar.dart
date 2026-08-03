@@ -438,4 +438,45 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get disclaimerNotDismissable => 'لا يمكن إخفاء هذا التنبيه.';
+
+  @override
+  String get zonePickerTitle => 'أين تصطاد؟';
+
+  @override
+  String get zoneLevelCountry => 'الدولة';
+
+  @override
+  String get zoneLevelRegion => 'المنطقة';
+
+  @override
+  String get zoneLevelSubZone => 'المنطقة الفرعية';
+
+  @override
+  String get zoneWaterSalt => 'البحر';
+
+  @override
+  String get zoneWaterFresh => 'المياه الداخلية';
+
+  @override
+  String get zonePickerConfirm => 'استخدام هذا المكان';
+
+  @override
+  String get zonePickerEmptyHeadline => 'لا توجد قواعد مضمّنة لهذه الدولة';
+
+  @override
+  String get zonePickerEmptyBody => 'لا يحمل هذا الإصدار أي نص منقول عنها. هذا لا يعني عدم وجودها.';
+
+  @override
+  String get zonePickerLoadFailed => 'تعذّرت قراءة حزمة القواعد المضمّنة.';
+
+  @override
+  String countryName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ES': 'إسبانيا',
+      'AE': 'الإمارات العربية المتحدة',
+      'BR': 'البرازيل',
+      'other': '$code',
+    });
+    return '$_temp0';
+  }
 }

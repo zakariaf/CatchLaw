@@ -103,5 +103,16 @@
   "flagRuleSaveAction": "حفظ هذه الملاحظة على هذا الجهاز",
   "flagRuleRecorded": "حُفظت على هذا الجهاز.",
   "flagRuleEmptyNote": "الملاحظة فارغة.",
-  "disclaimerNotDismissable": "لا يمكن إخفاء هذا التنبيه."
+  "disclaimerNotDismissable": "لا يمكن إخفاء هذا التنبيه.",
+  "zonePickerTitle": "أين تصطاد؟",
+  "zoneLevelCountry": "الدولة",
+  "zoneLevelRegion": "المنطقة",
+  "zoneLevelSubZone": "المنطقة الفرعية",
+  "zoneWaterSalt": "البحر",
+  "zoneWaterFresh": "المياه الداخلية",
+  "zonePickerConfirm": "استخدام هذا المكان",
+  "zonePickerEmptyHeadline": "لا توجد قواعد مضمّنة لهذه الدولة",
+  "zonePickerEmptyBody": "لا يحمل هذا الإصدار أي نص منقول عنها. هذا لا يعني عدم وجودها.",
+  "zonePickerLoadFailed": "تعذّرت قراءة حزمة القواعد المضمّنة.",
+  "countryName": "{code, select, ES{إسبانيا} AE{الإمارات العربية المتحدة} BR{البرازيل} other{{code}}}"
 }

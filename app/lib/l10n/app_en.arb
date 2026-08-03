@@ -719,5 +719,54 @@
   "disclaimerNotDismissable": "It cannot be dismissed.",
   "@disclaimerNotDismissable": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The mono line under the disclaimer, which makes the disclaimer’s absence legible in a screenshot: a reader looking at a screen grab can tell whether the sentence above was ever there. It states a property of the screen, never an instruction."
+  },
+  "zonePickerTitle": "Where are you fishing?",
+  "@zonePickerTitle": {
+    "description": "S9’s question. It asks where he IS, not where he wants the rules to come from — the place decides which instrument applies, and he is not choosing a jurisdiction the way one chooses a setting."
+  },
+  "zoneLevelCountry": "Country",
+  "@zoneLevelCountry": {
+    "description": "Level label. A noun."
+  },
+  "zoneLevelRegion": "Region",
+  "@zoneLevelRegion": {
+    "description": "Level label. The authority that publishes, which §7.1 calls a jurisdiction and a fisher calls a region."
+  },
+  "zoneLevelSubZone": "Sub-zone",
+  "@zoneLevelSubZone": {
+    "description": "Level label. Offered only where the pack printed coordinates."
+  },
+  "zoneWaterSalt": "Sea",
+  "@zoneWaterSalt": {
+    "description": "Water choice. Offered only where the authority publishes both sea and inland rules."
+  },
+  "zoneWaterFresh": "Inland water",
+  "@zoneWaterFresh": {
+    "description": "Water choice. Offered only where the authority publishes both sea and inland rules."
+  },
+  "zonePickerConfirm": "Use this place",
+  "@zonePickerConfirm": {
+    "description": "Names the effect: the place is remembered and the next launch opens already knowing it."
+  },
+  "zonePickerEmptyHeadline": "No rules bundled for this country",
+  "@zonePickerEmptyHeadline": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A country with no bundled jurisdiction. It states what this BUILD carries, never what the country regulates."
+  },
+  "zonePickerEmptyBody": "This build carries no transcribed instrument for it. That does not mean there are none.",
+  "@zonePickerEmptyBody": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The second sentence is mandatory and may not be softened or merged: an absence in the pack is not an absence of law, and a reader who takes it as one is exactly the failure the no-rule wording exists to prevent."
+  },
+  "zonePickerLoadFailed": "The bundled rule pack could not be read.",
+  "@zonePickerLoadFailed": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A read that failed, said plainly. It must not be rendered as an empty list: a picker showing no countries because a file was locked reads as a claim that the app ships nowhere."
+  },
+  "countryName": "{code, select, ES{Spain} AE{United Arab Emirates} BR{Brazil} other{{code}}}",
+  "@countryName": {
+    "description": "The shipped country names, selected by ISO code. `other` falls through to the code itself rather than to a guess: an unrecognised country is a pack this build did not produce, and a wrong country name on a legal screen is worse than a bare code.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
   }
 }

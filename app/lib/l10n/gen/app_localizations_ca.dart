@@ -442,4 +442,46 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get disclaimerNotDismissable => 'No es pot descartar.';
+
+  @override
+  String get zonePickerTitle => 'On pesques?';
+
+  @override
+  String get zoneLevelCountry => 'País';
+
+  @override
+  String get zoneLevelRegion => 'Regió';
+
+  @override
+  String get zoneLevelSubZone => 'Subzona';
+
+  @override
+  String get zoneWaterSalt => 'Mar';
+
+  @override
+  String get zoneWaterFresh => 'Aigües continentals';
+
+  @override
+  String get zonePickerConfirm => 'Usa aquest lloc';
+
+  @override
+  String get zonePickerEmptyHeadline => 'No hi ha normes incloses per a aquest país';
+
+  @override
+  String get zonePickerEmptyBody =>
+      'Aquesta versió no porta cap norma transcrita. Això no vol dir que no n’hi hagi.';
+
+  @override
+  String get zonePickerLoadFailed => 'No s’ha pogut llegir el paquet de normes inclòs.';
+
+  @override
+  String countryName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ES': 'Espanya',
+      'AE': 'Emirats Àrabs Units',
+      'BR': 'Brasil',
+      'other': '$code',
+    });
+    return '$_temp0';
+  }
 }

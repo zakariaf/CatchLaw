@@ -715,6 +715,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'It cannot be dismissed.'**
   String get disclaimerNotDismissable;
+
+  /// S9’s question. It asks where he IS, not where he wants the rules to come from — the place decides which instrument applies, and he is not choosing a jurisdiction the way one chooses a setting.
+  ///
+  /// In en, this message translates to:
+  /// **'Where are you fishing?'**
+  String get zonePickerTitle;
+
+  /// Level label. A noun.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get zoneLevelCountry;
+
+  /// Level label. The authority that publishes, which §7.1 calls a jurisdiction and a fisher calls a region.
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get zoneLevelRegion;
+
+  /// Level label. Offered only where the pack printed coordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub-zone'**
+  String get zoneLevelSubZone;
+
+  /// Water choice. Offered only where the authority publishes both sea and inland rules.
+  ///
+  /// In en, this message translates to:
+  /// **'Sea'**
+  String get zoneWaterSalt;
+
+  /// Water choice. Offered only where the authority publishes both sea and inland rules.
+  ///
+  /// In en, this message translates to:
+  /// **'Inland water'**
+  String get zoneWaterFresh;
+
+  /// Names the effect: the place is remembered and the next launch opens already knowing it.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this place'**
+  String get zonePickerConfirm;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A country with no bundled jurisdiction. It states what this BUILD carries, never what the country regulates.
+  ///
+  /// In en, this message translates to:
+  /// **'No rules bundled for this country'**
+  String get zonePickerEmptyHeadline;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The second sentence is mandatory and may not be softened or merged: an absence in the pack is not an absence of law, and a reader who takes it as one is exactly the failure the no-rule wording exists to prevent.
+  ///
+  /// In en, this message translates to:
+  /// **'This build carries no transcribed instrument for it. That does not mean there are none.'**
+  String get zonePickerEmptyBody;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A read that failed, said plainly. It must not be rendered as an empty list: a picker showing no countries because a file was locked reads as a claim that the app ships nowhere.
+  ///
+  /// In en, this message translates to:
+  /// **'The bundled rule pack could not be read.'**
+  String get zonePickerLoadFailed;
+
+  /// The shipped country names, selected by ISO code. `other` falls through to the code itself rather than to a guess: an unrecognised country is a pack this build did not produce, and a wrong country name on a legal screen is worse than a bare code.
+  ///
+  /// In en, this message translates to:
+  /// **'{code, select, ES{Spain} AE{United Arab Emirates} BR{Brazil} other{{code}}}'**
+  String countryName(String code);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

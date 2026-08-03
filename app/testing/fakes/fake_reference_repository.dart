@@ -1,5 +1,6 @@
 import 'package:catchlaw/data/repositories/data_failure.dart';
 import 'package:catchlaw/data/repositories/reference_repository.dart';
+import 'package:catchlaw/domain/models/jurisdiction.dart';
 import 'package:catchlaw/domain/models/species.dart';
 import 'package:rule_engine/rule_engine.dart' show Citation, ClosedSeason, Result, Rule;
 
@@ -96,8 +97,18 @@ final class FakeReferenceRepository implements ReferenceRepository {
           if (stringValues.containsKey(k)) k: stringValues[k]!,
       });
 
+  /// The jurisdictions this fake serves, in the order it was given them.
+  final List<Jurisdiction> jurisdictionRows = <Jurisdiction>[];
+
   @override
-  Future<Result<List<Zone>>> zones(int jurisdictionId) async => _read(const <Zone>[]);
+  Future<Result<List<Jurisdiction>>> jurisdictions() async => _read(jurisdictionRows);
+
+  /// zone rows per jurisdiction id, for the picker's third level.
+  final Map<int, List<Zone>> zoneRows = <int, List<Zone>>{};
+
+  @override
+  Future<Result<List<Zone>>> zones(int jurisdictionId) async =>
+      _read(zoneRows[jurisdictionId] ?? const <Zone>[]);
 
   @override
   Future<Result<Map<String, String>>> contentMeta() async =>

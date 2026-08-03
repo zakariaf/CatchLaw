@@ -103,5 +103,16 @@
   "flagRuleSaveAction": "Desa aquesta nota en aquest dispositiu",
   "flagRuleRecorded": "Desada en aquest dispositiu.",
   "flagRuleEmptyNote": "La nota és buida.",
-  "disclaimerNotDismissable": "No es pot descartar."
+  "disclaimerNotDismissable": "No es pot descartar.",
+  "zonePickerTitle": "On pesques?",
+  "zoneLevelCountry": "País",
+  "zoneLevelRegion": "Regió",
+  "zoneLevelSubZone": "Subzona",
+  "zoneWaterSalt": "Mar",
+  "zoneWaterFresh": "Aigües continentals",
+  "zonePickerConfirm": "Usa aquest lloc",
+  "zonePickerEmptyHeadline": "No hi ha normes incloses per a aquest país",
+  "zonePickerEmptyBody": "Aquesta versió no porta cap norma transcrita. Això no vol dir que no n’hi hagi.",
+  "zonePickerLoadFailed": "No s’ha pogut llegir el paquet de normes inclòs.",
+  "countryName": "{code, select, ES{Espanya} AE{Emirats Àrabs Units} BR{Brasil} other{{code}}}"
 }

@@ -434,4 +434,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get disclaimerNotDismissable => 'It cannot be dismissed.';
+
+  @override
+  String get zonePickerTitle => 'Where are you fishing?';
+
+  @override
+  String get zoneLevelCountry => 'Country';
+
+  @override
+  String get zoneLevelRegion => 'Region';
+
+  @override
+  String get zoneLevelSubZone => 'Sub-zone';
+
+  @override
+  String get zoneWaterSalt => 'Sea';
+
+  @override
+  String get zoneWaterFresh => 'Inland water';
+
+  @override
+  String get zonePickerConfirm => 'Use this place';
+
+  @override
+  String get zonePickerEmptyHeadline => 'No rules bundled for this country';
+
+  @override
+  String get zonePickerEmptyBody =>
+      'This build carries no transcribed instrument for it. That does not mean there are none.';
+
+  @override
+  String get zonePickerLoadFailed => 'The bundled rule pack could not be read.';
+
+  @override
+  String countryName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ES': 'Spain',
+      'AE': 'United Arab Emirates',
+      'BR': 'Brazil',
+      'other': '$code',
+    });
+    return '$_temp0';
+  }
 }

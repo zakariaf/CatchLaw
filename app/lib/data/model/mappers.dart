@@ -16,6 +16,7 @@ import 'package:catchlaw/data/model/enum_codecs.dart' as codecs;
 import 'package:catchlaw/data/services/reference_database_service.dart';
 import 'package:catchlaw/data/services/user_database_service.dart';
 import 'package:catchlaw/domain/models/catch_record.dart';
+import 'package:catchlaw/domain/models/jurisdiction.dart';
 import 'package:catchlaw/domain/models/species.dart' as domain;
 import 'package:catchlaw/domain/models/trip.dart' as domain;
 import 'package:catchlaw/domain/models/user_profile.dart';
@@ -59,7 +60,6 @@ domain.Zone toZone(ZoneRow row) => domain.Zone(
 );
 
 /// A `citation` row as the **engine's** [engine.Citation].
-///
 /// The engine already owns this type and its four fields are exactly §7.1's;
 /// mapping into a second one would give the app two citations and one of them
 /// would eventually be the one that prints.
@@ -71,13 +71,11 @@ engine.Citation toCitation(CitationRow row) => engine.Citation(
 );
 
 /// A `rule` row and its closures as the engine's [engine.Rule].
-///
 /// **[citation] is required and is not defaulted.** Invariant 3 makes a
 /// `Citation` non-nullable on every engine type precisely so it cannot be
 /// forgotten; a mapper that supplied an empty placeholder would satisfy the
 /// type and print a footnote that cites nothing, which is the defect the
 /// invariant exists to make unrepresentable.
-///
 /// `citationLineageId` is the citation's id as a string: §7.1 has no lineage
 /// column, and E04 collapses an amending order onto the order it amends by
 /// giving them one lineage. Until §7.1 grows the column, one citation is one
@@ -111,7 +109,6 @@ engine.Rule toRule(
 );
 
 /// A `closed_season` row as the engine's [engine.ClosedSeason].
-///
 /// [citation] is required for the same reason it is on [toRule]: a closure is
 /// the finding most likely to be argued with on the quay, and the instrument
 /// behind it is the only thing that ends the argument.
@@ -199,7 +196,6 @@ UserProfile toUserProfile(UserProfileRow row) => UserProfile(
   sunlightMode: row.sunlightMode,
   gloveMode: row.gloveMode,
 );
-
 engine.TaxonGroup _taxonGroup(String sql) {
   for (final engine.TaxonGroup g in engine.TaxonGroup.values) {
     if (g.name == sql) return g;
@@ -222,13 +218,11 @@ engine.WaterType _waterType(String sql) => switch (sql) {
   // what makes an unrecognised one unshippable in the first place.
   _ => engine.WaterType.salt,
 };
-
 engine.LimitUnit? _limitUnit(String? sql) => switch (sql) {
   'count' => engine.LimitUnit.count,
   'kg' => engine.LimitUnit.kg,
   _ => null,
 };
-
 engine.LimitPeriod? _limitPeriod(String? sql) => switch (sql) {
   'day' => engine.LimitPeriod.day,
   'trip' => engine.LimitPeriod.trip,
@@ -237,7 +231,6 @@ engine.LimitPeriod? _limitPeriod(String? sql) => switch (sql) {
 };
 
 /// A [CatchDraft] as the row drift will insert.
-///
 /// An extension rather than a method on the draft: `CatchesCompanion` is a
 /// generated drift type, and `FLUTTER_GUIDE.md` rule 6 keeps it out of
 /// `domain/` — which is exactly where the draft lives.
@@ -265,3 +258,22 @@ extension CatchDraftRow on CatchDraft {
     updatedAt: updatedAt ?? createdAt,
   );
 }
+
+/// A `jurisdiction` row as the picker's region rung.
+/// `has_zone_polygons` is carried through rather than derived from whether any
+/// ring exists: the pack states the fact, and a jurisdiction that printed no
+/// coordinate list is a different thing from one whose rings failed to load.
+Jurisdiction toJurisdiction(JurisdictionRow row) => Jurisdiction(
+  id: row.id,
+  code: row.code,
+  countryIso2: row.countryIso2,
+  nameKey: row.nameKey,
+  authorityKey: row.authorityKey,
+  defaultLocale: row.defaultLocale,
+  hasSaltwater: row.hasSaltwater,
+  hasFreshwater: row.hasFreshwater,
+  hasZonePolygons: row.hasZonePolygons,
+  contentVersion: row.contentVersion,
+  checkedOn: row.checkedOn,
+  validUntil: row.validUntil,
+);

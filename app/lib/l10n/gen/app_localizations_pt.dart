@@ -436,6 +436,48 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get disclaimerNotDismissable => 'Não pode ser dispensado.';
+
+  @override
+  String get zonePickerTitle => 'Onde você pesca?';
+
+  @override
+  String get zoneLevelCountry => 'País';
+
+  @override
+  String get zoneLevelRegion => 'Região';
+
+  @override
+  String get zoneLevelSubZone => 'Sub-zona';
+
+  @override
+  String get zoneWaterSalt => 'Mar';
+
+  @override
+  String get zoneWaterFresh => 'Águas interiores';
+
+  @override
+  String get zonePickerConfirm => 'Usar este lugar';
+
+  @override
+  String get zonePickerEmptyHeadline => 'Nenhuma norma incluída para este país';
+
+  @override
+  String get zonePickerEmptyBody =>
+      'Esta versão não traz nenhuma norma transcrita. Isso não significa que não existam.';
+
+  @override
+  String get zonePickerLoadFailed => 'Não foi possível ler o pacote de normas incluído.';
+
+  @override
+  String countryName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ES': 'Espanha',
+      'AE': 'Emirados Árabes Unidos',
+      'BR': 'Brasil',
+      'other': '$code',
+    });
+    return '$_temp0';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -870,4 +912,46 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get disclaimerNotDismissable => 'Não pode ser dispensado.';
+
+  @override
+  String get zonePickerTitle => 'Onde você pesca?';
+
+  @override
+  String get zoneLevelCountry => 'País';
+
+  @override
+  String get zoneLevelRegion => 'Região';
+
+  @override
+  String get zoneLevelSubZone => 'Sub-zona';
+
+  @override
+  String get zoneWaterSalt => 'Mar';
+
+  @override
+  String get zoneWaterFresh => 'Águas interiores';
+
+  @override
+  String get zonePickerConfirm => 'Usar este lugar';
+
+  @override
+  String get zonePickerEmptyHeadline => 'Nenhuma norma incluída para este país';
+
+  @override
+  String get zonePickerEmptyBody =>
+      'Esta versão não traz nenhuma norma transcrita. Isso não significa que não existam.';
+
+  @override
+  String get zonePickerLoadFailed => 'Não foi possível ler o pacote de normas incluído.';
+
+  @override
+  String countryName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ES': 'Espanha',
+      'AE': 'Emirados Árabes Unidos',
+      'BR': 'Brasil',
+      'other': '$code',
+    });
+    return '$_temp0';
+  }
 }
