@@ -33,5 +33,21 @@
   "lookAlikeSectionLabel": "يُخلط بسهولة مع",
   "lookAlikeConfusedWith": "ما يفرّق بينهما",
   "recentsStripLabel": "الأخيرة هنا",
-  "recentsEmptyBody": "تظهر هنا الأنواع التي تفتحها في هذه المنطقة."
+  "recentsEmptyBody": "تظهر هنا الأنواع التي تفتحها في هذه المنطقة.",
+  "calibrationTitle": "قياس شاشتك",
+  "calibrationCardExplainer": "ضع أي بطاقة مصرفية أو رخصة أو هوية على الزجاج واسحب الحافة لتطابقها.",
+  "calibrationHandleLabel": "حافة البطاقة",
+  "calibrationVerifyExplainer": "طول هذا الشريط {measurement}. قارنه بالضلع القصير للبطاقة نفسها.",
+  "calibrationVerifyBarLabel": "{measurement}",
+  "calibrationSaveAction": "حفظ هذا القياس",
+  "calibrationCancelAction": "خطوة للخلف",
+  "calibrationTooSmallScreen": "هذه الشاشة أضيق من بطاقة. الإدخال اليدوي متاح.",
+  "calibrationImplausible": "قاس هذا السحب {measurement} عبر الشاشة، وهذا ليس بطاقة.",
+  "unitMillimetres": "مم",
+  "unitCentimetres": "سم",
+  "rulerSemanticLabel": "مسطرة. القراءة {measurement}.",
+  "rulerZeroLabel": "٠",
+  "measurementCm": "{value} سم ({method})",
+  "measurementMm": "{value} مم ({method})",
+  "measurementInch": "{value} بوصة ({method})"
 }

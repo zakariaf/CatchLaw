@@ -308,6 +308,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Species you open in this zone appear here.'**
   String get recentsEmptyBody;
+
+  /// S4's heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Measure your screen'**
+  String get calibrationTitle;
+
+  /// What to do with the card. This is one of the very few places the app addresses an action, and it is about the DEVICE rather than about a fish — no rule, no verdict, nothing about what to keep.
+  ///
+  /// In en, this message translates to:
+  /// **'Lay any bank card, licence or ID on the glass and drag the edge to match it.'**
+  String get calibrationCardExplainer;
+
+  /// What a screen reader announces the drag handle as.
+  ///
+  /// In en, this message translates to:
+  /// **'Card edge'**
+  String get calibrationHandleLabel;
+
+  /// The second step. A fit step alone measures whatever was dragged to, including a handle nudged by a palm; this asks the reader to check a bar of known length against the same card. The length is a placeholder so it is authored once in Dart rather than typed into six translations.
+  ///
+  /// In en, this message translates to:
+  /// **'This bar is {measurement}. Check it against the short side of the same card.'**
+  String calibrationVerifyExplainer(String measurement);
+
+  /// The verify bar's own length, beside it. A placeholder only — the number and its unit are assembled by LengthDisplay and the unit key, glued with a non-breaking space. It is a pre-formatted STRING and not an int, because it carries a unit word in the locale's own digits; check_measurement check 1's `int lengthMm` rule is about a STORED length, and nothing here is stored.
+  ///
+  /// In en, this message translates to:
+  /// **'{measurement}'**
+  String calibrationVerifyBarLabel(String measurement);
+
+  /// Stores the measured scale.
+  ///
+  /// In en, this message translates to:
+  /// **'Save this measurement'**
+  String get calibrationSaveAction;
+
+  /// Returns to the fit step. From the approved corpus in button-anatomy.md — it names the step rather than a preservation, because the preservation wordings all open with a verb invariant 2 bans.
+  ///
+  /// In en, this message translates to:
+  /// **'Back one step'**
+  String get calibrationCancelAction;
+
+  /// A screen narrower than a card cannot be calibrated by this method. States the fact and names the path that still works — manual entry, which never depends on a calibration.
+  ///
+  /// In en, this message translates to:
+  /// **'This screen is narrower than a card. Manual entry is available.'**
+  String get calibrationTooSmallScreen;
+
+  /// Shown when a drag did not trace a card. It states WHAT WAS MEASURED, because a fisher who dragged to something absurd can see it — a bare refusal leaves him looking at the same handle with no idea why nothing happened.
+  ///
+  /// In en, this message translates to:
+  /// **'That drag measured {measurement} across the screen, which is not a card.'**
+  String calibrationImplausible(String measurement);
+
+  /// The millimetre unit word, glued to its number with a non-breaking space at the call site. Its own key so a number and its unit are never concatenated in Dart, where the order is wrong in Arabic.
+  ///
+  /// In en, this message translates to:
+  /// **'mm'**
+  String get unitMillimetres;
+
+  /// The centimetre unit word. Same rule.
+  ///
+  /// In en, this message translates to:
+  /// **'cm'**
+  String get unitCentimetres;
+
+  /// What a screen reader announces the ruler as. The canvas itself is excluded from semantics — a hundred tick marks is not a reading — so this sibling node carries the number. It STATES the reading and never says what it means.
+  ///
+  /// In en, this message translates to:
+  /// **'Ruler. Reading {measurement}.'**
+  String rulerSemanticLabel(String measurement);
+
+  /// The zero mark, in the locale's own digits. Its own key because the numeral system is a user setting and the zero is the one label that is always visible.
+  ///
+  /// In en, this message translates to:
+  /// **'0'**
+  String get rulerZeroLabel;
+
+  /// A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} cm ({method})'**
+  String measurementCm(String value, String method);
+
+  /// A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} mm ({method})'**
+  String measurementMm(String value, String method);
+
+  /// A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} in ({method})'**
+  String measurementInch(String value, String method);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

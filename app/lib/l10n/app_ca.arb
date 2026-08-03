@@ -33,5 +33,21 @@
   "lookAlikeSectionLabel": "Es confon fàcilment amb",
   "lookAlikeConfusedWith": "Què les diferencia",
   "recentsStripLabel": "Recents aquí",
-  "recentsEmptyBody": "Les espècies que obris en aquesta zona apareixen aquí."
+  "recentsEmptyBody": "Les espècies que obris en aquesta zona apareixen aquí.",
+  "calibrationTitle": "Mesura la pantalla",
+  "calibrationCardExplainer": "Posa qualsevol targeta bancària, carnet o DNI sobre el vidre i arrossega la vora fins a fer-la coincidir.",
+  "calibrationHandleLabel": "Vora de la targeta",
+  "calibrationVerifyExplainer": "Aquesta barra fa {measurement}. Compara-la amb el costat curt de la mateixa targeta.",
+  "calibrationVerifyBarLabel": "{measurement}",
+  "calibrationSaveAction": "Desa aquesta mesura",
+  "calibrationCancelAction": "Un pas enrere",
+  "calibrationTooSmallScreen": "Aquesta pantalla és més estreta que una targeta. L’entrada manual està disponible.",
+  "calibrationImplausible": "Aquest arrossegament ha mesurat {measurement} de pantalla, que no és una targeta.",
+  "unitMillimetres": "mm",
+  "unitCentimetres": "cm",
+  "rulerSemanticLabel": "Regle. Lectura {measurement}.",
+  "rulerZeroLabel": "0",
+  "measurementCm": "{value} cm ({method})",
+  "measurementMm": "{value} mm ({method})",
+  "measurementInch": "{value} polz ({method})"
 }

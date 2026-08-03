@@ -158,5 +158,113 @@
   "recentsEmptyBody": "Species you open in this zone appear here.",
   "@recentsEmptyBody": {
     "description": "Shown when the strip is empty. States what will fill it — a description of the mechanism, not an instruction to go and use it."
+  },
+  "calibrationTitle": "Measure your screen",
+  "@calibrationTitle": {
+    "description": "S4's heading."
+  },
+  "calibrationCardExplainer": "Lay any bank card, licence or ID on the glass and drag the edge to match it.",
+  "@calibrationCardExplainer": {
+    "description": "What to do with the card. This is one of the very few places the app addresses an action, and it is about the DEVICE rather than about a fish — no rule, no verdict, nothing about what to keep."
+  },
+  "calibrationHandleLabel": "Card edge",
+  "@calibrationHandleLabel": {
+    "description": "What a screen reader announces the drag handle as."
+  },
+  "calibrationVerifyExplainer": "This bar is {measurement}. Check it against the short side of the same card.",
+  "@calibrationVerifyExplainer": {
+    "description": "The second step. A fit step alone measures whatever was dragged to, including a handle nudged by a palm; this asks the reader to check a bar of known length against the same card. The length is a placeholder so it is authored once in Dart rather than typed into six translations.",
+    "placeholders": {
+      "measurement": {
+        "type": "String"
+      }
+    }
+  },
+  "calibrationVerifyBarLabel": "{measurement}",
+  "@calibrationVerifyBarLabel": {
+    "description": "The verify bar's own length, beside it. A placeholder only — the number and its unit are assembled by LengthDisplay and the unit key, glued with a non-breaking space. It is a pre-formatted STRING and not an int, because it carries a unit word in the locale's own digits; check_measurement check 1's `int lengthMm` rule is about a STORED length, and nothing here is stored.",
+    "placeholders": {
+      "measurement": {
+        "type": "String"
+      }
+    }
+  },
+  "calibrationSaveAction": "Save this measurement",
+  "@calibrationSaveAction": {
+    "description": "Stores the measured scale."
+  },
+  "calibrationCancelAction": "Back one step",
+  "@calibrationCancelAction": {
+    "description": "Returns to the fit step. From the approved corpus in button-anatomy.md — it names the step rather than a preservation, because the preservation wordings all open with a verb invariant 2 bans."
+  },
+  "calibrationTooSmallScreen": "This screen is narrower than a card. Manual entry is available.",
+  "@calibrationTooSmallScreen": {
+    "description": "A screen narrower than a card cannot be calibrated by this method. States the fact and names the path that still works — manual entry, which never depends on a calibration."
+  },
+  "calibrationImplausible": "That drag measured {measurement} across the screen, which is not a card.",
+  "@calibrationImplausible": {
+    "description": "Shown when a drag did not trace a card. It states WHAT WAS MEASURED, because a fisher who dragged to something absurd can see it — a bare refusal leaves him looking at the same handle with no idea why nothing happened.",
+    "placeholders": {
+      "measurement": {
+        "type": "String"
+      }
+    }
+  },
+  "unitMillimetres": "mm",
+  "unitCentimetres": "cm",
+  "@unitMillimetres": {
+    "description": "The millimetre unit word, glued to its number with a non-breaking space at the call site. Its own key so a number and its unit are never concatenated in Dart, where the order is wrong in Arabic."
+  },
+  "@unitCentimetres": {
+    "description": "The centimetre unit word. Same rule."
+  },
+  "rulerSemanticLabel": "Ruler. Reading {measurement}.",
+  "rulerZeroLabel": "0",
+  "@rulerSemanticLabel": {
+    "description": "What a screen reader announces the ruler as. The canvas itself is excluded from semantics — a hundred tick marks is not a reading — so this sibling node carries the number. It STATES the reading and never says what it means.",
+    "placeholders": {
+      "measurement": {
+        "type": "String"
+      }
+    }
+  },
+  "@rulerZeroLabel": {
+    "description": "The zero mark, in the locale's own digits. Its own key because the numeral system is a user setting and the zero is the one label that is always visible."
+  },
+  "measurementCm": "{value} cm ({method})",
+  "@measurementCm": {
+    "description": "A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "measurementMm": "{value} mm ({method})",
+  "@measurementMm": {
+    "description": "A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "measurementInch": "{value} in ({method})",
+  "@measurementInch": {
+    "description": "A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
   }
 }

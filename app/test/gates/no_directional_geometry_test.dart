@@ -73,10 +73,15 @@ void main() {
     expect(_run('lib').stdout.toString(), matches(RegExp(r'scanned [1-9][0-9]* dart files')));
   });
 
-  test('app/lib carries no directional escape hatch', () {
-    // CONVENTIONS.md §7 allows exactly one documented hatch per gate. The first
-    // legitimate user is E09's ruler, which must not mirror (SPEC.md §9.3); a
-    // marker appearing before then is a swept-under-the-rug physical inset.
+  test('the only directional escape hatch in app/lib is the ruler instrument', () {
+    // E06/T05 asserted this was EMPTY and named the file that would first earn
+    // a marker. E09/T04 is that file: SPEC.md §9.3's one documented exception,
+    // the ruler, which is an instrument rather than a layout — a mirrored scale
+    // puts zero at the tail of a real fish.
+    //
+    // The assertion is now "exactly this one file", which is stronger than
+    // "none": a second hatch anywhere is a physical inset swept under a rug,
+    // and it fails here rather than in a golden six epics later.
     final List<String> hatched = Directory('lib')
         .listSync(recursive: true)
         .whereType<File>()
@@ -84,6 +89,6 @@ void main() {
         .where((File f) => f.readAsStringSync().contains('catchlaw-directional-ok'))
         .map((File f) => f.path)
         .toList();
-    expect(hatched, isEmpty);
+    expect(hatched, <String>['lib/ui/ruler/widgets/ltr_instrument.dart']);
   });
 }

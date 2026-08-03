@@ -140,4 +140,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recentsEmptyBody => 'Species you open in this zone appear here.';
+
+  @override
+  String get calibrationTitle => 'Measure your screen';
+
+  @override
+  String get calibrationCardExplainer =>
+      'Lay any bank card, licence or ID on the glass and drag the edge to match it.';
+
+  @override
+  String get calibrationHandleLabel => 'Card edge';
+
+  @override
+  String calibrationVerifyExplainer(String measurement) {
+    return 'This bar is $measurement. Check it against the short side of the same card.';
+  }
+
+  @override
+  String calibrationVerifyBarLabel(String measurement) {
+    return '$measurement';
+  }
+
+  @override
+  String get calibrationSaveAction => 'Save this measurement';
+
+  @override
+  String get calibrationCancelAction => 'Back one step';
+
+  @override
+  String get calibrationTooSmallScreen =>
+      'This screen is narrower than a card. Manual entry is available.';
+
+  @override
+  String calibrationImplausible(String measurement) {
+    return 'That drag measured $measurement across the screen, which is not a card.';
+  }
+
+  @override
+  String get unitMillimetres => 'mm';
+
+  @override
+  String get unitCentimetres => 'cm';
+
+  @override
+  String rulerSemanticLabel(String measurement) {
+    return 'Ruler. Reading $measurement.';
+  }
+
+  @override
+  String get rulerZeroLabel => '0';
+
+  @override
+  String measurementCm(String value, String method) {
+    return '$value cm ($method)';
+  }
+
+  @override
+  String measurementMm(String value, String method) {
+    return '$value mm ($method)';
+  }
+
+  @override
+  String measurementInch(String value, String method) {
+    return '$value in ($method)';
+  }
 }

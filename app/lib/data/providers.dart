@@ -11,6 +11,7 @@
 /// away would reopen SQLite on the next navigation.
 library;
 
+import 'package:catchlaw/data/repositories/calibration_repository.dart';
 import 'package:catchlaw/data/repositories/look_alike_repository.dart';
 import 'package:catchlaw/data/repositories/measurement_repository.dart';
 import 'package:catchlaw/data/repositories/reference_repository.dart';
@@ -88,6 +89,12 @@ final Provider<SpeciesRecentRepository> speciesRecentRepositoryProvider =
       (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
     );
 
+/// What this device's screen measures.
+final Provider<CalibrationRepository> calibrationRepositoryProvider =
+    Provider<CalibrationRepository>(
+      (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
+    );
+
 /// Every seam `dataOverrides` must fill.
 ///
 /// A list rather than a comment, so "is this one wired?" is a test rather than
@@ -105,4 +112,5 @@ final List<ProviderBase<Object?>> kDataSeams = <ProviderBase<Object?>>[
   speciesAccountRepositoryProvider,
   lookAlikeRepositoryProvider,
   speciesRecentRepositoryProvider,
+  calibrationRepositoryProvider,
 ];

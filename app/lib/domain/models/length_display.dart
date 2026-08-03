@@ -8,6 +8,14 @@ import 'package:catchlaw/data/model/enum_codecs.dart';
 /// length shown in the catch log cannot round differently — and a legal
 /// minimum that reads 44 cm on one screen and 45 cm on another is the failure
 /// this product exists to prevent.
+/// 25.4 mm — the exact inch, by definition since 1959.
+///
+/// Named **once**, and in the domain layer beside the length it converts. A
+/// rounded 25.4 in one file and a 25 in another is a fish that measures
+/// differently on two screens, which is why `millimetres_only_test.dart`
+/// asserts this constant appears in exactly one place.
+const double kMillimetresPerInch = 25.4;
+
 abstract final class LengthDisplay {
   /// [millimetres] in [unit], as a number without its unit word.
   ///
@@ -22,7 +30,7 @@ abstract final class LengthDisplay {
   static String format(int millimetres, LengthUnit unit) => switch (unit) {
     LengthUnit.mm => '$millimetres',
     LengthUnit.cm => _trimZero((millimetres / 10).toStringAsFixed(1)),
-    LengthUnit.inches => (millimetres / 25.4).toStringAsFixed(1),
+    LengthUnit.inches => (millimetres / kMillimetresPerInch).toStringAsFixed(1),
   };
 
   static String _trimZero(String value) =>

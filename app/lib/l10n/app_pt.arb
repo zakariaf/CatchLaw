@@ -33,5 +33,21 @@
   "lookAlikeSectionLabel": "Confundida facilmente com",
   "lookAlikeConfusedWith": "O que as diferencia",
   "recentsStripLabel": "Recentes aqui",
-  "recentsEmptyBody": "As espécies que você abrir nesta zona aparecem aqui."
+  "recentsEmptyBody": "As espécies que você abrir nesta zona aparecem aqui.",
+  "calibrationTitle": "Meça sua tela",
+  "calibrationCardExplainer": "Coloque qualquer cartão bancário, carteira ou documento sobre o vidro e arraste a borda até coincidir.",
+  "calibrationHandleLabel": "Borda do cartão",
+  "calibrationVerifyExplainer": "Esta barra tem {measurement}. Compare com o lado curto do mesmo cartão.",
+  "calibrationVerifyBarLabel": "{measurement}",
+  "calibrationSaveAction": "Salvar esta medida",
+  "calibrationCancelAction": "Um passo atrás",
+  "calibrationTooSmallScreen": "Esta tela é mais estreita que um cartão. A entrada manual está disponível.",
+  "calibrationImplausible": "Esse arraste mediu {measurement} de tela, o que não é um cartão.",
+  "unitMillimetres": "mm",
+  "unitCentimetres": "cm",
+  "rulerSemanticLabel": "Régua. Leitura {measurement}.",
+  "rulerZeroLabel": "0",
+  "measurementCm": "{value} cm ({method})",
+  "measurementMm": "{value} mm ({method})",
+  "measurementInch": "{value} pol ({method})"
 }

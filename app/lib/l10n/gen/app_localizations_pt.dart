@@ -142,6 +142,70 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get recentsEmptyBody => 'As espécies que você abrir nesta zona aparecem aqui.';
+
+  @override
+  String get calibrationTitle => 'Meça sua tela';
+
+  @override
+  String get calibrationCardExplainer =>
+      'Coloque qualquer cartão bancário, carteira ou documento sobre o vidro e arraste a borda até coincidir.';
+
+  @override
+  String get calibrationHandleLabel => 'Borda do cartão';
+
+  @override
+  String calibrationVerifyExplainer(String measurement) {
+    return 'Esta barra tem $measurement. Compare com o lado curto do mesmo cartão.';
+  }
+
+  @override
+  String calibrationVerifyBarLabel(String measurement) {
+    return '$measurement';
+  }
+
+  @override
+  String get calibrationSaveAction => 'Salvar esta medida';
+
+  @override
+  String get calibrationCancelAction => 'Um passo atrás';
+
+  @override
+  String get calibrationTooSmallScreen =>
+      'Esta tela é mais estreita que um cartão. A entrada manual está disponível.';
+
+  @override
+  String calibrationImplausible(String measurement) {
+    return 'Esse arraste mediu $measurement de tela, o que não é um cartão.';
+  }
+
+  @override
+  String get unitMillimetres => 'mm';
+
+  @override
+  String get unitCentimetres => 'cm';
+
+  @override
+  String rulerSemanticLabel(String measurement) {
+    return 'Régua. Leitura $measurement.';
+  }
+
+  @override
+  String get rulerZeroLabel => '0';
+
+  @override
+  String measurementCm(String value, String method) {
+    return '$value cm ($method)';
+  }
+
+  @override
+  String measurementMm(String value, String method) {
+    return '$value mm ($method)';
+  }
+
+  @override
+  String measurementInch(String value, String method) {
+    return '$value pol ($method)';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -282,4 +346,68 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get recentsEmptyBody => 'As espécies que você abrir nesta zona aparecem aqui.';
+
+  @override
+  String get calibrationTitle => 'Meça sua tela';
+
+  @override
+  String get calibrationCardExplainer =>
+      'Coloque qualquer cartão bancário, carteira ou documento sobre o vidro e arraste a borda até coincidir.';
+
+  @override
+  String get calibrationHandleLabel => 'Borda do cartão';
+
+  @override
+  String calibrationVerifyExplainer(String measurement) {
+    return 'Esta barra tem $measurement. Compare com o lado curto do mesmo cartão.';
+  }
+
+  @override
+  String calibrationVerifyBarLabel(String measurement) {
+    return '$measurement';
+  }
+
+  @override
+  String get calibrationSaveAction => 'Salvar esta medida';
+
+  @override
+  String get calibrationCancelAction => 'Um passo atrás';
+
+  @override
+  String get calibrationTooSmallScreen =>
+      'Esta tela é mais estreita que um cartão. A entrada manual está disponível.';
+
+  @override
+  String calibrationImplausible(String measurement) {
+    return 'Esse arraste mediu $measurement de tela, o que não é um cartão.';
+  }
+
+  @override
+  String get unitMillimetres => 'mm';
+
+  @override
+  String get unitCentimetres => 'cm';
+
+  @override
+  String rulerSemanticLabel(String measurement) {
+    return 'Régua. Leitura $measurement.';
+  }
+
+  @override
+  String get rulerZeroLabel => '0';
+
+  @override
+  String measurementCm(String value, String method) {
+    return '$value cm ($method)';
+  }
+
+  @override
+  String measurementMm(String value, String method) {
+    return '$value mm ($method)';
+  }
+
+  @override
+  String measurementInch(String value, String method) {
+    return '$value pol ($method)';
+  }
 }
