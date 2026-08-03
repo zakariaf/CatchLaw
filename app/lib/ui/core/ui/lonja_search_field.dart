@@ -83,6 +83,11 @@ class _LonjaSearchFieldState extends State<LonjaSearchField> {
           child: Padding(
             padding: const EdgeInsetsDirectional.symmetric(vertical: LonjaSpace.s2),
             child: TextField(
+              // **Never on launch.** An auto-raised keyboard covers the recents
+              // strip, which is the one-tap path to a verdict for a fisher who
+              // has been here before — and §3's five seconds get spent
+              // dismissing it. He taps the field when he wants to type.
+              autofocus: false,
               controller: widget.controller,
               focusNode: _focus,
               onChanged: widget.onChanged,

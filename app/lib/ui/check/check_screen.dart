@@ -1,5 +1,6 @@
 import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/domain/models/evaluation_scope.dart';
+import 'package:catchlaw/ui/check/widgets/check_empty_state.dart';
 import 'package:catchlaw/ui/check/widgets/recents_strip.dart';
 import 'package:catchlaw/ui/core/ui/lonja_masthead.dart';
 import 'package:catchlaw/ui/species/widgets/species_detail_screen.dart';
@@ -81,7 +82,14 @@ class _Check extends ConsumerWidget {
                 ),
               ),
             ),
-            RecentsStrip(place: place, onSpeciesChosen: open),
+            RecentsStrip(
+              place: place,
+              onSpeciesChosen: open,
+              // Absent when he has recents, authored when he does not: a first
+              // launch that showed a blank band would read as a strip that
+              // failed to load.
+              whenEmpty: const CheckEmptyState(),
+            ),
             Expanded(
               child: SpeciesSearchScreen(
                 onSpeciesChosen: open,

@@ -125,5 +125,7 @@
   "checkPlaceLabel": "Respondendo para",
   "checkChangePlace": "Mudar de lugar",
   "checkRecentsLabel": "Recentes aqui",
-  "checkPackChecked": "verificado {date}"
+  "checkPackChecked": "verificado {date}",
+  "checkNoRecentsHeadline": "Nada verificado aqui ainda",
+  "checkNoRecentsBody": "As espécies que você buscar neste lugar aparecem aqui, e a próxima fica a um toque."
 }

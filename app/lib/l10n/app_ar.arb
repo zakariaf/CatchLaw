@@ -125,5 +125,7 @@
   "checkPlaceLabel": "الإجابة عن",
   "checkChangePlace": "تغيير المكان",
   "checkRecentsLabel": "الأحدث هنا",
-  "checkPackChecked": "تم التحقق {date}"
+  "checkPackChecked": "تم التحقق {date}",
+  "checkNoRecentsHeadline": "لم يُفحص شيء هنا بعد",
+  "checkNoRecentsBody": "الأنواع التي تبحث عنها في هذا المكان تظهر هنا، فيصبح التالي بلمسة واحدة."
 }

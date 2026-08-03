@@ -517,4 +517,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String checkPackChecked(String date) {
     return 'تم التحقق $date';
   }
+
+  @override
+  String get checkNoRecentsHeadline => 'لم يُفحص شيء هنا بعد';
+
+  @override
+  String get checkNoRecentsBody =>
+      'الأنواع التي تبحث عنها في هذا المكان تظهر هنا، فيصبح التالي بلمسة واحدة.';
 }

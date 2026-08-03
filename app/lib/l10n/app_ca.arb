@@ -125,5 +125,7 @@
   "checkPlaceLabel": "Responent per a",
   "checkChangePlace": "Canvia el lloc",
   "checkRecentsLabel": "Recents aquí",
-  "checkPackChecked": "verificat {date}"
+  "checkPackChecked": "verificat {date}",
+  "checkNoRecentsHeadline": "Encara no s’ha comprovat res aquí",
+  "checkNoRecentsBody": "Les espècies que cerquis en aquest lloc apareixen aquí, així el següent és un sol toc."
 }

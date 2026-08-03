@@ -516,6 +516,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String checkPackChecked(String date) {
     return 'verificado $date';
   }
+
+  @override
+  String get checkNoRecentsHeadline => 'Nada verificado aqui ainda';
+
+  @override
+  String get checkNoRecentsBody =>
+      'As espécies que você buscar neste lugar aparecem aqui, e a próxima fica a um toque.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1030,4 +1037,11 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String checkPackChecked(String date) {
     return 'verificado $date';
   }
+
+  @override
+  String get checkNoRecentsHeadline => 'Nada verificado aqui ainda';
+
+  @override
+  String get checkNoRecentsBody =>
+      'As espécies que você buscar neste lugar aparecem aqui, e a próxima fica a um toque.';
 }

@@ -522,4 +522,11 @@ class AppLocalizationsCa extends AppLocalizations {
   String checkPackChecked(String date) {
     return 'verificat $date';
   }
+
+  @override
+  String get checkNoRecentsHeadline => 'Encara no s’ha comprovat res aquí';
+
+  @override
+  String get checkNoRecentsBody =>
+      'Les espècies que cerquis en aquest lloc apareixen aquí, així el següent és un sol toc.';
 }

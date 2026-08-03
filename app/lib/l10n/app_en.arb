@@ -822,5 +822,13 @@
         "type": "String"
       }
     }
+  },
+  "checkNoRecentsHeadline": "Nothing checked here yet",
+  "@checkNoRecentsHeadline": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The first-launch state of the recents strip. It states what this DEVICE has done, never what the reader should do."
+  },
+  "checkNoRecentsBody": "Species you look up in this place appear here, so the next one is one tap.",
+  "@checkNoRecentsBody": {
+    "description": "What the strip will hold once it holds anything. It explains the mechanism rather than instructing: the fisher is not being asked to look anything up, he is being told what happens when he does."
   }
 }

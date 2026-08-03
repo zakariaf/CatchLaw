@@ -847,6 +847,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'checked {date}'**
   String checkPackChecked(String date);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The first-launch state of the recents strip. It states what this DEVICE has done, never what the reader should do.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing checked here yet'**
+  String get checkNoRecentsHeadline;
+
+  /// What the strip will hold once it holds anything. It explains the mechanism rather than instructing: the fisher is not being asked to look anything up, he is being told what happens when he does.
+  ///
+  /// In en, this message translates to:
+  /// **'Species you look up in this place appear here, so the next one is one tap.'**
+  String get checkNoRecentsBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

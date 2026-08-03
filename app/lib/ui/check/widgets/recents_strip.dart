@@ -19,13 +19,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// space the search box wants.
 class RecentsStrip extends ConsumerWidget {
   /// The recents for [place].
-  const RecentsStrip({required this.place, required this.onSpeciesChosen, super.key});
+  const RecentsStrip({
+    required this.place,
+    required this.onSpeciesChosen,
+    this.whenEmpty,
+    super.key,
+  });
 
   /// Where he is.
   final EvaluationScope place;
 
   /// Opens one.
   final void Function(int speciesId) onSpeciesChosen;
+
+  /// What stands here on a first launch in this place.
+  ///
+  /// Supplied by the caller rather than built in, because the strip is a strip
+  /// and the sentence belongs to the screen it sits on.
+  final Widget? whenEmpty;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,7 +53,7 @@ class RecentsStrip extends ConsumerWidget {
     // own authored empty state, and a labelled empty strip would tell the
     // fisher a feature exists before he has any use for it while taking the
     // vertical space the search box wants. // lonja-list-ok
-    if (entries.isEmpty) return const SizedBox.shrink();
+    if (entries.isEmpty) return whenEmpty ?? const SizedBox.shrink();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
