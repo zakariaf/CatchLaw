@@ -430,6 +430,10 @@ class VerdictPresenter {
   AmbiguousRuleDisplay _ambiguousRule(Rule rule) {
     final MeasurementMethod? method = rule.measurementMethod;
     return AmbiguousRuleDisplay(
+      // The lineage id rather than the row id: a reader recording which
+      // instrument he applied names the instrument, and the row that carries it
+      // is replaced wholesale by the next content update.
+      instrumentId: rule.citationLineageId,
       citation: _citation(rule.citation),
       facts: <RuleFact>[
         // A threshold with no method is a number the reader cannot act on, so

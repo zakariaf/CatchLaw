@@ -275,7 +275,16 @@ class NoteDisplay {
 @immutable
 class AmbiguousRuleDisplay {
   /// What this rule states, and where.
-  const AmbiguousRuleDisplay({required this.facts, required this.citation});
+  const AmbiguousRuleDisplay({
+    required this.instrumentId,
+    required this.facts,
+    required this.citation,
+  });
+
+  /// The instrument's lineage id, so a reader who records which one he applied
+  /// names a thing rather than a position in a list.
+
+  final String instrumentId;
 
   /// What the rule states, already localised and formatted.
   final List<RuleFact> facts;
