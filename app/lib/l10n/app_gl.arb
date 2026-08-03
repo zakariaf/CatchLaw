@@ -44,5 +44,7 @@
   "calibrationTooSmallScreen": "Esta pantalla é máis estreita ca unha tarxeta. A entrada manual está dispoñible.",
   "calibrationImplausible": "Ese arrastre mediu {measurement} de pantalla, que non é unha tarxeta.",
   "unitMillimetres": "mm",
-  "unitCentimetres": "cm"
+  "unitCentimetres": "cm",
+  "rulerSemanticLabel": "Regra. Lectura {measurement}.",
+  "rulerZeroLabel": "0"
 }

@@ -44,5 +44,7 @@
   "calibrationTooSmallScreen": "Aquesta pantalla és més estreta que una targeta. L’entrada manual està disponible.",
   "calibrationImplausible": "Aquest arrossegament ha mesurat {measurement} de pantalla, que no és una targeta.",
   "unitMillimetres": "mm",
-  "unitCentimetres": "cm"
+  "unitCentimetres": "cm",
+  "rulerSemanticLabel": "Regle. Lectura {measurement}.",
+  "rulerZeroLabel": "0"
 }

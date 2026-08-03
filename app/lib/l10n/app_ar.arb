@@ -44,5 +44,7 @@
   "calibrationTooSmallScreen": "هذه الشاشة أضيق من بطاقة. الإدخال اليدوي متاح.",
   "calibrationImplausible": "قاس هذا السحب {measurement} عبر الشاشة، وهذا ليس بطاقة.",
   "unitMillimetres": "مم",
-  "unitCentimetres": "سم"
+  "unitCentimetres": "سم",
+  "rulerSemanticLabel": "مسطرة. القراءة {measurement}.",
+  "rulerZeroLabel": "٠"
 }

@@ -183,6 +183,14 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get unitCentimetres => 'cm';
+
+  @override
+  String rulerSemanticLabel(String measurement) {
+    return 'Régua. Leitura $measurement.';
+  }
+
+  @override
+  String get rulerZeroLabel => '0';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -364,4 +372,12 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get unitCentimetres => 'cm';
+
+  @override
+  String rulerSemanticLabel(String measurement) {
+    return 'Régua. Leitura $measurement.';
+  }
+
+  @override
+  String get rulerZeroLabel => '0';
 }

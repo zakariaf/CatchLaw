@@ -374,6 +374,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'cm'**
   String get unitCentimetres;
+
+  /// What a screen reader announces the ruler as. The canvas itself is excluded from semantics — a hundred tick marks is not a reading — so this sibling node carries the number. It STATES the reading and never says what it means.
+  ///
+  /// In en, this message translates to:
+  /// **'Ruler. Reading {measurement}.'**
+  String rulerSemanticLabel(String measurement);
+
+  /// The zero mark, in the locale's own digits. Its own key because the numeral system is a user setting and the zero is the one label that is always visible.
+  ///
+  /// In en, this message translates to:
+  /// **'0'**
+  String get rulerZeroLabel;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

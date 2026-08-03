@@ -217,5 +217,18 @@
   },
   "@unitCentimetres": {
     "description": "The centimetre unit word. Same rule."
+  },
+  "rulerSemanticLabel": "Ruler. Reading {measurement}.",
+  "rulerZeroLabel": "0",
+  "@rulerSemanticLabel": {
+    "description": "What a screen reader announces the ruler as. The canvas itself is excluded from semantics — a hundred tick marks is not a reading — so this sibling node carries the number. It STATES the reading and never says what it means.",
+    "placeholders": {
+      "measurement": {
+        "type": "String"
+      }
+    }
+  },
+  "@rulerZeroLabel": {
+    "description": "The zero mark, in the locale's own digits. Its own key because the numeral system is a user setting and the zero is the one label that is always visible."
   }
 }

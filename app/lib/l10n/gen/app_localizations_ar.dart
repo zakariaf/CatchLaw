@@ -187,4 +187,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get unitCentimetres => 'سم';
+
+  @override
+  String rulerSemanticLabel(String measurement) {
+    return 'مسطرة. القراءة $measurement.';
+  }
+
+  @override
+  String get rulerZeroLabel => '٠';
 }

@@ -44,5 +44,7 @@
   "calibrationTooSmallScreen": "Esta pantalla es más estrecha que una tarjeta. La entrada manual está disponible.",
   "calibrationImplausible": "Ese arrastre midió {measurement} de pantalla, que no es una tarjeta.",
   "unitMillimetres": "mm",
-  "unitCentimetres": "cm"
+  "unitCentimetres": "cm",
+  "rulerSemanticLabel": "Regla. Lectura {measurement}.",
+  "rulerZeroLabel": "0"
 }
