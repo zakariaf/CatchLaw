@@ -435,4 +435,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get flagRuleEmptyNote => 'الملاحظة فارغة.';
+
+  @override
+  String get disclaimerNotDismissable => 'لا يمكن إخفاء هذا التنبيه.';
 }

@@ -439,4 +439,7 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get flagRuleEmptyNote => 'La nota és buida.';
+
+  @override
+  String get disclaimerNotDismissable => 'No es pot descartar.';
 }

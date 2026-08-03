@@ -709,6 +709,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The note is empty.'**
   String get flagRuleEmptyNote;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The mono line under the disclaimer, which makes the disclaimer’s absence legible in a screenshot: a reader looking at a screen grab can tell whether the sentence above was ever there. It states a property of the screen, never an instruction.
+  ///
+  /// In en, this message translates to:
+  /// **'It cannot be dismissed.'**
+  String get disclaimerNotDismissable;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

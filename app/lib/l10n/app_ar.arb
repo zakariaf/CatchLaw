@@ -102,5 +102,6 @@
   "flagRuleNoteLabel": "ما ينص عليه النص",
   "flagRuleSaveAction": "حفظ هذه الملاحظة على هذا الجهاز",
   "flagRuleRecorded": "حُفظت على هذا الجهاز.",
-  "flagRuleEmptyNote": "الملاحظة فارغة."
+  "flagRuleEmptyNote": "الملاحظة فارغة.",
+  "disclaimerNotDismissable": "لا يمكن إخفاء هذا التنبيه."
 }

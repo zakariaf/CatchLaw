@@ -715,5 +715,9 @@
   "flagRuleEmptyNote": "The note is empty.",
   "@flagRuleEmptyNote": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. States why nothing was written."
+  },
+  "disclaimerNotDismissable": "It cannot be dismissed.",
+  "@disclaimerNotDismissable": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The mono line under the disclaimer, which makes the disclaimer’s absence legible in a screenshot: a reader looking at a screen grab can tell whether the sentence above was ever there. It states a property of the screen, never an instruction."
   }
 }

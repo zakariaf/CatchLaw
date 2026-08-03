@@ -2,6 +2,7 @@ import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/widgets/result_ambiguity_block.dart';
 import 'package:catchlaw/ui/result/widgets/result_citation_footnote.dart';
+import 'package:catchlaw/ui/result/widgets/result_disclaimer.dart';
 import 'package:catchlaw/ui/result/widgets/result_findings_list.dart';
 import 'package:catchlaw/ui/result/widgets/result_haptics.dart';
 import 'package:catchlaw/ui/result/widgets/result_rule_facts_table.dart';
@@ -132,6 +133,11 @@ class _ResultSectionState extends State<ResultSection> {
             onOpenRuleText: widget.onOpenRuleText,
           ),
         ],
+        // Unconditional, and last. Not behind an `if`, not behind a flag, and
+        // not behind a slot that a later task could leave empty: every one of
+        // the nine result states ends here.
+        const SizedBox(height: LonjaSpace.s5),
+        ResultDisclaimer(authority: widget.jurisdiction),
       ],
     );
   }

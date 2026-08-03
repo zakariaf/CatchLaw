@@ -433,4 +433,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get flagRuleEmptyNote => 'La nota está vacía.';
+
+  @override
+  String get disclaimerNotDismissable => 'No se puede descartar.';
 }

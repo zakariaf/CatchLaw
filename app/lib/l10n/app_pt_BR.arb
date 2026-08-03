@@ -102,5 +102,6 @@
   "flagRuleNoteLabel": "O que a norma diz",
   "flagRuleSaveAction": "Salvar esta nota neste dispositivo",
   "flagRuleRecorded": "Salva neste dispositivo.",
-  "flagRuleEmptyNote": "A nota está vazia."
+  "flagRuleEmptyNote": "A nota está vazia.",
+  "disclaimerNotDismissable": "Não pode ser dispensado."
 }

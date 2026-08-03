@@ -102,5 +102,6 @@
   "flagRuleNoteLabel": "Que di a norma",
   "flagRuleSaveAction": "Gardar esta nota neste dispositivo",
   "flagRuleRecorded": "Gardada neste dispositivo.",
-  "flagRuleEmptyNote": "A nota está baleira."
+  "flagRuleEmptyNote": "A nota está baleira.",
+  "disclaimerNotDismissable": "Non se pode descartar."
 }

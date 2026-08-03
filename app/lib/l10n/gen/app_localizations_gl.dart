@@ -431,4 +431,7 @@ class AppLocalizationsGl extends AppLocalizations {
 
   @override
   String get flagRuleEmptyNote => 'A nota está baleira.';
+
+  @override
+  String get disclaimerNotDismissable => 'Non se pode descartar.';
 }

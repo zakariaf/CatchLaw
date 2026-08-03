@@ -431,4 +431,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get flagRuleEmptyNote => 'The note is empty.';
+
+  @override
+  String get disclaimerNotDismissable => 'It cannot be dismissed.';
 }
