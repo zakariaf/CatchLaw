@@ -1,4 +1,5 @@
 import 'package:catchlaw/data/providers.dart';
+import 'package:catchlaw/domain/models/content_string_missing.dart';
 import 'package:catchlaw/domain/models/content_strings.dart';
 import 'package:catchlaw/domain/use_cases/content_string_resolver.dart';
 import 'package:catchlaw/domain/use_cases/evaluate_catch_use_case.dart';
@@ -33,19 +34,36 @@ final resultContentStringsProvider = FutureProvider.autoDispose
     .family<ContentStrings, ResultRequest>((Ref ref, ResultRequest request) async {
       final resolver = ContentStringResolver(ref.watch(contentStringRepositoryProvider));
       final keys = <String>[...kVerdictContentKeys, request.context.authorityKey];
+
       // Concurrently, not in sequence. Each key is its own statement against
-      // `reference.db`, and ten in a row is ten round trips between the fish and
-      // the answer — on the phone `SPEC.md` §13 budgets for.
-      final List<String> values = await Future.wait(<Future<String>>[
+      // `reference.db`, and ten in a row is ten round trips between the fish
+      // and the answer — on the phone `SPEC.md` §13 budgets for.
+      //
+      // **A method name that does not resolve is SKIPPED, not fatal.** A pack
+      // defines the methods its instruments use and no others — Galicia's
+      // shellfish orders state shell length and nothing else — and the content
+      // build counts an unreferenced key rather than failing it. Resolving all
+      // nine eagerly and throwing on the first absence would make every verdict
+      // in a single-method jurisdiction unreachable.
+      //
+      // The absence still bites where it matters: `ContentStrings` throws for a
+      // key the presenter actually asks for, so a method a RULE uses and the
+      // pack never named is a loud failure on the screen that needed it — which
+      // is the same defect the §8 build assertion would have caught first.
+      final List<String?> values = await Future.wait(<Future<String?>>[
         for (final String key in keys)
-          resolver.resolve(
-            key,
-            requestedLocale: request.locale,
-            defaultLocale: request.context.defaultLocale,
-          ),
+          resolver
+              .resolve(
+                key,
+                requestedLocale: request.locale,
+                defaultLocale: request.context.defaultLocale,
+              )
+              .then<String?>((String v) => v)
+              .onError<ContentStringMissing>((_, _) => null),
       ]);
       return ContentStrings(<String, String>{
-        for (var i = 0; i < keys.length; i++) keys[i]: values[i],
+        for (var i = 0; i < keys.length; i++)
+          if (values[i] case final String value) keys[i]: value,
       });
     });
 
