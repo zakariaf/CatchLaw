@@ -418,4 +418,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get staleDetailClose => 'Cerrar esta nota';
+
+  @override
+  String get flagRuleAction => 'Marcar esta norma';
+
+  @override
+  String get flagRuleNoteLabel => 'Qué dice la norma';
+
+  @override
+  String get flagRuleSaveAction => 'Guardar esta nota en este dispositivo';
+
+  @override
+  String get flagRuleRecorded => 'Guardada en este dispositivo.';
+
+  @override
+  String get flagRuleEmptyNote => 'La nota está vacía.';
 }

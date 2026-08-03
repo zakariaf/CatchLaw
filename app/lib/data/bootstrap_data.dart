@@ -7,6 +7,7 @@ import 'package:catchlaw/data/repositories/legal_text_repository_drift.dart';
 import 'package:catchlaw/data/repositories/look_alike_repository_drift.dart';
 import 'package:catchlaw/data/repositories/measurement_repository_drift.dart';
 import 'package:catchlaw/data/repositories/reference_repository_drift.dart';
+import 'package:catchlaw/data/repositories/rule_flag_repository_drift.dart';
 import 'package:catchlaw/data/repositories/settings_repository_drift.dart';
 import 'package:catchlaw/data/repositories/species_account_repository_drift.dart';
 import 'package:catchlaw/data/repositories/species_browse_repository_drift.dart';
@@ -77,6 +78,9 @@ List<Override> dataOverrides({required AppDirectories directories}) {
     ),
     legalTextRepositoryProvider.overrideWith(
       (Ref ref) => DriftLegalTextRepository(ref.watch(referenceDatabaseProvider)),
+    ),
+    ruleFlagRepositoryProvider.overrideWith(
+      (Ref ref) => DriftRuleFlagRepository(ref.watch(userDatabaseProvider)),
     ),
     speciesRecentRepositoryProvider.overrideWith(
       (Ref ref) => DriftSpeciesRecentRepository(

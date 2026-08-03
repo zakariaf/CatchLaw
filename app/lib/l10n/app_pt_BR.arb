@@ -97,5 +97,10 @@
   "citationCopyAction": "Copiar a citação",
   "rulePackExpiredOn": "Estas normas passaram a sua data final em {date}. São exibidas como foram publicadas.",
   "rulePackProvenance": "O pacote de normas incluído {pack} passou a sua data de validade em {date}. O texto acima é a última redação verificada.",
-  "staleDetailClose": "Fechar esta nota"
+  "staleDetailClose": "Fechar esta nota",
+  "flagRuleAction": "Sinalizar esta norma",
+  "flagRuleNoteLabel": "O que a norma diz",
+  "flagRuleSaveAction": "Salvar esta nota neste dispositivo",
+  "flagRuleRecorded": "Salva neste dispositivo.",
+  "flagRuleEmptyNote": "A nota está vazia."
 }

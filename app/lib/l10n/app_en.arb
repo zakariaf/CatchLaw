@@ -695,5 +695,25 @@
   "staleDetailClose": "Close this note",
   "@staleDetailClose": {
     "description": "The control that puts the stale-pack EXPLANATION away for this app session. It closes the note, never the bar: the bar is the invariant and only the paragraph under it can be put away. It is not persisted, so a reader returning in September sees it again."
+  },
+  "flagRuleAction": "Flag this rule",
+  "@flagRuleAction": {
+    "description": "Opens the note field. It records a doubt about the TRANSCRIPTION and changes no number and no verdict — the label must not suggest the app will act on it, and there is nowhere for it to be sent."
+  },
+  "flagRuleNoteLabel": "What the instrument says",
+  "@flagRuleNoteLabel": {
+    "description": "The field label. It asks what the INSTRUMENT says, not what the reader wants the answer to be."
+  },
+  "flagRuleSaveAction": "Save this note on this device",
+  "@flagRuleSaveAction": {
+    "description": "The save target. Its label names the effect and its whole extent: the note stays on this device, because there is no network and nothing is transmitted."
+  },
+  "flagRuleRecorded": "Saved on this device.",
+  "@flagRuleRecorded": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The receipt for something already committed, in the past tense. It promises no review, no reply and no upload."
+  },
+  "flagRuleEmptyNote": "The note is empty.",
+  "@flagRuleEmptyNote": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. States why nothing was written."
   }
 }

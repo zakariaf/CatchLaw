@@ -424,4 +424,19 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get staleDetailClose => 'Tanca aquesta nota';
+
+  @override
+  String get flagRuleAction => 'Marca aquesta norma';
+
+  @override
+  String get flagRuleNoteLabel => 'Què diu la norma';
+
+  @override
+  String get flagRuleSaveAction => 'Desa aquesta nota en aquest dispositiu';
+
+  @override
+  String get flagRuleRecorded => 'Desada en aquest dispositiu.';
+
+  @override
+  String get flagRuleEmptyNote => 'La nota és buida.';
 }

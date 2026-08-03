@@ -679,6 +679,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close this note'**
   String get staleDetailClose;
+
+  /// Opens the note field. It records a doubt about the TRANSCRIPTION and changes no number and no verdict — the label must not suggest the app will act on it, and there is nowhere for it to be sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Flag this rule'**
+  String get flagRuleAction;
+
+  /// The field label. It asks what the INSTRUMENT says, not what the reader wants the answer to be.
+  ///
+  /// In en, this message translates to:
+  /// **'What the instrument says'**
+  String get flagRuleNoteLabel;
+
+  /// The save target. Its label names the effect and its whole extent: the note stays on this device, because there is no network and nothing is transmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Save this note on this device'**
+  String get flagRuleSaveAction;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The receipt for something already committed, in the past tense. It promises no review, no reply and no upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this device.'**
+  String get flagRuleRecorded;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. States why nothing was written.
+  ///
+  /// In en, this message translates to:
+  /// **'The note is empty.'**
+  String get flagRuleEmptyNote;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

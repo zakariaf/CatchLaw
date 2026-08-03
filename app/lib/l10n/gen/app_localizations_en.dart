@@ -416,4 +416,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get staleDetailClose => 'Close this note';
+
+  @override
+  String get flagRuleAction => 'Flag this rule';
+
+  @override
+  String get flagRuleNoteLabel => 'What the instrument says';
+
+  @override
+  String get flagRuleSaveAction => 'Save this note on this device';
+
+  @override
+  String get flagRuleRecorded => 'Saved on this device.';
+
+  @override
+  String get flagRuleEmptyNote => 'The note is empty.';
 }

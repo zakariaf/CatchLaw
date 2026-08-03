@@ -416,4 +416,19 @@ class AppLocalizationsGl extends AppLocalizations {
 
   @override
   String get staleDetailClose => 'Pechar esta nota';
+
+  @override
+  String get flagRuleAction => 'Marcar esta norma';
+
+  @override
+  String get flagRuleNoteLabel => 'Que di a norma';
+
+  @override
+  String get flagRuleSaveAction => 'Gardar esta nota neste dispositivo';
+
+  @override
+  String get flagRuleRecorded => 'Gardada neste dispositivo.';
+
+  @override
+  String get flagRuleEmptyNote => 'A nota está baleira.';
 }

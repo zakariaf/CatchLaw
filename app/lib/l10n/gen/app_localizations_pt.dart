@@ -418,6 +418,21 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get staleDetailClose => 'Fechar esta nota';
+
+  @override
+  String get flagRuleAction => 'Sinalizar esta norma';
+
+  @override
+  String get flagRuleNoteLabel => 'O que a norma diz';
+
+  @override
+  String get flagRuleSaveAction => 'Salvar esta nota neste dispositivo';
+
+  @override
+  String get flagRuleRecorded => 'Salva neste dispositivo.';
+
+  @override
+  String get flagRuleEmptyNote => 'A nota está vazia.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -834,4 +849,19 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get staleDetailClose => 'Fechar esta nota';
+
+  @override
+  String get flagRuleAction => 'Sinalizar esta norma';
+
+  @override
+  String get flagRuleNoteLabel => 'O que a norma diz';
+
+  @override
+  String get flagRuleSaveAction => 'Salvar esta nota neste dispositivo';
+
+  @override
+  String get flagRuleRecorded => 'Salva neste dispositivo.';
+
+  @override
+  String get flagRuleEmptyNote => 'A nota está vazia.';
 }

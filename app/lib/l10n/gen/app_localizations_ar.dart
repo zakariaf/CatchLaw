@@ -420,4 +420,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get staleDetailClose => 'إغلاق هذه الملاحظة';
+
+  @override
+  String get flagRuleAction => 'الإبلاغ عن هذه القاعدة';
+
+  @override
+  String get flagRuleNoteLabel => 'ما ينص عليه النص';
+
+  @override
+  String get flagRuleSaveAction => 'حفظ هذه الملاحظة على هذا الجهاز';
+
+  @override
+  String get flagRuleRecorded => 'حُفظت على هذا الجهاز.';
+
+  @override
+  String get flagRuleEmptyNote => 'الملاحظة فارغة.';
 }

@@ -97,5 +97,10 @@
   "citationCopyAction": "نسخ الاستشهاد",
   "rulePackExpiredOn": "انتهت صلاحية هذه القواعد في {date}. وهي معروضة كما نُشرت.",
   "rulePackProvenance": "حزمة القواعد المضمّنة {pack} انتهت صلاحيتها في {date}. النص أعلاه هو آخر صيغة تم التحقق منها.",
-  "staleDetailClose": "إغلاق هذه الملاحظة"
+  "staleDetailClose": "إغلاق هذه الملاحظة",
+  "flagRuleAction": "الإبلاغ عن هذه القاعدة",
+  "flagRuleNoteLabel": "ما ينص عليه النص",
+  "flagRuleSaveAction": "حفظ هذه الملاحظة على هذا الجهاز",
+  "flagRuleRecorded": "حُفظت على هذا الجهاز.",
+  "flagRuleEmptyNote": "الملاحظة فارغة."
 }
