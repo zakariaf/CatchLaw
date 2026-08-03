@@ -556,3 +556,46 @@ done, not a live instruction.
 **Applied by:** E06/T01. Read by every later task that writes an ARB key, and by E20/T02.
 
 ---
+## D-19 — A non-template ARB carries exactly one `@` block, and only to state the verdict constraint to its translator
+
+**Decision.** Every `app_*.arb` that holds a `verdict*` or `finding*` key carries **one** metadata
+block — `@verdictBelowMinimum`, whose `description` opens `STATEMENT OF FACT.` — and no other. The
+template `app_en.arb` keeps a block per key, as before. Nothing else about tier-one authoring changes:
+`app_en.arb` is still where a key is declared, still the only file carrying placeholders, and still the
+file a translator is given alongside the target.
+
+**Losing source.** `app/test/l10n/arb_scaffolding_test.dart`'s *"app_en.arb is the only ARB carrying
+@ metadata blocks"*, written in E06/T01. The test is amended in this change rather than deleted: it
+still fails on a second block, on a block for any other key, and on a block whose description drops the
+constraint.
+
+**Why the test cannot stand as written.** `check_verdict_contract.sh` check 6b globs every `*.arb`
+holding a key matching `"(verdict|finding)[A-Za-z0-9_]*"` and fails any one of them that does not
+contain the literal `STATEMENT OF FACT`. Parity requires every key in seven files (D-18). So the moment
+the first `verdict*` key ships — E10/T01 — six files must carry that string and the test forbids the
+only place ARB has to put it. There is no third option: a non-`@` key becomes a message and breaks
+parity; a `@@x-…` global still starts with `@` and still fails the test.
+
+**Why the gate wins on substance, not merely on the tie-break.** `verdict-copy-rules.md` says it
+outright about the Arabic imperative — «احتفظ به» is short, fluent, exactly what a translator asked for
+good Arabic produces, and invisible to every English-language grep: *"Both are caught only by the
+`@description` shipping with the key."* The gate's rule is that the constraint travels **with the
+translated file**. The test's rule is that duplicated descriptions drift. Both are true, and one block
+per file is the smallest thing that satisfies the first while conceding almost nothing to the second —
+the block carries no placeholders and no per-key wording, so there is nothing in it to drift out of
+step with the template.
+
+D-2's rule of thumb points the same way and is not the argument here: it settles a gate against
+*prose*, and this is a gate against a *test*.
+
+**What this obliges.** A task that adds the first `verdict*` or `finding*` key to a locale file adds
+the constraint block in the same change. A task that adds any other `@` block to a non-template file is
+adding drift, and the amended test still fails it.
+
+**Not amended:** `epics/E06-localisation/T01-arb-scaffolding.md` row 10, on D-18's precedent — its
+statement was true when written, it shipped, and the epic is merged; a completed task file is a record
+of what was done rather than a live instruction.
+
+**Applied by:** E10/T01, which ships the first `verdict*` keys and amends the test.
+
+---

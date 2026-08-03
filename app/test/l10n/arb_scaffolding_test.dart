@@ -73,16 +73,33 @@ void main() {
     });
   }
 
-  test('app_en.arb is the only ARB carrying @ metadata blocks', () {
+  test('app_en.arb is the only ARB carrying @ metadata beyond the verdict constraint', () {
+    // D-19. A non-template file carries exactly one block, and only to put the
+    // STATEMENT OF FACT constraint in front of the translator of that file:
+    // check_verdict_contract.sh check 6b fails any ARB holding a verdict*/finding*
+    // key without it, and the Arabic imperative it guards against is one fluent
+    // word that no English-language grep can see. Everything else is drift, and
+    // still fails here.
     for (final String suffix in kArbSuffixes) {
       final Iterable<String> metadata = _arb(
         suffix,
       ).keys.where((String k) => k.startsWith('@') && k != '@@locale');
       if (suffix == 'en') {
         expect(metadata, isNotEmpty, reason: 'the template declares every @key block');
-      } else {
-        expect(metadata, isEmpty, reason: 'app_$suffix.arb carries metadata that will drift');
+        continue;
       }
+      expect(metadata, <String>[
+        '@verdictBelowMinimum',
+      ], reason: 'app_$suffix.arb carries metadata that will drift');
+      final block = _arb(suffix)['@verdictBelowMinimum']! as Map<String, dynamic>;
+      expect(block.keys, <String>[
+        'description',
+      ], reason: 'a placeholder declared outside the template is a placeholder that drifts');
+      expect(
+        block['description'],
+        startsWith('STATEMENT OF FACT.'),
+        reason: 'the one block a locale file carries exists to state the constraint',
+      );
     }
   });
 

@@ -206,4 +206,206 @@ class AppLocalizationsCa extends AppLocalizations {
   String measurementInch(String value, String method) {
     return '$value polz ($method)';
   }
+
+  @override
+  String massKg(String value) {
+    return '$value kg';
+  }
+
+  @override
+  String get limitPeriodDay => 'dia';
+
+  @override
+  String get limitPeriodTrip => 'marea';
+
+  @override
+  String get limitPeriodSeason => 'temporada';
+
+  @override
+  String monthName(String month) {
+    String _temp0 = intl.Intl.selectLogic(month, {
+      '1': 'gener',
+      '2': 'febrer',
+      '3': 'març',
+      '4': 'abril',
+      '5': 'maig',
+      '6': 'juny',
+      '7': 'juliol',
+      '8': 'agost',
+      '9': 'setembre',
+      '10': 'octubre',
+      '11': 'novembre',
+      '12': 'desembre',
+      'other': '$month',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String dateDayMonth(String day, String month) {
+    String _temp0 = intl.Intl.selectLogic(month, {
+      'abril': '$day d\'abril',
+      'agost': '$day d\'agost',
+      'octubre': '$day d\'octubre',
+      'other': '$day de $month',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String verdictMeetsMinimum(String measured, String unit, String threshold, String method) {
+    return 'Compleix el mínim — $measured $unit mesurats, mínim $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictBelowMinimum(String measured, String unit, String threshold, String method) {
+    return 'Per sota del mínim — $measured $unit mesurats, mínim $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictWithinMaximum(String measured, String unit, String threshold, String method) {
+    return 'Dins del màxim — $measured $unit mesurats, màxim $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictAboveMaximum(String measured, String unit, String threshold, String method) {
+    return 'Per sobre del màxim — $measured $unit mesurats, màxim $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictMinimumNotMeasured(String threshold, String unit, String method) {
+    return 'Sense mesura — el mínim és $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictMaximumNotMeasured(String threshold, String unit, String method) {
+    return 'Sense mesura — el màxim és $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictSizeMethodMismatch(
+    String measuredMethod,
+    String threshold,
+    String unit,
+    String method,
+  ) {
+    return 'Mesurat per $measuredMethod — la norma indica $threshold $unit ($method). No es fa cap comparació.';
+  }
+
+  @override
+  String verdictMarginShortOfMinimum(String margin, String unit) {
+    return 'Per sota del mínim en $margin $unit';
+  }
+
+  @override
+  String verdictMarginOverMinimum(String margin, String unit) {
+    return 'Per sobre del mínim en $margin $unit';
+  }
+
+  @override
+  String verdictMarginOverMaximum(String margin, String unit) {
+    return 'Per sobre del màxim en $margin $unit';
+  }
+
+  @override
+  String verdictMarginUnderMaximum(String margin, String unit) {
+    return 'Per sota del màxim en $margin $unit';
+  }
+
+  @override
+  String verdictClosedSeasonInForce(String starts, String ends, String day, String total) {
+    return 'Veda — del $starts al $ends. Vigent avui, dia $day de $total.';
+  }
+
+  @override
+  String verdictClosedSeasonNotInForce(String starts, String ends) {
+    return 'Veda — del $starts al $ends. Avui no és vigent.';
+  }
+
+  @override
+  String get verdictProtected => 'Espècie protegida — captura prohibida.';
+
+  @override
+  String verdictWithinBagLimit(String recorded, String limit, String period) {
+    return 'Dins de la quota — $recorded registrats, límit $limit per $period';
+  }
+
+  @override
+  String verdictAboveBagLimit(String recorded, String limit, String period) {
+    return 'Per sobre de la quota — $recorded registrats, límit $limit per $period';
+  }
+
+  @override
+  String verdictBagLimitNotRecorded(String limit, String period) {
+    return 'Res registrat en aquest període — la quota és $limit per $period';
+  }
+
+  @override
+  String verdictWithinVesselLimit(String recorded, String limit) {
+    return 'Dins del límit per embarcació — $recorded registrats, límit $limit';
+  }
+
+  @override
+  String verdictAboveVesselLimit(String recorded, String limit) {
+    return 'Per sobre del límit per embarcació — $recorded registrats, límit $limit';
+  }
+
+  @override
+  String verdictVesselLimitNotRecorded(String limit) {
+    return 'Res registrat per a aquesta embarcació — el límit és $limit';
+  }
+
+  @override
+  String get verdictNoRuleRecorded =>
+      'No hi ha cap norma registrada per a aquesta espècie aquí. Això no vol dir que sigui legal.';
+
+  @override
+  String get verdictNoLimitInInstrument =>
+      'La norma s\'ha consultat i no registra cap límit per a aquesta espècie aquí.';
+
+  @override
+  String get verdictUnknownSpecies =>
+      'Aquesta espècie no està registrada en aquesta jurisdicció. Això no vol dir que sigui legal.';
+
+  @override
+  String get verdictAmbiguous => 'Aquí s\'apliquen dues normes del mateix rang.';
+
+  @override
+  String get findingFactMeasured => 'Mesurat';
+
+  @override
+  String get findingFactMinimum => 'Mínim';
+
+  @override
+  String get findingFactMaximum => 'Màxim';
+
+  @override
+  String get findingFactDates => 'Dates';
+
+  @override
+  String get findingFactToday => 'Avui';
+
+  @override
+  String get findingFactRecorded => 'Registrat';
+
+  @override
+  String get findingFactLimit => 'Límit';
+
+  @override
+  String get findingFactPeriod => 'Període';
+
+  @override
+  String findingDayOfWindow(String day, String total) {
+    return 'dia $day de $total';
+  }
+
+  @override
+  String findingWindowRange(String starts, String ends) {
+    return 'del $starts al $ends';
+  }
+
+  @override
+  String disclaimerVerdict(String authority) {
+    return 'CatchLaw cita normes publicades. No és assessorament jurídic ni autoritza cap captura. Convé verificar-ho amb $authority abans de confiar-hi.';
+  }
 }

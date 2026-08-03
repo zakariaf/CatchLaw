@@ -266,5 +266,405 @@
         "type": "String"
       }
     }
+  },
+  "massKg": "{value} kg",
+  "@massKg": {
+    "description": "A mass in kilograms, for a bag limit an instrument states by weight.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "limitPeriodDay": "day",
+  "@limitPeriodDay": {
+    "description": "The period a bag limit is stated over. A noun, used inside a verdict sentence."
+  },
+  "limitPeriodTrip": "trip",
+  "@limitPeriodTrip": {
+    "description": "The period a bag limit is stated over. A noun, used inside a verdict sentence."
+  },
+  "limitPeriodSeason": "season",
+  "@limitPeriodSeason": {
+    "description": "The period a bag limit is stated over. A noun, used inside a verdict sentence."
+  },
+  "monthName": "{month, select, 1{January} 2{February} 3{March} 4{April} 5{May} 6{June} 7{July} 8{August} 9{September} 10{October} 11{November} 12{December} other{{month}}}",
+  "@monthName": {
+    "description": "The month names, selected by number. Season boundaries print as day and month, never as an ISO date: an ISO date in prose is unreadable to the man holding the fish.",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "dateDayMonth": "{day} {month}",
+  "@dateDayMonth": {
+    "description": "A day and a month, composed per locale. Spanish, Galician, Catalan and Portuguese need a preposition English does not, and Catalan elides it before a vowel.",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictMeetsMinimum": "Meets the minimum — {measured} {unit} measured, minimum {threshold} {unit} ({method})",
+  "@verdictMeetsMinimum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Both numbers are mandatory and so is the method: a threshold with no method is a number the reader cannot act on, because total length and fork length differ by 6-9 cm on the same fish. Word order may change; no slot may be dropped. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.",
+    "placeholders": {
+      "measured": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictBelowMinimum": "Below the minimum — {measured} {unit} measured, minimum {threshold} {unit} ({method})",
+  "@verdictBelowMinimum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The headline sentence of the whole product. Both numbers and the method are mandatory. It states what the instrument requires and what was measured, and says nothing about what to do with the fish. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.",
+    "placeholders": {
+      "measured": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictWithinMaximum": "Within the maximum — {measured} {unit} measured, maximum {threshold} {unit} ({method})",
+  "@verdictWithinMaximum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A slot rule read from the other end. Both numbers and the method are mandatory. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.",
+    "placeholders": {
+      "measured": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictAboveMaximum": "Above the maximum — {measured} {unit} measured, maximum {threshold} {unit} ({method})",
+  "@verdictAboveMaximum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A maximum, not a minimum: this is a legally distinct statement from the below-minimum one and may never be merged with it. Both numbers and the method are mandatory. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.",
+    "placeholders": {
+      "measured": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictMinimumNotMeasured": "Not measured — the minimum is {threshold} {unit} ({method})",
+  "@verdictMinimumNotMeasured": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Nothing has been measured, so nothing has been compared. This is an OPEN QUESTION and never a pass: an unmeasured fish has not met the minimum, nobody has checked. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.",
+    "placeholders": {
+      "threshold": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictMaximumNotMeasured": "Not measured — the maximum is {threshold} {unit} ({method})",
+  "@verdictMaximumNotMeasured": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Nothing has been measured, so nothing has been compared. An OPEN QUESTION, never a pass. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.",
+    "placeholders": {
+      "threshold": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictSizeMethodMismatch": "Measured by {measuredMethod} — the instrument states {threshold} {unit} ({method}). No comparison is made.",
+  "@verdictSizeMethodMismatch": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The reading and the instrument use different methods, so the two numbers are stated side by side and NO comparison is drawn. A conversion factor here would manufacture a pass at the centimetre that costs AED 3,000. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone.",
+    "placeholders": {
+      "measuredMethod": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictMarginShortOfMinimum": "Short of the minimum by {margin} {unit}",
+  "@verdictMarginShortOfMinimum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The numeric margin under the stamp. It restates the gap the headline already carries; it never advises.",
+    "placeholders": {
+      "margin": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictMarginOverMinimum": "Over the minimum by {margin} {unit}",
+  "@verdictMarginOverMinimum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The numeric margin under the stamp, for an individual that meets the minimum.",
+    "placeholders": {
+      "margin": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictMarginOverMaximum": "Over the maximum by {margin} {unit}",
+  "@verdictMarginOverMaximum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The numeric margin under the stamp, for an individual above the maximum.",
+    "placeholders": {
+      "margin": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictMarginUnderMaximum": "Under the maximum by {margin} {unit}",
+  "@verdictMarginUnderMaximum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The numeric margin under the stamp, for an individual within the maximum.",
+    "placeholders": {
+      "margin": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictClosedSeasonInForce": "Closed season — {starts} to {ends}. In force today, day {day} of {total}.",
+  "@verdictClosedSeasonInForce": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Both dates and the position inside the window are mandatory. Never a countdown: days-remaining invites planning, and this app states what the instrument says today.",
+    "placeholders": {
+      "starts": {
+        "type": "String"
+      },
+      "ends": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictClosedSeasonNotInForce": "Closed season — {starts} to {ends}. Not in force today.",
+  "@verdictClosedSeasonNotInForce": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The closure exists and is not in force today. It is stated rather than hidden, because the fisher is entitled to see the whole picture.",
+    "placeholders": {
+      "starts": {
+        "type": "String"
+      },
+      "ends": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictProtected": "Protected species — taking prohibited.",
+  "@verdictProtected": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. No measurement slot at all: a measurement beside a prohibition implies a threshold that does not exist, and a reader who sees one looks for a bigger individual of a species that may never be taken."
+  },
+  "verdictWithinBagLimit": "Within the bag limit — {recorded} recorded, limit {limit} per {period}",
+  "@verdictWithinBagLimit": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. What has been recorded and what the instrument permits. The period is mandatory: a season quota compared against one day passes on every day of a season it has already exhausted.",
+    "placeholders": {
+      "recorded": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictAboveBagLimit": "Above the bag limit — {recorded} recorded, limit {limit} per {period}",
+  "@verdictAboveBagLimit": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. What has been recorded and what the instrument permits, with the period it is stated over.",
+    "placeholders": {
+      "recorded": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictBagLimitNotRecorded": "Nothing recorded for this period — the bag limit is {limit} per {period}",
+  "@verdictBagLimitNotRecorded": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The catch log is opt-in, so nothing recorded is the common case. An OPEN QUESTION, never a pass.",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictWithinVesselLimit": "Within the vessel limit — {recorded} recorded, limit {limit}",
+  "@verdictWithinVesselLimit": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A per-hull count. It carries no period, because the instrument gives it none and the app may not state one it was not given.",
+    "placeholders": {
+      "recorded": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictAboveVesselLimit": "Above the vessel limit — {recorded} recorded, limit {limit}",
+  "@verdictAboveVesselLimit": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A per-hull count, exceeded. No period, for the same reason.",
+    "placeholders": {
+      "recorded": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictVesselLimitNotRecorded": "Nothing recorded for this vessel — the limit is {limit}",
+  "@verdictVesselLimitNotRecorded": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Nothing recorded against this hull. An OPEN QUESTION, never a pass.",
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictNoRuleRecorded": "No rule recorded for this species here. This does not mean it is legal.",
+  "@verdictNoRuleRecorded": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. TWO sentences are mandatory: the second one prevents the absence of a rule from being read as permission. Do not merge, shorten or soften it."
+  },
+  "verdictNoLimitInInstrument": "The instrument was read and records no limit for this species here.",
+  "@verdictNoLimitInInstrument": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Legally miles from the no-rule sentence and never merged with it: here the instrument WAS read and positively records no limit, and it is cited. There it was silent."
+  },
+  "verdictUnknownSpecies": "This species is not recorded for this jurisdiction. This does not mean it is legal.",
+  "@verdictUnknownSpecies": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The species is not in this jurisdiction reference at all — a different state from a species with no rule. TWO sentences, and the second may not be softened."
+  },
+  "verdictAmbiguous": "Two rules of equal standing apply here.",
+  "@verdictAmbiguous": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Two instruments of equal standing disagree and the app chooses neither. It states the disagreement and ranks nothing; picking one would be advice."
+  },
+  "findingFactMeasured": "Measured",
+  "@findingFactMeasured": {
+    "description": "Row label in the rule table. A noun, not a sentence."
+  },
+  "findingFactMinimum": "Minimum",
+  "@findingFactMinimum": {
+    "description": "Row label in the rule table. A noun, not a sentence."
+  },
+  "findingFactMaximum": "Maximum",
+  "@findingFactMaximum": {
+    "description": "Row label in the rule table. A noun, not a sentence."
+  },
+  "findingFactDates": "Dates",
+  "@findingFactDates": {
+    "description": "Row label in the rule table, for the two dates of a closure."
+  },
+  "findingFactToday": "Today",
+  "@findingFactToday": {
+    "description": "Row label in the rule table, for where today sits inside a closure."
+  },
+  "findingFactRecorded": "Recorded",
+  "@findingFactRecorded": {
+    "description": "Row label in the rule table, for what the catch log holds."
+  },
+  "findingFactLimit": "Limit",
+  "@findingFactLimit": {
+    "description": "Row label in the rule table, for what the instrument permits."
+  },
+  "findingFactPeriod": "Period",
+  "@findingFactPeriod": {
+    "description": "Row label in the rule table, for the period a limit is stated over."
+  },
+  "findingDayOfWindow": "day {day} of {total}",
+  "@findingDayOfWindow": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Where today sits inside a closure. Not a countdown.",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "findingWindowRange": "{starts} to {ends}",
+  "@findingWindowRange": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The two dates of a closure, as day and month.",
+    "placeholders": {
+      "starts": {
+        "type": "String"
+      },
+      "ends": {
+        "type": "String"
+      }
+    }
+  },
+  "disclaimerVerdict": "CatchLaw quotes published instruments. It is not legal advice and does not authorise any catch. Verify with {authority} before relying on it.",
+  "@disclaimerVerdict": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Unconditional and never dismissible. The authority is per jurisdiction: a generic one is a shrug. The wording is fixed by catchlaw-verdict-contract and may not be shortened.",
+    "placeholders": {
+      "authority": {
+        "type": "String"
+      }
+    }
   }
 }

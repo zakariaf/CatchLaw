@@ -71,6 +71,9 @@ List<Override> dataOverrides({required AppDirectories directories}) {
     calibrationRepositoryProvider.overrideWith(
       (Ref ref) => DriftCalibrationRepository(ref.watch(userDatabaseProvider)),
     ),
+    contentStringRepositoryProvider.overrideWith(
+      (Ref ref) => ContentStringRepositoryDrift(ref.watch(referenceDatabaseProvider)),
+    ),
     speciesRecentRepositoryProvider.overrideWith(
       (Ref ref) => DriftSpeciesRecentRepository(
         userDb: ref.watch(userDatabaseProvider),

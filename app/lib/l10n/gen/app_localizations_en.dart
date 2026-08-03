@@ -204,4 +204,200 @@ class AppLocalizationsEn extends AppLocalizations {
   String measurementInch(String value, String method) {
     return '$value in ($method)';
   }
+
+  @override
+  String massKg(String value) {
+    return '$value kg';
+  }
+
+  @override
+  String get limitPeriodDay => 'day';
+
+  @override
+  String get limitPeriodTrip => 'trip';
+
+  @override
+  String get limitPeriodSeason => 'season';
+
+  @override
+  String monthName(String month) {
+    String _temp0 = intl.Intl.selectLogic(month, {
+      '1': 'January',
+      '2': 'February',
+      '3': 'March',
+      '4': 'April',
+      '5': 'May',
+      '6': 'June',
+      '7': 'July',
+      '8': 'August',
+      '9': 'September',
+      '10': 'October',
+      '11': 'November',
+      '12': 'December',
+      'other': '$month',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String dateDayMonth(String day, String month) {
+    return '$day $month';
+  }
+
+  @override
+  String verdictMeetsMinimum(String measured, String unit, String threshold, String method) {
+    return 'Meets the minimum — $measured $unit measured, minimum $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictBelowMinimum(String measured, String unit, String threshold, String method) {
+    return 'Below the minimum — $measured $unit measured, minimum $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictWithinMaximum(String measured, String unit, String threshold, String method) {
+    return 'Within the maximum — $measured $unit measured, maximum $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictAboveMaximum(String measured, String unit, String threshold, String method) {
+    return 'Above the maximum — $measured $unit measured, maximum $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictMinimumNotMeasured(String threshold, String unit, String method) {
+    return 'Not measured — the minimum is $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictMaximumNotMeasured(String threshold, String unit, String method) {
+    return 'Not measured — the maximum is $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictSizeMethodMismatch(
+    String measuredMethod,
+    String threshold,
+    String unit,
+    String method,
+  ) {
+    return 'Measured by $measuredMethod — the instrument states $threshold $unit ($method). No comparison is made.';
+  }
+
+  @override
+  String verdictMarginShortOfMinimum(String margin, String unit) {
+    return 'Short of the minimum by $margin $unit';
+  }
+
+  @override
+  String verdictMarginOverMinimum(String margin, String unit) {
+    return 'Over the minimum by $margin $unit';
+  }
+
+  @override
+  String verdictMarginOverMaximum(String margin, String unit) {
+    return 'Over the maximum by $margin $unit';
+  }
+
+  @override
+  String verdictMarginUnderMaximum(String margin, String unit) {
+    return 'Under the maximum by $margin $unit';
+  }
+
+  @override
+  String verdictClosedSeasonInForce(String starts, String ends, String day, String total) {
+    return 'Closed season — $starts to $ends. In force today, day $day of $total.';
+  }
+
+  @override
+  String verdictClosedSeasonNotInForce(String starts, String ends) {
+    return 'Closed season — $starts to $ends. Not in force today.';
+  }
+
+  @override
+  String get verdictProtected => 'Protected species — taking prohibited.';
+
+  @override
+  String verdictWithinBagLimit(String recorded, String limit, String period) {
+    return 'Within the bag limit — $recorded recorded, limit $limit per $period';
+  }
+
+  @override
+  String verdictAboveBagLimit(String recorded, String limit, String period) {
+    return 'Above the bag limit — $recorded recorded, limit $limit per $period';
+  }
+
+  @override
+  String verdictBagLimitNotRecorded(String limit, String period) {
+    return 'Nothing recorded for this period — the bag limit is $limit per $period';
+  }
+
+  @override
+  String verdictWithinVesselLimit(String recorded, String limit) {
+    return 'Within the vessel limit — $recorded recorded, limit $limit';
+  }
+
+  @override
+  String verdictAboveVesselLimit(String recorded, String limit) {
+    return 'Above the vessel limit — $recorded recorded, limit $limit';
+  }
+
+  @override
+  String verdictVesselLimitNotRecorded(String limit) {
+    return 'Nothing recorded for this vessel — the limit is $limit';
+  }
+
+  @override
+  String get verdictNoRuleRecorded =>
+      'No rule recorded for this species here. This does not mean it is legal.';
+
+  @override
+  String get verdictNoLimitInInstrument =>
+      'The instrument was read and records no limit for this species here.';
+
+  @override
+  String get verdictUnknownSpecies =>
+      'This species is not recorded for this jurisdiction. This does not mean it is legal.';
+
+  @override
+  String get verdictAmbiguous => 'Two rules of equal standing apply here.';
+
+  @override
+  String get findingFactMeasured => 'Measured';
+
+  @override
+  String get findingFactMinimum => 'Minimum';
+
+  @override
+  String get findingFactMaximum => 'Maximum';
+
+  @override
+  String get findingFactDates => 'Dates';
+
+  @override
+  String get findingFactToday => 'Today';
+
+  @override
+  String get findingFactRecorded => 'Recorded';
+
+  @override
+  String get findingFactLimit => 'Limit';
+
+  @override
+  String get findingFactPeriod => 'Period';
+
+  @override
+  String findingDayOfWindow(String day, String total) {
+    return 'day $day of $total';
+  }
+
+  @override
+  String findingWindowRange(String starts, String ends) {
+    return '$starts to $ends';
+  }
+
+  @override
+  String disclaimerVerdict(String authority) {
+    return 'CatchLaw quotes published instruments. It is not legal advice and does not authorise any catch. Verify with $authority before relying on it.';
+  }
 }

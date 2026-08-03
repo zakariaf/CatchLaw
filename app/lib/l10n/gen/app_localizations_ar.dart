@@ -210,4 +210,198 @@ class AppLocalizationsAr extends AppLocalizations {
   String measurementInch(String value, String method) {
     return '$value بوصة ($method)';
   }
+
+  @override
+  String massKg(String value) {
+    return '$value كجم';
+  }
+
+  @override
+  String get limitPeriodDay => 'يوم';
+
+  @override
+  String get limitPeriodTrip => 'رحلة';
+
+  @override
+  String get limitPeriodSeason => 'موسم';
+
+  @override
+  String monthName(String month) {
+    String _temp0 = intl.Intl.selectLogic(month, {
+      '1': 'يناير',
+      '2': 'فبراير',
+      '3': 'مارس',
+      '4': 'أبريل',
+      '5': 'مايو',
+      '6': 'يونيو',
+      '7': 'يوليو',
+      '8': 'أغسطس',
+      '9': 'سبتمبر',
+      '10': 'أكتوبر',
+      '11': 'نوفمبر',
+      '12': 'ديسمبر',
+      'other': '$month',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String dateDayMonth(String day, String month) {
+    return '$day $month';
+  }
+
+  @override
+  String verdictMeetsMinimum(String measured, String unit, String threshold, String method) {
+    return 'يستوفي الحد الأدنى — $measured $unit مُقاسة، الحد الأدنى $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictBelowMinimum(String measured, String unit, String threshold, String method) {
+    return 'دون الحد الأدنى — $measured $unit مُقاسة، الحد الأدنى $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictWithinMaximum(String measured, String unit, String threshold, String method) {
+    return 'ضمن الحد الأقصى — $measured $unit مُقاسة، الحد الأقصى $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictAboveMaximum(String measured, String unit, String threshold, String method) {
+    return 'فوق الحد الأقصى — $measured $unit مُقاسة، الحد الأقصى $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictMinimumNotMeasured(String threshold, String unit, String method) {
+    return 'لا يوجد قياس — الحد الأدنى $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictMaximumNotMeasured(String threshold, String unit, String method) {
+    return 'لا يوجد قياس — الحد الأقصى $threshold $unit ($method)';
+  }
+
+  @override
+  String verdictSizeMethodMismatch(
+    String measuredMethod,
+    String threshold,
+    String unit,
+    String method,
+  ) {
+    return 'القياس بطريقة $measuredMethod — والنص يذكر $threshold $unit ($method). لا تجرى أي مقارنة.';
+  }
+
+  @override
+  String verdictMarginShortOfMinimum(String margin, String unit) {
+    return 'أقل من الحد الأدنى بـ $margin $unit';
+  }
+
+  @override
+  String verdictMarginOverMinimum(String margin, String unit) {
+    return 'أعلى من الحد الأدنى بـ $margin $unit';
+  }
+
+  @override
+  String verdictMarginOverMaximum(String margin, String unit) {
+    return 'أعلى من الحد الأقصى بـ $margin $unit';
+  }
+
+  @override
+  String verdictMarginUnderMaximum(String margin, String unit) {
+    return 'أقل من الحد الأقصى بـ $margin $unit';
+  }
+
+  @override
+  String verdictClosedSeasonInForce(String starts, String ends, String day, String total) {
+    return 'موسم إغلاق — من $starts إلى $ends. ساري اليوم، اليوم $day من $total.';
+  }
+
+  @override
+  String verdictClosedSeasonNotInForce(String starts, String ends) {
+    return 'موسم إغلاق — من $starts إلى $ends. غير ساري اليوم.';
+  }
+
+  @override
+  String get verdictProtected => 'نوع محمي — الصيد محظور.';
+
+  @override
+  String verdictWithinBagLimit(String recorded, String limit, String period) {
+    return 'ضمن حد الحصة — $recorded مسجّلة، الحد $limit لكل $period';
+  }
+
+  @override
+  String verdictAboveBagLimit(String recorded, String limit, String period) {
+    return 'فوق حد الحصة — $recorded مسجّلة، الحد $limit لكل $period';
+  }
+
+  @override
+  String verdictBagLimitNotRecorded(String limit, String period) {
+    return 'لا يوجد شيء مسجّل لهذه المدة — حد الحصة $limit لكل $period';
+  }
+
+  @override
+  String verdictWithinVesselLimit(String recorded, String limit) {
+    return 'ضمن حد القارب — $recorded مسجّلة، الحد $limit';
+  }
+
+  @override
+  String verdictAboveVesselLimit(String recorded, String limit) {
+    return 'فوق حد القارب — $recorded مسجّلة، الحد $limit';
+  }
+
+  @override
+  String verdictVesselLimitNotRecorded(String limit) {
+    return 'لا يوجد شيء مسجّل لهذا القارب — الحد $limit';
+  }
+
+  @override
+  String get verdictNoRuleRecorded =>
+      'لا توجد قاعدة مسجّلة لهذا النوع هنا. هذا لا يعني أنه قانوني.';
+
+  @override
+  String get verdictNoLimitInInstrument => 'قُرئ النص ولا يسجّل أي حد لهذا النوع هنا.';
+
+  @override
+  String get verdictUnknownSpecies => 'هذا النوع غير مسجّل في هذه الولاية. هذا لا يعني أنه قانوني.';
+
+  @override
+  String get verdictAmbiguous => 'تنطبق هنا قاعدتان متساويتان في المرتبة.';
+
+  @override
+  String get findingFactMeasured => 'المقاس';
+
+  @override
+  String get findingFactMinimum => 'الحد الأدنى';
+
+  @override
+  String get findingFactMaximum => 'الحد الأقصى';
+
+  @override
+  String get findingFactDates => 'التواريخ';
+
+  @override
+  String get findingFactToday => 'اليوم';
+
+  @override
+  String get findingFactRecorded => 'المسجّل';
+
+  @override
+  String get findingFactLimit => 'الحد';
+
+  @override
+  String get findingFactPeriod => 'الفترة';
+
+  @override
+  String findingDayOfWindow(String day, String total) {
+    return 'اليوم $day من $total';
+  }
+
+  @override
+  String findingWindowRange(String starts, String ends) {
+    return 'من $starts إلى $ends';
+  }
+
+  @override
+  String disclaimerVerdict(String authority) {
+    return 'يقتبس CatchLaw نصوصًا منشورة. ليست استشارة قانونية ولا تصرّح بأي صيد. يجب التحقق من $authority قبل الاعتماد عليها.';
+  }
 }
