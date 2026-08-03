@@ -13,14 +13,14 @@
 library;
 
 /// `content_meta.build_date` of the payload this binary ships with.
-const String kContentBuildDate = '2026-08-14';
+const String kContentBuildDate = '2026-08-03';
 
 /// `SPEC.md` §7.1's schema version, as the builder wrote it.
 const int kContentSchemaVersion = 1;
 
 /// The UNCOMPRESSED byte count. The determinate progress bar's denominator.
-const int kContentBuildBytes = 188416;
+const int kContentBuildBytes = 196608;
 
 /// The UNCOMPRESSED sha256, verified after decompression and before the rename.
 const String kContentBuildSha256 =
-    'c2e96a030d67f46e5376e3ad36d1611c568fc71d43db19a9992c37ce44cb93e2';
+    '09dd55213b059cd92a8407715d7132e266abf94450f473ef5d25ad80e021b5c6';

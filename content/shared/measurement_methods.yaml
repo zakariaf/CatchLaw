@@ -1,0 +1,15 @@
+# measurement_method — how a threshold is measured at the animal.
+#
+# The method is a column on the RULE row, never on the species: the same species
+# is measured differently in two countries, and a method inferred from the fish
+# rather than read from the instrument turns a legal catch into a fine.
+#
+# Only the methods this corpus actually uses are authored. An unreferenced key
+# is counted, never failed (A2), and the app skips a method name it was never
+# given — so a jurisdiction that states one method carries one row.
+measurement_methods:
+  - id: SHL
+    code: SHL
+    name_key: measurement.shl.name
+    definition_key: measurement.shl.definition
+    diagram_asset: method/shl.svg

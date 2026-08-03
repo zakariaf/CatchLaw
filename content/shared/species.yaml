@@ -17,3 +17,12 @@ species:
     family_id: veneridae
     taxon_group: bivalve
     silhouette_asset: sil/venerupis-corrugata.svg
+    # The decided absences, recorded rather than left as gaps. §9.2 step 3: a
+    # wrong vernacular name is worse than no name, because it produces a
+    # confident wrong finding — and a species with no name in a locale falls
+    # back to the binomial, which is Latin, present everywhere, never wrong.
+    # E22 adds names here only after native-speaker review.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale

@@ -1,0 +1,26 @@
+<!-- Venerupis corrugata, right valve, exterior. Originated line art for
+     CatchLaw (SPEC.md §8): drawn from the outline in the Xunta's own tallas
+     mínimas plate rather than traced from any copyrighted illustration, and
+     deliberately schematic — it identifies the shape of a clam, and the app
+     never asks a fisher to identify a species from it alone.
+
+     The double-headed arrow is the anteroposterior axis (LAP), which is what
+     Artigo 6.4(a) of the 2012 order measures. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90" width="120" height="90">
+  <g fill="none" stroke="#1A2019" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60 12 C86 12 108 30 108 50 C108 68 86 80 60 80 C34 80 12 68 12 50 C12 30 34 12 60 12 Z"/>
+    <path d="M60 12 C56 26 52 40 50 52"/>
+    <path d="M60 12 C64 26 70 40 76 52"/>
+    <path d="M60 12 C60 28 60 44 60 54"/>
+    <path d="M24 34 C40 28 80 28 96 34"/>
+    <path d="M18 46 C40 38 80 38 102 46"/>
+    <path d="M20 58 C42 50 78 50 100 58"/>
+  </g>
+  <g fill="none" stroke="#1A2019" stroke-width="1.2" stroke-linecap="round">
+    <path d="M12 86 L108 86"/>
+    <path d="M12 86 L18 82"/>
+    <path d="M12 86 L18 90"/>
+    <path d="M108 86 L102 82"/>
+    <path d="M108 86 L102 90"/>
+  </g>
+</svg>

@@ -39,3 +39,21 @@ strings:
       es: La distancia más larga entre los bordes de la concha
       gl: A distancia máis longa entre os bordos da cuncha
       pt_BR: A maior distância entre as bordas da concha
+
+  - key: instrument.orde
+    values:
+      ar: أمر
+      ca: Ordre
+      en: Order
+      es: Orden
+      gl: Orde
+      pt_BR: Portaria
+
+  - key: no_vernacular.not_named_in_locale
+    values:
+      ar: لا يسمّي أي نص منشور هذا النوع بهذه اللغة.
+      ca: Cap norma publicada anomena aquesta espècie en aquesta llengua.
+      en: No published instrument names this species in this language.
+      es: Ninguna norma publicada nombra esta especie en este idioma.
+      gl: Ningunha norma publicada nomea esta especie neste idioma.
+      pt_BR: Nenhuma norma publicada nomeia esta espécie neste idioma.

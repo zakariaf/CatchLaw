@@ -1,7 +1,32 @@
 {
   "jurisdiction": "es-ga",
-  "content_version": "2026.08.0",
+  "content_version": "2026.08.1",
   "rows": {
+    "citations/es-ga-orde-2012-07-27-art6": {
+      "article": "Art. 6",
+      "instrument": "Orde do 27 de xullo de 2012",
+      "instrument_type_key": "instrument.orde",
+      "jurisdiction": "ES-GA",
+      "published_on": "2012-11-27",
+      "retrieved_on": "2026-08-03",
+      "source_url": "https://www.xunta.gal/dog/Publicados/2012/20121127/AnuncioG0165-191112-0006_gl.html"
+    },
+    "legal_texts/es-ga-orde-2012-07-27-art6": {
+      "article_ref": "Artigo 6",
+      "body": "Artigo 6. Dos moluscos\n\n1. Os tamaños mínimos dos moluscos son os que se recollen no anexo I-B\ndesta orde.\n\n4. O tamaño medirase tal e como se indica no anexo II-B e da seguinte\nmaneira: a) No caso dos moluscos bivalvos, medindo o eixe maior ou\nanteroposterior (LAP), excepto a ostra e a ostra rizada, que se medirán no\neixe dorsoventral (LDV).",
+      "citation_id": "es-ga-orde-2012-07-27-art6",
+      "jurisdiction_id": "ES-GA",
+      "locale": "gl"
+    },
+    "rules/es-ga-ameixa-babosa-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art6",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "SHL",
+      "min_size_mm": 38,
+      "species_id": "venerupis-corrugata",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
     "zones/es-ga-rias-baixas": {
       "code": "rias-baixas",
       "jurisdiction_id": "ES-GA",
