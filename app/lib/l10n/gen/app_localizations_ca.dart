@@ -129,6 +129,9 @@ class AppLocalizationsCa extends AppLocalizations {
   String get speciesPlateSemanticLabel => 'Làmina gravada';
 
   @override
+  String get speciesSilhouetteSemanticLabel => 'Dibuix lineal';
+
+  @override
   String get speciesProtectedAnywhere => 'Protegida en algun lloc d’aquesta jurisdicció';
 
   @override

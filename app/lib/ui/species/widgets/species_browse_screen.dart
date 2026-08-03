@@ -4,6 +4,7 @@ import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/core/ui/lonja_empty_state.dart';
 import 'package:catchlaw/ui/core/ui/lonja_section_label.dart';
+import 'package:catchlaw/ui/core/ui/lonja_silhouette.dart';
 import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
 import 'package:catchlaw/ui/species/view_models/species_browse_view_model.dart';
 import 'package:flutter/material.dart';
@@ -131,6 +132,7 @@ class _SilhouetteTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final LonjaTokens tokens = LonjaTokens.of(context);
     final LonjaTypeScale type = LonjaType.of(context);
+    final AppLocalizations l10n = AppLocalizations.of(context);
 
     return Semantics(
       button: true,
@@ -143,16 +145,20 @@ class _SilhouetteTile extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // The art itself is E08/T05's resolver and the icon family nobody
-              // owns yet; the tile reserves the box so the grid's geometry is
-              // the one that ships.
+              // The drawing IS the tile: this grid is S6, the shape entry
+              // point, and a grid of empty boxes is a browse screen with
+              // nothing to browse. It shipped empty for one release because the
+              // resolver was unbuilt and `assets/sil/` was unbundled.
               Expanded(
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: tokens.surfaceSunk,
                     border: Border.all(color: tokens.hairline, width: LonjaRules.rule),
                   ),
-                  child: const SizedBox.expand(),
+                  child: LonjaSilhouette(
+                    assetKey: tile.silhouetteAsset,
+                    semanticsLabel: l10n.speciesSilhouetteSemanticLabel,
+                  ),
                 ),
               ),
               const SizedBox(height: LonjaSpace.s1),

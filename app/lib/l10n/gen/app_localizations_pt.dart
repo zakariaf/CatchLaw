@@ -129,6 +129,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get speciesPlateSemanticLabel => 'Prancha gravada';
 
   @override
+  String get speciesSilhouetteSemanticLabel => 'Desenho de linha';
+
+  @override
   String get speciesProtectedAnywhere => 'Protegida em algum lugar desta jurisdição';
 
   @override
@@ -648,6 +651,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get speciesPlateSemanticLabel => 'Prancha gravada';
+
+  @override
+  String get speciesSilhouetteSemanticLabel => 'Desenho de linha';
 
   @override
   String get speciesProtectedAnywhere => 'Protegida em algum lugar desta jurisdição';

@@ -127,6 +127,9 @@ class AppLocalizationsGl extends AppLocalizations {
   String get speciesPlateSemanticLabel => 'Lámina gravada';
 
   @override
+  String get speciesSilhouetteSemanticLabel => 'Debuxo lineal';
+
+  @override
   String get speciesProtectedAnywhere => 'Protexida nalgún lugar desta xurisdición';
 
   @override

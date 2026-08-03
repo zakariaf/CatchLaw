@@ -118,6 +118,17 @@ flutter:
     # E18's "about the rule book" screen reads for the counts — neither of
     # which should require opening ten megabytes of SQLite.
     - assets/content_build.json
+    # Originated SVG line art, one file per species (SPEC.md §8). NOT plates:
+    # a plate is a historical engraving and ships only when its illustrator's
+    # death year clears the longest term among the four bundled jurisdictions,
+    # which today is none of them (content/shared/plates.yaml is `plates: []`).
+    # The silhouette is drawn for this app, carries no copyright question, and
+    # is what the species detail and the browse grid actually render.
+    #
+    # A directory rather than a file list: one entry per species would be a
+    # line every content update has to remember, and the update that forgets it
+    # ships a blank frame that no test sees, which is exactly what happened.
+    - assets/sil/
     # The SIL OFL 1.1 text for both bundled families. An asset rather than a
     # bare repository file because S17 renders it in full (E18) — SPEC.md §8
     # makes shipping it the CONDITION under which the fonts may be bundled.

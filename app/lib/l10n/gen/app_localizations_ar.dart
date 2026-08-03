@@ -134,6 +134,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get speciesPlateSemanticLabel => 'لوحة محفورة';
 
   @override
+  String get speciesSilhouetteSemanticLabel => 'رسم خطي';
+
+  @override
   String get speciesProtectedAnywhere => 'محمي في مكان ما ضمن هذه الولاية';
 
   @override

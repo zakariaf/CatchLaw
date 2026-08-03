@@ -127,6 +127,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get speciesPlateSemanticLabel => 'Engraved plate';
 
   @override
+  String get speciesSilhouetteSemanticLabel => 'Line drawing';
+
+  @override
   String get speciesProtectedAnywhere => 'Protected somewhere in this jurisdiction';
 
   @override
