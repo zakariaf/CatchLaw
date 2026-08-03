@@ -1,6 +1,6 @@
 import 'package:catchlaw/data/bootstrap_data.dart';
-import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/data/model/enum_codecs.dart';
+import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/domain/models/jurisdiction.dart';
 import 'package:catchlaw/domain/models/species.dart';
 import 'package:catchlaw/domain/models/species_search_hit.dart';
