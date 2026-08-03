@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:catchlaw/data/repositories/reference_repository_drift.dart';
 import 'package:catchlaw/data/services/reference_database_service.dart';
 import 'package:drift/drift.dart' show QueryRow;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rule_engine/rule_engine.dart' show MeasurementMethod, Ok, Result, Rule;
 
 import '../../testing/fixtures/reference_fixture.dart';
 
@@ -49,6 +51,45 @@ void main() {
     expect(sized, isNotEmpty);
     for (final row in sized) {
       expect(row['measurement_method_id'], isNotNull, reason: '${row['id']}');
+    }
+  });
+
+  test('the shipped pack resolves its measurement method by code, not by row id', () async {
+    // The defect this test exists for shipped, and only running the app against a
+    // real pack found it. The build numbers `measurement_method` by INSERTION
+    // ORDER, and two call sites read that id as an index into the enum's
+    // declaration order -- so a shell-length rule stated a TOTAL-LENGTH threshold.
+    // Wrong method, confident number, cited instrument: the exact verdict this
+    // product exists to prevent.
+    //
+    // Asserted against the built artefact and driven off SQL, because an
+    // in-memory fixture is free to number its methods the way the broken map
+    // assumed, and every one of ours did.
+    final List<Map<String, Object?>> sized = await rows('''
+      SELECT r.jurisdiction_id AS j, r.species_id AS s, r.water_type AS w,
+             r.valid_from AS f, m.code AS code
+      FROM rule r JOIN measurement_method m ON m.id = r.measurement_method_id
+      WHERE r.min_size_mm IS NOT NULL OR r.max_size_mm IS NOT NULL
+    ''');
+    expect(sized, isNotEmpty, reason: 'the pack carries at least one size rule');
+
+    final repo = DriftReferenceRepository(db);
+    for (final row in sized) {
+      final Result<List<Rule>> read = await repo.candidateRules(
+        jurisdictionId: row['j']! as int,
+        speciesId: row['s']! as int,
+        waterType: row['w']! as String,
+        onDate: row['f']! as String,
+      );
+      final List<Rule> rules = (read as Ok<List<Rule>>).value;
+      final Iterable<MeasurementMethod?> methods = rules
+          .where((Rule r) => r.minSizeMm != null || r.maxSizeMm != null)
+          .map((Rule r) => r.measurementMethod);
+      expect(
+        methods,
+        contains(MeasurementMethod.fromCode(row['code']! as String)),
+        reason: 'the pack states ${row['code']}, so the app must read it',
+      );
     }
   });
 

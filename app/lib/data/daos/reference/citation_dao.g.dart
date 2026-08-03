@@ -18,6 +18,7 @@ class CitationDaoManager {
 mixin _$ReferenceMetaDaoMixin on DatabaseAccessor<ReferenceDatabase> {
   $ContentMetasTable get contentMetas => attachedDatabase.contentMetas;
   $JurisdictionsTable get jurisdictions => attachedDatabase.jurisdictions;
+  $MeasurementMethodsTable get measurementMethods => attachedDatabase.measurementMethods;
   ReferenceMetaDaoManager get managers => ReferenceMetaDaoManager(this);
 }
 
@@ -28,4 +29,6 @@ class ReferenceMetaDaoManager {
       $$ContentMetasTableTableManager(_db.attachedDatabase, _db.contentMetas);
   $$JurisdictionsTableTableManager get jurisdictions =>
       $$JurisdictionsTableTableManager(_db.attachedDatabase, _db.jurisdictions);
+  $$MeasurementMethodsTableTableManager get measurementMethods =>
+      $$MeasurementMethodsTableTableManager(_db.attachedDatabase, _db.measurementMethods);
 }

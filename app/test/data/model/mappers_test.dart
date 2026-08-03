@@ -97,7 +97,14 @@ void main() {
       )).single;
       final engine.Citation citation = toCitation((await CitationDao(db).byId(1))!);
 
-      final engine.Rule rule = toRule(row, citation: citation);
+      // The method is passed IN, resolved from `measurement_method.code`. The
+      // mapper deliberately cannot derive it from `measurement_method_id`: the
+      // build numbers that column by insertion order.
+      final engine.Rule rule = toRule(
+        row,
+        citation: citation,
+        method: engine.MeasurementMethod.shellLength,
+      );
 
       expect(rule.citation.instrument, 'Orde do 27 de xullo de 2012');
       expect(rule.minSizeMm, 450);

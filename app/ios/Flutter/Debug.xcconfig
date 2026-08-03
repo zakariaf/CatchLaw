@@ -1,1 +1,6 @@
+// The Pods include comes FIRST, and `#include?` rather than `#include`: a clone
+// that has not run `pod install` yet has no such file, and a hard include would
+// fail the build with a missing-file error instead of the "sandbox is not in
+// sync" message that says what to actually do.
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
 #include "Generated.xcconfig"

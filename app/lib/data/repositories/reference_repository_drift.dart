@@ -10,7 +10,8 @@ import 'package:catchlaw/data/repositories/storage_boundary.dart';
 import 'package:catchlaw/data/services/reference_database_service.dart';
 import 'package:catchlaw/domain/models/jurisdiction.dart';
 import 'package:catchlaw/domain/models/species.dart';
-import 'package:rule_engine/rule_engine.dart' show Citation, ClosedSeason, Result, Rule;
+import 'package:rule_engine/rule_engine.dart'
+    show Citation, ClosedSeason, MeasurementMethod, Result, Rule;
 
 /// [ReferenceRepository] over the shipped, read-only `reference.db`.
 ///
@@ -95,11 +96,21 @@ final class DriftReferenceRepository implements ReferenceRepository {
       );
     }
 
+    // Read once per query, not per rule: the table is nine rows at most and
+    // never changes within a pack.
+    final Map<int, String> codes = await _meta.methodCodes();
+
     return <Rule>[
       for (final RuleRow r in rows)
         toRule(
           r,
           citation: _require(citations, r.citationId, 'rule'),
+          // Resolved through the CODE. The build assigns
+          // `measurement_method.id` by insertion order, so a pack declaring one
+          // method gives it id 1 — and an id-to-enum map reads that as total
+          // length. A shell-length rule printing as a total-length rule is the
+          // failure this whole product exists to prevent.
+          method: _methodFor(r.measurementMethodId, codes),
           closedSeasons: byRule[r.id] ?? const <ClosedSeason>[],
         ),
     ];
@@ -137,6 +148,18 @@ final class DriftReferenceRepository implements ReferenceRepository {
 
   @override
   Future<Result<Map<String, String>>> contentMeta() => boundary.guard(_meta.contentMeta);
+
+  /// The engine's method for a rule's `measurement_method_id`.
+  ///
+  /// A code this build does not recognise resolves to `null` — the same shape
+  /// as a rule with no method at all — because the engine emits NO size finding
+  /// without one. That is the safe direction: a size rule the app cannot state
+  /// the method for is a size rule it does not state.
+  MeasurementMethod? _methodFor(int? id, Map<int, String> codes) {
+    if (id == null) return null;
+    final String? code = codes[id];
+    return code == null ? null : MeasurementMethod.fromCode(code);
+  }
 
   Future<Map<int, Citation>> _citationsById(Iterable<int> ids) async => <int, Citation>{
     for (final CitationRow row in await _citations.byIds(ids)) row.id: toCitation(row),

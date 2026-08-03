@@ -21,6 +21,41 @@ Future<ReferenceDatabase> buildRulesFixture() async {
 
   await db.batch((Batch batch) {
     batch
+      // Seeded with ids that do NOT match the enum's declaration order, on
+      // purpose. The content build numbers this table by insertion order, and
+      // a fixture that numbered TL as 1 would agree with the id-to-enum map
+      // that shipped the shell-length-as-total-length defect — and would go on
+      // agreeing with it after the fix.
+      ..insert(
+        db.measurementMethods,
+        MeasurementMethodsCompanion.insert(
+          id: const Value<int>(1),
+          code: 'SHL',
+          nameKey: 'measurement.shl.name',
+          definitionKey: 'measurement.shl.definition',
+          diagramAsset: 'method/shl.svg',
+        ),
+      )
+      ..insert(
+        db.measurementMethods,
+        MeasurementMethodsCompanion.insert(
+          id: const Value<int>(2),
+          code: 'FL',
+          nameKey: 'measurement.fl.name',
+          definitionKey: 'measurement.fl.definition',
+          diagramAsset: 'method/fl.svg',
+        ),
+      )
+      ..insert(
+        db.measurementMethods,
+        MeasurementMethodsCompanion.insert(
+          id: const Value<int>(3),
+          code: 'TL',
+          nameKey: 'measurement.tl.name',
+          definitionKey: 'measurement.tl.definition',
+          diagramAsset: 'method/tl.svg',
+        ),
+      )
       ..insert(
         db.jurisdictions,
         JurisdictionsCompanion.insert(

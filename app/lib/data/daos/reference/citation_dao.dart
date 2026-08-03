@@ -2,6 +2,7 @@ import 'package:catchlaw/data/services/reference_database_service.dart';
 import 'package:catchlaw/data/services/tables/reference/citation.dart';
 import 'package:catchlaw/data/services/tables/reference/content_meta.dart';
 import 'package:catchlaw/data/services/tables/reference/jurisdiction.dart';
+import 'package:catchlaw/data/services/tables/reference/measurement.dart';
 import 'package:drift/drift.dart';
 
 part 'citation_dao.g.dart';
@@ -33,7 +34,7 @@ class CitationDao extends DatabaseAccessor<ReferenceDatabase> with _$CitationDao
 }
 
 /// Reads what the pack says about itself.
-@DriftAccessor(tables: <Type>[ContentMetas, Jurisdictions])
+@DriftAccessor(tables: <Type>[ContentMetas, Jurisdictions, MeasurementMethods])
 class ReferenceMetaDao extends DatabaseAccessor<ReferenceDatabase> with _$ReferenceMetaDaoMixin {
   /// Reads pack metadata from [db].
   ReferenceMetaDao(super.db);
@@ -46,6 +47,14 @@ class ReferenceMetaDao extends DatabaseAccessor<ReferenceDatabase> with _$Refere
     final List<ContentMetaRow> rows = await select(contentMetas).get();
     return <String, String>{for (final ContentMetaRow r in rows) r.key: r.value};
   }
+
+  /// `measurement_method.id` → its `code`.
+  ///
+  /// The whole table, in one statement: it is nine rows at most, and a join per
+  /// rule would be a round trip for a value that never changes within a pack.
+  Future<Map<int, String>> methodCodes() async => <int, String>{
+    for (final MeasurementMethodRow row in await select(measurementMethods).get()) row.id: row.code,
+  };
 
   /// Every bundled jurisdiction, by code.
   Future<List<JurisdictionRow>> allJurisdictions() =>

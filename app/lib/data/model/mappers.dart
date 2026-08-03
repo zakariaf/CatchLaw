@@ -71,11 +71,23 @@ engine.Citation toCitation(CitationRow row) => engine.Citation(
 );
 
 /// A `rule` row and its closures as the engine's [engine.Rule].
+///
 /// **[citation] is required and is not defaulted.** Invariant 3 makes a
 /// `Citation` non-nullable on every engine type precisely so it cannot be
 /// forgotten; a mapper that supplied an empty placeholder would satisfy the
 /// type and print a footnote that cites nothing, which is the defect the
 /// invariant exists to make unrepresentable.
+///
+/// **[method] is required, and is passed IN rather than derived.** It is
+/// resolved by the caller from `measurement_method.code`, never from
+/// `measurement_method_id`. The build assigns those integers by insertion
+/// order, so a pack declaring one method gives it id 1 — and an id-to-enum map
+/// reads id 1 as total length, printing a shell-length rule as a total-length
+/// rule. That is `catchlaw-rule-engine` rule 12's failure, the one priced at
+/// 6-9 cm between FL and TL on a Kanaad. The code is the stable key, and §7.1
+/// makes it `UNIQUE` for exactly that reason. Required rather than optional so
+/// the shortcut is unwritable rather than merely discouraged.
+///
 /// `citationLineageId` is the citation's id as a string: §7.1 has no lineage
 /// column, and E04 collapses an amending order onto the order it amends by
 /// giving them one lineage. Until §7.1 grows the column, one citation is one
@@ -84,6 +96,7 @@ engine.Citation toCitation(CitationRow row) => engine.Citation(
 engine.Rule toRule(
   RuleRow row, {
   required engine.Citation citation,
+  required engine.MeasurementMethod? method,
   List<engine.ClosedSeason> closedSeasons = const <engine.ClosedSeason>[],
 }) => engine.Rule(
   id: row.id,
@@ -97,9 +110,7 @@ engine.Rule toRule(
   validTo: row.validTo,
   minSizeMm: row.minSizeMm,
   maxSizeMm: row.maxSizeMm,
-  measurementMethod: row.measurementMethodId == null
-      ? null
-      : engine.MeasurementMethod.values.elementAtOrNull(row.measurementMethodId! - 1),
+  measurementMethod: method,
   bagLimit: row.bagLimit,
   bagLimitUnit: _limitUnit(row.bagLimitUnit),
   bagLimitPeriod: _limitPeriod(row.bagLimitPeriod),

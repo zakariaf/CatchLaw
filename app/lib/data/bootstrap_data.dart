@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/data/repositories/calibration_repository_drift.dart';
 import 'package:catchlaw/data/repositories/content_string_repository_drift.dart';
@@ -15,6 +14,9 @@ import 'package:catchlaw/data/repositories/species_facts_repository_drift.dart';
 import 'package:catchlaw/data/repositories/species_recent_repository_drift.dart';
 import 'package:catchlaw/data/repositories/species_search_repository_drift.dart';
 import 'package:catchlaw/data/services/app_directories.dart';
+import 'package:catchlaw/data/services/app_meta_marker_store.dart';
+import 'package:catchlaw/data/services/asset_bundle_service.dart';
+import 'package:catchlaw/data/services/reference/content_build.dart';
 import 'package:catchlaw/data/services/reference_database_service.dart';
 import 'package:catchlaw/data/services/reference_installer.dart';
 import 'package:catchlaw/data/services/user_database_opener.dart';
@@ -22,6 +24,7 @@ import 'package:catchlaw/data/services/user_database_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:path/path.dart' as p;
+import 'package:rule_engine/rule_engine.dart' show Failure, Ok, Result;
 
 /// The real data layer, wired into the seams of `providers.dart`.
 ///
@@ -35,12 +38,26 @@ import 'package:path/path.dart' as p;
 /// [directories] is a port precisely so this stays true: `path_provider` needs
 /// a platform channel, and the channel is called inside the lazy callback,
 /// after the first frame.
-List<Override> dataOverrides({required AppDirectories directories}) {
-  final reference = ReferenceDatabase(
-    referenceExecutorAt(() async => _file(await directories.reference(), _kReferenceFile)),
-  );
+List<Override> dataOverrides({
+  required AppDirectories directories,
+  AssetBundleService bundle = const RootBundleAssetService(),
+}) {
   final user = UserDatabase(
     guardedUserExecutorAt(() async => _file(await directories.user(), _kUserFile)),
+  );
+  final reference = ReferenceDatabase(
+    // **Extracted before it is opened, and inside the lazy callback.** The
+    // shipped asset is a `.gz` (D-6); on a first launch there is no
+    // `reference.db` on disk at all, and a read-only open of a file that does
+    // not exist is `SqliteException(14)` — which the picker renders honestly as
+    // "the bundled rule pack could not be read", and which is nonetheless a
+    // wiring defect rather than a broken pack.
+    //
+    // Here rather than in `main()`: `LazyDatabase` runs this on the first
+    // QUERY, after the first frame, so nothing is awaited before `runApp`
+    // (`catchlaw-conventions-index` rule 8). The extraction is idempotent — the
+    // marker in `user.db` is what makes the second launch skip it.
+    referenceExecutorAt(() async => _installedReference(directories, user, bundle)),
   );
 
   return <Override>[
@@ -118,7 +135,32 @@ List<Override> dataOverrides({required AppDirectories directories}) {
 /// minute of spinner on a screen whose whole job is to state a fact.
 Duration? noRetry(int retryCount, Object error) => null;
 
-const String _kReferenceFile = ReferenceInstaller.kFileName;
 const String _kUserFile = 'user.db';
 
 File _file(Directory dir, String name) => File(p.join(dir.path, name));
+
+/// The extracted `reference.db`, installing it first if this build has not been.
+///
+/// Throws rather than returning a missing file. A `Result` that the executor
+/// swallowed would surface as the same `SqliteException(14)` the extraction
+/// exists to prevent, three frames later and with the cause gone — and the
+/// installer's failure type already says which of the four things went wrong.
+Future<File> _installedReference(
+  AppDirectories directories,
+  UserDatabase user,
+  AssetBundleService bundle,
+) async {
+  final Result<File> installed = await ReferenceInstaller(
+    bundle: bundle,
+    directories: directories,
+    // One marker, in `user.db`, written last. Two markers would be one too
+    // many, and the one that is not written last is the one that lies (D-6).
+    marker: AppMetaMarkerStore(user),
+    expected: kReferenceBuild,
+  ).ensureInstalled();
+
+  return switch (installed) {
+    Ok<File>(:final File value) => value,
+    Failure<File>(:final Exception exception) => throw exception,
+  };
+}

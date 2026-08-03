@@ -140,24 +140,21 @@ T _decode<T>(List<T> values, String? sql, T fallback) {
   return fallback;
 }
 
-/// `rule.measurement_method_id` as the engine's enum.
+/// `measurement_method.code` as the engine's enum.
 ///
-/// **Here and not beside the species**, and `check_measurement.sh` check 6 is
-/// what says so: the same fish is measured differently in two countries, so TL
-/// versus FL is a column on the RULE row and never a property of the species. A
-/// decoder living in a `*species*.dart` file asserts the opposite of that, and
-/// the thing it asserts is what turns a legal fish into a fine.
+/// **By CODE, never by id.** The content build assigns `measurement_method.id`
+/// by insertion order, so a pack declaring one method gives it id 1 — and an
+/// id-to-enum map reads id 1 as total length. A shell-length rule then states a
+/// total-length threshold, which is `catchlaw-rule-engine` rule 12's failure
+/// exactly: 65 cm fork length is roughly 71 cm total length, and the difference
+/// is a fine. §7.1 makes `code` `UNIQUE` because it is the stable key.
 ///
-/// Total, with a documented fallback, like every other codec here: the id comes
-/// out of a file a content update replaces wholesale, so a value this build does
-/// not recognise must not throw on a fisher's phone. `totalLength` is the
-/// fallback because it is the method the largest number of instruments use — a
-/// hint that named the wrong method still carries the right number, where a
-/// crash carries nothing.
-MeasurementMethod measurementMethodOfId(int id) => switch (id) {
-  1 => MeasurementMethod.totalLength,
-  2 => MeasurementMethod.forkLength,
-  3 => MeasurementMethod.carapaceWidth,
-  4 => MeasurementMethod.shellLength,
-  _ => MeasurementMethod.totalLength,
-};
+/// This was live in two call sites and was caught by running the app against a
+/// real pack, not by a test: every fixture in the suite happened to number its
+/// methods the way the old map assumed.
+///
+/// Null rather than a fallback for an unrecognised code. The engine emits NO
+/// size finding without a method, which is the safe direction — a size rule the
+/// app cannot state the method for is a size rule it does not state.
+MeasurementMethod? measurementMethodOfCode(String? code) =>
+    code == null ? null : MeasurementMethod.fromCode(code);

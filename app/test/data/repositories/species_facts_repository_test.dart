@@ -152,13 +152,22 @@ void main() {
     expect(_unwrap(await repo.zoneChain(10)), <int>[10]);
   });
 
-  test('measurementMethodOfId falls back rather than throwing on an unknown id', () {
-    // The id comes out of a file a content update replaces wholesale, so a
-    // value this build does not recognise must not throw on a fisher's phone.
-    // A hint that named the wrong method still carries the right number; a
-    // crash carries nothing.
-    expect(measurementMethodOfId(1), MeasurementMethod.totalLength);
-    expect(measurementMethodOfId(2), MeasurementMethod.forkLength);
-    expect(measurementMethodOfId(99), MeasurementMethod.totalLength);
+  test('measurementMethodOfCode resolves by the stable code, never by a row id', () {
+    // The defect this replaced was live in two call sites and shipped: the
+    // content build numbers `measurement_method` by INSERTION ORDER, so a pack
+    // declaring only shell length gives it id 1 — and the old id-to-enum map
+    // read id 1 as total length. A shell-length rule then stated a total-length
+    // threshold. Every fixture in this suite happened to number its methods the
+    // way that map assumed, so only running the app against a real pack found
+    // it.
+    expect(measurementMethodOfCode('SHL'), MeasurementMethod.shellLength);
+    expect(measurementMethodOfCode('TL'), MeasurementMethod.totalLength);
+    expect(measurementMethodOfCode('FL'), MeasurementMethod.forkLength);
+
+    // Null, not a fallback: the engine emits no size finding without a method,
+    // and a size rule the app cannot state the method for is one it does not
+    // state.
+    expect(measurementMethodOfCode('NOPE'), isNull);
+    expect(measurementMethodOfCode(null), isNull);
   });
 }
