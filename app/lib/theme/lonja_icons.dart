@@ -108,6 +108,12 @@ abstract final class LonjaIcons {
 
   /// A closure is in force.
   static const LonjaGlyph closedSeason = LonjaGlyph('closedSeason', _closedSeason);
+
+  /// The question could not be answered from what the fisher supplied.
+  ///
+  /// Its own mark rather than a faded tick: an open question rendered as a pale
+  /// pass is a rule reported as checked when nothing was checked.
+  static const LonjaGlyph openQuestion = LonjaGlyph('openQuestion', _openQuestion);
 }
 
 Path _tick() => Path()
@@ -136,3 +142,12 @@ Path _closedSeason() => Path()
   ..lineTo(16, 6.5)
   ..moveTo(7, 15.5)
   ..lineTo(17, 15.5);
+
+Path _openQuestion() => Path()
+  ..addOval(Rect.fromCircle(center: const Offset(12, 12), radius: 9))
+  ..moveTo(12, 16.5)
+  ..lineTo(12, 16.5)
+  ..moveTo(9, 9.5)
+  ..lineTo(15, 9.5)
+  ..moveTo(15, 9.5)
+  ..lineTo(12, 13.5);

@@ -1,4 +1,6 @@
+import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
+import 'package:catchlaw/ui/result/widgets/result_findings_list.dart';
 import 'package:catchlaw/ui/result/widgets/result_haptics.dart';
 import 'package:catchlaw/ui/result/widgets/result_verdict_panel.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +69,8 @@ class _ResultSectionState extends State<ResultSection> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         if (stamp != null) ResultVerdictPanel(stamp: stamp, citation: stamp.citation),
+        if (display.secondary.isNotEmpty) const SizedBox(height: LonjaSpace.s5),
+        ResultFindingsList(findings: display.secondary),
       ],
     );
   }

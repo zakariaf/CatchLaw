@@ -129,6 +129,7 @@ class FindingDisplay {
     required this.kind,
     required this.outcome,
     required this.citation,
+    required this.citationIndex,
     required this.facts,
   });
 
@@ -147,6 +148,14 @@ class FindingDisplay {
   /// The instrument it rests on. Required, and never null (invariant 3).
   final CitationDisplay citation;
 
+  /// Which footnote this row points at, 1-based.
+  ///
+  /// Assigned ONCE, in the presenter, by de-duplicating the citations in
+  /// first-appearance order — so the marker on a row and the footnote under the
+  /// page cannot disagree. Two markers for one instrument would say two
+  /// instruments were read; a marker computed twice is how they come to differ.
+  final int citationIndex;
+
   /// The numbers behind the sentence.
   final List<RuleFact> facts;
 
@@ -158,10 +167,12 @@ class FindingDisplay {
           other.kind == kind &&
           other.outcome == outcome &&
           other.citation == citation &&
+          other.citationIndex == citationIndex &&
           listEquals(other.facts, facts);
 
   @override
-  int get hashCode => Object.hash(sentence, kind, outcome, citation, Object.hashAll(facts));
+  int get hashCode =>
+      Object.hash(sentence, kind, outcome, citation, citationIndex, Object.hashAll(facts));
 }
 
 /// The one thing at the top of the screen.
@@ -347,6 +358,14 @@ class ResultDisplay {
   /// beneath it and the fisher sees the whole picture without the stamp
   /// equivocating.
   final List<FindingDisplay> findings;
+
+  /// Everything the stamp or the note does not already say.
+  ///
+  /// The first finding is the headline, and the headline is already on screen
+  /// in the stamp — or, for an open question, in the note. Printing it twice
+  /// reads as two separate rules biting.
+  List<FindingDisplay> get secondary =>
+      findings.isEmpty ? const <FindingDisplay>[] : findings.sublist(1);
 
   /// Present only when an instrument behind this answer had lapsed.
   ///

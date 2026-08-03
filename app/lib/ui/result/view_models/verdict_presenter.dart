@@ -129,8 +129,16 @@ class VerdictPresenter {
   }) {
     // Headline first, then the engine's own order. The engine ranks once; a
     // second sort here would be a second, untested opinion.
+    final ranked = <Finding>[headline, ...secondary];
+    // First-appearance order, de-duplicated: two findings from one instrument
+    // share a marker, because two markers would say two instruments were read.
+    final footnotes = <Citation>[];
+    for (final finding in ranked) {
+      if (!footnotes.contains(finding.citation)) footnotes.add(finding.citation);
+    }
     final findings = <FindingDisplay>[
-      for (final Finding finding in <Finding>[headline, ...secondary]) _finding(finding),
+      for (final Finding finding in ranked)
+        _finding(finding, footnotes.indexOf(finding.citation) + 1),
     ];
     final FindingDisplay head = findings.first;
 
@@ -234,11 +242,12 @@ class VerdictPresenter {
     };
   }
 
-  FindingDisplay _finding(Finding finding) => FindingDisplay(
+  FindingDisplay _finding(Finding finding, int citationIndex) => FindingDisplay(
     sentence: _sentenceFor(finding),
     kind: finding.kind,
     outcome: finding.outcome,
     citation: _citation(finding.citation),
+    citationIndex: citationIndex,
     facts: _factsFor(finding),
   );
 

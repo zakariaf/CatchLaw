@@ -326,3 +326,51 @@ const CitationDisplay kCitationDisplayMd580 = CitationDisplay(
   publishedOn: '2015-11-03',
   checkedOn: '2026-07-14',
 );
+
+/// A second instrument, as the footnote prints it.
+const CitationDisplay kCitationDisplayXunta = CitationDisplay(
+  instrument: 'Orde do 27 de xullo de 2012',
+  article: 'Art. 4',
+  publishedOn: '2012-08-06',
+  checkedOn: '2026-08-12',
+);
+
+/// A minimum that failed, footnote 1.
+const FindingDisplay kFindingMinSizeFails = FindingDisplay(
+  sentence: 'Below the minimum — 38\u00A0cm measured, minimum 45\u00A0cm (Total length)',
+  kind: FindingKind.minSize,
+  outcome: FindingOutcome.fails,
+  citation: kCitationDisplayMd580,
+  citationIndex: 1,
+  facts: <RuleFact>[],
+);
+
+/// A maximum that was met, from the SAME instrument as [kFindingMinSizeFails].
+const FindingDisplay kFindingMaxSizeSatisfied = FindingDisplay(
+  sentence: 'Within the maximum — 38\u00A0cm measured, maximum 120\u00A0cm (Total length)',
+  kind: FindingKind.maxSize,
+  outcome: FindingOutcome.passes,
+  citation: kCitationDisplayMd580,
+  citationIndex: 1,
+  facts: <RuleFact>[],
+);
+
+/// A bag limit that failed, from a SECOND instrument.
+const FindingDisplay kFindingBagLimitFails = FindingDisplay(
+  sentence: 'Above the bag limit — 9 recorded, limit 6 per day',
+  kind: FindingKind.bagLimit,
+  outcome: FindingOutcome.fails,
+  citation: kCitationDisplayXunta,
+  citationIndex: 2,
+  facts: <RuleFact>[],
+);
+
+/// A bag limit nobody has recorded against.
+const FindingDisplay kFindingBagLimitIndeterminate = FindingDisplay(
+  sentence: 'Nothing recorded for this period — the bag limit is 6 per day',
+  kind: FindingKind.bagLimit,
+  outcome: FindingOutcome.indeterminate,
+  citation: kCitationDisplayMd580,
+  citationIndex: 1,
+  facts: <RuleFact>[],
+);
