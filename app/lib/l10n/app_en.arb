@@ -604,35 +604,35 @@
   },
   "findingFactMeasured": "Measured",
   "@findingFactMeasured": {
-    "description": "Row label in the rule table. A noun, not a sentence."
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence."
   },
   "findingFactMinimum": "Minimum",
   "@findingFactMinimum": {
-    "description": "Row label in the rule table. A noun, not a sentence."
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence."
   },
   "findingFactMaximum": "Maximum",
   "@findingFactMaximum": {
-    "description": "Row label in the rule table. A noun, not a sentence."
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence."
   },
   "findingFactDates": "Dates",
   "@findingFactDates": {
-    "description": "Row label in the rule table, for the two dates of a closure."
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for the two dates of a closure."
   },
   "findingFactToday": "Today",
   "@findingFactToday": {
-    "description": "Row label in the rule table, for where today sits inside a closure."
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for where today sits inside a closure."
   },
   "findingFactRecorded": "Recorded",
   "@findingFactRecorded": {
-    "description": "Row label in the rule table, for what the catch log holds."
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for what the catch log holds."
   },
   "findingFactLimit": "Limit",
   "@findingFactLimit": {
-    "description": "Row label in the rule table, for what the instrument permits."
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for what the instrument permits."
   },
   "findingFactPeriod": "Period",
   "@findingFactPeriod": {
-    "description": "Row label in the rule table, for the period a limit is stated over."
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for the period a limit is stated over."
   },
   "findingDayOfWindow": "day {day} of {total}",
   "@findingDayOfWindow": {

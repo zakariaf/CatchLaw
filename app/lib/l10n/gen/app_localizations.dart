@@ -590,49 +590,49 @@ abstract class AppLocalizations {
   /// **'Two rules of equal standing apply here.'**
   String get verdictAmbiguous;
 
-  /// Row label in the rule table. A noun, not a sentence.
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence.
   ///
   /// In en, this message translates to:
   /// **'Measured'**
   String get findingFactMeasured;
 
-  /// Row label in the rule table. A noun, not a sentence.
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence.
   ///
   /// In en, this message translates to:
   /// **'Minimum'**
   String get findingFactMinimum;
 
-  /// Row label in the rule table. A noun, not a sentence.
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence.
   ///
   /// In en, this message translates to:
   /// **'Maximum'**
   String get findingFactMaximum;
 
-  /// Row label in the rule table, for the two dates of a closure.
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for the two dates of a closure.
   ///
   /// In en, this message translates to:
   /// **'Dates'**
   String get findingFactDates;
 
-  /// Row label in the rule table, for where today sits inside a closure.
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for where today sits inside a closure.
   ///
   /// In en, this message translates to:
   /// **'Today'**
   String get findingFactToday;
 
-  /// Row label in the rule table, for what the catch log holds.
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for what the catch log holds.
   ///
   /// In en, this message translates to:
   /// **'Recorded'**
   String get findingFactRecorded;
 
-  /// Row label in the rule table, for what the instrument permits.
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for what the instrument permits.
   ///
   /// In en, this message translates to:
   /// **'Limit'**
   String get findingFactLimit;
 
-  /// Row label in the rule table, for the period a limit is stated over.
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table, for the period a limit is stated over.
   ///
   /// In en, this message translates to:
   /// **'Period'**
