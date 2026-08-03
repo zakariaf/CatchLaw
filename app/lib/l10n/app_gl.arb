@@ -115,5 +115,6 @@
   "zonePickerEmptyBody": "Esta versión non leva ningunha norma transcrita. Isto non significa que non existan.",
   "zonePickerLoadFailed": "Non se puido ler o paquete de normas incluído.",
   "countryName": "{code, select, ES{España} AE{Emiratos Árabes Unidos} BR{Brasil} other{{code}}}",
-  "zoneNoPublishedBoundaries": "{authority} non publica límites de coordenadas. As normas rexistradas aquí aplícanse a toda a xurisdición."
+  "zoneNoPublishedBoundaries": "{authority} non publica límites de coordenadas. As normas rexistradas aquí aplícanse a toda a xurisdición.",
+  "zoneWaterChoiceRequired": "Hai que escoller mar ou augas continentais antes de que este lugar poida responder."
 }

@@ -154,6 +154,14 @@ class _Levels extends ConsumerWidget {
                         ),
                     ],
                   ),
+                if (state.needsWaterChoice)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: LonjaSpace.s4,
+                      vertical: LonjaSpace.s2,
+                    ),
+                    child: Text(l10n.zoneWaterChoiceRequired, textAlign: TextAlign.start),
+                  ),
                 if (state.offersWaterChoice)
                   ZoneLevel(
                     label: l10n.zoneLevelRegion,

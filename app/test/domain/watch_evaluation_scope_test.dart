@@ -139,6 +139,44 @@ void main() {
     expect(scope!.zonePath, <String>['ES-GA', 'b', 'a']);
   });
 
+  test('WatchEvaluationScope takes his stored water only where the zone covers both', () async {
+    final settings = FakeSettingsRepository();
+    await settings.setActivePlace(jurisdictionCode: 'ES-GA', zoneCode: 'both-waters');
+    await settings.setActiveWater(WaterKind.fresh);
+
+    final EvaluationScope? scope = await _scope(
+      settings,
+      zones: const <Zone>[
+        Zone(
+          id: 12,
+          jurisdictionId: 1,
+          code: 'both-waters',
+          nameKey: 'zone.es_ga.both',
+          waterType: WaterKind.both,
+          zoneKind: ZoneKind.region,
+        ),
+      ],
+    )().firstWhere((EvaluationScope? s) => s != null);
+
+    expect(scope!.water, WaterKind.fresh);
+  });
+
+  test('WatchEvaluationScope ignores his stored water where the zone publishes one', () async {
+    final settings = FakeSettingsRepository();
+    await settings.setActivePlace(jurisdictionCode: 'ES-GA', zoneCode: 'rias-baixas');
+    await settings.setActiveWater(WaterKind.fresh);
+
+    final EvaluationScope? scope = await _scope(
+      settings,
+      zones: const <Zone>[_riasBaixas],
+    )().firstWhere((EvaluationScope? s) => s != null);
+
+    // The zone says salt. A stored preference that could override it would be
+    // the fisher choosing which water a place is, and a freshwater rule
+    // answered for a sea zone is a wrong verdict.
+    expect(scope!.water, WaterKind.salt);
+  });
+
   // NOT TESTED HERE, and stated rather than left as a gap: that a WRITE
   // re-emits. `FakeSettingsRepository.watchProfile` yields its current profile
   // and then a BROADCAST stream, so whether a write lands depends on when the

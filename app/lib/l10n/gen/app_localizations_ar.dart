@@ -484,4 +484,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String zoneNoPublishedBoundaries(String authority) {
     return 'لا تنشر $authority حدودًا إحداثية. القواعد المسجّلة هنا تسري على الولاية بأكملها.';
   }
+
+  @override
+  String get zoneWaterChoiceRequired =>
+      'يجب اختيار البحر أو المياه الداخلية قبل أن يجيب هذا المكان.';
 }

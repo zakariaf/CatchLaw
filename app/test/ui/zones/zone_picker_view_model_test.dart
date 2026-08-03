@@ -278,6 +278,103 @@ void main() {
       },
     );
 
+    test('.isComplete refuses a zone that covers both waters until one is chosen', () async {
+      const bothWaters = Zone(
+        id: 30,
+        jurisdictionId: 2,
+        code: 'rak-all',
+        nameKey: 'zone.ae_rak.all',
+        waterType: WaterKind.both,
+        zoneKind: ZoneKind.region,
+      );
+      final ProviderContainer container = _container(
+        zones: <int, List<Zone>>{
+          2: <Zone>[bothWaters],
+        },
+      );
+      await _settled(container);
+      container.read(zonePickerViewModelProvider.notifier).selectCountry('AE');
+      await _settled(container);
+      container.read(zonePickerViewModelProvider.notifier).selectJurisdiction('AE-RK');
+
+      // A place that has not said which water answers with the wrong
+      // instrument, so it is not a place yet.
+      ZonePickerState state = await _settled(container);
+      expect(state.needsWaterChoice, isTrue);
+      expect(state.isComplete, isFalse);
+
+      container.read(zonePickerViewModelProvider.notifier).selectWater(WaterKind.fresh);
+      state = await _settled(container);
+      expect(state.isComplete, isTrue);
+    });
+
+    test('.isComplete asks nothing where the ZONE publishes one water', () async {
+      final ProviderContainer container = _container(
+        zones: <int, List<Zone>>{
+          2: <Zone>[
+            const Zone(
+              id: 31,
+              jurisdictionId: 2,
+              code: 'rak-coast',
+              nameKey: 'zone.ae_rak.coast',
+              waterType: WaterKind.salt,
+              zoneKind: ZoneKind.region,
+            ),
+          ],
+        },
+      );
+      await _settled(container);
+      container.read(zonePickerViewModelProvider.notifier).selectCountry('AE');
+      await _settled(container);
+      container.read(zonePickerViewModelProvider.notifier).selectJurisdiction('AE-RK');
+
+      // The AUTHORITY publishes both, but this ZONE does not — and asking
+      // anyway is a tap spent on a distinction the place does not have.
+      final ZonePickerState state = await _settled(container);
+      expect(state.needsWaterChoice, isFalse);
+      expect(state.isComplete, isTrue);
+    });
+
+    test('.confirmSelection stores the water he chose', () async {
+      final settings = FakeSettingsRepository();
+      final reference = FakeReferenceRepository()
+        ..jurisdictionRows.add(_rak)
+        ..zoneRows[2] = const <Zone>[
+          Zone(
+            id: 32,
+            jurisdictionId: 2,
+            code: 'rak-all',
+            nameKey: 'zone.ae_rak.all',
+            waterType: WaterKind.both,
+            zoneKind: ZoneKind.region,
+          ),
+        ];
+      final container = ProviderContainer(
+        retry: noRetry,
+        overrides: <Override>[
+          referenceRepositoryProvider.overrideWithValue(reference),
+          settingsRepositoryProvider.overrideWithValue(settings),
+          contentStringRepositoryProvider.overrideWithValue(
+            FakeContentStringRepository(const <String, Map<String, String>>{
+              'jurisdiction.ae_rak.authority': <String, String>{'en': 'MOCCAE'},
+            }),
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
+      await _settled(container);
+      container.read(zonePickerViewModelProvider.notifier).selectCountry('AE');
+      await _settled(container);
+      container.read(zonePickerViewModelProvider.notifier).selectJurisdiction('AE-RK');
+      await _settled(container);
+      container.read(zonePickerViewModelProvider.notifier).selectWater(WaterKind.fresh);
+      await _settled(container);
+
+      await container.read(zonePickerViewModelProvider.notifier).confirmSelection();
+
+      expect(settings.activeWater, WaterKind.fresh);
+    });
+
     test('.build reports a broken read as an error rather than an empty list', () async {
       final ProviderContainer container = _container(broken: true);
       final ProviderSubscription<AsyncValue<ZonePickerState>> sub = container.listen(

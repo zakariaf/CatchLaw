@@ -787,6 +787,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{authority} publishes no coordinate boundaries. The rules recorded here apply across the whole jurisdiction.'**
   String zoneNoPublishedBoundaries(String authority);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Why the place cannot be confirmed yet. The authority publishes rules for both waters and they are different rules, so a place that has not said which one answers with the wrong instrument — this states the condition, not an instruction to the reader.
+  ///
+  /// In en, this message translates to:
+  /// **'Sea or inland water has to be chosen before this place can answer.'**
+  String get zoneWaterChoiceRequired;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

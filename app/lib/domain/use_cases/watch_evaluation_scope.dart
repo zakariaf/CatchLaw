@@ -39,11 +39,38 @@ final class WatchEvaluationScope {
         yield null;
         continue;
       }
-      yield await _resolve(jurisdictionCode, profile.activeZoneCode);
+      // Read per emission rather than carried on the profile: the choice lives
+      // in `app_meta` because a new `user_profile` column would be a schema
+      // change, and a schema change is irreversible after the first shipped
+      // pack.
+      final Result<WaterKind?> chosen = await settings.readActiveWater();
+      yield await _resolve(
+        jurisdictionCode,
+        profile.activeZoneCode,
+        chosen is Ok<WaterKind?> ? chosen.value : null,
+      );
     }
   }
 
-  Future<EvaluationScope?> _resolve(String jurisdictionCode, String? zoneCode) async {
+  /// The water the rules are asked about.
+  ///
+  /// Total, and with the stored choice reaching only the one branch where the
+  /// place leaves the question open.
+  WaterKind _waterFor(Zone? zone, WaterKind? chosen) => switch (zone?.waterType) {
+    WaterKind.salt => WaterKind.salt,
+    WaterKind.fresh => WaterKind.fresh,
+    WaterKind.both => chosen ?? WaterKind.both,
+    // No zone row, or a `water_type` this build does not recognise. `both`
+    // filters nothing, which is the honest answer: the app has not been told
+    // which water, so it withholds no rule on that ground.
+    WaterKind.unknown || null => chosen ?? WaterKind.both,
+  };
+
+  Future<EvaluationScope?> _resolve(
+    String jurisdictionCode,
+    String? zoneCode,
+    WaterKind? profileWater,
+  ) async {
     final Result<List<Jurisdiction>> all = await reference.jurisdictions();
     if (all is! Ok<List<Jurisdiction>>) return null;
 
@@ -66,11 +93,14 @@ final class WatchEvaluationScope {
       jurisdictionCode: jurisdiction.code,
       zoneCode: zone?.code ?? jurisdictionCode,
       zonePath: _pathTo(zone, zones, jurisdictionCode),
-      // The zone's own water when it publishes one, because water type is a
-      // property of the PLACE: a freshwater rule answered for a sea zone is a
-      // wrong verdict, and neither the fisher nor the app gets to choose which
-      // water a river is.
-      water: zone?.waterType ?? WaterKind.both,
+      // **The zone's own water decides, and the fisher only chooses where the
+      // zone itself says `both`.** Water type is a property of the PLACE: a
+      // freshwater rule answered for a sea zone is a wrong verdict, and neither
+      // he nor the app gets to say which water a river is. Where the zone
+      // genuinely covers both, the stored choice is his — and until he has made
+      // one the scope carries `both`, which the engine reads as "no water
+      // filter" rather than as a guess.
+      water: _waterFor(zone, profileWater),
     );
   }
 

@@ -106,7 +106,7 @@ final class ZonePickerViewModel extends AsyncNotifier<ZonePickerState> {
     state = AsyncData<ZonePickerState>(current.copyWith(selectedZoneCode: code));
   }
 
-  /// Chooses salt or fresh, where the authority publishes both.
+  /// Chooses salt or fresh, where the ZONE leaves it open.
   void selectWater(WaterKind water) {
     final ZonePickerState? current = state.value;
     if (current == null) return;
@@ -131,6 +131,21 @@ final class ZonePickerViewModel extends AsyncNotifier<ZonePickerState> {
   Future<void> confirmSelection() async {
     final ZonePickerState? current = state.value;
     if (current == null || !current.isComplete) return;
+    // The water first: a place stored without it would be answerable for one
+    // frame against the previous choice, and that frame is a verdict.
+    final WaterKind? water = current.water;
+    if (water != null) {
+      final Result<void> storedWater = await ref
+          .read(settingsRepositoryProvider)
+          .setActiveWater(water);
+      // A water that failed to store leaves the place answerable against the
+      // previous choice, so the place is not stored either.
+      if (storedWater case Failure<void>(:final Exception exception)) {
+        state = AsyncError<ZonePickerState>(exception, StackTrace.current);
+        return;
+      }
+    }
+
     // The write's own Result is inspected rather than dropped: a place that
     // silently failed to store is a picker the fisher fills in again on every
     // launch, and he will read that as the app forgetting rather than as a

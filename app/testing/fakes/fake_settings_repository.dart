@@ -58,6 +58,21 @@ final class FakeSettingsRepository implements SettingsRepository {
     (UserProfile p) => p.copyWith(activeJurisdiction: jurisdictionCode, activeZoneCode: zoneCode),
   );
 
+  /// The stored water choice, where the zone leaves it open.
+  WaterKind? activeWater;
+
+  @override
+  Future<Result<void>> setActiveWater(WaterKind water) async {
+    if (env == StoreEnv.storeUnavailable) return Result<void>.error(Exception('store'));
+    activeWater = water;
+    return const Result<void>.ok(null);
+  }
+
+  @override
+  Future<Result<WaterKind?>> readActiveWater() async => env == StoreEnv.storeUnavailable
+      ? Result<WaterKind?>.error(Exception('store'))
+      : Result<WaterKind?>.ok(activeWater);
+
   @override
   Future<Result<void>> setRulerCalibration({
     required double pxPerMm,

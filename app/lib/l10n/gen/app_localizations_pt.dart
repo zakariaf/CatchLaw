@@ -483,6 +483,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String zoneNoPublishedBoundaries(String authority) {
     return '$authority não publica limites de coordenadas. As normas registradas aqui se aplicam a toda a jurisdição.';
   }
+
+  @override
+  String get zoneWaterChoiceRequired =>
+      'É preciso escolher mar ou águas interiores antes que este lugar possa responder.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -964,4 +968,8 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String zoneNoPublishedBoundaries(String authority) {
     return '$authority não publica limites de coordenadas. As normas registradas aqui se aplicam a toda a jurisdição.';
   }
+
+  @override
+  String get zoneWaterChoiceRequired =>
+      'É preciso escolher mar ou águas interiores antes que este lugar possa responder.';
 }

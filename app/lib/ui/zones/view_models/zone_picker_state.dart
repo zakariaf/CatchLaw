@@ -18,7 +18,7 @@ class ZonePickerState {
     this.selectedCountry,
     this.selectedJurisdictionCode,
     this.selectedZoneCode,
-    this.water = WaterKind.salt,
+    this.water,
     this.authorityName,
   });
 
@@ -37,8 +37,12 @@ class ZonePickerState {
   /// Which sub-zone, where the pack offers any.
   final String? selectedZoneCode;
 
-  /// Salt or fresh, where the jurisdiction publishes both.
-  final WaterKind water;
+  /// Salt or fresh, or `null` where he has not been asked or has not answered.
+  ///
+  /// Nullable on purpose: a default of `salt` would be the app answering a
+  /// question about the place on his behalf, and it would be right in most of
+  /// the corpus and silently wrong in the rest.
+  final WaterKind? water;
 
   /// The selected authority's own name, resolved through `content_string`.
   ///
@@ -106,8 +110,27 @@ class ZonePickerState {
   bool get offersWaterChoice =>
       (jurisdiction?.hasSaltwater ?? false) && (jurisdiction?.hasFreshwater ?? false);
 
+  /// Whether the ZONE leaves the water open and he has not answered.
+  ///
+  /// The authority publishing both is not the test — the ZONE is. A sea zone
+  /// inside a jurisdiction that also regulates rivers needs no question asked,
+  /// and asking it anyway is a tap spent on a distinction the place does not
+  /// have.
+  bool get needsWaterChoice =>
+      (_selectedZone ?? regionZone)?.waterType == WaterKind.both && water == null;
+
+  Zone? get _selectedZone {
+    for (final Zone z in zonesOfSelected) {
+      if (z.code == selectedZoneCode) return z;
+    }
+    return null;
+  }
+
   /// Whether there is enough here to confirm.
-  bool get isComplete => selectedJurisdictionCode != null;
+  ///
+  /// A place that has not said which water answers with the wrong instrument
+  /// where the zone covers both, so it is not a place yet.
+  bool get isComplete => selectedJurisdictionCode != null && !needsWaterChoice;
 
   /// This frame with the given fields replaced.
   ZonePickerState copyWith({

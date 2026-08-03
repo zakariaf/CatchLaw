@@ -483,4 +483,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String zoneNoPublishedBoundaries(String authority) {
     return '$authority no publica límites de coordenadas. Las normas registradas aquí se aplican a toda la jurisdicción.';
   }
+
+  @override
+  String get zoneWaterChoiceRequired =>
+      'Hay que elegir mar o aguas continentales antes de que este lugar pueda responder.';
 }
