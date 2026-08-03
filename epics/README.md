@@ -67,19 +67,24 @@ assumption that every task of an epic is built before the next epic starts.
 nothing in the original plan owned them.
 
 ```
-E12/T08   the evaluation seam          ← the keystone; nothing routes to a Resolution without it
-E22/T01   authoring guide
-E22/T10   Galicia rule rows            ← the pack carries zero rule rows today
-E11/T04   S9 place picker
-E11/T05   no polygons, no subzone level
-E11/T08   water type belongs to the zone
-E11/T07   saved zones
-E12/T01   bottom navigation            ← `home:` stops being an empty box
-E12/T05   no jurisdiction set
-E12/T02   the Check screen
-E12/T04   empty state and keyboard
-E12/T06   cold-start budget
-E12/T07   the five-second core loop    ← the acceptance test
+epic/11-zones
+  E11/T04   S9 place picker
+  E11/T05   no polygons, no subzone level
+  E11/T08   water type belongs to the zone
+  E11/T07   saved zones
+
+epic/12-check-home
+  E12/T08   the evaluation seam        ← the keystone; nothing reaches a Resolution without it
+  E12/T01   bottom navigation          ← `home:` stops being an empty box
+  E12/T05   no jurisdiction set
+  E12/T02   the Check screen
+  E12/T04   empty state and keyboard
+  E12/T06   cold-start budget
+  E12/T07   the five-second core loop  ← the acceptance test
+
+epic/22-content-galicia
+  E22/T01   authoring guide
+  E22/T10   Galicia rule rows          ← the pack carries zero rule rows today
 ```
 
 ## Status

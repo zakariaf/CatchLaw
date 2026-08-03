@@ -24,21 +24,35 @@ and RTL work has been *proved* rather than *written*.
 
 ### The thirteen tasks
 
+**Built in three branches, in this order**, because `CONVENTIONS.md` gives one branch per epic and
+E12 cannot pick a zone until E11 has one:
+
+```
+epic/11-zones            E11/T04, T05, T08, T07
+epic/12-check-home       E12/T08 first, then T01, T05, T02, T04, T06, T07
+epic/22-content-galicia  E22/T01, T10
+```
+
+The `Order` column below is the order the tasks are BUILT within that. E12/T08 is first inside its
+epic and not first overall: it is the keystone, and it is also the one E12 task that needs nothing
+from the rest of E12 — so it lands before the screens that consume it, which is what "first" was
+protecting.
+
 | Order | Task | Why it is in v1 |
 |---|---|---|
-| 1 | **E12/T08** — the evaluation seam ⭑ new | The keystone nobody owned. Without it there is no app, only screens |
-| 2 | E22/T01 — authoring guide and reviewer protocol | The protocol the first real rules are authored under |
-| 3 | **E22/T10** — Galicia rule rows and verbatim text ⭑ new | Without a rule row every answer is "no rule recorded" — true, and useless |
-| 4 | E11/T04 — S9 country · region · subzone | The fisher has to say where he is before anything can be evaluated |
-| 5 | E11/T05 — no polygons, no subzone level | The shipped pack sets `has_zone_polygons: false`; this is the path it takes |
-| 6 | E11/T08 — water type belongs to the zone | A freshwater rule answered for a sea zone is a wrong verdict |
-| 7 | E11/T07 — saved zones and instant re-evaluation | §4.4: switching zone re-answers without a round trip |
-| 8 | E12/T01 — bottom navigation | The front door. `home:` stops being an empty box |
-| 9 | E12/T05 — no jurisdiction set | The first-launch state, which is every fisher's first ten seconds |
-| 10 | E12/T02 — the Check screen | S1: search, recents, the three entry points |
-| 11 | E12/T04 — empty state and keyboard | The state a new install sits in |
-| 12 | E12/T06 — cold-start budget | §13's < 1.2 s, measured rather than hoped for |
-| 13 | E12/T07 — the five-second core loop | The acceptance test. If this passes, v1 is real |
+| 1 | E11/T04 — S9 country · region · subzone | The fisher has to say where he is before anything can be evaluated |
+| 2 | E11/T05 — no polygons, no subzone level | The shipped pack sets `has_zone_polygons: false`; this is the path it takes |
+| 3 | E11/T08 — water type belongs to the zone | A freshwater rule answered for a sea zone is a wrong verdict |
+| 4 | E11/T07 — saved zones and instant re-evaluation | §4.4: switching zone re-answers without a round trip |
+| 5 | **E12/T08** — the evaluation seam ⭑ new | The keystone nobody owned. Without it there is no app, only screens |
+| 6 | E12/T01 — bottom navigation | The front door. `home:` stops being an empty box |
+| 7 | E12/T05 — no jurisdiction set | The first-launch state, which is every fisher's first ten seconds |
+| 8 | E12/T02 — the Check screen | S1: search, recents, the three entry points |
+| 9 | E12/T04 — empty state and keyboard | The state a new install sits in |
+| 10 | E12/T06 — cold-start budget | §13's < 1.2 s, measured rather than hoped for |
+| 11 | E12/T07 — the five-second core loop | The acceptance test. If this passes, v1 is real |
+| 12 | E22/T01 — authoring guide and reviewer protocol | The protocol the first real rules are authored under |
+| 13 | **E22/T10** — Galicia rule rows and verbatim text ⭑ new | Without a rule row every answer is "no rule recorded" — true, and useless |
 
 Two of the thirteen are new files written by this change; the other eleven already exist and are
 unedited.
