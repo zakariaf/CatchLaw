@@ -94,5 +94,8 @@
   "@verdictBelowMinimum": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The headline sentence of the whole product. Both numbers and the method are mandatory. It states what the instrument requires and what was measured, and says nothing about what to do with the fish. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone."
   },
-  "citationCopyAction": "Copiar a cita"
+  "citationCopyAction": "Copiar a cita",
+  "rulePackExpiredOn": "Estas normas pasaron a súa data de fin o {date}. Amósanse tal como se publicaron.",
+  "rulePackProvenance": "O paquete de normas incluído {pack} pasou a súa data de validez o {date}. O texto anterior é a última redacción verificada.",
+  "staleDetailClose": "Pechar esta nota"
 }

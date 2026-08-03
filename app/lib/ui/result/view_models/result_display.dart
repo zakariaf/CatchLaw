@@ -321,17 +321,29 @@ class AmbiguityDisplay {
 @immutable
 class StaleDisplay {
   /// States the expiry, and nothing else.
-  const StaleDisplay({required this.sentence});
+  const StaleDisplay({required this.sentence, required this.provenance});
 
   /// Already localised, and about the data rather than about the fish.
+  ///
+  /// It states a fact and never an instruction. "Update the app" is an
+  /// instruction, and it is one the reader cannot act on: there is no network
+  /// here by design, so there is nothing to retry and nothing to fetch.
   final String sentence;
+
+  /// The second citation footnote: which pack, and when it lapsed.
+  ///
+  /// Beside the sentence rather than inside it, because the two are read in
+  /// different places — the bar sits above the answer and the provenance sits
+  /// under the instrument it qualifies.
+  final String provenance;
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is StaleDisplay && other.sentence == sentence;
+      identical(this, other) ||
+      other is StaleDisplay && other.sentence == sentence && other.provenance == provenance;
 
   @override
-  int get hashCode => sentence.hashCode;
+  int get hashCode => Object.hash(sentence, provenance);
 }
 
 /// Everything the result screen draws, in six languages, with no lookups left.

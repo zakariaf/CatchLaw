@@ -119,6 +119,10 @@ class _ResultSectionState extends State<ResultSection> {
             jurisdiction: widget.jurisdiction,
             marker: index + 1,
             sourceUrl: index < widget.sourceUrls.length ? widget.sourceUrls[index] : null,
+            // The pack provenance rides on the FIRST footnote only: it is one
+            // fact about the bundle, and repeating it under every instrument
+            // would read as several packs having lapsed.
+            provenance: index == 0 ? display.stale?.provenance : null,
             onOpenRuleText: widget.onOpenRuleText,
           ),
         ],

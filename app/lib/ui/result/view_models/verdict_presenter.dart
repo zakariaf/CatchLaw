@@ -70,8 +70,18 @@ class VerdictPresenter {
     final String disclaimer = l10n.disclaimerVerdict(content[context.authorityKey]);
     // A flag beside the answer, never a filter over it: an expired ruleset is
     // still evaluated and still shown, and withholding it would be advice.
+    //
+    // The date is the PACK's and arrives on the context, because the engine
+    // carries `isExpired` as a bool and no date at all — expiry is about the
+    // instrument's currency rather than about the fish. Where the pack states
+    // no end date, the sentence states the fact without one rather than
+    // inventing a day.
+    final String? expiredOn = context.packExpiredOn;
     final StaleDisplay? stale = resolution.isExpired
-        ? StaleDisplay(sentence: l10n.rulePackExpired)
+        ? StaleDisplay(
+            sentence: expiredOn == null ? l10n.rulePackExpired : l10n.rulePackExpiredOn(expiredOn),
+            provenance: l10n.rulePackProvenance(context.packId, expiredOn ?? ''),
+          )
         : null;
 
     return switch (resolution) {

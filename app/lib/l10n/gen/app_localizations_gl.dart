@@ -403,4 +403,17 @@ class AppLocalizationsGl extends AppLocalizations {
 
   @override
   String get citationCopyAction => 'Copiar a cita';
+
+  @override
+  String rulePackExpiredOn(String date) {
+    return 'Estas normas pasaron a súa data de fin o $date. Amósanse tal como se publicaron.';
+  }
+
+  @override
+  String rulePackProvenance(String pack, String date) {
+    return 'O paquete de normas incluído $pack pasou a súa data de validez o $date. O texto anterior é a última redacción verificada.';
+  }
+
+  @override
+  String get staleDetailClose => 'Pechar esta nota';
 }

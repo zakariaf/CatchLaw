@@ -407,4 +407,17 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get citationCopyAction => 'نسخ الاستشهاد';
+
+  @override
+  String rulePackExpiredOn(String date) {
+    return 'انتهت صلاحية هذه القواعد في $date. وهي معروضة كما نُشرت.';
+  }
+
+  @override
+  String rulePackProvenance(String pack, String date) {
+    return 'حزمة القواعد المضمّنة $pack انتهت صلاحيتها في $date. النص أعلاه هو آخر صيغة تم التحقق منها.';
+  }
+
+  @override
+  String get staleDetailClose => 'إغلاق هذه الملاحظة';
 }

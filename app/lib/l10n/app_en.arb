@@ -670,5 +670,30 @@
   "citationCopyAction": "Copy the citation",
   "@citationCopyAction": {
     "description": "The accessible name of the copy control on the citation footnote. It copies the CITATION LINE — instrument, article and both dates — and never the verdict sentence: a verdict on the clipboard is a statement about one fish detached from the source that supports it."
+  },
+  "rulePackExpiredOn": "These rules passed their stated end date on {date}. They are shown as published.",
+  "@rulePackExpiredOn": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The ochre bar, with the date the pack stated as its end. It must not tell the reader to update, to check elsewhere, or to do anything at all: invariant 5 shows the finding anyway, and there is no network to recover from. The date is ISO and unlocalised, like every citation date.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rulePackProvenance": "Bundled rule pack {pack} passed its validity date on {date}. The text above is the last verified wording.",
+  "@rulePackProvenance": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The second citation footnote on an expired pack. It states which pack and when it lapsed, and says nothing about what the reader should do with that.",
+    "placeholders": {
+      "pack": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "staleDetailClose": "Close this note",
+  "@staleDetailClose": {
+    "description": "The control that puts the stale-pack EXPLANATION away for this app session. It closes the note, never the bar: the bar is the invariant and only the paragraph under it can be put away. It is not persisted, so a reader returning in September sees it again."
   }
 }

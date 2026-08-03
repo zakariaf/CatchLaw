@@ -661,6 +661,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copy the citation'**
   String get citationCopyAction;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The ochre bar, with the date the pack stated as its end. It must not tell the reader to update, to check elsewhere, or to do anything at all: invariant 5 shows the finding anyway, and there is no network to recover from. The date is ISO and unlocalised, like every citation date.
+  ///
+  /// In en, this message translates to:
+  /// **'These rules passed their stated end date on {date}. They are shown as published.'**
+  String rulePackExpiredOn(String date);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The second citation footnote on an expired pack. It states which pack and when it lapsed, and says nothing about what the reader should do with that.
+  ///
+  /// In en, this message translates to:
+  /// **'Bundled rule pack {pack} passed its validity date on {date}. The text above is the last verified wording.'**
+  String rulePackProvenance(String pack, String date);
+
+  /// The control that puts the stale-pack EXPLANATION away for this app session. It closes the note, never the bar: the bar is the invariant and only the paragraph under it can be put away. It is not persisted, so a reader returning in September sees it again.
+  ///
+  /// In en, this message translates to:
+  /// **'Close this note'**
+  String get staleDetailClose;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

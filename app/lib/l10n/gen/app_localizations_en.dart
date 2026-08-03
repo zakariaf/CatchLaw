@@ -403,4 +403,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get citationCopyAction => 'Copy the citation';
+
+  @override
+  String rulePackExpiredOn(String date) {
+    return 'These rules passed their stated end date on $date. They are shown as published.';
+  }
+
+  @override
+  String rulePackProvenance(String pack, String date) {
+    return 'Bundled rule pack $pack passed its validity date on $date. The text above is the last verified wording.';
+  }
+
+  @override
+  String get staleDetailClose => 'Close this note';
 }

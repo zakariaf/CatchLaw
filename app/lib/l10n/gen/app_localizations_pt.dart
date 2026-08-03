@@ -405,6 +405,19 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get citationCopyAction => 'Copiar a citação';
+
+  @override
+  String rulePackExpiredOn(String date) {
+    return 'Estas normas passaram a sua data final em $date. São exibidas como foram publicadas.';
+  }
+
+  @override
+  String rulePackProvenance(String pack, String date) {
+    return 'O pacote de normas incluído $pack passou a sua data de validade em $date. O texto acima é a última redação verificada.';
+  }
+
+  @override
+  String get staleDetailClose => 'Fechar esta nota';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -808,4 +821,17 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get citationCopyAction => 'Copiar a citação';
+
+  @override
+  String rulePackExpiredOn(String date) {
+    return 'Estas normas passaram a sua data final em $date. São exibidas como foram publicadas.';
+  }
+
+  @override
+  String rulePackProvenance(String pack, String date) {
+    return 'O pacote de normas incluído $pack passou a sua data de validade em $date. O texto acima é a última redação verificada.';
+  }
+
+  @override
+  String get staleDetailClose => 'Fechar esta nota';
 }

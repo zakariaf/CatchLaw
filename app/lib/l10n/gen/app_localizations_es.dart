@@ -405,4 +405,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get citationCopyAction => 'Copiar la cita';
+
+  @override
+  String rulePackExpiredOn(String date) {
+    return 'Estas normas pasaron su fecha de fin el $date. Se muestran tal como se publicaron.';
+  }
+
+  @override
+  String rulePackProvenance(String pack, String date) {
+    return 'El paquete de normas incluido $pack pasó su fecha de validez el $date. El texto anterior es la última redacción verificada.';
+  }
+
+  @override
+  String get staleDetailClose => 'Cerrar esta nota';
 }

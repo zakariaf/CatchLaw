@@ -32,6 +32,7 @@ class ResultCitationFootnote extends StatelessWidget {
     required this.marker,
     required this.onOpenRuleText,
     this.sourceUrl,
+    this.provenance,
     super.key,
   });
 
@@ -58,6 +59,14 @@ class ResultCitationFootnote extends StatelessWidget {
 
   /// Selectable text, never a link. Absent for an instrument that records none.
   final String? sourceUrl;
+
+  /// The second marker on an expired pack: which pack, and when it lapsed.
+  ///
+  /// Under the instrument it qualifies rather than in the bar, because a reader
+  /// checking the footnote is asking a different question from one glancing at
+  /// the top of the screen — and the answer to "how current is this" belongs
+  /// beside the thing it is about.
+  final String? provenance;
 
   /// Opens the bundled verbatim article.
   ///
@@ -168,6 +177,14 @@ class ResultCitationFootnote extends StatelessWidget {
             ),
           ),
         ),
+        if (provenance case final String provenance) ...<Widget>[
+          const SizedBox(height: LonjaSpace.s1),
+          Text(
+            provenance,
+            style: type.citation.copyWith(color: tokens.onSurfaceMuted),
+            textAlign: TextAlign.start,
+          ),
+        ],
         if (sourceUrl != null) ...<Widget>[
           const SizedBox(height: LonjaSpace.s1),
           // Selectable, and with no gesture of any kind. The failure mode is a

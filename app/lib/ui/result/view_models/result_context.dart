@@ -9,7 +9,12 @@ import 'package:meta/meta.dart';
 @immutable
 class ResultContext {
   /// Describes the active jurisdiction.
-  const ResultContext({required this.authorityKey, this.defaultLocale = 'en'});
+  const ResultContext({
+    required this.authorityKey,
+    this.defaultLocale = 'en',
+    this.packId = '',
+    this.packExpiredOn,
+  });
 
   /// The `content_string` key for the authority named in the disclaimer.
   ///
@@ -27,15 +32,28 @@ class ResultContext {
   /// language before it falls to `en`.
   final String defaultLocale;
 
+  /// The bundled pack these rules came from — `RAK-GULF v2026.2`.
+  final String packId;
+
+  /// The date the pack stated as its end, ISO-8601, or `null` if it has none.
+  ///
+  /// **A fact about the pack, not about the answer.** The engine returns
+  /// `isExpired` as a bool and carries no date, because expiry is a property of
+  /// the instrument's currency rather than of the fish — so the date travels
+  /// with the place, and the answer is identical either way.
+  final String? packExpiredOn;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ResultContext &&
           other.authorityKey == authorityKey &&
-          other.defaultLocale == defaultLocale;
+          other.defaultLocale == defaultLocale &&
+          other.packId == packId &&
+          other.packExpiredOn == packExpiredOn;
 
   @override
-  int get hashCode => Object.hash(authorityKey, defaultLocale);
+  int get hashCode => Object.hash(authorityKey, defaultLocale, packId, packExpiredOn);
 }
 
 /// One result screen worth of question: which place, and in which language.
