@@ -46,5 +46,8 @@
   "unitMillimetres": "مم",
   "unitCentimetres": "سم",
   "rulerSemanticLabel": "مسطرة. القراءة {measurement}.",
-  "rulerZeroLabel": "٠"
+  "rulerZeroLabel": "٠",
+  "measurementCm": "{value} سم ({method})",
+  "measurementMm": "{value} مم ({method})",
+  "measurementInch": "{value} بوصة ({method})"
 }

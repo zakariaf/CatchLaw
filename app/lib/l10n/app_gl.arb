@@ -46,5 +46,8 @@
   "unitMillimetres": "mm",
   "unitCentimetres": "cm",
   "rulerSemanticLabel": "Regra. Lectura {measurement}.",
-  "rulerZeroLabel": "0"
+  "rulerZeroLabel": "0",
+  "measurementCm": "{value} cm ({method})",
+  "measurementMm": "{value} mm ({method})",
+  "measurementInch": "{value} pol ({method})"
 }

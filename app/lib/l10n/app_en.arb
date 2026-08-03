@@ -230,5 +230,41 @@
   },
   "@rulerZeroLabel": {
     "description": "The zero mark, in the locale's own digits. Its own key because the numeral system is a user setting and the zero is the one label that is always visible."
+  },
+  "measurementCm": "{value} cm ({method})",
+  "@measurementCm": {
+    "description": "A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "measurementMm": "{value} mm ({method})",
+  "@measurementMm": {
+    "description": "A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "measurementInch": "{value} in ({method})",
+  "@measurementInch": {
+    "description": "A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
   }
 }

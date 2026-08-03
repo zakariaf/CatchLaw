@@ -189,4 +189,19 @@ class AppLocalizationsGl extends AppLocalizations {
 
   @override
   String get rulerZeroLabel => '0';
+
+  @override
+  String measurementCm(String value, String method) {
+    return '$value cm ($method)';
+  }
+
+  @override
+  String measurementMm(String value, String method) {
+    return '$value mm ($method)';
+  }
+
+  @override
+  String measurementInch(String value, String method) {
+    return '$value pol ($method)';
+  }
 }

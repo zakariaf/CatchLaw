@@ -386,6 +386,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'0'**
   String get rulerZeroLabel;
+
+  /// A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} cm ({method})'**
+  String measurementCm(String value, String method);
+
+  /// A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} mm ({method})'**
+  String measurementMm(String value, String method);
+
+  /// A measurement and the method it was taken by. The method is NOT optional: TL and FL differ by 6-9 cm on a Kanaad, so a number on its own is one the reader cannot act on. The two are separate placeholders because they sit on different sides of the sentence in different languages, and the unit is glued to its value with a non-breaking space rather than concatenated in Dart.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} in ({method})'**
+  String measurementInch(String value, String method);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
