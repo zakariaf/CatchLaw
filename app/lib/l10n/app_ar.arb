@@ -114,5 +114,6 @@
   "zonePickerEmptyHeadline": "لا توجد قواعد مضمّنة لهذه الدولة",
   "zonePickerEmptyBody": "لا يحمل هذا الإصدار أي نص منقول عنها. هذا لا يعني عدم وجودها.",
   "zonePickerLoadFailed": "تعذّرت قراءة حزمة القواعد المضمّنة.",
-  "countryName": "{code, select, ES{إسبانيا} AE{الإمارات العربية المتحدة} BR{البرازيل} other{{code}}}"
+  "countryName": "{code, select, ES{إسبانيا} AE{الإمارات العربية المتحدة} BR{البرازيل} other{{code}}}",
+  "zoneNoPublishedBoundaries": "لا تنشر {authority} حدودًا إحداثية. القواعد المسجّلة هنا تسري على الولاية بأكملها."
 }

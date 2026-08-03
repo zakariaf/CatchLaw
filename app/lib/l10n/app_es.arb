@@ -114,5 +114,6 @@
   "zonePickerEmptyHeadline": "No hay normas incluidas para este país",
   "zonePickerEmptyBody": "Esta versión no lleva ninguna norma transcrita. Esto no significa que no existan.",
   "zonePickerLoadFailed": "No se pudo leer el paquete de normas incluido.",
-  "countryName": "{code, select, ES{España} AE{Emiratos Árabes Unidos} BR{Brasil} other{{code}}}"
+  "countryName": "{code, select, ES{España} AE{Emiratos Árabes Unidos} BR{Brasil} other{{code}}}",
+  "zoneNoPublishedBoundaries": "{authority} no publica límites de coordenadas. Las normas registradas aquí se aplican a toda la jurisdicción."
 }

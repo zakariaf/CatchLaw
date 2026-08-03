@@ -7,6 +7,7 @@ import 'package:catchlaw/ui/core/ui/lonja_button.dart';
 import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
 import 'package:catchlaw/ui/zones/view_models/zone_picker_state.dart';
 import 'package:catchlaw/ui/zones/view_models/zone_picker_view_model.dart';
+import 'package:catchlaw/ui/zones/widgets/no_subzone_notice.dart';
 import 'package:catchlaw/ui/zones/widgets/zone_level.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -124,7 +125,12 @@ class _Levels extends ConsumerWidget {
                   ),
                 // Absent, not disabled, where the pack printed no coordinates:
                 // there is no subdivision the app can stand behind, and an
-                // empty level would invite the fisher to look for one.
+                // empty level would invite the fisher to look for one. The
+                // notice below says why, in the authority's name.
+                if (state.jurisdiction != null &&
+                    !state.offersSubZone &&
+                    state.authorityName != null)
+                  NoSubZoneNotice(authority: state.authorityName!),
                 if (state.offersSubZone)
                   ZoneLevel(
                     label: l10n.zoneLevelSubZone,

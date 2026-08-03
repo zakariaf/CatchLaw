@@ -478,4 +478,9 @@ class AppLocalizationsEs extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String zoneNoPublishedBoundaries(String authority) {
+    return '$authority no publica límites de coordenadas. Las normas registradas aquí se aplican a toda la jurisdicción.';
+  }
 }

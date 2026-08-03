@@ -781,6 +781,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{code, select, ES{Spain} AE{United Arab Emirates} BR{Brazil} other{{code}}}'**
   String countryName(String code);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Why the sub-zone level is absent. It states what the AUTHORITY publishes, never what the app could not load: SPEC.md §8 ends that row with four words — we do not invent boundaries — and an administrative boundary borrowed from a public dataset would render beautifully and attribute a rule to a zone the decision never mentions. The second sentence is mandatory: without it the absence reads as a gap rather than as the scope the instrument actually has.
+  ///
+  /// In en, this message translates to:
+  /// **'{authority} publishes no coordinate boundaries. The rules recorded here apply across the whole jurisdiction.'**
+  String zoneNoPublishedBoundaries(String authority);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

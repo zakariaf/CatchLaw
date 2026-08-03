@@ -2,6 +2,8 @@ import 'package:catchlaw/data/model/enum_codecs.dart';
 import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/domain/models/jurisdiction.dart';
 import 'package:catchlaw/domain/models/species.dart';
+import 'package:catchlaw/domain/use_cases/content_string_resolver.dart';
+import 'package:catchlaw/l10n/locale_notifier.dart';
 import 'package:catchlaw/ui/zones/view_models/zone_picker_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rule_engine/rule_engine.dart' show Failure, Ok, Result;
@@ -72,6 +74,29 @@ final class ZonePickerViewModel extends AsyncNotifier<ZonePickerState> {
     };
     if (state.value?.selectedJurisdictionCode != code) return;
     state = AsyncData<ZonePickerState>(state.value!.copyWith(zonesOfSelected: zones));
+
+    // Resolved only when it is about to be said. The authority's name is needed
+    // for one sentence — why there is no sub-zone level — and reading it for
+    // every jurisdiction in the list would be a query per row of a list nobody
+    // has tapped.
+    if (!(state.value?.offersSubZone ?? true)) await _loadAuthorityName(code, j.authorityKey);
+  }
+
+  Future<void> _loadAuthorityName(String code, String authorityKey) async {
+    final resolver = ContentStringResolver(ref.read(contentStringRepositoryProvider));
+    try {
+      final String name = await resolver.resolve(
+        authorityKey,
+        requestedLocale: ref.read(localeNotifierProvider).value?.languageCode ?? 'en',
+        defaultLocale: state.value?.jurisdiction?.defaultLocale ?? 'en',
+      );
+      if (state.value?.selectedJurisdictionCode != code) return;
+      state = AsyncData<ZonePickerState>(state.value!.copyWith(authorityName: name));
+    } on Exception {
+      // The notice is dropped rather than printed with a placeholder. A
+      // sentence that names no authority states nothing a reader can check,
+      // and this one exists precisely to be checkable.
+    }
   }
 
   /// Selects a sub-zone.
@@ -100,7 +125,13 @@ final class ZonePickerViewModel extends AsyncNotifier<ZonePickerState> {
         .read(settingsRepositoryProvider)
         .setActivePlace(
           jurisdictionCode: current.selectedJurisdictionCode,
-          zoneCode: current.selectedZoneCode,
+          // Where the authority published no boundaries, the stored zone is the
+          // jurisdiction-wide one: the rules apply across the whole
+          // jurisdiction, and storing null would leave the next launch unable
+          // to tell "not chosen" from "chosen, and it is everywhere".
+          zoneCode: current.offersSubZone
+              ? current.selectedZoneCode
+              : current.regionZone?.code ?? current.selectedZoneCode,
         );
     if (written case Failure<void>(:final Exception exception)) {
       state = AsyncError<ZonePickerState>(exception, StackTrace.current);

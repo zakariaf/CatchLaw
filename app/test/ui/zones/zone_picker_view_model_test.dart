@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rule_engine/rule_engine.dart' show Ok, ZoneKind;
 
+import '../../../testing/fakes/fake_content_string_repository.dart';
 import '../../../testing/fakes/fake_reference_repository.dart';
 import '../../../testing/fakes/fake_settings_repository.dart';
 import '../../../testing/fakes/store_env.dart';
@@ -76,6 +77,14 @@ ProviderContainer _container({
     overrides: <Override>[
       referenceRepositoryProvider.overrideWithValue(reference),
       settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository()),
+      contentStringRepositoryProvider.overrideWithValue(
+        FakeContentStringRepository(const <String, Map<String, String>>{
+          'jurisdiction.es_ga.authority': <String, String>{
+            'en': 'Xunta de Galicia — Department of the Sea',
+            'gl': 'Xunta de Galicia — Consellería do Mar',
+          },
+        }),
+      ),
     ],
   );
   addTearDown(container.dispose);
@@ -192,6 +201,11 @@ void main() {
         overrides: <Override>[
           referenceRepositoryProvider.overrideWithValue(reference),
           settingsRepositoryProvider.overrideWithValue(settings),
+          contentStringRepositoryProvider.overrideWithValue(
+            FakeContentStringRepository(const <String, Map<String, String>>{
+              'jurisdiction.es_ga.authority': <String, String>{'en': 'Xunta de Galicia'},
+            }),
+          ),
         ],
       );
       addTearDown(container.dispose);
@@ -208,6 +222,61 @@ void main() {
         'ES-GA',
       );
     });
+
+    test('.selectJurisdiction resolves the authority for the no-boundaries notice', () async {
+      final ProviderContainer container = _container(
+        jurisdictions: const <Jurisdiction>[_galicia],
+        zones: <int, List<Zone>>{
+          1: <Zone>[_riasBaixas],
+        },
+      );
+      await _settled(container);
+      container.read(zonePickerViewModelProvider.notifier).selectCountry('ES');
+      await _settled(container);
+
+      container.read(zonePickerViewModelProvider.notifier).selectJurisdiction('ES-GA');
+      final ZonePickerState state = await _settled(container);
+
+      // The sentence names the AUTHORITY, so the name has to be resolved
+      // before it can be said. Resolved on selection and not per row: a query
+      // per jurisdiction in the list is a query per row nobody tapped.
+      expect(state.authorityName, 'Xunta de Galicia — Department of the Sea');
+    });
+
+    test(
+      '.confirmSelection stores the jurisdiction-wide zone when no boundaries are published',
+      () async {
+        final settings = FakeSettingsRepository();
+        final reference = FakeReferenceRepository()
+          ..jurisdictionRows.add(_galicia)
+          ..zoneRows[1] = <Zone>[_riasBaixas];
+        final container = ProviderContainer(
+          retry: noRetry,
+          overrides: <Override>[
+            referenceRepositoryProvider.overrideWithValue(reference),
+            settingsRepositoryProvider.overrideWithValue(settings),
+            contentStringRepositoryProvider.overrideWithValue(
+              FakeContentStringRepository(const <String, Map<String, String>>{
+                'jurisdiction.es_ga.authority': <String, String>{'en': 'Xunta de Galicia'},
+              }),
+            ),
+          ],
+        );
+        addTearDown(container.dispose);
+        await _settled(container);
+        container.read(zonePickerViewModelProvider.notifier).selectCountry('ES');
+        await _settled(container);
+        container.read(zonePickerViewModelProvider.notifier).selectJurisdiction('ES-GA');
+        await _settled(container);
+
+        await container.read(zonePickerViewModelProvider.notifier).confirmSelection();
+
+        // Storing null would leave the next launch unable to tell "not chosen"
+        // from "chosen, and it is everywhere".
+        final UserProfile profile = (await settings.read() as Ok<UserProfile>).value;
+        expect(profile.activeZoneCode, 'rias-baixas');
+      },
+    );
 
     test('.build reports a broken read as an error rather than an empty list', () async {
       final ProviderContainer container = _container(broken: true);

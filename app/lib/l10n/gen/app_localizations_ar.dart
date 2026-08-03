@@ -479,4 +479,9 @@ class AppLocalizationsAr extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String zoneNoPublishedBoundaries(String authority) {
+    return 'لا تنشر $authority حدودًا إحداثية. القواعد المسجّلة هنا تسري على الولاية بأكملها.';
+  }
 }

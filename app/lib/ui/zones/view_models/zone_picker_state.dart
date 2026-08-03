@@ -19,6 +19,7 @@ class ZonePickerState {
     this.selectedJurisdictionCode,
     this.selectedZoneCode,
     this.water = WaterKind.salt,
+    this.authorityName,
   });
 
   /// Every jurisdiction the pack carries.
@@ -38,6 +39,13 @@ class ZonePickerState {
 
   /// Salt or fresh, where the jurisdiction publishes both.
   final WaterKind water;
+
+  /// The selected authority's own name, resolved through `content_string`.
+  ///
+  /// Needed for one sentence only — the notice that says why there is no
+  /// sub-zone level — and that sentence names the AUTHORITY on purpose: it
+  /// states what a government publishes, not what this app could not load.
+  final String? authorityName;
 
   /// The countries, de-duplicated and ordered.
   List<String> get countries =>
@@ -74,6 +82,18 @@ class ZonePickerState {
   /// remembering to check [offersSubZone] first.
   List<Zone> get subZones => offersSubZone ? _subdivisions : const <Zone>[];
 
+  /// The jurisdiction-wide zone, where the pack carries one.
+  ///
+  /// What a zero-polygon jurisdiction stores as its active zone: the rules
+  /// apply across the whole jurisdiction, and the region rung is what the
+  /// engine already ranks level with a `NULL` zone id.
+  Zone? get regionZone {
+    for (final Zone z in zonesOfSelected) {
+      if (z.zoneKind == ZoneKind.region) return z;
+    }
+    return null;
+  }
+
   List<Zone> get _subdivisions => <Zone>[
     for (final Zone z in zonesOfSelected)
       if (z.zoneKind != ZoneKind.region) z,
@@ -96,6 +116,7 @@ class ZonePickerState {
     String? selectedJurisdictionCode,
     String? selectedZoneCode,
     WaterKind? water,
+    String? authorityName,
     bool clearJurisdiction = false,
     bool clearZone = false,
   }) => ZonePickerState(
@@ -107,6 +128,7 @@ class ZonePickerState {
         : selectedJurisdictionCode ?? this.selectedJurisdictionCode,
     selectedZoneCode: clearZone ? null : selectedZoneCode ?? this.selectedZoneCode,
     water: water ?? this.water,
+    authorityName: clearJurisdiction ? null : authorityName ?? this.authorityName,
   );
 
   @override
@@ -118,7 +140,8 @@ class ZonePickerState {
           other.selectedCountry == selectedCountry &&
           other.selectedJurisdictionCode == selectedJurisdictionCode &&
           other.selectedZoneCode == selectedZoneCode &&
-          other.water == water;
+          other.water == water &&
+          other.authorityName == authorityName;
 
   @override
   int get hashCode => Object.hash(
@@ -128,5 +151,6 @@ class ZonePickerState {
     selectedJurisdictionCode,
     selectedZoneCode,
     water,
+    authorityName,
   );
 }

@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../testing/fakes/fake_content_string_repository.dart';
 import '../../../testing/fakes/fake_reference_repository.dart';
 import '../../../testing/fakes/fake_settings_repository.dart';
 import '../../../testing/fakes/store_env.dart';
@@ -43,6 +44,14 @@ Future<void> _pumpPicker(
       overrides: <Override>[
         referenceRepositoryProvider.overrideWithValue(reference),
         settingsRepositoryProvider.overrideWithValue(FakeSettingsRepository()),
+        contentStringRepositoryProvider.overrideWithValue(
+          FakeContentStringRepository(const <String, Map<String, String>>{
+            'jurisdiction.es_ga.authority': <String, String>{
+              'en': 'Xunta de Galicia — Department of the Sea',
+              'gl': 'Xunta de Galicia — Consellería do Mar',
+            },
+          }),
+        ),
       ],
       child: MaterialApp(
         theme: resolveLonjaTheme(skin: LonjaSkin.paper, gloved: false),

@@ -478,6 +478,11 @@ class AppLocalizationsPt extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String zoneNoPublishedBoundaries(String authority) {
+    return '$authority não publica limites de coordenadas. As normas registradas aqui se aplicam a toda a jurisdição.';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -953,5 +958,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
       'other': '$code',
     });
     return '$_temp0';
+  }
+
+  @override
+  String zoneNoPublishedBoundaries(String authority) {
+    return '$authority não publica limites de coordenadas. As normas registradas aqui se aplicam a toda a jurisdição.';
   }
 }
