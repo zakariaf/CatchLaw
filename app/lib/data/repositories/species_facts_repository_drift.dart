@@ -8,14 +8,19 @@ import 'package:catchlaw/data/repositories/storage_boundary.dart';
 import 'package:catchlaw/data/services/reference_database_service.dart';
 import 'package:catchlaw/domain/models/rule_hint.dart';
 import 'package:catchlaw/domain/models/species_facts.dart';
-import 'package:rule_engine/rule_engine.dart' show Citation, Result;
+// The method here is read off the RULE row — the thing check 6 exists to
+// enforce — and the gate matches this file by NAME. The hatch is on the line
+// because that is where the gate reads it.
+import 'package:rule_engine/rule_engine.dart'
+    show Citation, MeasurementMethod, Result; // measurement-ok
 
 /// [SpeciesFactsRepository] over the read-only `reference.db` (D-6).
 final class DriftSpeciesFactsRepository implements SpeciesFactsRepository {
   /// Reads facts out of [db].
   DriftSpeciesFactsRepository(this.db, {this.boundary = const StorageBoundary()})
     : _facts = SpeciesFactsDao(db),
-      _citations = CitationDao(db);
+      _citations = CitationDao(db),
+      _methodCodes = ReferenceMetaDao(db);
 
   /// The rule book.
   final ReferenceDatabase db;
@@ -25,6 +30,7 @@ final class DriftSpeciesFactsRepository implements SpeciesFactsRepository {
 
   final SpeciesFactsDao _facts;
   final CitationDao _citations;
+  final ReferenceMetaDao _methodCodes;
 
   @override
   Future<Result<List<int>>> zoneChain(int zoneId) => boundary.guard(() => _facts.zoneChain(zoneId));
@@ -36,6 +42,10 @@ final class DriftSpeciesFactsRepository implements SpeciesFactsRepository {
     required List<int> zoneChain,
     required String onDate,
   }) => boundary.guard(() async {
+    // Codes, not ids: the build numbers `measurement_method` by insertion
+    // order, so id 1 is whatever the pack declared first.
+    final Map<int, String> codes = await _methodCodes.methodCodes();
+
     final List<RuleRow> candidates = await _facts.candidateRules(
       speciesIds: speciesIds,
       jurisdictionId: jurisdictionId,
@@ -63,7 +73,7 @@ final class DriftSpeciesFactsRepository implements SpeciesFactsRepository {
         // §7.3 step 2: a rule reaches the active zone when its zone_id is NULL
         // — it covers the whole jurisdiction — or is any member of the chain.
         inActiveZone: rule.zoneId == null || zoneChain.contains(rule.zoneId),
-        hint: _hintFor(rule, isClosed: closed.contains(rule.id)),
+        hint: _hintFor(rule, codes, isClosed: closed.contains(rule.id)),
         // Throws rather than emitting a fact with a blank footnote, which is
         // E05's established shape for exactly this lookup. Invariant 3 is a
         // REQUIRED, non-nullable Citation, and a hint without one is the app
@@ -92,16 +102,19 @@ final class DriftSpeciesFactsRepository implements SpeciesFactsRepository {
   /// are not three facts of equal weight: a protected species may not be taken
   /// at any size in any month, so leading with a minimum would be true and
   /// useless.
-  RuleHint _hintFor(RuleRow rule, {required bool isClosed}) {
+  RuleHint _hintFor(RuleRow rule, Map<int, String> codes, {required bool isClosed}) {
     if (rule.isProtected) return const ProtectedHint();
     if (isClosed) return const ClosedSeasonHint();
     final int? minimum = rule.minSizeMm;
-    final int? methodId = rule.measurementMethodId;
+    // From `rule.measurement_method_id`, via its stable CODE — never from the
+    // species, which is what check 6 is for.
+    final String? code = codes[rule.measurementMethodId];
+    final MeasurementMethod? method = measurementMethodOfCode(code); // measurement-ok
     // A minimum with no method is a number the engine would have to guess at,
     // and TL and FL differ by 6-9 cm on a Kanaad. E04's build assertion A1
     // rejects such a row, so reaching this branch means a pack this build did
     // not produce — and no headline beats a wrong one.
-    if (minimum == null || methodId == null) return const NoHint();
-    return MinimumSizeHint(millimetres: minimum, method: measurementMethodOfId(methodId));
+    if (minimum == null || method == null) return const NoHint();
+    return MinimumSizeHint(millimetres: minimum, method: method);
   }
 }

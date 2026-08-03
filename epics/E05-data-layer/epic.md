@@ -66,6 +66,8 @@ content build for the same one.
 | T08 | The user DAOs | `T08-user-daos.md` | M | T04 |
 | T09 | Repositories, interfaces and fakes | `T09-repositories-interfaces-fakes.md` | L | T07, T08 |
 | T10 | Mappers: drift rows never escape `data/` | `T10-mappers-rows-stay-in-data.md` | M | T09 |
+| T11 | The installer runs before the pack is opened ⭑ | `T11-installer-wired-into-bootstrap.md` | S | T02, T03 |
+| T12 | A measurement method is resolved by its code ⭑ | `T12-measurement-method-by-code.md` | S | T10 |
 
 T04 has no dependency on T01–T03 and can be built in parallel by a second pair of hands; T03 needs
 `app_meta` from T04 because D-6 puts the completion marker there. Everything else is a straight line.
