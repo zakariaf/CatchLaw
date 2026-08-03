@@ -113,6 +113,20 @@ final class ZonePickerViewModel extends AsyncNotifier<ZonePickerState> {
     state = AsyncData<ZonePickerState>(current.copyWith(water: water));
   }
 
+  /// Makes a saved place active in one tap.
+  ///
+  /// Writes straight through rather than walking the three levels: he already
+  /// told the app about this place once, and asking him to say it again is the
+  /// five-second path spent on a question already answered.
+  Future<void> selectSaved({required String jurisdictionCode, required String zoneCode}) async {
+    final Result<void> written = await ref
+        .read(settingsRepositoryProvider)
+        .setActivePlace(jurisdictionCode: jurisdictionCode, zoneCode: zoneCode);
+    if (written case Failure<void>(:final Exception exception)) {
+      state = AsyncError<ZonePickerState>(exception, StackTrace.current);
+    }
+  }
+
   /// Writes the place, so the next launch opens already knowing it.
   Future<void> confirmSelection() async {
     final ZonePickerState? current = state.value;

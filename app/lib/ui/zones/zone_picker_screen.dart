@@ -1,6 +1,7 @@
 import 'package:catchlaw/data/model/enum_codecs.dart';
 import 'package:catchlaw/domain/models/jurisdiction.dart';
 import 'package:catchlaw/domain/models/species.dart';
+import 'package:catchlaw/domain/models/trip.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/ui/core/ui/lonja_button.dart';
@@ -8,6 +9,7 @@ import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
 import 'package:catchlaw/ui/zones/view_models/zone_picker_state.dart';
 import 'package:catchlaw/ui/zones/view_models/zone_picker_view_model.dart';
 import 'package:catchlaw/ui/zones/widgets/no_subzone_notice.dart';
+import 'package:catchlaw/ui/zones/widgets/saved_zone_strip.dart';
 import 'package:catchlaw/ui/zones/widgets/zone_level.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -81,6 +83,15 @@ class _Levels extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                // Above the country level: a fisher who has fished here before
+                // is one tap from the answer, and that tap is the five-second
+                // path §3 budgets for.
+                SavedZoneStrip(
+                  onSelected: (SavedZone zone) => picker.selectSaved(
+                    jurisdictionCode: zone.jurisdictionCode,
+                    zoneCode: zone.zoneCode,
+                  ),
+                ),
                 ZoneLevel(
                   label: l10n.zoneLevelCountry,
                   children: <Widget>[
