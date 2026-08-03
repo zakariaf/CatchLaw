@@ -402,4 +402,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String disclaimerVerdict(String authority) {
     return 'CatchLaw cita normas publicadas. No es asesoramiento jurídico ni autoriza ninguna captura. Conviene verificarlo con $authority antes de basarse en ello.';
   }
+
+  @override
+  String get citationCopyAction => 'Copiar la cita';
 }

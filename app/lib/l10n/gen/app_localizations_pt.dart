@@ -402,6 +402,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String disclaimerVerdict(String authority) {
     return 'O CatchLaw cita normas publicadas. Não é aconselhamento jurídico e não autoriza nenhuma captura. Convém verificar com $authority antes de se basear nele.';
   }
+
+  @override
+  String get citationCopyAction => 'Copiar a citação';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -802,4 +805,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String disclaimerVerdict(String authority) {
     return 'O CatchLaw cita normas publicadas. Não é aconselhamento jurídico e não autoriza nenhuma captura. Convém verificar com $authority antes de se basear nele.';
   }
+
+  @override
+  String get citationCopyAction => 'Copiar a citação';
 }

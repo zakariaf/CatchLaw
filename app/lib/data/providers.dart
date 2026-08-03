@@ -13,6 +13,7 @@ library;
 
 import 'package:catchlaw/data/repositories/calibration_repository.dart';
 import 'package:catchlaw/data/repositories/content_string_repository.dart';
+import 'package:catchlaw/data/repositories/legal_text_repository.dart';
 import 'package:catchlaw/data/repositories/look_alike_repository.dart';
 import 'package:catchlaw/data/repositories/measurement_repository.dart';
 import 'package:catchlaw/data/repositories/reference_repository.dart';
@@ -106,6 +107,11 @@ final Provider<ContentStringRepository> contentStringRepositoryProvider =
       (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
     );
 
+/// The verbatim law behind a citation.
+final Provider<LegalTextRepository> legalTextRepositoryProvider = Provider<LegalTextRepository>(
+  (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
+);
+
 /// Every seam `dataOverrides` must fill.
 ///
 /// A list rather than a comment, so "is this one wired?" is a test rather than
@@ -125,4 +131,5 @@ final List<ProviderBase<Object?>> kDataSeams = <ProviderBase<Object?>>[
   speciesRecentRepositoryProvider,
   calibrationRepositoryProvider,
   contentStringRepositoryProvider,
+  legalTextRepositoryProvider,
 ];

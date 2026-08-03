@@ -93,5 +93,6 @@
   "disclaimerVerdict": "CatchLaw cita normas publicadas. No es asesoramiento jurídico ni autoriza ninguna captura. Conviene verificarlo con {authority} antes de basarse en ello.",
   "@verdictBelowMinimum": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The headline sentence of the whole product. Both numbers and the method are mandatory. It states what the instrument requires and what was measured, and says nothing about what to do with the fish. The unit is a placeholder and follows the INSTRUMENT, never the reader locale and never the ruler setting: a Galician shell length stays in mm on an Arabic phone."
-  }
+  },
+  "citationCopyAction": "Copiar la cita"
 }

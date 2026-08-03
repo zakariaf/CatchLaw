@@ -30,6 +30,21 @@ class LegalTextDao extends DatabaseAccessor<ReferenceDatabase> with _$LegalTextD
     return rows.map((QueryRow r) => legalTexts.map(r.data)).toList();
   }
 
+  /// Every article hanging off one `citation` row, in reading order.
+  ///
+  /// Indexed on `citation_id`, which is what makes the result screen's tap one
+  /// statement rather than a scan of every article the jurisdiction published.
+  /// Returns a list because §7.1 lets one citation carry several articles, and
+  /// an empty list is a real answer: a citation whose text was not transcribed
+  /// is not a citation that does not exist.
+  Future<List<LegalTextRow>> byCitation(int citationId) =>
+      (select(legalTexts)
+            ..where(($LegalTextsTable t) => t.citationId.equals(citationId))
+            ..orderBy(<OrderClauseGenerator<$LegalTextsTable>>[
+              ($LegalTextsTable t) => OrderingTerm(expression: t.sortOrder),
+            ]))
+          .get();
+
   /// Every article of one jurisdiction in one locale, in reading order.
   Future<List<LegalTextRow>> articlesFor(int jurisdictionId, String locale) =>
       (select(legalTexts)

@@ -655,6 +655,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'CatchLaw quotes published instruments. It is not legal advice and does not authorise any catch. Verify with {authority} before relying on it.'**
   String disclaimerVerdict(String authority);
+
+  /// The accessible name of the copy control on the citation footnote. It copies the CITATION LINE — instrument, article and both dates — and never the verdict sentence: a verdict on the clipboard is a statement about one fish detached from the source that supports it.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the citation'**
+  String get citationCopyAction;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

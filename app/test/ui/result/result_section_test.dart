@@ -30,6 +30,8 @@ const ResultDisplay _noRule = ResultDisplay(
   ),
 );
 
+void _ignore(int citationId) {}
+
 void main() {
   final calls = <String>[];
 
@@ -53,20 +55,41 @@ void main() {
 
   group('ResultSection', () {
     testWidgets('draws the stamp when the display carries one', (WidgetTester tester) async {
-      await pumpLonja(tester, const ResultSection(display: _belowMinimum));
+      await pumpLonja(
+        tester,
+        const ResultSection(
+          display: _belowMinimum,
+          jurisdiction: 'United Arab Emirates',
+          onOpenRuleText: _ignore,
+        ),
+      );
       await _drainHaptics(tester);
 
       expect(find.byType(ResultVerdictPanel), findsOneWidget);
     });
 
     testWidgets('draws no stamp for a display that carries none', (WidgetTester tester) async {
-      await pumpLonja(tester, const ResultSection(display: _noRule));
+      await pumpLonja(
+        tester,
+        const ResultSection(
+          display: _noRule,
+          jurisdiction: 'United Arab Emirates',
+          onOpenRuleText: _ignore,
+        ),
+      );
 
       expect(find.byType(ResultVerdictPanel), findsNothing);
     });
 
     testWidgets('announces the verdict through the vibrator once', (WidgetTester tester) async {
-      await pumpLonja(tester, const ResultSection(display: _belowMinimum));
+      await pumpLonja(
+        tester,
+        const ResultSection(
+          display: _belowMinimum,
+          jurisdiction: 'United Arab Emirates',
+          onOpenRuleText: _ignore,
+        ),
+      );
       await tester.pump();
 
       expect(calls, hasLength(1), reason: 'the first impact; the second is 120 ms later');
@@ -80,7 +103,14 @@ void main() {
       WidgetTester tester,
     ) async {
       // A buzz for "no rule recorded" would itself read as a verdict.
-      await pumpLonja(tester, const ResultSection(display: _noRule));
+      await pumpLonja(
+        tester,
+        const ResultSection(
+          display: _noRule,
+          jurisdiction: 'United Arab Emirates',
+          onOpenRuleText: _ignore,
+        ),
+      );
       await tester.pump();
 
       expect(calls, isEmpty);

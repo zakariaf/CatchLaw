@@ -400,4 +400,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String disclaimerVerdict(String authority) {
     return 'CatchLaw quotes published instruments. It is not legal advice and does not authorise any catch. Verify with $authority before relying on it.';
   }
+
+  @override
+  String get citationCopyAction => 'Copy the citation';
 }

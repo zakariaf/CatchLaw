@@ -666,5 +666,9 @@
         "type": "String"
       }
     }
+  },
+  "citationCopyAction": "Copy the citation",
+  "@citationCopyAction": {
+    "description": "The accessible name of the copy control on the citation footnote. It copies the CITATION LINE — instrument, article and both dates — and never the verdict sentence: a verdict on the clipboard is a statement about one fish detached from the source that supports it."
   }
 }

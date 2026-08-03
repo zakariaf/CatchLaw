@@ -24,7 +24,14 @@ class SpeciesMeasurementSlot extends StatelessWidget {
 /// reviewed.
 class SpeciesVerdictSlot extends StatelessWidget {
   /// Draws [display], or reserves the space until there is one.
-  const SpeciesVerdictSlot({this.display, super.key});
+  const SpeciesVerdictSlot({
+    this.display,
+    this.jurisdiction = '',
+    this.citationIds = const <int>[],
+    this.sourceUrls = const <String?>[],
+    this.onOpenRuleText,
+    super.key,
+  });
 
   /// The answer, already localised, or `null` before one has been asked for.
   ///
@@ -34,9 +41,29 @@ class SpeciesVerdictSlot extends StatelessWidget {
   /// the honest rendering of both: nothing is stamped, and nothing is claimed.
   final ResultDisplay? display;
 
+  /// The authority named in the footnote, already localised.
+  final String jurisdiction;
+
+  /// The `citation.id` behind each footnote, in footnote order.
+  final List<int> citationIds;
+
+  /// Each footnote's `source_url`, in the same order.
+  final List<String?> sourceUrls;
+
+  /// Opens the verbatim article. E12 owns the route; until then the caller
+  /// supplies the destination and this widget holds no navigation knowledge.
+  final void Function(int citationId)? onOpenRuleText;
+
   @override
   Widget build(BuildContext context) {
     final ResultDisplay? display = this.display;
-    return display == null ? const SizedBox.shrink() : ResultSection(display: display);
+    if (display == null) return const SizedBox.shrink();
+    return ResultSection(
+      display: display,
+      jurisdiction: jurisdiction,
+      citationIds: citationIds,
+      sourceUrls: sourceUrls,
+      onOpenRuleText: onOpenRuleText ?? (int _) {},
+    );
   }
 }

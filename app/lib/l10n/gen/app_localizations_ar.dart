@@ -404,4 +404,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String disclaimerVerdict(String authority) {
     return 'يقتبس CatchLaw نصوصًا منشورة. ليست استشارة قانونية ولا تصرّح بأي صيد. يجب التحقق من $authority قبل الاعتماد عليها.';
   }
+
+  @override
+  String get citationCopyAction => 'نسخ الاستشهاد';
 }
