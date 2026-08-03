@@ -103,5 +103,18 @@
   "flagRuleSaveAction": "Guardar esta nota en este dispositivo",
   "flagRuleRecorded": "Guardada en este dispositivo.",
   "flagRuleEmptyNote": "La nota está vacía.",
-  "disclaimerNotDismissable": "No se puede descartar."
+  "disclaimerNotDismissable": "No se puede descartar.",
+  "zonePickerTitle": "¿Dónde pescas?",
+  "zoneLevelCountry": "País",
+  "zoneLevelRegion": "Región",
+  "zoneLevelSubZone": "Subzona",
+  "zoneWaterSalt": "Mar",
+  "zoneWaterFresh": "Aguas continentales",
+  "zonePickerConfirm": "Usar este lugar",
+  "zonePickerEmptyHeadline": "No hay normas incluidas para este país",
+  "zonePickerEmptyBody": "Esta versión no lleva ninguna norma transcrita. Esto no significa que no existan.",
+  "zonePickerLoadFailed": "No se pudo leer el paquete de normas incluido.",
+  "countryName": "{code, select, ES{España} AE{Emiratos Árabes Unidos} BR{Brasil} other{{code}}}",
+  "zoneNoPublishedBoundaries": "{authority} no publica límites de coordenadas. Las normas registradas aquí se aplican a toda la jurisdicción.",
+  "zoneWaterChoiceRequired": "Hay que elegir mar o aguas continentales antes de que este lugar pueda responder."
 }

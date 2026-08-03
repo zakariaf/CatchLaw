@@ -21,7 +21,8 @@ final class DriftSettingsRepository implements SettingsRepository {
   /// Reads and writes settings in [db].
   DriftSettingsRepository(this.db, {this.boundary = const StorageBoundary()})
     : _profile = UserProfileDao(db),
-      _zones = SavedZoneDao(db);
+      _zones = SavedZoneDao(db),
+      _meta = AppMetaDao(db);
 
   /// The fisher's log, which is also where their settings live.
   final UserDatabase db;
@@ -31,6 +32,7 @@ final class DriftSettingsRepository implements SettingsRepository {
 
   final UserProfileDao _profile;
   final SavedZoneDao _zones;
+  final AppMetaDao _meta;
 
   @override
   Stream<domain.UserProfile> watchProfile() =>
@@ -59,6 +61,22 @@ final class DriftSettingsRepository implements SettingsRepository {
       activeZoneCode: Value<String?>(zoneCode),
     ),
   );
+
+  /// The `app_meta` key the water choice is stored under.
+  static const String kActiveWaterKey = 'active_water_type';
+
+  @override
+  Future<Result<void>> setActiveWater(WaterKind water) =>
+      boundary.guard(() => _meta.write(kActiveWaterKey, water.sql));
+
+  @override
+  Future<Result<WaterKind?>> readActiveWater() => boundary.guard(() async {
+    final String? stored = await _meta.read(kActiveWaterKey);
+    // Decoded through the total codec: the value comes out of a file an export
+    // and import can round-trip, and an unrecognised one becomes `null` — "he
+    // has not chosen" — rather than throwing on a fisher's phone.
+    return stored == null ? null : waterKindOf(stored);
+  });
 
   @override
   Future<Result<void>> setRulerCalibration({

@@ -35,6 +35,23 @@ abstract interface class SettingsRepository {
   @useResult
   Future<Result<void>> setActivePlace({String? jurisdictionCode, String? zoneCode});
 
+  /// Which water he is asking about, where the ZONE leaves it open.
+  ///
+  /// Reachable only for a zone whose own `water_type` is `both`. It is not a
+  /// preference that overrides the pack: water type is a property of the place,
+  /// and this answers the one question the pack declined to answer.
+  ///
+  /// **In `app_meta`, not on `user_profile`.** A new column is a schema change,
+  /// and a schema change is irreversible after the first shipped pack — for one
+  /// nullable enum answered by one jurisdiction in the corpus, the key-value
+  /// table is the proportionate place.
+  @useResult
+  Future<Result<void>> setActiveWater(WaterKind water);
+
+  /// The stored water choice, or `null` if he has not made one.
+  @useResult
+  Future<Result<WaterKind?>> readActiveWater();
+
   /// What S4 measured, and when. A stale calibration is shown, never silently
   /// reused as if it were fresh.
   @useResult

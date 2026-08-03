@@ -8,6 +8,7 @@ import 'package:catchlaw/data/repositories/data_failure.dart';
 import 'package:catchlaw/data/repositories/reference_repository.dart';
 import 'package:catchlaw/data/repositories/storage_boundary.dart';
 import 'package:catchlaw/data/services/reference_database_service.dart';
+import 'package:catchlaw/domain/models/jurisdiction.dart';
 import 'package:catchlaw/domain/models/species.dart';
 import 'package:rule_engine/rule_engine.dart' show Citation, ClosedSeason, Result, Rule;
 
@@ -124,6 +125,10 @@ final class DriftReferenceRepository implements ReferenceRepository {
   @override
   Future<Result<Map<String, String>>> strings(Iterable<String> keys, String locale) =>
       boundary.guard(() => _strings.resolve(keys, locale));
+
+  @override
+  Future<Result<List<Jurisdiction>>> jurisdictions() =>
+      boundary.guard(() async => (await _meta.allJurisdictions()).map(toJurisdiction).toList());
 
   @override
   Future<Result<List<Zone>>> zones(int jurisdictionId) => boundary.guard(

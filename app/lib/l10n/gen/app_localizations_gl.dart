@@ -434,4 +434,55 @@ class AppLocalizationsGl extends AppLocalizations {
 
   @override
   String get disclaimerNotDismissable => 'Non se pode descartar.';
+
+  @override
+  String get zonePickerTitle => 'Onde pescas?';
+
+  @override
+  String get zoneLevelCountry => 'País';
+
+  @override
+  String get zoneLevelRegion => 'Rexión';
+
+  @override
+  String get zoneLevelSubZone => 'Subzona';
+
+  @override
+  String get zoneWaterSalt => 'Mar';
+
+  @override
+  String get zoneWaterFresh => 'Augas continentais';
+
+  @override
+  String get zonePickerConfirm => 'Usar este lugar';
+
+  @override
+  String get zonePickerEmptyHeadline => 'Non hai normas incluídas para este país';
+
+  @override
+  String get zonePickerEmptyBody =>
+      'Esta versión non leva ningunha norma transcrita. Isto non significa que non existan.';
+
+  @override
+  String get zonePickerLoadFailed => 'Non se puido ler o paquete de normas incluído.';
+
+  @override
+  String countryName(String code) {
+    String _temp0 = intl.Intl.selectLogic(code, {
+      'ES': 'España',
+      'AE': 'Emiratos Árabes Unidos',
+      'BR': 'Brasil',
+      'other': '$code',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String zoneNoPublishedBoundaries(String authority) {
+    return '$authority non publica límites de coordenadas. As normas rexistradas aquí aplícanse a toda a xurisdición.';
+  }
+
+  @override
+  String get zoneWaterChoiceRequired =>
+      'Hai que escoller mar ou augas continentais antes de que este lugar poida responder.';
 }
