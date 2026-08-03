@@ -128,12 +128,18 @@ void main() {
   testWidgets('SpeciesDetailScreen reserves the measurement and verdict slots', (
     WidgetTester tester,
   ) async {
-    // Named, empty slots rather than absences: the page's shape is the one that
+    // Named slots rather than absences: the page's shape is the one that
     // ships, so E09 and E10 do not also have to re-lay out everything around
     // them — and a reviewer can see the measurement was planned, not forgotten.
+    //
+    // E12/T08 changed what fills the verdict slot, not that it is reserved:
+    // `SpeciesVerdict` is always in the tree and renders nothing until the
+    // fisher has told the app where he is. A verdict computed against a
+    // jurisdiction nobody chose would be worse than an empty slot.
     await _pump(tester, account: _account());
     expect(find.byType(SpeciesMeasurementSlot), findsOneWidget);
-    expect(find.byType(SpeciesVerdictSlot), findsOneWidget);
+    expect(find.byType(SpeciesVerdict), findsOneWidget);
+    expect(find.byType(SpeciesVerdictSlot), findsNothing, reason: 'no place chosen yet');
   });
 
   testWidgets('SpeciesDetailScreen shows the failure rather than an empty page', (

@@ -16,6 +16,11 @@ class EvaluationScope {
     required this.zoneCode,
     required this.zonePath,
     required this.water,
+    required this.authorityKey,
+    required this.defaultLocale,
+    required this.packVersion,
+    required this.checkedOn,
+    this.packValidUntil,
   });
 
   /// `ES-GA`, `AE-RK`.
@@ -35,6 +40,25 @@ class EvaluationScope {
   /// Which water the rules are being asked about.
   final WaterKind water;
 
+  /// The `content_string` key for the authority named in the disclaimer.
+  ///
+  /// Carried here so the result screen needs no second lookup of the
+  /// jurisdiction row: resolving the place already read it, and reading it
+  /// twice is how two screens come to name two different authorities.
+  final String authorityKey;
+
+  /// The language this authority publishes in — §9.2 step 2.
+  final String defaultLocale;
+
+  /// The bundled pack version, for the stale bar's provenance.
+  final String packVersion;
+
+  /// When a human last verified this jurisdiction's transcription.
+  final String checkedOn;
+
+  /// When the pack states its rules stop being current, or `null`.
+  final String? packValidUntil;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -42,7 +66,10 @@ class EvaluationScope {
           other.jurisdictionCode == jurisdictionCode &&
           other.zoneCode == zoneCode &&
           _samePath(other.zonePath) &&
-          other.water == water;
+          other.water == water &&
+          other.authorityKey == authorityKey &&
+          other.packVersion == packVersion &&
+          other.packValidUntil == packValidUntil;
 
   /// Element-wise, by hand.
   ///

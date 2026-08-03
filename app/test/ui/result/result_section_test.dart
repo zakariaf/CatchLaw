@@ -17,12 +17,14 @@ Future<void> _drainHaptics(WidgetTester tester) => tester.pump(const Duration(mi
 const ResultDisplay _belowMinimum = ResultDisplay(
   findings: <FindingDisplay>[],
   disclaimer: 'CatchLaw quotes published instruments.',
+  authority: 'Xunta de Galicia — Consellería do Mar',
   stamp: kStampBelowMinimum,
 );
 
 const ResultDisplay _noRule = ResultDisplay(
   findings: <FindingDisplay>[],
   disclaimer: 'CatchLaw quotes published instruments.',
+  authority: 'Xunta de Galicia — Consellería do Mar',
   note: NoteDisplay(
     sentence: 'No rule recorded for this species here. This does not mean it is legal.',
     kind: NoteKind.noRuleRecorded,

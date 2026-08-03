@@ -368,6 +368,7 @@ class ResultDisplay {
   const ResultDisplay({
     required this.findings,
     required this.disclaimer,
+    required this.authority,
     this.stamp,
     this.note,
     this.ambiguity,
@@ -409,6 +410,13 @@ class ResultDisplay {
   /// The sentence that is always drawn and cannot be dismissed.
   final String disclaimer;
 
+  /// The authority's own name, already resolved.
+  ///
+  /// Beside the disclaimer rather than derived from it: the footnote names the
+  /// authority too, and a screen that pulled the name back out of a finished
+  /// sentence would be parsing its own output.
+  final String authority;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -418,9 +426,10 @@ class ResultDisplay {
           other.ambiguity == ambiguity &&
           listEquals(other.findings, findings) &&
           other.stale == stale &&
-          other.disclaimer == disclaimer;
+          other.disclaimer == disclaimer &&
+          other.authority == authority;
 
   @override
   int get hashCode =>
-      Object.hash(stamp, note, ambiguity, Object.hashAll(findings), stale, disclaimer);
+      Object.hash(stamp, note, ambiguity, Object.hashAll(findings), stale, disclaimer, authority);
 }
