@@ -8,6 +8,7 @@ import 'package:catchlaw/domain/models/trip.dart';
 import 'package:catchlaw/domain/use_cases/evaluate_catch_use_case.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/l10n/locale_codec.dart';
+import 'package:catchlaw/l10n/numeral_system.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/core/ui/lonja_button.dart';
@@ -39,7 +40,7 @@ import 'package:rule_engine/rule_engine.dart' show Ok, Result;
 ///
 /// E09 fills the measurement slot and E10 the verdict; both are named, empty
 /// slots here rather than absent, so the page's shape is the one that ships.
-class SpeciesDetailScreen extends ConsumerWidget {
+class SpeciesDetailScreen extends ConsumerStatefulWidget {
   /// Opens the account for [speciesId].
   const SpeciesDetailScreen({required this.speciesId, super.key});
 
@@ -47,8 +48,21 @@ class SpeciesDetailScreen extends ConsumerWidget {
   final int speciesId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<SpeciesAccount> account = ref.watch(speciesAccountProvider(speciesId));
+  ConsumerState<SpeciesDetailScreen> createState() => _SpeciesDetailScreenState();
+}
+
+class _SpeciesDetailScreenState extends ConsumerState<SpeciesDetailScreen> {
+  /// What the ruler last returned, or null before a measurement.
+  ///
+  /// **Held here and not in the ruler**, because the reading is an input to the
+  /// VERDICT and the verdict lives on this page. Kept out of `user.db` too: a
+  /// length is a fact about one fish in one hand, not a setting, and persisting
+  /// it would mean the next fish inherits the last one's measurement.
+  int? _measuredMm;
+
+  @override
+  Widget build(BuildContext context) {
+    final AsyncValue<SpeciesAccount> account = ref.watch(speciesAccountProvider(widget.speciesId));
     final LonjaTokens tokens = LonjaTokens.of(context);
 
     return Scaffold(
@@ -75,14 +89,20 @@ class SpeciesDetailScreen extends ConsumerWidget {
                 const SizedBox(height: LonjaSpace.s5),
                 if (value.otherNames.isNotEmpty) _OtherNamesBlock(names: value.otherNames),
                 const SizedBox(height: LonjaSpace.s5),
-                const _MeasureSlot(),
+                _MeasureSlot(
+                  measuredMm: _measuredMm,
+                  onMeasured: (int mm) => setState(() => _measuredMm = mm),
+                ),
                 const SizedBox(height: LonjaSpace.s4),
                 // Fed, at last. The slot has been on this page since E08 and
                 // empty since E08: E12/T08 is the seam that gives it something
                 // to draw.
-                SpeciesVerdict(speciesId: speciesId),
+                SpeciesVerdict(speciesId: widget.speciesId, lengthMm: _measuredMm),
                 const SizedBox(height: LonjaSpace.s5),
-                _RecordCatchAction(speciesId: speciesId, scientificName: value.scientificName),
+                _RecordCatchAction(
+                  speciesId: widget.speciesId,
+                  scientificName: value.scientificName,
+                ),
               ],
             ),
           ),
@@ -216,16 +236,22 @@ class _OtherNamesBlock extends StatelessWidget {
 /// page behind a loading state: the plate, the names and the family are already
 /// on screen and are true whatever the rules say.
 ///
-/// **No reading yet.** E09's ruler writes a measurement and nothing joins it to
-/// this screen; until it does, the size finding is indeterminate and the note
+/// **The reading arrives from S3.** `CatchQuestion` has carried `lengthMm`
+/// since E12/T08 and every caller passed null, so the only verdict this screen
+/// could ever state was "not measured" — the ruler was unrouted and the seam
+/// that would have fed it was therefore never exercised. With a measurement the
+/// note
 /// says so — which is exactly what an unmeasured fish deserves and is never a
 /// pass.
 class SpeciesVerdict extends ConsumerWidget {
   /// Answers for [speciesId].
-  const SpeciesVerdict({required this.speciesId, super.key});
+  const SpeciesVerdict({required this.speciesId, this.lengthMm, super.key});
 
   /// Which fish.
   final int speciesId;
+
+  /// The measured length, or null when nothing has been measured.
+  final int? lengthMm;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -246,7 +272,15 @@ class SpeciesVerdict extends ConsumerWidget {
     );
     final AsyncValue<ResultDisplay> display = ref.watch(
       resultDisplayProvider((
-        question: CatchQuestion(scope: scope, speciesId: speciesId, on: scope.checkedOn),
+        question: CatchQuestion(
+          scope: scope,
+          speciesId: speciesId,
+          on: scope.checkedOn,
+          // The reading, at last. CatchQuestion has carried lengthMm since
+          // E12/T08 and every caller passed null, so the only verdict this
+          // screen could ever state was "not measured".
+          lengthMm: lengthMm,
+        ),
         request: request,
       )),
     );
@@ -346,16 +380,31 @@ class _RecordCatchActionState extends ConsumerState<_RecordCatchAction> {
 /// fish" had no answer, on a product whose stated job is to replace a booklet
 /// with a ruler on the back cover.
 class _MeasureSlot extends StatelessWidget {
-  const _MeasureSlot();
+  const _MeasureSlot({required this.measuredMm, required this.onMeasured});
+
+  /// The last reading, or null.
+  final int? measuredMm;
+
+  /// Called with a new reading in millimetres.
+  final ValueChanged<int> onMeasured;
 
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context);
     return LonjaButton.secondary(
-      label: l10n.measureTitle,
-      onPressed: () => Navigator.of(
-        context,
-      ).push<int>(MaterialPageRoute<int>(builder: (BuildContext context) => const MeasureScreen())),
+      // The reading becomes the label once there is one, so the page states
+      // what it is about to answer against rather than making him remember.
+      label: measuredMm == null
+          ? l10n.measureTitle
+          : l10n.measureManualReading(
+              numberFormatFor(Localizations.localeOf(context)).format(measuredMm!),
+            ),
+      onPressed: () async {
+        final int? mm = await Navigator.of(context).push<int>(
+          MaterialPageRoute<int>(builder: (BuildContext context) => const MeasureScreen()),
+        );
+        if (mm != null) onMeasured(mm);
+      },
     );
   }
 }
