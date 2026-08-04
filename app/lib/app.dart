@@ -7,6 +7,8 @@ import 'package:catchlaw/theme/lonja_theme.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/ui/check/check_screen.dart';
 import 'package:catchlaw/ui/core/ui/app_shell.dart';
+import 'package:catchlaw/ui/log/widgets/today_screen.dart';
+import 'package:catchlaw/ui/log/widgets/trips_screen.dart';
 import 'package:catchlaw/ui/reference/widgets/reference_screen.dart';
 import 'package:catchlaw/ui/settings/widgets/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +102,8 @@ class CatchlawApp extends ConsumerWidget {
           home ??
           const AppShell(
             check: CheckScreen(),
+            today: TodayScreen(),
+            trips: TripsScreen(),
             reference: ReferenceScreen(),
             settings: SettingsScreen(),
           ),

@@ -557,6 +557,54 @@ class AppLocalizationsAr extends AppLocalizations {
       'يحتفظ CatchLaw بكل ما يحتاجه على هذا الهاتف. لا حساب فيه ولا شيفرة شبكة.';
 
   @override
+  String get todayHeadline => 'اليوم';
+
+  @override
+  String get todayNothingRecorded => 'لا شيء مسجَّل اليوم';
+
+  @override
+  String get todayNothingBody => 'يظهر هنا النوع الذي تسجّله من صفحته، مع العدد لهذا المكان.';
+
+  @override
+  String get todayNoPlace => 'لا مكان محدَّد';
+
+  @override
+  String todayCountKept(int count, int kept) {
+    return '$count مسجَّل · $kept محتفَظ به';
+  }
+
+  @override
+  String get tripsHeadline => 'الرحلات';
+
+  @override
+  String get tripsNone => 'لا رحلات بعد';
+
+  @override
+  String get tripsNoneBody => 'بدء رحلة يجمع ما تسجّله في خرجة واحدة. كل شيء يبقى على هذا الهاتف.';
+
+  @override
+  String get tripsStart => 'ابدأ رحلة';
+
+  @override
+  String get tripsEnd => 'أنهِ هذه الرحلة';
+
+  @override
+  String tripsRunning(String since) {
+    return 'جارية منذ $since';
+  }
+
+  @override
+  String tripsEnded(String started, String ended) {
+    return '$started — $ended';
+  }
+
+  @override
+  String get catchRecord => 'سجّل هذا الصيد';
+
+  @override
+  String get catchRecorded => 'تم التسجيل';
+
+  @override
   String get navToday => 'اليوم';
 
   @override

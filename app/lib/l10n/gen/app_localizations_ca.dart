@@ -562,6 +562,56 @@ class AppLocalizationsCa extends AppLocalizations {
       'CatchLaw guarda en aquest telèfon tot el que necessita. No té compte ni codi de xarxa.';
 
   @override
+  String get todayHeadline => 'Avui';
+
+  @override
+  String get todayNothingRecorded => 'Res registrat avui';
+
+  @override
+  String get todayNothingBody =>
+      'L\'espècie que registris des de la seva pàgina apareix aquí, amb el recompte d\'aquest lloc.';
+
+  @override
+  String get todayNoPlace => 'Sense lloc';
+
+  @override
+  String todayCountKept(int count, int kept) {
+    return '$count registrats · $kept conservats';
+  }
+
+  @override
+  String get tripsHeadline => 'Sortides';
+
+  @override
+  String get tripsNone => 'Encara no hi ha sortides';
+
+  @override
+  String get tripsNoneBody =>
+      'Iniciar una sortida agrupa el que registris en una sola jornada. Tot es queda en aquest telèfon.';
+
+  @override
+  String get tripsStart => 'Inicia sortida';
+
+  @override
+  String get tripsEnd => 'Finalitza la sortida';
+
+  @override
+  String tripsRunning(String since) {
+    return 'En curs des de $since';
+  }
+
+  @override
+  String tripsEnded(String started, String ended) {
+    return '$started — $ended';
+  }
+
+  @override
+  String get catchRecord => 'Registra aquesta captura';
+
+  @override
+  String get catchRecorded => 'Registrat';
+
+  @override
   String get navToday => 'Avui';
 
   @override

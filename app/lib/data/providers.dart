@@ -12,6 +12,7 @@
 library;
 
 import 'package:catchlaw/data/repositories/calibration_repository.dart';
+import 'package:catchlaw/data/repositories/catch_log_repository.dart';
 import 'package:catchlaw/data/repositories/content_string_repository.dart';
 import 'package:catchlaw/data/repositories/legal_text_repository.dart';
 import 'package:catchlaw/data/repositories/look_alike_repository.dart';
@@ -113,6 +114,11 @@ final Provider<LegalTextRepository> legalTextRepositoryProvider = Provider<Legal
   (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
 );
 
+/// What the fisher has landed, and the outings he landed it on.
+final Provider<CatchLogRepository> catchLogRepositoryProvider = Provider<CatchLogRepository>(
+  (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
+);
+
 /// The fisher's disputes with the transcription.
 final Provider<RuleFlagRepository> ruleFlagRepositoryProvider = Provider<RuleFlagRepository>(
   (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
@@ -139,4 +145,5 @@ final List<ProviderBase<Object?>> kDataSeams = <ProviderBase<Object?>>[
   contentStringRepositoryProvider,
   legalTextRepositoryProvider,
   ruleFlagRepositoryProvider,
+  catchLogRepositoryProvider,
 ];

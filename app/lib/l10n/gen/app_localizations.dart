@@ -920,6 +920,90 @@ abstract class AppLocalizations {
   /// **'CatchLaw holds everything it needs on this phone. It has no account and no network code.'**
   String get settingsOfflineNote;
 
+  /// Catch log copy: todayHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todayHeadline;
+
+  /// Catch log copy: todayNothingRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing recorded today'**
+  String get todayNothingRecorded;
+
+  /// The empty state on S8. A STATEMENT OF FACT about where records come from — it does not instruct the reader to record anything.
+  ///
+  /// In en, this message translates to:
+  /// **'A species you record from its page appears here, with the count for this place.'**
+  String get todayNothingBody;
+
+  /// Catch log copy: todayNoPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'No place set'**
+  String get todayNoPlace;
+
+  /// Catch log copy: todayCountKept.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} recorded · {kept} kept'**
+  String todayCountKept(int count, int kept);
+
+  /// Catch log copy: tripsHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Trips'**
+  String get tripsHeadline;
+
+  /// Catch log copy: tripsNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No trips yet'**
+  String get tripsNone;
+
+  /// The empty state on S9. States what a trip does and that nothing leaves the phone. No instruction, no promise about the law.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting a trip groups what you record into one outing. Everything stays on this phone.'**
+  String get tripsNoneBody;
+
+  /// Catch log copy: tripsStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a trip'**
+  String get tripsStart;
+
+  /// Catch log copy: tripsEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'End this trip'**
+  String get tripsEnd;
+
+  /// Catch log copy: tripsRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Running since {since}'**
+  String tripsRunning(String since);
+
+  /// Catch log copy: tripsEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'{started} — {ended}'**
+  String tripsEnded(String started, String ended);
+
+  /// The action that writes one catch to the private log. A neutral verb naming exactly what happens: it records, it does not submit, declare or report — SPEC 5 refuses presenting the log as satisfying any declaration duty.
+  ///
+  /// In en, this message translates to:
+  /// **'Record this catch'**
+  String get catchRecord;
+
+  /// Catch log copy: catchRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded'**
+  String get catchRecorded;
+
   /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
   ///
   /// In en, this message translates to:

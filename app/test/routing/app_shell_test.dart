@@ -28,7 +28,13 @@ class _CheckRoot extends StatelessWidget {
 
 Future<void> _pumpShell(WidgetTester tester, {Locale locale = const Locale('en')}) => pumpLonja(
   tester,
-  const AppShell(check: _CheckRoot(), reference: _ReferenceRoot(), settings: _SettingsRoot()),
+  const AppShell(
+    check: _CheckRoot(),
+    today: _TodayRoot(),
+    trips: _TripsRoot(),
+    reference: _ReferenceRoot(),
+    settings: _SettingsRoot(),
+  ),
   locale: locale,
 );
 
@@ -71,14 +77,15 @@ void main() {
     ) async {
       await _pumpShell(tester);
 
-      await tester.tap(find.text('Trips'));
+      await tester.tap(find.text('Settings'));
       await tester.pumpAndSettle();
 
-      // Today, Trips and Settings are still placeholders. Asserted on one of
-      // them rather than deleted with Reference, because the assertion that
-      // matters is that an unbuilt branch SAYS SO — and it has to keep holding
-      // until the last of the three is built.
-      expect(find.byType(DestinationPlaceholder), findsOneWidget);
+      // Every branch is now built, so the placeholder is unreachable from the
+      // strip. The assertion is kept and inverted rather than deleted: it is
+      // what proves the last branch stopped being a stub, and it fails loudly
+      // if a future branch is added without a screen behind it.
+      expect(find.byType(DestinationPlaceholder), findsNothing);
+      expect(find.text('settings root'), findsOneWidget);
     });
 
     testWidgets('keeps the Check branch route when the reader comes back', (
@@ -182,4 +189,20 @@ class _SettingsRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const Text('settings root');
+}
+
+/// Stands in for Today, for the same reason the others stand in.
+class _TodayRoot extends StatelessWidget {
+  const _TodayRoot();
+
+  @override
+  Widget build(BuildContext context) => const Text('today root');
+}
+
+/// Stands in for Trips.
+class _TripsRoot extends StatelessWidget {
+  const _TripsRoot();
+
+  @override
+  Widget build(BuildContext context) => const Text('trips root');
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/data/repositories/calibration_repository_drift.dart';
+import 'package:catchlaw/data/repositories/catch_log_repository_drift.dart';
 import 'package:catchlaw/data/repositories/content_string_repository_drift.dart';
 import 'package:catchlaw/data/repositories/legal_text_repository_drift.dart';
 import 'package:catchlaw/data/repositories/look_alike_repository_drift.dart';
@@ -72,6 +73,9 @@ List<Override> dataOverrides({
       ref.onDispose(user.close);
       return user;
     }),
+    catchLogRepositoryProvider.overrideWith(
+      (Ref ref) => DriftCatchLogRepository(ref.watch(userDatabaseProvider)),
+    ),
     referenceRepositoryProvider.overrideWith(
       (Ref ref) => DriftReferenceRepository(ref.watch(referenceDatabaseProvider)),
     ),

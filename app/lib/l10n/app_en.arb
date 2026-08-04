@@ -873,6 +873,73 @@
   "@settingsOfflineNote": {
     "description": "The offline note at the foot of Settings. A STATEMENT OF FACT about what the app contains, in the reader's own interest \u2014 it makes no promise about the law and gives no instruction."
   },
+  "todayHeadline": "Today",
+  "@todayHeadline": {
+    "description": "Catch log copy: todayHeadline."
+  },
+  "todayNothingRecorded": "Nothing recorded today",
+  "@todayNothingRecorded": {
+    "description": "Catch log copy: todayNothingRecorded."
+  },
+  "todayNothingBody": "A species you record from its page appears here, with the count for this place.",
+  "@todayNothingBody": {
+    "description": "The empty state on S8. A STATEMENT OF FACT about where records come from \u2014 it does not instruct the reader to record anything."
+  },
+  "todayNoPlace": "No place set",
+  "@todayNoPlace": {
+    "description": "Catch log copy: todayNoPlace."
+  },
+  "todayCountKept": "{count} recorded · {kept} kept",
+  "@todayCountKept": {
+    "description": "Catch log copy: todayCountKept.",
+    "placeholders": {
+      "count": { "type": "int" },
+      "kept": { "type": "int" }
+    }
+  },
+  "tripsHeadline": "Trips",
+  "@tripsHeadline": {
+    "description": "Catch log copy: tripsHeadline."
+  },
+  "tripsNone": "No trips yet",
+  "@tripsNone": {
+    "description": "Catch log copy: tripsNone."
+  },
+  "tripsNoneBody": "Starting a trip groups what you record into one outing. Everything stays on this phone.",
+  "@tripsNoneBody": {
+    "description": "The empty state on S9. States what a trip does and that nothing leaves the phone. No instruction, no promise about the law."
+  },
+  "tripsStart": "Start a trip",
+  "@tripsStart": {
+    "description": "Catch log copy: tripsStart."
+  },
+  "tripsEnd": "End this trip",
+  "@tripsEnd": {
+    "description": "Catch log copy: tripsEnd."
+  },
+  "tripsRunning": "Running since {since}",
+  "@tripsRunning": {
+    "description": "Catch log copy: tripsRunning.",
+    "placeholders": {
+      "since": { "type": "String" }
+    }
+  },
+  "tripsEnded": "{started} — {ended}",
+  "@tripsEnded": {
+    "description": "Catch log copy: tripsEnded.",
+    "placeholders": {
+      "started": { "type": "String" },
+      "ended": { "type": "String" }
+    }
+  },
+  "catchRecord": "Record this catch",
+  "@catchRecord": {
+    "description": "The action that writes one catch to the private log. A neutral verb naming exactly what happens: it records, it does not submit, declare or report \u2014 SPEC 5 refuses presenting the log as satisfying any declaration duty."
+  },
+  "catchRecorded": "Recorded",
+  "@catchRecorded": {
+    "description": "Catch log copy: catchRecorded."
+  },
   "navToday": "Today",
   "@navToday": {
     "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."

@@ -554,6 +554,56 @@ class AppLocalizationsEn extends AppLocalizations {
       'CatchLaw holds everything it needs on this phone. It has no account and no network code.';
 
   @override
+  String get todayHeadline => 'Today';
+
+  @override
+  String get todayNothingRecorded => 'Nothing recorded today';
+
+  @override
+  String get todayNothingBody =>
+      'A species you record from its page appears here, with the count for this place.';
+
+  @override
+  String get todayNoPlace => 'No place set';
+
+  @override
+  String todayCountKept(int count, int kept) {
+    return '$count recorded · $kept kept';
+  }
+
+  @override
+  String get tripsHeadline => 'Trips';
+
+  @override
+  String get tripsNone => 'No trips yet';
+
+  @override
+  String get tripsNoneBody =>
+      'Starting a trip groups what you record into one outing. Everything stays on this phone.';
+
+  @override
+  String get tripsStart => 'Start a trip';
+
+  @override
+  String get tripsEnd => 'End this trip';
+
+  @override
+  String tripsRunning(String since) {
+    return 'Running since $since';
+  }
+
+  @override
+  String tripsEnded(String started, String ended) {
+    return '$started — $ended';
+  }
+
+  @override
+  String get catchRecord => 'Record this catch';
+
+  @override
+  String get catchRecorded => 'Recorded';
+
+  @override
   String get navToday => 'Today';
 
   @override

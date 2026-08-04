@@ -1,4 +1,3 @@
-import 'package:catchlaw/routing/destination_placeholder.dart';
 import 'package:catchlaw/ui/core/ui/lonja_destination.dart';
 import 'package:catchlaw/ui/core/ui/lonja_nav_strip.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,14 @@ import 'package:flutter/material.dart';
 /// branch would put him back at the top of a list he had already scrolled.
 class AppShell extends StatefulWidget {
   /// Opens on Check, with [check] as its root and [reference] behind S6.
-  const AppShell({required this.check, required this.reference, required this.settings, super.key});
+  const AppShell({
+    required this.check,
+    required this.today,
+    required this.trips,
+    required this.reference,
+    required this.settings,
+    super.key,
+  });
 
   /// The Check branch's root screen — S1.
   final Widget check;
@@ -31,7 +37,13 @@ class AppShell extends StatefulWidget {
   /// the shell stays testable with two `SizedBox`es.
   final Widget reference;
 
-  /// The Settings branch's root screen — S16. Injected for the same reason.
+  /// The Today branch's root screen — S8.
+  final Widget today;
+
+  /// The Trips branch's root screen — S9.
+  final Widget trips;
+
+  /// The Settings branch's root screen — S14.
   final Widget settings;
 
   @override
@@ -76,8 +88,13 @@ class _AppShellState extends State<AppShell> {
                 // this branch rendered a placeholder because nothing routed to
                 // it, not because the screen did not exist.
                 LonjaDestination.reference => widget.reference,
+                LonjaDestination.today => widget.today,
+                LonjaDestination.trips => widget.trips,
                 LonjaDestination.settings => widget.settings,
-                _ => DestinationPlaceholder(destination: destination),
+                // No `_` arm and no `default:`. Every destination is built now,
+                // so an exhaustive switch is what makes ADDING one a compile
+                // error rather than a screen that silently renders a stub —
+                // which is exactly how four branches shipped empty.
               },
             ),
           ),

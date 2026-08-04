@@ -556,6 +556,56 @@ class AppLocalizationsPt extends AppLocalizations {
       'A CatchLaw guarda neste telemóvel tudo o que precisa. Não tem conta nem código de rede.';
 
   @override
+  String get todayHeadline => 'Hoje';
+
+  @override
+  String get todayNothingRecorded => 'Nada registado hoje';
+
+  @override
+  String get todayNothingBody =>
+      'A espécie que registares a partir da sua página aparece aqui, com a contagem deste local.';
+
+  @override
+  String get todayNoPlace => 'Sem local';
+
+  @override
+  String todayCountKept(int count, int kept) {
+    return '$count registados · $kept guardados';
+  }
+
+  @override
+  String get tripsHeadline => 'Saídas';
+
+  @override
+  String get tripsNone => 'Ainda não há saídas';
+
+  @override
+  String get tripsNoneBody =>
+      'Iniciar uma saída agrupa o que registares numa só jornada. Tudo fica neste telemóvel.';
+
+  @override
+  String get tripsStart => 'Iniciar saída';
+
+  @override
+  String get tripsEnd => 'Terminar saída';
+
+  @override
+  String tripsRunning(String since) {
+    return 'Em curso desde $since';
+  }
+
+  @override
+  String tripsEnded(String started, String ended) {
+    return '$started — $ended';
+  }
+
+  @override
+  String get catchRecord => 'Registar esta captura';
+
+  @override
+  String get catchRecorded => 'Registado';
+
+  @override
   String get navToday => 'Hoje';
 
   @override
@@ -1139,6 +1189,56 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get settingsOfflineNote =>
       'O CatchLaw guarda neste celular tudo o que precisa. Não tem conta nem código de rede.';
+
+  @override
+  String get todayHeadline => 'Hoje';
+
+  @override
+  String get todayNothingRecorded => 'Nada registrado hoje';
+
+  @override
+  String get todayNothingBody =>
+      'A espécie que você registrar na página dela aparece aqui, com a contagem deste local.';
+
+  @override
+  String get todayNoPlace => 'Sem local';
+
+  @override
+  String todayCountKept(int count, int kept) {
+    return '$count registrados · $kept guardados';
+  }
+
+  @override
+  String get tripsHeadline => 'Saídas';
+
+  @override
+  String get tripsNone => 'Ainda não há saídas';
+
+  @override
+  String get tripsNoneBody =>
+      'Iniciar uma saída agrupa o que você registrar em uma só jornada. Tudo fica neste celular.';
+
+  @override
+  String get tripsStart => 'Iniciar saída';
+
+  @override
+  String get tripsEnd => 'Encerrar saída';
+
+  @override
+  String tripsRunning(String since) {
+    return 'Em andamento desde $since';
+  }
+
+  @override
+  String tripsEnded(String started, String ended) {
+    return '$started — $ended';
+  }
+
+  @override
+  String get catchRecord => 'Registrar esta captura';
+
+  @override
+  String get catchRecorded => 'Registrado';
 
   @override
   String get navToday => 'Hoje';

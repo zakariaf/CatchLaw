@@ -554,6 +554,56 @@ class AppLocalizationsGl extends AppLocalizations {
       'CatchLaw garda neste teléfono todo o que precisa. Non ten conta nin código de rede.';
 
   @override
+  String get todayHeadline => 'Hoxe';
+
+  @override
+  String get todayNothingRecorded => 'Nada rexistrado hoxe';
+
+  @override
+  String get todayNothingBody =>
+      'A especie que rexistres desde a súa páxina aparece aquí, co reconto deste lugar.';
+
+  @override
+  String get todayNoPlace => 'Sen lugar';
+
+  @override
+  String todayCountKept(int count, int kept) {
+    return '$count rexistrados · $kept conservados';
+  }
+
+  @override
+  String get tripsHeadline => 'Saídas';
+
+  @override
+  String get tripsNone => 'Aínda non hai saídas';
+
+  @override
+  String get tripsNoneBody =>
+      'Iniciar unha saída agrupa o que rexistres nunha soa xornada. Todo permanece neste teléfono.';
+
+  @override
+  String get tripsStart => 'Iniciar saída';
+
+  @override
+  String get tripsEnd => 'Rematar saída';
+
+  @override
+  String tripsRunning(String since) {
+    return 'En curso desde $since';
+  }
+
+  @override
+  String tripsEnded(String started, String ended) {
+    return '$started — $ended';
+  }
+
+  @override
+  String get catchRecord => 'Rexistrar esta captura';
+
+  @override
+  String get catchRecorded => 'Rexistrado';
+
+  @override
   String get navToday => 'Hoxe';
 
   @override

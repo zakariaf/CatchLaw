@@ -1,16 +1,22 @@
+import 'package:catchlaw/data/model/enum_codecs.dart';
+import 'package:catchlaw/data/providers.dart';
+import 'package:catchlaw/domain/models/catch_record.dart';
 import 'package:catchlaw/domain/models/evaluation_scope.dart';
 import 'package:catchlaw/domain/models/species.dart';
 import 'package:catchlaw/domain/models/species_account.dart';
+import 'package:catchlaw/domain/models/trip.dart';
 import 'package:catchlaw/domain/use_cases/evaluate_catch_use_case.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/l10n/locale_codec.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
+import 'package:catchlaw/ui/core/ui/lonja_button.dart';
 import 'package:catchlaw/ui/core/ui/lonja_plate.dart';
 import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
 import 'package:catchlaw/ui/core/ui/lonja_section_label.dart';
 import 'package:catchlaw/ui/core/ui/lonja_silhouette.dart';
 import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
+import 'package:catchlaw/ui/log/view_models/catch_log_providers.dart';
 import 'package:catchlaw/ui/result/view_models/result_context.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/view_models/result_providers.dart';
@@ -19,6 +25,7 @@ import 'package:catchlaw/ui/species/widgets/species_detail_placeholders.dart';
 import 'package:catchlaw/ui/zones/view_models/zone_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rule_engine/rule_engine.dart' show Ok, Result;
 
 /// S2 — the species account, static half.
 ///
@@ -73,6 +80,8 @@ class SpeciesDetailScreen extends ConsumerWidget {
                 // empty since E08: E12/T08 is the seam that gives it something
                 // to draw.
                 SpeciesVerdict(speciesId: speciesId),
+                const SizedBox(height: LonjaSpace.s5),
+                _RecordCatchAction(speciesId: speciesId, scientificName: value.scientificName),
               ],
             ),
           ),
@@ -252,5 +261,79 @@ class SpeciesVerdict extends ConsumerWidget {
         onOpenRuleText: (int _) {},
       ),
     );
+  }
+}
+
+/// Writes what he just read into the private log.
+///
+/// **On the species page and not on a screen of its own**, because the moment a
+/// fisher records a catch is the moment he has just read the verdict for it —
+/// and a log that costs a navigation is a log nobody keeps at 05:40 with wet
+/// hands.
+///
+/// **It records the outcome, never a judgement of its own.** The row stores
+/// `CatchOutcome.unknown` here: this build has the species and the place but no
+/// measured length, and the honest value for "what did the rules say about THIS
+/// fish" is that nothing was measured. `unknown` is explicitly not permission —
+/// the vocabulary keeps the three absences apart precisely so a log entry
+/// cannot be read later as a rule that passed. E13 fills in the measured
+/// outcome when the ruler feeds this seam.
+///
+/// **Nothing leaves the phone.** No submit, no share, no export. The label says
+/// "record" for that reason: SPEC 5 refuses presenting the log as satisfying a
+/// declaration duty, and a verb like "report" or "declare" would do exactly
+/// that in one word.
+class _RecordCatchAction extends ConsumerStatefulWidget {
+  const _RecordCatchAction({required this.speciesId, required this.scientificName});
+
+  final int speciesId;
+  final String scientificName;
+
+  @override
+  ConsumerState<_RecordCatchAction> createState() => _RecordCatchActionState();
+}
+
+class _RecordCatchActionState extends ConsumerState<_RecordCatchAction> {
+  /// Latched after a successful write.
+  ///
+  /// A double tap on a wet screen is one fish, not two. The latch is local and
+  /// resets when the page is left, which is the right scope: recording the same
+  /// species twice on one tide is legitimate, recording it twice in one second
+  /// is a slip.
+  bool _recorded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations l10n = AppLocalizations.of(context);
+    final EvaluationScope? scope = ref.watch(evaluationScopeProvider).value;
+    if (scope == null) return const SizedBox.shrink();
+
+    return LonjaButton.secondary(
+      label: _recorded ? l10n.catchRecorded : l10n.catchRecord,
+      onPressed: _recorded ? null : () => _record(scope),
+    );
+  }
+
+  Future<void> _record(EvaluationScope scope) async {
+    final Trip? open = ref.read(openTripProvider).value;
+    final Result<int> written = await ref
+        .read(catchLogRepositoryProvider)
+        .record(
+          CatchDraft(
+            tripId: open?.id,
+            jurisdictionCode: scope.jurisdictionCode,
+            zoneCode: scope.zoneCode,
+            speciesId: widget.speciesId,
+            scientificName: widget.scientificName,
+            outcome: CatchOutcome.unknown,
+            contentVersion: scope.packVersion,
+            createdAt: DateTime.now().toIso8601String(),
+          ),
+        );
+
+    // The write crossed an await and this State may be gone — a setState on a
+    // disposed element is an exception on a wet phone at 05:40.
+    if (!mounted) return;
+    if (written is Ok<int>) setState(() => _recorded = true);
   }
 }
