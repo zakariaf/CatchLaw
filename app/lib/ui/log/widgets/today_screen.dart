@@ -122,31 +122,40 @@ class _TallyLine extends ConsumerWidget {
               // never inferred from a verdict — a legal fish put back is still
               // a legal fish, and a log that decided that for him would be a
               // record about the rules rather than about his morning.
+              // Expanded, not bare children. A Row hands its children an
+              // UNBOUNDED width, and LonjaButton sizes to the width it is
+              // given — so an infinite constraint fails to lay out and takes
+              // the whole list item with it. The rows were built with the right
+              // data and painted nothing.
               Row(
                 children: <Widget>[
-                  LonjaButton.secondary(
-                    label: l10n.todayMarkKept,
-                    onPressed: () => ref
-                        .read(catchLogRepositoryProvider)
-                        .setLatestKept(
-                          speciesId: entry.speciesId,
-                          isoDay: isoDay,
-                          jurisdictionCode: place.jurisdiction,
-                          zoneCode: place.zone,
-                          kept: true,
-                        ),
+                  Expanded(
+                    child: LonjaButton.secondary(
+                      label: l10n.todayMarkKept,
+                      onPressed: () => ref
+                          .read(catchLogRepositoryProvider)
+                          .setLatestKept(
+                            speciesId: entry.speciesId,
+                            isoDay: isoDay,
+                            jurisdictionCode: place.jurisdiction,
+                            zoneCode: place.zone,
+                            kept: true,
+                          ),
+                    ),
                   ),
                   const SizedBox(width: LonjaSpace.s2),
-                  LonjaButton.secondary(
-                    label: l10n.todayUndoOne,
-                    onPressed: () => ref
-                        .read(catchLogRepositoryProvider)
-                        .removeLatest(
-                          speciesId: entry.speciesId,
-                          isoDay: isoDay,
-                          jurisdictionCode: place.jurisdiction,
-                          zoneCode: place.zone,
-                        ),
+                  Expanded(
+                    child: LonjaButton.secondary(
+                      label: l10n.todayUndoOne,
+                      onPressed: () => ref
+                          .read(catchLogRepositoryProvider)
+                          .removeLatest(
+                            speciesId: entry.speciesId,
+                            isoDay: isoDay,
+                            jurisdictionCode: place.jurisdiction,
+                            zoneCode: place.zone,
+                          ),
+                    ),
                   ),
                 ],
               ),
