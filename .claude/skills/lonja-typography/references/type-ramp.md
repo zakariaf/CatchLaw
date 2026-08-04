@@ -23,28 +23,31 @@ px column is what you type. All mono steps carry `FontFeature.tabularFigures()`.
 
 | Step            | Face  | Size | Weight | Height | Tracking (em) | Tracking (px) | Where it is mandatory                                   |
 |-----------------|-------|------|--------|--------|---------------|---------------|---------------------------------------------------------|
-| `verdict`       | serif | 40   | w700   | 1.02   | -0.020        | -0.80         | The verdict stamp, and nothing else                      |
-| `display`       | serif | 30   | w600   | 1.10   | -0.005        | -0.15         | Species vernacular name on the account screen            |
-| `title`         | serif | 24   | w600   | 1.15   |  0.000        |  0.00         | Screen headings, section heads in a species account      |
-| `subtitle`      | serif | 20   | w600   | 1.25   |  0.000        |  0.00         | Sub-heads, zone name on the result screen                |
-| `legal`         | serif | 17   | w400   | 1.62   |  0.005        |  0.09         | Article text, the reason line, the disclaimer            |
-| `legalSmall`    | serif | 15   | w400   | 1.55   |  0.010        |  0.15         | Footnotes, source note, secondary legal prose            |
-| `binomial`      | serif | 16   | w400   | 1.45   |  0.010        |  0.16         | Scientific names ONLY — italic, the app's only italic    |
-| `uiLarge`       | sans  | 18   | w600   | 1.20   |  0.010        |  0.18         | Primary button labels in glove mode                      |
-| `ui`            | sans  | 16   | w500   | 1.35   |  0.010        |  0.16         | Buttons, nav labels, chips                               |
-| `uiSmall`       | sans  | 14   | w500   | 1.40   |  0.020        |  0.28         | Helper text, secondary chrome, zone chips                |
-| `eyebrow`       | sans  | 12.5 | w600   | 1.10   |  0.140        |  1.75         | Tracked uppercase block labels: VERDICT, SPECIES, ZONE   |
-| `microLabel`    | sans  | 11.5 | w600   | 1.10   |  0.200        |  2.30         | Gazette margin rubrics, table column heads               |
-| `measure`       | mono  | 34   | w600   | 1.00   | -0.010        | -0.34         | The single large measurement readout (`38 cm`)           |
-| `datum`         | mono  | 16   | w500   | 1.30   |  0.010        |  0.16         | Limits, table cells, `min 45 cm total length`            |
-| `citation`      | mono  | 14   | w400   | 1.50   |  0.020        |  0.28         | Instrument, article, published date, checked date        |
-| `articleNumber` | mono  | 12.5 | w600   | 1.00   |  0.060        |  0.75         | Margin rail article numbers (`Art. 3`)                   |
+| `verdict`       | serif | 42   | w700   | 1.02   | -0.020        | -0.84         | The verdict stamp, and nothing else                      |
+| `display`       | serif | 32   | w600   | 1.10   | -0.005        | -0.16         | Species vernacular name on the account screen            |
+| `title`         | serif | 26   | w600   | 1.15   |  0.000        |  0.00         | Screen headings, section heads in a species account      |
+| `subtitle`      | serif | 22   | w600   | 1.25   |  0.000        |  0.00         | Sub-heads, zone name on the result screen                |
+| `legal`         | serif | 19   | w400   | 1.62   |  0.005        |  0.10         | Article text, the reason line, the disclaimer            |
+| `legalSmall`    | serif | 17   | w400   | 1.55   |  0.010        |  0.17         | Footnotes, source note, secondary legal prose            |
+| `binomial`      | serif | 17   | w400   | 1.45   |  0.010        |  0.17         | Scientific names ONLY — italic, the app's only italic    |
+| `uiLarge`       | sans  | 19   | w600   | 1.20   |  0.010        |  0.19         | Primary button labels in glove mode                      |
+| `ui`            | sans  | 17   | w500   | 1.35   |  0.010        |  0.17         | Buttons, nav labels, chips                               |
+| `uiSmall`       | sans  | 15   | w500   | 1.40   |  0.020        |  0.30         | Helper text, secondary chrome, zone chips                |
+| `eyebrow`       | sans  | 14   | w600   | 1.10   |  0.120        |  1.68         | Tracked uppercase block labels: VERDICT, SPECIES, ZONE   |
+| `microLabel`    | sans  | 12.5 | w600   | 1.10   |  0.160        |  2.00         | Gazette margin rubrics, table column heads               |
+| `measure`       | mono  | 36   | w600   | 1.00   | -0.010        | -0.36         | The single large measurement readout (`38 cm`)           |
+| `datum`         | mono  | 18   | w500   | 1.30   |  0.010        |  0.18         | Limits, table cells, `min 45 cm total length`            |
+| `citation`      | mono  | 16   | w400   | 1.50   |  0.020        |  0.32         | Instrument, article, published date, checked date        |
+| `articleNumber` | mono  | 14   | w600   | 1.00   |  0.060        |  0.84         | Margin rail article numbers (`Art. 3`)                   |
 
 ### The floor, and why the small end was lifted
 
-**Nothing a fisher must read is set below 11.5.** The first ramp put `eyebrow` at 10.5 and
-`microLabel` at 9.5, and both were unreadable on a phone at arm's length — reported from a real
-device, not from a golden. The values were calibrated as if for a printed page held close; this app
+**Nothing a fisher must read is set below 12.5.** The first ramp put `eyebrow` at 10.5 and
+`microLabel` at 9.5, and both were unreadable on a phone at arm's length. The second put them at 12.5
+and 11.5 — a 19 % lift — and was reported **still too small from the same device**, which is the only
+evidence that decides this. These are the third values, and the lesson is worth more than the number:
+a 19 % lift on a 10.5 px label is still a small label, and a half-measure on legibility costs a second
+round trip to learn nothing new. The values were calibrated as if for a printed page held close; this app
 is held at arm's length, at 05:40, in glare, with wet hands, by eyes that are frequently not young.
 Below about 11.5 the tracked uppercase labels stop resolving as words and become texture.
 

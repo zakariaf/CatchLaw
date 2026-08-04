@@ -31,22 +31,22 @@ class TypeRow {
 /// is: a list generated from [LonjaTypeScale] would compare the file with
 /// itself and pass forever.
 const List<TypeRow> kTypeRamp = <TypeRow>[
-  TypeRow('verdict', 'serif', 40.0, FontWeight.w700, 1.02, -0.8),
-  TypeRow('display', 'serif', 30.0, FontWeight.w600, 1.1, -0.15),
-  TypeRow('title', 'serif', 24.0, FontWeight.w600, 1.15, 0.0),
-  TypeRow('subtitle', 'serif', 20.0, FontWeight.w600, 1.25, 0.0),
-  TypeRow('legal', 'serif', 17.0, FontWeight.w400, 1.62, 0.09),
-  TypeRow('legalSmall', 'serif', 15.0, FontWeight.w400, 1.55, 0.15),
-  TypeRow('binomial', 'serif', 16.0, FontWeight.w400, 1.45, 0.16),
-  TypeRow('uiLarge', 'sans', 18.0, FontWeight.w600, 1.2, 0.18),
-  TypeRow('ui', 'sans', 16.0, FontWeight.w500, 1.35, 0.16),
-  TypeRow('uiSmall', 'sans', 14.0, FontWeight.w500, 1.4, 0.28),
-  TypeRow('eyebrow', 'sans', 12.5, FontWeight.w600, 1.1, 1.75),
-  TypeRow('microLabel', 'sans', 11.5, FontWeight.w600, 1.1, 2.3),
-  TypeRow('measure', 'mono', 34.0, FontWeight.w600, 1.0, -0.34),
-  TypeRow('datum', 'mono', 16.0, FontWeight.w500, 1.3, 0.16),
-  TypeRow('citation', 'mono', 14.0, FontWeight.w400, 1.5, 0.28),
-  TypeRow('articleNumber', 'mono', 12.5, FontWeight.w600, 1.0, 0.75),
+  TypeRow('verdict', 'serif', 42.0, FontWeight.w700, 1.02, -0.84),
+  TypeRow('display', 'serif', 32.0, FontWeight.w600, 1.1, -0.16),
+  TypeRow('title', 'serif', 26.0, FontWeight.w600, 1.15, 0.0),
+  TypeRow('subtitle', 'serif', 22.0, FontWeight.w600, 1.25, 0.0),
+  TypeRow('legal', 'serif', 19.0, FontWeight.w400, 1.62, 0.1),
+  TypeRow('legalSmall', 'serif', 17.0, FontWeight.w400, 1.55, 0.17),
+  TypeRow('binomial', 'serif', 17.0, FontWeight.w400, 1.45, 0.17),
+  TypeRow('uiLarge', 'sans', 19.0, FontWeight.w600, 1.2, 0.19),
+  TypeRow('ui', 'sans', 17.0, FontWeight.w500, 1.35, 0.17),
+  TypeRow('uiSmall', 'sans', 15.0, FontWeight.w500, 1.4, 0.3),
+  TypeRow('eyebrow', 'sans', 14.0, FontWeight.w600, 1.1, 1.68),
+  TypeRow('microLabel', 'sans', 12.5, FontWeight.w600, 1.1, 2.0),
+  TypeRow('measure', 'mono', 36.0, FontWeight.w600, 1.0, -0.36),
+  TypeRow('datum', 'mono', 18.0, FontWeight.w500, 1.3, 0.18),
+  TypeRow('citation', 'mono', 16.0, FontWeight.w400, 1.5, 0.32),
+  TypeRow('articleNumber', 'mono', 14.0, FontWeight.w600, 1.0, 0.84),
 ];
 
 /// The floor no step may go below.
@@ -56,7 +56,7 @@ const List<TypeRow> kTypeRamp = <TypeRow>[
 /// a golden, because a golden proves the pixels did not move and says nothing
 /// about whether a person can read them. Below roughly this size a tracked
 /// uppercase label stops resolving as words and becomes texture.
-const double kSmallestReadableStep = 11.5;
+const double kSmallestReadableStep = 12.5;
 
 /// One step of [LonjaTypeScale], addressed by name.
 ///

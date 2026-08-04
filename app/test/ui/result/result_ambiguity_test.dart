@@ -94,6 +94,13 @@ void main() {
       expect(find.text('Neither — record both'), findsOneWidget);
       expect(find.textContaining('Orde do 27 de xullo de 2012'), findsWidgets);
 
+      // Scrolled to first, because the dialog's content scrolls and the defer
+      // action is the last thing in it — on a small screen at the shipped type
+      // sizes it starts below the fold. A bare tap on an off-screen widget does
+      // not fail fast here: it misses, the dialog never pops, and `await answer`
+      // hangs until the ten-minute timeout, which reads as an unrelated flake.
+      await tester.ensureVisible(find.text('Neither — record both'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Neither — record both'));
       await tester.pumpAndSettle();
       expect(await answer, isA<DeferredToBoth>());
