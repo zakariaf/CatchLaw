@@ -26,8 +26,11 @@ class _CheckRoot extends StatelessWidget {
   );
 }
 
-Future<void> _pumpShell(WidgetTester tester, {Locale locale = const Locale('en')}) =>
-    pumpLonja(tester, const AppShell(check: _CheckRoot()), locale: locale);
+Future<void> _pumpShell(WidgetTester tester, {Locale locale = const Locale('en')}) => pumpLonja(
+  tester,
+  const AppShell(check: _CheckRoot(), reference: _ReferenceRoot()),
+  locale: locale,
+);
 
 void main() {
   group('AppShell', () {
@@ -58,6 +61,23 @@ void main() {
       await tester.tap(find.text('Reference'));
       await tester.pumpAndSettle();
 
+      // Reference is a real branch now, so this asserts the injected root
+      // rather than the placeholder it used to show.
+      expect(find.text('reference root'), findsOneWidget);
+    });
+
+    testWidgets('shows the placeholder on a branch this release does not build', (
+      WidgetTester tester,
+    ) async {
+      await _pumpShell(tester);
+
+      await tester.tap(find.text('Trips'));
+      await tester.pumpAndSettle();
+
+      // Today, Trips and Settings are still placeholders. Asserted on one of
+      // them rather than deleted with Reference, because the assertion that
+      // matters is that an unbuilt branch SAYS SO — and it has to keep holding
+      // until the last of the three is built.
       expect(find.byType(DestinationPlaceholder), findsOneWidget);
     });
 
@@ -144,4 +164,14 @@ void main() {
       );
     });
   });
+}
+
+/// Stands in for S6, for the same reason [_CheckRoot] stands in for S1: the
+/// shell's tests are about the strip, the stack and branch history, and none of
+/// those needs a database.
+class _ReferenceRoot extends StatelessWidget {
+  const _ReferenceRoot();
+
+  @override
+  Widget build(BuildContext context) => const Text('reference root');
 }

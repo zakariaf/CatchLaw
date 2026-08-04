@@ -5,6 +5,7 @@ import 'package:catchlaw/l10n/resolve_locale.dart';
 import 'package:catchlaw/theme/lonja_theme.dart';
 import 'package:catchlaw/ui/check/check_screen.dart';
 import 'package:catchlaw/ui/core/ui/app_shell.dart';
+import 'package:catchlaw/ui/reference/widgets/reference_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -69,7 +70,7 @@ class CatchlawApp extends ConsumerWidget {
       // The front door, at last. E01 through E11 built an engine, a database,
       // six locales, a theme and five screens behind a `SizedBox.shrink()`;
       // this is the line that lets a fisher reach any of it.
-      home: home ?? const AppShell(check: CheckScreen()),
+      home: home ?? const AppShell(check: CheckScreen(), reference: ReferenceScreen()),
     );
   }
 }

@@ -16,11 +16,20 @@ import 'package:flutter/material.dart';
 /// Reference and taps back is still looking at that species. Rebuilding the
 /// branch would put him back at the top of a list he had already scrolled.
 class AppShell extends StatefulWidget {
-  /// Opens on Check, with [check] as its root.
-  const AppShell({required this.check, super.key});
+  /// Opens on Check, with [check] as its root and [reference] behind S6.
+  const AppShell({required this.check, required this.reference, super.key});
 
   /// The Check branch's root screen — S1.
   final Widget check;
+
+  /// The Reference branch's root screen — S6.
+  ///
+  /// Injected for the same reason [check] is: both reach providers, and a shell
+  /// that constructed them itself could not be pumped without a `ProviderScope`.
+  /// The shell's own tests are about the strip, the stack and branch history —
+  /// none of which needs a database — so the branches arrive from outside and
+  /// the shell stays testable with two `SizedBox`es.
+  final Widget reference;
 
   @override
   State<AppShell> createState() => _AppShellState();
@@ -58,9 +67,14 @@ class _AppShellState extends State<AppShell> {
             key: _navigators[destination],
             onGenerateRoute: (RouteSettings settings) => MaterialPageRoute<void>(
               settings: settings,
-              builder: (BuildContext context) => destination == LonjaDestination.check
-                  ? widget.check
-                  : DestinationPlaceholder(destination: destination),
+              builder: (BuildContext context) => switch (destination) {
+                LonjaDestination.check => widget.check,
+                // S6, complete and tested since E08 and unreachable until now:
+                // this branch rendered a placeholder because nothing routed to
+                // it, not because the screen did not exist.
+                LonjaDestination.reference => widget.reference,
+                _ => DestinationPlaceholder(destination: destination),
+              },
             ),
           ),
       ],
