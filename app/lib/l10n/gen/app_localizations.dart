@@ -1004,6 +1004,108 @@ abstract class AppLocalizations {
   /// **'Recorded'**
   String get catchRecorded;
 
+  /// Ruler and calibration copy: measureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Measure'**
+  String get measureTitle;
+
+  /// Ruler and calibration copy: measureUncalibrated.
+  ///
+  /// In en, this message translates to:
+  /// **'This screen is not calibrated'**
+  String get measureUncalibrated;
+
+  /// Why calibration exists, on S3. A STATEMENT OF FACT about the device — a phone has no millimetre, so an uncalibrated ruler would draw a guessed scale. It also states that manual entry works regardless, because rule 6 requires it.
+  ///
+  /// In en, this message translates to:
+  /// **'A phone reports pixels, not millimetres, and the ratio differs by model. Until the screen is calibrated it cannot draw a ruler at true size. Typing a length works either way.'**
+  String get measureUncalibratedBody;
+
+  /// Ruler and calibration copy: measureManualLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Or type the length'**
+  String get measureManualLabel;
+
+  /// Ruler and calibration copy: measureUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this length'**
+  String get measureUse;
+
+  /// Ruler and calibration copy: calibrateAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibrate the screen'**
+  String get calibrateAction;
+
+  /// Ruler and calibration copy: calibrateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibrate'**
+  String get calibrateTitle;
+
+  /// Ruler and calibration copy: calibrateFitBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Lay a bank card flat on the screen, left edge against the left edge of the box, and drag the black line to its right edge.'**
+  String get calibrateFitBody;
+
+  /// Ruler and calibration copy: calibrateVerifyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the line against the card once more. If it sits on the edge, save.'**
+  String get calibrateVerifyBody;
+
+  /// Ruler and calibration copy: calibrateVerifyAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Check it'**
+  String get calibrateVerifyAction;
+
+  /// Ruler and calibration copy: calibrateSaveAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the calibration'**
+  String get calibrateSaveAction;
+
+  /// Ruler and calibration copy: calibrateCardWidth.
+  ///
+  /// In en, this message translates to:
+  /// **'A bank card is {mm} millimetres wide (ISO/IEC 7810 ID-1).'**
+  String calibrateCardWidth(String mm);
+
+  /// Shown when the plausibility band rejects a scale. States what happened to the measurement, not what the reader did wrong: a scale outside the band is a drag that slipped.
+  ///
+  /// In en, this message translates to:
+  /// **'That scale is outside the plausible range for a phone screen, so it was not saved.'**
+  String get calibrateImplausible;
+
+  /// Ruler and calibration copy: todayRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get todayRemove;
+
+  /// A per-species action on the day tally. Kept is authored by the fisher and never inferred from a verdict: a legal fish put back is still a legal fish.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept'**
+  String get todayMarkKept;
+
+  /// A per-species action on the day tally. Kept is authored by the fisher and never inferred from a verdict: a legal fish put back is still a legal fish.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove one'**
+  String get todayUndoOne;
+
+  /// The keypad's delete key on S3. A word rather than a glyph: an arrow from an icon font is one missing family away from a tofu box on the one control that undoes a mistyped length.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get measureBackspace;
+
   /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
   ///
   /// In en, this message translates to:
@@ -1063,6 +1165,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Species you look up in this place appear here, so the next one is one tap.'**
   String get checkNoRecentsBody;
+
+  /// The typed length on S3, before any rule is applied. Spelled out rather than abbreviated because check_measurement.sh bans a bare unit token — and the ban is right: this number carries no measurement method yet, so it is a quantity the fisher typed, not a stated measurement against an instrument.
+  ///
+  /// In en, this message translates to:
+  /// **'{mm} millimetres'**
+  String measureManualReading(String mm);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

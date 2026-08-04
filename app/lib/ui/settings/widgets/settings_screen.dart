@@ -4,10 +4,12 @@ import 'package:catchlaw/domain/models/user_profile.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
+import 'package:catchlaw/ui/core/ui/lonja_button.dart';
 import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
 import 'package:catchlaw/ui/core/ui/lonja_section_label.dart';
 import 'package:catchlaw/ui/core/ui/lonja_segmented.dart';
 import 'package:catchlaw/ui/core/ui/lonja_switch.dart';
+import 'package:catchlaw/ui/ruler/widgets/calibration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -143,6 +145,18 @@ class SettingsScreen extends ConsumerWidget {
                       ? l10n.settingsRulerUncalibrated
                       : l10n.settingsRulerCalibrated(p.rulerCalibratedAt!),
                   style: type.datum,
+                ),
+                const SizedBox(height: LonjaSpace.s3),
+                // "Not calibrated" was a dead statement: it named a state with
+                // no way out of it. The screen that fixes it has existed since
+                // E09 and was reachable from nowhere.
+                LonjaButton.secondary(
+                  label: l10n.calibrateAction,
+                  onPressed: () => Navigator.of(context).push<void>(
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const CalibrationScreen(),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: LonjaSpace.s6),
 

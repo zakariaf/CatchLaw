@@ -15,7 +15,7 @@
   },
   "settingsLanguage": "Language",
   "@settingsLanguage": {
-    "description": "S14's label for the language control. Its value differs per locale, which is what lets a test prove the ar bundle loaded rather than silently falling back to this template."
+    "description": "Settings label: settingsLanguage."
   },
   "settingsLanguageSystemDefault": "Device language",
   "@settingsLanguageSystemDefault": {
@@ -794,10 +794,6 @@
   "@destinationNotBuiltYet": {
     "description": "Shown on the four navigation branches this release does not build. A STATEMENT OF FACT about what this version contains — it does not apologise, does not promise a date, and does not tell the reader to do anything. A branch that renders only its own name reads as a broken screen rather than as one that is not built."
   },
-  "settingsLanguage": "Language",
-  "@settingsLanguage": {
-    "description": "Settings label: settingsLanguage."
-  },
   "settingsLanguageDevice": "Follow the device",
   "@settingsLanguageDevice": {
     "description": "Settings label: settingsLanguageDevice."
@@ -862,7 +858,9 @@
   "@settingsRulerCalibrated": {
     "description": "The ruler's state on Settings. A STATEMENT OF FACT with the date calibration happened; it does not tell the reader to recalibrate.",
     "placeholders": {
-      "on": { "type": "String" }
+      "on": {
+        "type": "String"
+      }
     }
   },
   "settingsAboutPack": "Rule book",
@@ -871,7 +869,7 @@
   },
   "settingsOfflineNote": "CatchLaw holds everything it needs on this phone. It has no account and no network code.",
   "@settingsOfflineNote": {
-    "description": "The offline note at the foot of Settings. A STATEMENT OF FACT about what the app contains, in the reader's own interest \u2014 it makes no promise about the law and gives no instruction."
+    "description": "The offline note at the foot of Settings. A STATEMENT OF FACT about what the app contains, in the reader's own interest — it makes no promise about the law and gives no instruction."
   },
   "todayHeadline": "Today",
   "@todayHeadline": {
@@ -883,7 +881,7 @@
   },
   "todayNothingBody": "A species you record from its page appears here, with the count for this place.",
   "@todayNothingBody": {
-    "description": "The empty state on S8. A STATEMENT OF FACT about where records come from \u2014 it does not instruct the reader to record anything."
+    "description": "The empty state on S8. A STATEMENT OF FACT about where records come from — it does not instruct the reader to record anything."
   },
   "todayNoPlace": "No place set",
   "@todayNoPlace": {
@@ -893,8 +891,12 @@
   "@todayCountKept": {
     "description": "Catch log copy: todayCountKept.",
     "placeholders": {
-      "count": { "type": "int" },
-      "kept": { "type": "int" }
+      "count": {
+        "type": "int"
+      },
+      "kept": {
+        "type": "int"
+      }
     }
   },
   "tripsHeadline": "Trips",
@@ -921,24 +923,103 @@
   "@tripsRunning": {
     "description": "Catch log copy: tripsRunning.",
     "placeholders": {
-      "since": { "type": "String" }
+      "since": {
+        "type": "String"
+      }
     }
   },
   "tripsEnded": "{started} — {ended}",
   "@tripsEnded": {
     "description": "Catch log copy: tripsEnded.",
     "placeholders": {
-      "started": { "type": "String" },
-      "ended": { "type": "String" }
+      "started": {
+        "type": "String"
+      },
+      "ended": {
+        "type": "String"
+      }
     }
   },
   "catchRecord": "Record this catch",
   "@catchRecord": {
-    "description": "The action that writes one catch to the private log. A neutral verb naming exactly what happens: it records, it does not submit, declare or report \u2014 SPEC 5 refuses presenting the log as satisfying any declaration duty."
+    "description": "The action that writes one catch to the private log. A neutral verb naming exactly what happens: it records, it does not submit, declare or report — SPEC 5 refuses presenting the log as satisfying any declaration duty."
   },
   "catchRecorded": "Recorded",
   "@catchRecorded": {
     "description": "Catch log copy: catchRecorded."
+  },
+  "measureTitle": "Measure",
+  "@measureTitle": {
+    "description": "Ruler and calibration copy: measureTitle."
+  },
+  "measureUncalibrated": "This screen is not calibrated",
+  "@measureUncalibrated": {
+    "description": "Ruler and calibration copy: measureUncalibrated."
+  },
+  "measureUncalibratedBody": "A phone reports pixels, not millimetres, and the ratio differs by model. Until the screen is calibrated it cannot draw a ruler at true size. Typing a length works either way.",
+  "@measureUncalibratedBody": {
+    "description": "Why calibration exists, on S3. A STATEMENT OF FACT about the device — a phone has no millimetre, so an uncalibrated ruler would draw a guessed scale. It also states that manual entry works regardless, because rule 6 requires it."
+  },
+  "measureManualLabel": "Or type the length",
+  "@measureManualLabel": {
+    "description": "Ruler and calibration copy: measureManualLabel."
+  },
+  "measureUse": "Use this length",
+  "@measureUse": {
+    "description": "Ruler and calibration copy: measureUse."
+  },
+  "calibrateAction": "Calibrate the screen",
+  "@calibrateAction": {
+    "description": "Ruler and calibration copy: calibrateAction."
+  },
+  "calibrateTitle": "Calibrate",
+  "@calibrateTitle": {
+    "description": "Ruler and calibration copy: calibrateTitle."
+  },
+  "calibrateFitBody": "Lay a bank card flat on the screen, left edge against the left edge of the box, and drag the black line to its right edge.",
+  "@calibrateFitBody": {
+    "description": "Ruler and calibration copy: calibrateFitBody."
+  },
+  "calibrateVerifyBody": "Check the line against the card once more. If it sits on the edge, save.",
+  "@calibrateVerifyBody": {
+    "description": "Ruler and calibration copy: calibrateVerifyBody."
+  },
+  "calibrateVerifyAction": "Check it",
+  "@calibrateVerifyAction": {
+    "description": "Ruler and calibration copy: calibrateVerifyAction."
+  },
+  "calibrateSaveAction": "Save the calibration",
+  "@calibrateSaveAction": {
+    "description": "Ruler and calibration copy: calibrateSaveAction."
+  },
+  "calibrateCardWidth": "A bank card is {mm} millimetres wide (ISO/IEC 7810 ID-1).",
+  "@calibrateCardWidth": {
+    "description": "Ruler and calibration copy: calibrateCardWidth.",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
+  "calibrateImplausible": "That scale is outside the plausible range for a phone screen, so it was not saved.",
+  "@calibrateImplausible": {
+    "description": "Shown when the plausibility band rejects a scale. States what happened to the measurement, not what the reader did wrong: a scale outside the band is a drag that slipped."
+  },
+  "todayRemove": "Remove",
+  "@todayRemove": {
+    "description": "Ruler and calibration copy: todayRemove."
+  },
+  "todayMarkKept": "Kept",
+  "@todayMarkKept": {
+    "description": "A per-species action on the day tally. Kept is authored by the fisher and never inferred from a verdict: a legal fish put back is still a legal fish."
+  },
+  "todayUndoOne": "Remove one",
+  "@todayUndoOne": {
+    "description": "A per-species action on the day tally. Kept is authored by the fisher and never inferred from a verdict: a legal fish put back is still a legal fish."
+  },
+  "measureBackspace": "Back",
+  "@measureBackspace": {
+    "description": "The keypad's delete key on S3. A word rather than a glyph: an arrow from an icon font is one missing family away from a tofu box on the one control that undoes a mistyped length."
   },
   "navToday": "Today",
   "@navToday": {
@@ -984,5 +1065,14 @@
   "checkNoRecentsBody": "Species you look up in this place appear here, so the next one is one tap.",
   "@checkNoRecentsBody": {
     "description": "What the strip will hold once it holds anything. It explains the mechanism rather than instructing: the fisher is not being asked to look anything up, he is being told what happens when he does."
+  },
+  "measureManualReading": "{mm} millimetres",
+  "@measureManualReading": {
+    "description": "The typed length on S3, before any rule is applied. Spelled out rather than abbreviated because check_measurement.sh bans a bare unit token — and the ban is right: this number carries no measurement method yet, so it is a quantity the fisher typed, not a stated measurement against an instrument.",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
   }
 }

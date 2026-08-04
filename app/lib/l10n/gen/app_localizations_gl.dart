@@ -604,6 +604,63 @@ class AppLocalizationsGl extends AppLocalizations {
   String get catchRecorded => 'Rexistrado';
 
   @override
+  String get measureTitle => 'Medir';
+
+  @override
+  String get measureUncalibrated => 'Esta pantalla non está calibrada';
+
+  @override
+  String get measureUncalibratedBody =>
+      'Un teléfono informa de píxeles, non de milímetros, e a proporción varía segundo o modelo. Ata calibrar, a pantalla non pode debuxar unha regra a tamaño real. Escribir unha lonxitude funciona igualmente.';
+
+  @override
+  String get measureManualLabel => 'Ou escribe a lonxitude';
+
+  @override
+  String get measureUse => 'Usar esta lonxitude';
+
+  @override
+  String get calibrateAction => 'Calibrar a pantalla';
+
+  @override
+  String get calibrateTitle => 'Calibrar';
+
+  @override
+  String get calibrateFitBody =>
+      'Pon unha tarxeta bancaria sobre a pantalla, co bordo esquerdo contra o bordo esquerdo do recadro, e arrastra a liña negra ata o seu bordo dereito.';
+
+  @override
+  String get calibrateVerifyBody =>
+      'Comproba a liña contra a tarxeta unha vez máis. Se coincide co bordo, garda.';
+
+  @override
+  String get calibrateVerifyAction => 'Comprobar';
+
+  @override
+  String get calibrateSaveAction => 'Gardar a calibración';
+
+  @override
+  String calibrateCardWidth(String mm) {
+    return 'Unha tarxeta bancaria mide $mm milímetros de ancho (ISO/IEC 7810 ID-1).';
+  }
+
+  @override
+  String get calibrateImplausible =>
+      'Esa escala queda fóra do rango plausible para unha pantalla de teléfono, así que non se gardou.';
+
+  @override
+  String get todayRemove => 'Quitar';
+
+  @override
+  String get todayMarkKept => 'Conservado';
+
+  @override
+  String get todayUndoOne => 'Quitar un';
+
+  @override
+  String get measureBackspace => 'Borrar';
+
+  @override
   String get navToday => 'Hoxe';
 
   @override
@@ -635,4 +692,9 @@ class AppLocalizationsGl extends AppLocalizations {
   @override
   String get checkNoRecentsBody =>
       'As especies que busques neste lugar aparecen aquí, así o seguinte é un só toque.';
+
+  @override
+  String measureManualReading(String mm) {
+    return '$mm milímetros';
+  }
 }

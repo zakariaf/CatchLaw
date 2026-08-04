@@ -605,6 +605,62 @@ class AppLocalizationsAr extends AppLocalizations {
   String get catchRecorded => 'تم التسجيل';
 
   @override
+  String get measureTitle => 'قياس';
+
+  @override
+  String get measureUncalibrated => 'هذه الشاشة غير معايَرة';
+
+  @override
+  String get measureUncalibratedBody =>
+      'يبلّغ الهاتف بالبكسل لا بالمليمتر، والنسبة تختلف بين الطُرز. قبل المعايرة لا تستطيع الشاشة رسم مسطرة بالحجم الحقيقي. إدخال الطول يدويًا يعمل في الحالتين.';
+
+  @override
+  String get measureManualLabel => 'أو اكتب الطول';
+
+  @override
+  String get measureUse => 'استخدم هذا الطول';
+
+  @override
+  String get calibrateAction => 'عايِر الشاشة';
+
+  @override
+  String get calibrateTitle => 'المعايرة';
+
+  @override
+  String get calibrateFitBody =>
+      'ضع بطاقة مصرفية على الشاشة، حافتها اليسرى عند الحافة اليسرى للمربع، ثم اسحب الخط الأسود إلى حافتها اليمنى.';
+
+  @override
+  String get calibrateVerifyBody =>
+      'تحقّق من الخط مقابل البطاقة مرة أخرى. إن كان على الحافة، فاحفظ.';
+
+  @override
+  String get calibrateVerifyAction => 'تحقّق';
+
+  @override
+  String get calibrateSaveAction => 'احفظ المعايرة';
+
+  @override
+  String calibrateCardWidth(String mm) {
+    return 'عرض البطاقة المصرفية $mm مليمتر (ISO/IEC 7810 ID-1).';
+  }
+
+  @override
+  String get calibrateImplausible => 'هذا المقياس خارج النطاق المعقول لشاشة هاتف، لذلك لم يُحفظ.';
+
+  @override
+  String get todayRemove => 'إزالة';
+
+  @override
+  String get todayMarkKept => 'محتفَظ به';
+
+  @override
+  String get todayUndoOne => 'أزل واحدًا';
+
+  @override
+  String get measureBackspace => 'حذف';
+
+  @override
   String get navToday => 'اليوم';
 
   @override
@@ -636,4 +692,9 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get checkNoRecentsBody =>
       'الأنواع التي تبحث عنها في هذا المكان تظهر هنا، فيصبح التالي بلمسة واحدة.';
+
+  @override
+  String measureManualReading(String mm) {
+    return '$mm مليمتر';
+  }
 }

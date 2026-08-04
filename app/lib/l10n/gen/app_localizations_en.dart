@@ -604,6 +604,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String get catchRecorded => 'Recorded';
 
   @override
+  String get measureTitle => 'Measure';
+
+  @override
+  String get measureUncalibrated => 'This screen is not calibrated';
+
+  @override
+  String get measureUncalibratedBody =>
+      'A phone reports pixels, not millimetres, and the ratio differs by model. Until the screen is calibrated it cannot draw a ruler at true size. Typing a length works either way.';
+
+  @override
+  String get measureManualLabel => 'Or type the length';
+
+  @override
+  String get measureUse => 'Use this length';
+
+  @override
+  String get calibrateAction => 'Calibrate the screen';
+
+  @override
+  String get calibrateTitle => 'Calibrate';
+
+  @override
+  String get calibrateFitBody =>
+      'Lay a bank card flat on the screen, left edge against the left edge of the box, and drag the black line to its right edge.';
+
+  @override
+  String get calibrateVerifyBody =>
+      'Check the line against the card once more. If it sits on the edge, save.';
+
+  @override
+  String get calibrateVerifyAction => 'Check it';
+
+  @override
+  String get calibrateSaveAction => 'Save the calibration';
+
+  @override
+  String calibrateCardWidth(String mm) {
+    return 'A bank card is $mm millimetres wide (ISO/IEC 7810 ID-1).';
+  }
+
+  @override
+  String get calibrateImplausible =>
+      'That scale is outside the plausible range for a phone screen, so it was not saved.';
+
+  @override
+  String get todayRemove => 'Remove';
+
+  @override
+  String get todayMarkKept => 'Kept';
+
+  @override
+  String get todayUndoOne => 'Remove one';
+
+  @override
+  String get measureBackspace => 'Back';
+
+  @override
   String get navToday => 'Today';
 
   @override
@@ -635,4 +692,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get checkNoRecentsBody =>
       'Species you look up in this place appear here, so the next one is one tap.';
+
+  @override
+  String measureManualReading(String mm) {
+    return '$mm millimetres';
+  }
 }

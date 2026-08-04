@@ -1,7 +1,10 @@
+import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/domain/models/catch_record.dart';
+import 'package:catchlaw/domain/models/evaluation_scope.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
+import 'package:catchlaw/ui/core/ui/lonja_button.dart';
 import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
 import 'package:catchlaw/ui/log/view_models/catch_log_providers.dart';
 import 'package:catchlaw/ui/zones/view_models/zone_providers.dart';
@@ -74,16 +77,18 @@ class TodayScreen extends ConsumerWidget {
   }
 }
 
-class _TallyLine extends StatelessWidget {
+class _TallyLine extends ConsumerWidget {
   const _TallyLine({required this.entry});
 
   final SpeciesTallyEntry entry;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final AppLocalizations l10n = AppLocalizations.of(context);
     final LonjaTokens tokens = LonjaTokens.of(context);
     final LonjaTypeScale type = LonjaType.of(context);
+    final EvaluationScope? place = ref.watch(evaluationScopeProvider).value;
+    final String isoDay = ref.watch(todayIsoProvider);
 
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: tokens.density.rowHeight),
@@ -102,6 +107,43 @@ class _TallyLine extends StatelessWidget {
               l10n.todayCountKept(entry.count, entry.kept),
               style: type.datum.copyWith(color: tokens.onSurfaceMuted),
             ),
+            if (place != null) ...<Widget>[
+              const SizedBox(height: LonjaSpace.s2),
+              // Two actions, both on the MOST RECENT row of this species.
+              // "Remove one" undoes a double tap; clearing the whole species
+              // would throw away a morning to fix a slip. "Kept" is authored,
+              // never inferred from a verdict — a legal fish put back is still
+              // a legal fish, and a log that decided that for him would be a
+              // record about the rules rather than about his morning.
+              Row(
+                children: <Widget>[
+                  LonjaButton.secondary(
+                    label: l10n.todayMarkKept,
+                    onPressed: () => ref
+                        .read(catchLogRepositoryProvider)
+                        .setLatestKept(
+                          speciesId: entry.speciesId,
+                          isoDay: isoDay,
+                          jurisdictionCode: place.jurisdictionCode,
+                          zoneCode: place.zoneCode,
+                          kept: true,
+                        ),
+                  ),
+                  const SizedBox(width: LonjaSpace.s2),
+                  LonjaButton.secondary(
+                    label: l10n.todayUndoOne,
+                    onPressed: () => ref
+                        .read(catchLogRepositoryProvider)
+                        .removeLatest(
+                          speciesId: entry.speciesId,
+                          isoDay: isoDay,
+                          jurisdictionCode: place.jurisdictionCode,
+                          zoneCode: place.zoneCode,
+                        ),
+                  ),
+                ],
+              ),
+            ],
           ],
         ),
       ),

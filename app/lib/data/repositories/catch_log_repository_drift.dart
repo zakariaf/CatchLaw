@@ -96,6 +96,51 @@ final class DriftCatchLogRepository implements CatchLogRepository {
   );
 
   @override
+  Future<Result<int>> removeLatest({
+    required int speciesId,
+    required String isoDay,
+    required String jurisdictionCode,
+    required String zoneCode,
+  }) => boundary.guard(
+    () => db.customUpdate(
+      'DELETE FROM catch WHERE id = (SELECT id FROM catch WHERE species_id = ?1 '
+      'AND jurisdiction_code = ?2 AND zone_code = ?3 AND created_at LIKE ?4 '
+      'ORDER BY created_at DESC, id DESC LIMIT 1)',
+      variables: <Variable<Object>>[
+        Variable<int>(speciesId),
+        Variable<String>(jurisdictionCode),
+        Variable<String>(zoneCode),
+        Variable<String>('$isoDay%'),
+      ],
+      updates: <TableInfo<Table, Object>>{db.catches},
+    ),
+  );
+
+  @override
+  Future<Result<int>> setLatestKept({
+    required int speciesId,
+    required String isoDay,
+    required String jurisdictionCode,
+    required String zoneCode,
+    required bool kept,
+  }) => boundary.guard(
+    () => db.customUpdate(
+      'UPDATE catch SET was_kept = ?5, updated_at = created_at WHERE id = '
+      '(SELECT id FROM catch WHERE species_id = ?1 AND jurisdiction_code = ?2 '
+      'AND zone_code = ?3 AND created_at LIKE ?4 '
+      'ORDER BY created_at DESC, id DESC LIMIT 1)',
+      variables: <Variable<Object>>[
+        Variable<int>(speciesId),
+        Variable<String>(jurisdictionCode),
+        Variable<String>(zoneCode),
+        Variable<String>('$isoDay%'),
+        Variable<int>(kept ? 1 : 0),
+      ],
+      updates: <TableInfo<Table, Object>>{db.catches},
+    ),
+  );
+
+  @override
   Future<Result<void>> endTrip(int tripId, String endedAt) =>
       boundary.guard(() => _trips.endTrip(tripId, endedAt));
 }

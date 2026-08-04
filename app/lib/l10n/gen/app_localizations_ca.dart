@@ -612,6 +612,63 @@ class AppLocalizationsCa extends AppLocalizations {
   String get catchRecorded => 'Registrat';
 
   @override
+  String get measureTitle => 'Mesura';
+
+  @override
+  String get measureUncalibrated => 'Aquesta pantalla no està calibrada';
+
+  @override
+  String get measureUncalibratedBody =>
+      'Un telèfon informa de píxels, no de mil·límetres, i la proporció varia segons el model. Fins que no es calibra, la pantalla no pot dibuixar un regle a mida real. Escriure una longitud funciona igualment.';
+
+  @override
+  String get measureManualLabel => 'O escriu la longitud';
+
+  @override
+  String get measureUse => 'Usa aquesta longitud';
+
+  @override
+  String get calibrateAction => 'Calibra la pantalla';
+
+  @override
+  String get calibrateTitle => 'Calibra';
+
+  @override
+  String get calibrateFitBody =>
+      'Posa una targeta bancària sobre la pantalla, amb la vora esquerra contra la vora esquerra del requadre, i arrossega la línia negra fins a la seva vora dreta.';
+
+  @override
+  String get calibrateVerifyBody =>
+      'Comprova la línia contra la targeta un cop més. Si coincideix amb la vora, desa.';
+
+  @override
+  String get calibrateVerifyAction => 'Comprova';
+
+  @override
+  String get calibrateSaveAction => 'Desa el calibratge';
+
+  @override
+  String calibrateCardWidth(String mm) {
+    return 'Una targeta bancària fa $mm mil·límetres d\'amplada (ISO/IEC 7810 ID-1).';
+  }
+
+  @override
+  String get calibrateImplausible =>
+      'Aquesta escala queda fora del rang plausible per a una pantalla de telèfon, així que no s\'ha desat.';
+
+  @override
+  String get todayRemove => 'Elimina';
+
+  @override
+  String get todayMarkKept => 'Conservat';
+
+  @override
+  String get todayUndoOne => 'N\'elimina un';
+
+  @override
+  String get measureBackspace => 'Esborra';
+
+  @override
   String get navToday => 'Avui';
 
   @override
@@ -643,4 +700,9 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get checkNoRecentsBody =>
       'Les espècies que cerquis en aquest lloc apareixen aquí, així el següent és un sol toc.';
+
+  @override
+  String measureManualReading(String mm) {
+    return '$mm mil·límetres';
+  }
 }

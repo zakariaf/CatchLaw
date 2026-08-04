@@ -51,6 +51,35 @@ abstract interface class CatchLogRepository {
     String? label,
   });
 
+  /// Removes the most recent catch of [speciesId] recorded on [isoDay] here.
+  ///
+  /// The most recent one, not all of them: a fisher who tapped twice wants the
+  /// second tap undone, and a delete that cleared the whole species would throw
+  /// away a morning's work to fix a slip. Deleting from a tally is unusual, so
+  /// the row it removes is stated to be the newest rather than left to the
+  /// reader to guess.
+  @useResult
+  Future<Result<int>> removeLatest({
+    required int speciesId,
+    required String isoDay,
+    required String jurisdictionCode,
+    required String zoneCode,
+  });
+
+  /// Sets `was_kept` on the most recent catch of [speciesId] on [isoDay] here.
+  ///
+  /// Kept is authored by the fisher and is never inferred from a verdict: a
+  /// legal fish put back is still a legal fish, and a record that decided this
+  /// for him would be a record about the rules rather than about his morning.
+  @useResult
+  Future<Result<int>> setLatestKept({
+    required int speciesId,
+    required String isoDay,
+    required String jurisdictionCode,
+    required String zoneCode,
+    required bool kept,
+  });
+
   /// Closes [tripId] at [endedAt].
   @useResult
   Future<Result<void>> endTrip(int tripId, String endedAt);

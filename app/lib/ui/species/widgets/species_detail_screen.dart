@@ -20,6 +20,7 @@ import 'package:catchlaw/ui/log/view_models/catch_log_providers.dart';
 import 'package:catchlaw/ui/result/view_models/result_context.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/view_models/result_providers.dart';
+import 'package:catchlaw/ui/ruler/widgets/measure_screen.dart';
 import 'package:catchlaw/ui/species/view_models/species_detail_view_model.dart';
 import 'package:catchlaw/ui/species/widgets/species_detail_placeholders.dart';
 import 'package:catchlaw/ui/zones/view_models/zone_providers.dart';
@@ -74,7 +75,7 @@ class SpeciesDetailScreen extends ConsumerWidget {
                 const SizedBox(height: LonjaSpace.s5),
                 if (value.otherNames.isNotEmpty) _OtherNamesBlock(names: value.otherNames),
                 const SizedBox(height: LonjaSpace.s5),
-                const SpeciesMeasurementSlot(),
+                const _MeasureSlot(),
                 const SizedBox(height: LonjaSpace.s4),
                 // Fed, at last. The slot has been on this page since E08 and
                 // empty since E08: E12/T08 is the seam that gives it something
@@ -335,5 +336,26 @@ class _RecordCatchActionState extends ConsumerState<_RecordCatchAction> {
     // disposed element is an exception on a wet phone at 05:40.
     if (!mounted) return;
     if (written is Ok<int>) setState(() => _recorded = true);
+  }
+}
+
+/// The route to S3, in the slot that has held a placeholder since E08.
+///
+/// The ruler, its painter, its calibration flow and its manual keypad have all
+/// existed since E09 and were reachable from nowhere — so "how do I measure a
+/// fish" had no answer, on a product whose stated job is to replace a booklet
+/// with a ruler on the back cover.
+class _MeasureSlot extends StatelessWidget {
+  const _MeasureSlot();
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations l10n = AppLocalizations.of(context);
+    return LonjaButton.secondary(
+      label: l10n.measureTitle,
+      onPressed: () => Navigator.of(
+        context,
+      ).push<int>(MaterialPageRoute<int>(builder: (BuildContext context) => const MeasureScreen())),
+    );
   }
 }

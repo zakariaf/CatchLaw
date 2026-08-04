@@ -137,7 +137,10 @@ void main() {
     // fisher has told the app where he is. A verdict computed against a
     // jurisdiction nobody chose would be worse than an empty slot.
     await _pump(tester, account: _account());
-    expect(find.byType(SpeciesMeasurementSlot), findsOneWidget);
+    // By its label, not its type: the slot is a private widget now that it
+    // routes to a real screen, and what the page must show is a way to MEASURE
+    // — which is the thing that was missing, not a named placeholder.
+    expect(find.text('Measure'), findsOneWidget);
     expect(find.byType(SpeciesVerdict), findsOneWidget);
     expect(find.byType(SpeciesVerdictSlot), findsNothing, reason: 'no place chosen yet');
   });

@@ -606,6 +606,63 @@ class AppLocalizationsPt extends AppLocalizations {
   String get catchRecorded => 'Registado';
 
   @override
+  String get measureTitle => 'Medir';
+
+  @override
+  String get measureUncalibrated => 'Este ecrã não está calibrado';
+
+  @override
+  String get measureUncalibratedBody =>
+      'Um telemóvel informa píxeis, não milímetros, e a proporção varia com o modelo. Até calibrar, o ecrã não pode desenhar uma régua em tamanho real. Escrever um comprimento funciona à mesma.';
+
+  @override
+  String get measureManualLabel => 'Ou escreve o comprimento';
+
+  @override
+  String get measureUse => 'Usar este comprimento';
+
+  @override
+  String get calibrateAction => 'Calibrar o ecrã';
+
+  @override
+  String get calibrateTitle => 'Calibrar';
+
+  @override
+  String get calibrateFitBody =>
+      'Coloca um cartão bancário sobre o ecrã, com o bordo esquerdo contra o bordo esquerdo da caixa, e arrasta a linha preta até ao seu bordo direito.';
+
+  @override
+  String get calibrateVerifyBody =>
+      'Verifica a linha contra o cartão mais uma vez. Se assentar no bordo, guarda.';
+
+  @override
+  String get calibrateVerifyAction => 'Verificar';
+
+  @override
+  String get calibrateSaveAction => 'Guardar a calibração';
+
+  @override
+  String calibrateCardWidth(String mm) {
+    return 'Um cartão bancário tem $mm milímetros de largura (ISO/IEC 7810 ID-1).';
+  }
+
+  @override
+  String get calibrateImplausible =>
+      'Essa escala está fora do intervalo plausível para um ecrã de telemóvel, por isso não foi guardada.';
+
+  @override
+  String get todayRemove => 'Remover';
+
+  @override
+  String get todayMarkKept => 'Guardado';
+
+  @override
+  String get todayUndoOne => 'Remover um';
+
+  @override
+  String get measureBackspace => 'Apagar';
+
+  @override
   String get navToday => 'Hoje';
 
   @override
@@ -637,6 +694,11 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get checkNoRecentsBody =>
       'As espécies que você buscar neste lugar aparecem aqui, e a próxima fica a um toque.';
+
+  @override
+  String measureManualReading(String mm) {
+    return '$mm milímetros';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1241,6 +1303,63 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get catchRecorded => 'Registrado';
 
   @override
+  String get measureTitle => 'Medir';
+
+  @override
+  String get measureUncalibrated => 'Esta tela não está calibrada';
+
+  @override
+  String get measureUncalibratedBody =>
+      'Um celular informa pixels, não milímetros, e a proporção varia conforme o modelo. Até calibrar, a tela não pode desenhar uma régua em tamanho real. Digitar um comprimento funciona do mesmo jeito.';
+
+  @override
+  String get measureManualLabel => 'Ou digite o comprimento';
+
+  @override
+  String get measureUse => 'Usar este comprimento';
+
+  @override
+  String get calibrateAction => 'Calibrar a tela';
+
+  @override
+  String get calibrateTitle => 'Calibrar';
+
+  @override
+  String get calibrateFitBody =>
+      'Coloque um cartão bancário sobre a tela, com a borda esquerda contra a borda esquerda da caixa, e arraste a linha preta até a borda direita dele.';
+
+  @override
+  String get calibrateVerifyBody =>
+      'Confira a linha contra o cartão mais uma vez. Se estiver na borda, salve.';
+
+  @override
+  String get calibrateVerifyAction => 'Conferir';
+
+  @override
+  String get calibrateSaveAction => 'Salvar a calibração';
+
+  @override
+  String calibrateCardWidth(String mm) {
+    return 'Um cartão bancário tem $mm milímetros de largura (ISO/IEC 7810 ID-1).';
+  }
+
+  @override
+  String get calibrateImplausible =>
+      'Essa escala está fora da faixa plausível para uma tela de celular, então não foi salva.';
+
+  @override
+  String get todayRemove => 'Remover';
+
+  @override
+  String get todayMarkKept => 'Guardado';
+
+  @override
+  String get todayUndoOne => 'Remover um';
+
+  @override
+  String get measureBackspace => 'Apagar';
+
+  @override
   String get navToday => 'Hoje';
 
   @override
@@ -1272,4 +1391,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get checkNoRecentsBody =>
       'As espécies que você buscar neste lugar aparecem aqui, e a próxima fica a um toque.';
+
+  @override
+  String measureManualReading(String mm) {
+    return '$mm milímetros';
+  }
 }
