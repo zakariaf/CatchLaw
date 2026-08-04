@@ -1,8 +1,8 @@
 import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/domain/models/catch_record.dart';
-import 'package:catchlaw/domain/models/evaluation_scope.dart';
 import 'package:catchlaw/domain/models/trip.dart';
-import 'package:catchlaw/ui/zones/view_models/zone_providers.dart';
+import 'package:catchlaw/domain/models/user_profile.dart';
+import 'package:catchlaw/ui/settings/widgets/settings_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Today, as the log stores it.
@@ -23,23 +23,35 @@ final Provider<String> todayIsoProvider = Provider<String>((Ref ref) {
 /// Empty — not an error — when no place is set. A fisher who has not answered
 /// "where are you fishing?" has no day to tally, and S8 says so in words rather
 /// than failing.
-/// **Watched by `select`, on the two codes and nothing else.** `WatchEvaluationScope`
-/// builds a fresh stream on every rebuild of its own dependencies, so watching
-/// the whole `AsyncValue` re-created this provider each time the scope
-/// re-emitted an IDENTICAL place — and a `StreamProvider` rebuilt before its
-/// first event goes back to loading. The screen then sat in a permanent loading
-/// state and rendered blank, with three correct rows in the database and a
-/// correct query over them. Selecting the codes means an unchanged place is not
-/// a change.
+/// The active place, as two codes.
+///
+/// **From the profile, not from `EvaluationScope`.** The tally needs a
+/// jurisdiction and a zone; the scope additionally resolves the zone chain, the
+/// water type, the pack version and its expiry, and rebuilds its whole stream
+/// whenever any of those dependencies move. Depending on it meant the tally was
+/// re-created on churn that had nothing to do with the two strings it uses — and
+/// a `StreamProvider` rebuilt before its first event drops back to loading, so
+/// the page sat blank with correct rows underneath it.
+///
+/// `user_profile` is also the same source the RECORD path writes against, so the
+/// read and the write cannot disagree about where the fisher is.
+final Provider<({String jurisdiction, String zone})?> activePlaceProvider =
+    Provider<({String jurisdiction, String zone})?>((Ref ref) {
+      final UserProfile? profile = ref.watch(settingsProfileProvider).value;
+      final String? jurisdiction = profile?.activeJurisdiction;
+      final String? zone = profile?.activeZoneCode;
+      if (jurisdiction == null || zone == null) return null;
+      return (jurisdiction: jurisdiction, zone: zone);
+    });
+
+/// The day's tally for the active place.
+///
+/// Empty — not an error — when no place is set. A fisher who has not answered
+/// "where are you fishing?" has no day to tally, and S8 says so in words rather
+/// than failing.
 final StreamProvider<List<SpeciesTallyEntry>> dayTallyProvider =
     StreamProvider<List<SpeciesTallyEntry>>((Ref ref) {
-      final ({String jurisdiction, String zone})? place = ref.watch(
-        evaluationScopeProvider.select(
-          (AsyncValue<EvaluationScope?> a) => a.value == null
-              ? null
-              : (jurisdiction: a.value!.jurisdictionCode, zone: a.value!.zoneCode),
-        ),
-      );
+      final ({String jurisdiction, String zone})? place = ref.watch(activePlaceProvider);
       if (place == null) return Stream<List<SpeciesTallyEntry>>.value(const <SpeciesTallyEntry>[]);
 
       return ref

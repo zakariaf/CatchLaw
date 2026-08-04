@@ -7,15 +7,12 @@
 // is exactly what this test covers: it exercises `dayTallyProvider` itself,
 // which no test did.
 
+import 'package:catchlaw/data/model/enum_codecs.dart';
 import 'package:catchlaw/data/providers.dart';
-import 'package:catchlaw/data/repositories/catch_log_repository.dart';
 import 'package:catchlaw/data/repositories/catch_log_repository_drift.dart';
 import 'package:catchlaw/data/services/user_database_service.dart';
-import 'package:catchlaw/data/model/enum_codecs.dart';
 import 'package:catchlaw/domain/models/catch_record.dart';
-import 'package:catchlaw/domain/models/evaluation_scope.dart';
 import 'package:catchlaw/ui/log/view_models/catch_log_providers.dart';
-import 'package:catchlaw/ui/zones/view_models/zone_providers.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
@@ -23,18 +20,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rule_engine/rule_engine.dart' show Ok, Result;
 
 const String kDay = '2026-08-04';
-
-/// The place, as `WatchEvaluationScope` would emit it.
-EvaluationScope scopeFor() => const EvaluationScope(
-  jurisdictionCode: 'ES-GA',
-  zoneCode: 'rias-baixas',
-  authorityKey: 'jurisdiction.es_ga.authority',
-  defaultLocale: 'gl',
-  packVersion: '2026.08.2',
-  checkedOn: kDay,
-  water: WaterKind.salt,
-  zonePath: <String>['ES-GA', 'rias-baixas'],
-);
 
 void main() {
   late UserDatabase db;
@@ -49,7 +34,7 @@ void main() {
   /// sees the same thing — a permanent loading state, which renders as a blank
   /// page whatever rows are in the database.
   Future<List<SpeciesTallyEntry>> tally() async {
-    final List<List<SpeciesTallyEntry>> seen = <List<SpeciesTallyEntry>>[];
+    final seen = <List<SpeciesTallyEntry>>[];
     final ProviderSubscription<AsyncValue<List<SpeciesTallyEntry>>> sub = container.listen(
       dayTallyProvider,
       (AsyncValue<List<SpeciesTallyEntry>>? _, AsyncValue<List<SpeciesTallyEntry>> next) {
@@ -70,9 +55,7 @@ void main() {
         userDatabaseProvider.overrideWithValue(db),
         catchLogRepositoryProvider.overrideWithValue(DriftCatchLogRepository(db)),
         todayIsoProvider.overrideWithValue(kDay),
-        evaluationScopeProvider.overrideWith(
-          (Ref ref) => Stream<EvaluationScope?>.value(scopeFor()),
-        ),
+        activePlaceProvider.overrideWithValue((jurisdiction: 'ES-GA', zone: 'rias-baixas')),
       ],
     );
     addTearDown(() {
@@ -112,7 +95,7 @@ void main() {
   test('dayTallyProvider emits again when a catch is recorded', () async {
     // The screen's actual complaint: rows exist in the database and the page
     // shows nothing. Subscribed first, written after.
-    final List<List<SpeciesTallyEntry>> seen = <List<SpeciesTallyEntry>>[];
+    final seen = <List<SpeciesTallyEntry>>[];
     final ProviderSubscription<AsyncValue<List<SpeciesTallyEntry>>> sub = container.listen(
       dayTallyProvider,
       (AsyncValue<List<SpeciesTallyEntry>>? _, AsyncValue<List<SpeciesTallyEntry>> next) {
@@ -133,7 +116,7 @@ void main() {
   test('dayTallyProvider counts kept separately from recorded', () async {
     await record('Belone belone', 1);
     await record('Belone belone', 1);
-    await container
+    final Result<int> marked = await container
         .read(catchLogRepositoryProvider)
         .setLatestKept(
           speciesId: 1,
@@ -142,6 +125,7 @@ void main() {
           zoneCode: 'rias-baixas',
           kept: true,
         );
+    expect(marked, isA<Ok<int>>());
 
     final List<SpeciesTallyEntry> rows = await tally();
 
@@ -153,7 +137,7 @@ void main() {
     await record('Belone belone', 1);
     await record('Belone belone', 1);
 
-    await container
+    final Result<int> removed = await container
         .read(catchLogRepositoryProvider)
         .removeLatest(
           speciesId: 1,
@@ -161,6 +145,7 @@ void main() {
           jurisdictionCode: 'ES-GA',
           zoneCode: 'rias-baixas',
         );
+    expect(removed, isA<Ok<int>>());
 
     final List<SpeciesTallyEntry> rows = await tally();
     expect(rows.single.count, 1, reason: 'one tap undone, not the whole species');

@@ -1,13 +1,11 @@
 import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/domain/models/catch_record.dart';
-import 'package:catchlaw/domain/models/evaluation_scope.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/core/ui/lonja_button.dart';
 import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
 import 'package:catchlaw/ui/log/view_models/catch_log_providers.dart';
-import 'package:catchlaw/ui/zones/view_models/zone_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,7 +36,7 @@ class TodayScreen extends ConsumerWidget {
     final LonjaTokens tokens = LonjaTokens.of(context);
     final LonjaTypeScale type = LonjaType.of(context);
     final AsyncValue<List<SpeciesTallyEntry>> tally = ref.watch(dayTallyProvider);
-    final hasPlace = ref.watch(evaluationScopeProvider).value != null;
+    final hasPlace = ref.watch(activePlaceProvider) != null;
 
     return Scaffold(
       body: SafeArea(
@@ -96,7 +94,7 @@ class _TallyLine extends ConsumerWidget {
     final AppLocalizations l10n = AppLocalizations.of(context);
     final LonjaTokens tokens = LonjaTokens.of(context);
     final LonjaTypeScale type = LonjaType.of(context);
-    final EvaluationScope? place = ref.watch(evaluationScopeProvider).value;
+    final ({String jurisdiction, String zone})? place = ref.watch(activePlaceProvider);
     final String isoDay = ref.watch(todayIsoProvider);
 
     return ConstrainedBox(
@@ -133,8 +131,8 @@ class _TallyLine extends ConsumerWidget {
                         .setLatestKept(
                           speciesId: entry.speciesId,
                           isoDay: isoDay,
-                          jurisdictionCode: place.jurisdictionCode,
-                          zoneCode: place.zoneCode,
+                          jurisdictionCode: place.jurisdiction,
+                          zoneCode: place.zone,
                           kept: true,
                         ),
                   ),
@@ -146,8 +144,8 @@ class _TallyLine extends ConsumerWidget {
                         .removeLatest(
                           speciesId: entry.speciesId,
                           isoDay: isoDay,
-                          jurisdictionCode: place.jurisdictionCode,
-                          zoneCode: place.zoneCode,
+                          jurisdictionCode: place.jurisdiction,
+                          zoneCode: place.zone,
                         ),
                   ),
                 ],
