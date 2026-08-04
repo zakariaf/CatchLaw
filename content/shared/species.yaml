@@ -26,3 +26,263 @@ species:
       ar: no_vernacular.not_named_in_locale
       ca: no_vernacular.not_named_in_locale
       pt_BR: no_vernacular.not_named_in_locale
+
+  - id: pollachius-pollachius
+    scientific_name: Pollachius pollachius
+    family_id: gadidae
+    taxon_group: finfish
+    silhouette_asset: sil/pollachius-pollachius.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: belone-belone
+    scientific_name: Belone belone
+    family_id: belonidae
+    taxon_group: finfish
+    silhouette_asset: sil/belone-belone.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: boops-boops
+    scientific_name: Boops boops
+    family_id: sparidae
+    taxon_group: finfish
+    silhouette_asset: sil/boops-boops.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: pagellus-erythrinus
+    scientific_name: Pagellus erythrinus
+    family_id: sparidae
+    taxon_group: finfish
+    silhouette_asset: sil/pagellus-erythrinus.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: conger-conger
+    scientific_name: Conger conger
+    family_id: congridae
+    taxon_group: finfish
+    silhouette_asset: sil/conger-conger.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: spondyliosoma-cantharus
+    scientific_name: Spondyliosoma cantharus
+    family_id: sparidae
+    taxon_group: finfish
+    silhouette_asset: sil/spondyliosoma-cantharus.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: sparus-aurata
+    scientific_name: Sparus aurata
+    family_id: sparidae
+    taxon_group: finfish
+    silhouette_asset: sil/sparus-aurata.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: trisopterus-luscus
+    scientific_name: Trisopterus luscus
+    family_id: gadidae
+    taxon_group: finfish
+    silhouette_asset: sil/trisopterus-luscus.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: solea-solea
+    scientific_name: Solea solea
+    family_id: soleidae
+    taxon_group: finfish
+    silhouette_asset: sil/solea-solea.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: labrus-bergylta
+    scientific_name: Labrus bergylta
+    family_id: labridae
+    taxon_group: finfish
+    silhouette_asset: sil/labrus-bergylta.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: scyliorhinus-canicula
+    scientific_name: Scyliorhinus canicula
+    family_id: scyliorhinidae
+    taxon_group: finfish
+    silhouette_asset: sil/scyliorhinus-canicula.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: merlangius-merlangus
+    scientific_name: Merlangius merlangus
+    family_id: gadidae
+    taxon_group: finfish
+    silhouette_asset: sil/merlangius-merlangus.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: epinephelus-marginatus
+    scientific_name: Epinephelus marginatus
+    family_id: serranidae
+    taxon_group: finfish
+    silhouette_asset: sil/epinephelus-marginatus.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: merluccius-merluccius
+    scientific_name: Merluccius merluccius
+    family_id: merlucciidae
+    taxon_group: finfish
+    silhouette_asset: sil/merluccius-merluccius.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: pagrus-pagrus
+    scientific_name: Pagrus pagrus
+    family_id: sparidae
+    taxon_group: finfish
+    silhouette_asset: sil/pagrus-pagrus.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: dicentrarchus-labrax
+    scientific_name: Dicentrarchus labrax
+    family_id: moronidae
+    taxon_group: finfish
+    silhouette_asset: sil/dicentrarchus-labrax.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: psetta-maxima
+    scientific_name: Psetta maxima
+    family_id: scophthalmidae
+    taxon_group: finfish
+    silhouette_asset: sil/psetta-maxima.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: sarpa-salpa
+    scientific_name: Sarpa salpa
+    family_id: sparidae
+    taxon_group: finfish
+    silhouette_asset: sil/sarpa-salpa.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: mullus-surmuletus
+    scientific_name: Mullus surmuletus
+    family_id: mullidae
+    taxon_group: finfish
+    silhouette_asset: sil/mullus-surmuletus.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale
+
+  - id: scophthalmus-rhombus
+    scientific_name: Scophthalmus rhombus
+    family_id: scophthalmidae
+    taxon_group: finfish
+    silhouette_asset: sil/scophthalmus-rhombus.svg
+    # ar, ca and pt_BR are RECORDED absences, not gaps: a wrong vernacular
+    # name produces a confident wrong finding, and a species with no name in
+    # a locale falls back to the binomial, which is never wrong.
+    no_vernacular:
+      ar: no_vernacular.not_named_in_locale
+      ca: no_vernacular.not_named_in_locale
+      pt_BR: no_vernacular.not_named_in_locale

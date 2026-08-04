@@ -7,3 +7,51 @@ families:
   - id: veneridae
     scientific: Veneridae
     name_key: family.veneridae
+
+  - id: belonidae
+    scientific: Belonidae
+    name_key: family.belonidae
+
+  - id: congridae
+    scientific: Congridae
+    name_key: family.congridae
+
+  - id: gadidae
+    scientific: Gadidae
+    name_key: family.gadidae
+
+  - id: labridae
+    scientific: Labridae
+    name_key: family.labridae
+
+  - id: merlucciidae
+    scientific: Merlucciidae
+    name_key: family.merlucciidae
+
+  - id: moronidae
+    scientific: Moronidae
+    name_key: family.moronidae
+
+  - id: mullidae
+    scientific: Mullidae
+    name_key: family.mullidae
+
+  - id: scophthalmidae
+    scientific: Scophthalmidae
+    name_key: family.scophthalmidae
+
+  - id: scyliorhinidae
+    scientific: Scyliorhinidae
+    name_key: family.scyliorhinidae
+
+  - id: serranidae
+    scientific: Serranidae
+    name_key: family.serranidae
+
+  - id: soleidae
+    scientific: Soleidae
+    name_key: family.soleidae
+
+  - id: sparidae
+    scientific: Sparidae
+    name_key: family.sparidae

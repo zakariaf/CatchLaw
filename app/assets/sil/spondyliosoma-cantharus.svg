@@ -1,0 +1,42 @@
+<!--
+  Spondyliosoma cantharus (black sea bream; Galician: Choupa).
+  Originated schematic line art drawn for CatchLaw. Not traced, copied or
+  derived from any copyrighted illustration, photograph or plate.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- body outline: deep oval, steep forehead, narrow caudal peduncle -->
+  <path d="M20 52 C24 40 32 28 48 21 C55 17 60 17 66 19 C96 22 118 26 132 32 C140 36 145 40 148 44 L148 56 C130 70 110 77 84 78 C62 78 40 72 28 62 C23 57 20 55 20 52 Z"/>
+
+  <!-- long single dorsal fin running most of the back -->
+  <path d="M66 19 L73 8 L104 8 L128 16 L132 32"/>
+  <path d="M79 9 L82 17"/>
+  <path d="M91 8 L93 19"/>
+  <path d="M104 8 L106 21"/>
+  <path d="M117 12 L118 24"/>
+
+  <!-- forked caudal fin -->
+  <path d="M148 44 C158 40 172 30 186 20 C180 34 176 44 174 50 C176 56 180 66 186 80 C172 70 158 60 148 56"/>
+
+  <!-- anal fin -->
+  <path d="M104 78 L112 90 L136 74 L142 66"/>
+
+  <!-- pelvic fin -->
+  <path d="M58 77 L62 90 L72 78"/>
+
+  <!-- pectoral fin -->
+  <path d="M48 48 C60 55 72 64 82 74 C70 66 58 60 47 58"/>
+
+  <!-- gill cover -->
+  <path d="M45 24 C50 40 50 58 44 71"/>
+
+  <!-- small mouth -->
+  <path d="M20 51 L31 55"/>
+
+  <!-- lateral line -->
+  <path d="M48 38 C74 44 108 48 142 51"/>
+
+  <!-- eye -->
+  <ellipse cx="32" cy="42" rx="3.6" ry="3.6"/>
+
+</svg>

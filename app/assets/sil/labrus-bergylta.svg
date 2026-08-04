@@ -1,0 +1,44 @@
+<!-- Labrus bergylta (ballan wrasse / maragota) — originated schematic line art drawn for CatchLaw. Not traced from, derived from, or copied from any copyrighted illustration or photograph. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- body outline: robust deep oval, head at left, open at the snout where the thick lips close it -->
+    <path d="M20 50 C26 38 38 27 58 25.5 C90 21 126 27 150 42 L150 61 C126 76 90 81 58 74 C40 71 24 64 20 60"/>
+
+    <!-- thick protruding lips (the diagnostic blunt fleshy snout) -->
+    <path d="M20 50 C12.5 51 11.5 58 20 60"/>
+    <path d="M16.5 55 C24 58 30 58.5 36 57"/>
+
+    <!-- gill cover -->
+    <path d="M42 31 C47.5 44 47.5 58 40 69"/>
+
+    <!-- eye -->
+    <ellipse cx="33" cy="45" rx="3.6" ry="3.6"/>
+    <ellipse cx="33" cy="45" rx="1" ry="1"/>
+
+    <!-- long dorsal fin: spiny zigzag forward, rounded soft-rayed lobe aft -->
+    <path d="M58 26 L64 12 L72 15 L80 11 L88 14 L96 10 L104 13 L112 10 L120 14 C132 10.5 142 16 146.5 31"/>
+    <line x1="72" y1="15" x2="70" y2="22"/>
+    <line x1="88" y1="14" x2="86" y2="23"/>
+    <line x1="104" y1="13" x2="103" y2="24"/>
+
+    <!-- pectoral fin, rounded and set high -->
+    <path d="M50 55 C62 59 70 67.5 66 76.5 C57.5 74 51.5 65 50 55"/>
+
+    <!-- pelvic fin -->
+    <path d="M60 74.5 L64.5 87 L73 80"/>
+
+    <!-- anal fin -->
+    <path d="M108 78.5 L114.5 92 C125 93 134 87 144 67"/>
+
+    <!-- caudal peduncle to rounded (truncate-to-convex) tail -->
+    <path d="M150 43 C166 34 178 32 186 34 C193.5 44 193.5 61 186 70 C176 72 164 68 150 61"/>
+    <line x1="153" y1="46" x2="183" y2="40"/>
+    <line x1="153" y1="52" x2="189" y2="52"/>
+    <line x1="153" y1="58" x2="183" y2="64"/>
+
+    <!-- lateral line -->
+    <path d="M44 47 C78 43 116 47 146 53"/>
+
+  </g>
+</svg>

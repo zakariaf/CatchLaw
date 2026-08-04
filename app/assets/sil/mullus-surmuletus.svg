@@ -1,0 +1,49 @@
+<!--
+  Mullus surmuletus / Mullus spp. — red mullet (Galician: Salmonetes).
+  Originated schematic line art drawn for CatchLaw. Not traced, copied or
+  derived from any copyrighted illustration, photograph or field-guide plate.
+  Diagnostic features carried by this drawing: elongate body, steep blunt
+  head, two long chin barbels, two well-separated dorsal fins, forked tail.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- body outline: steep blunt head, elongate flank, caudal peduncle -->
+    <path d="M16,54 C16,43 26,29 42,24 C72,17 120,28 152,38 L152,50 C120,57 70,65 32,64 C22,63 16,60 16,54 Z"/>
+
+    <!-- forked caudal fin -->
+    <path d="M152,38 L190,20 L172,44 L190,68 L152,50"/>
+
+    <!-- first dorsal fin -->
+    <path d="M58,23 L62,6 L84,27"/>
+
+    <!-- second dorsal fin, clearly separated from the first -->
+    <path d="M102,30 L106,15 L126,33"/>
+
+    <!-- anal fin -->
+    <path d="M104,56 L112,71 L128,53"/>
+
+    <!-- pelvic fin -->
+    <path d="M60,60 L64,72 L76,60"/>
+
+    <!-- pectoral fin -->
+    <path d="M46,45 C54,50 60,54 68,57"/>
+
+    <!-- gill cover -->
+    <path d="M41,25 C47,39 46,52 38,64"/>
+
+    <!-- inferior mouth line -->
+    <path d="M16,54 L28,58"/>
+
+    <!-- eye -->
+    <ellipse cx="29" cy="44" rx="3.6" ry="3.6"/>
+
+    <!-- two long chin barbels — the key mark of Mullus -->
+    <path d="M22,58 C31,74 45,81 60,81"/>
+    <path d="M24,60 C34,79 50,87 66,87"/>
+
+    <!-- lateral line -->
+    <path d="M45,41 C80,44 118,45 149,44"/>
+
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+<!-- Dicentrarchus labrax (European seabass; Galician: Robaliza). Originated
+     schematic line art drawn for CatchLaw from morphological description; not
+     traced from, or derived from, any copyrighted illustration or photograph. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- upper outline: pointed snout, sloping head, streamlined back, slender peduncle -->
+    <path d="M14,52 C24,42 36,34 54,31 C82,27 112,31 136,38 L152,44"/>
+
+    <!-- lower outline: jaw, throat, shallow belly, peduncle -->
+    <path d="M14,56 C24,66 38,73 56,75 C84,78 114,73 136,64 L152,56"/>
+
+    <!-- mouth: large terminal gape on a pointed head -->
+    <path d="M14,54 C22,56 29,57 36,57"/>
+
+    <!-- eye -->
+    <ellipse cx="30" cy="49" rx="3.2" ry="3"/>
+
+    <!-- gill cover, with the flat opercular spines that name the genus -->
+    <path d="M39,35 C45,45 46,58 42,70"/>
+    <path d="M42,52 L48,54"/>
+    <path d="M42,56 L47,58"/>
+
+    <!-- lateral line, running near-straight from the shoulder to the tail -->
+    <path d="M44,45 C70,42 104,45 148,50"/>
+
+    <!-- FIRST dorsal fin: separate and triangular, stiff spines -->
+    <path d="M62,30 L70,12 L84,29"/>
+    <path d="M75,29.6 L76.5,19.5"/>
+    <path d="M80,29.2 L81,24.5"/>
+
+    <!-- SECOND dorsal fin: a clear gap behind the first, soft and rounded -->
+    <path d="M92,30 C100,19 116,20 126,35"/>
+
+    <!-- anal fin, set under the second dorsal -->
+    <path d="M98,74 C104,88 116,86 120,70"/>
+
+    <!-- pectoral fin -->
+    <path d="M46,58 C56,62 62,68 60,73 C52,70 47,64 46,58"/>
+
+    <!-- pelvic fin, thoracic -->
+    <path d="M51,74 C54,83 60,84 62,77 C58,76 54,75 51,74"/>
+
+    <!-- caudal fin: clearly forked, stiff lobes -->
+    <path d="M152,44 L184,26 C175,38 170,46 168,50 C170,54 175,62 184,74 L152,56"/>
+
+  </g>
+</svg>

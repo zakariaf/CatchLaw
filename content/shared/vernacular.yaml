@@ -43,3 +43,403 @@ species_names:
     locale: en
     name: Pullet carpet shell
     is_primary: true
+
+  - id: pollachius-pollachius-gl
+    species_id: pollachius-pollachius
+    locale: gl
+    name: Abadexo
+    gender: m
+    is_primary: true
+
+  - id: pollachius-pollachius-es
+    species_id: pollachius-pollachius
+    locale: es
+    name: Abadejo
+    gender: m
+    is_primary: true
+
+  - id: pollachius-pollachius-en
+    species_id: pollachius-pollachius
+    locale: en
+    name: Pollack
+    is_primary: true
+
+  - id: belone-belone-gl
+    species_id: belone-belone
+    locale: gl
+    name: Agulla
+    gender: f
+    is_primary: true
+
+  - id: belone-belone-es
+    species_id: belone-belone
+    locale: es
+    name: Aguja
+    gender: f
+    is_primary: true
+
+  - id: belone-belone-en
+    species_id: belone-belone
+    locale: en
+    name: Garfish
+    is_primary: true
+
+  - id: boops-boops-gl
+    species_id: boops-boops
+    locale: gl
+    name: Boga
+    gender: f
+    is_primary: true
+
+  - id: boops-boops-es
+    species_id: boops-boops
+    locale: es
+    name: Boga
+    gender: f
+    is_primary: true
+
+  - id: boops-boops-en
+    species_id: boops-boops
+    locale: en
+    name: Bogue
+    is_primary: true
+
+  - id: pagellus-erythrinus-gl
+    species_id: pagellus-erythrinus
+    locale: gl
+    name: Breca
+    gender: f
+    is_primary: true
+
+  - id: pagellus-erythrinus-es
+    species_id: pagellus-erythrinus
+    locale: es
+    name: Breca
+    gender: f
+    is_primary: true
+
+  - id: pagellus-erythrinus-en
+    species_id: pagellus-erythrinus
+    locale: en
+    name: Common pandora
+    is_primary: true
+
+  - id: conger-conger-gl
+    species_id: conger-conger
+    locale: gl
+    name: Congro
+    gender: m
+    is_primary: true
+
+  - id: conger-conger-es
+    species_id: conger-conger
+    locale: es
+    name: Congrio
+    gender: m
+    is_primary: true
+
+  - id: conger-conger-en
+    species_id: conger-conger
+    locale: en
+    name: European conger
+    is_primary: true
+
+  - id: spondyliosoma-cantharus-gl
+    species_id: spondyliosoma-cantharus
+    locale: gl
+    name: Choupa
+    gender: f
+    is_primary: true
+
+  - id: spondyliosoma-cantharus-es
+    species_id: spondyliosoma-cantharus
+    locale: es
+    name: Chopa
+    gender: f
+    is_primary: true
+
+  - id: spondyliosoma-cantharus-en
+    species_id: spondyliosoma-cantharus
+    locale: en
+    name: Black seabream
+    is_primary: true
+
+  - id: sparus-aurata-gl
+    species_id: sparus-aurata
+    locale: gl
+    name: Dourada
+    gender: f
+    is_primary: true
+
+  - id: sparus-aurata-es
+    species_id: sparus-aurata
+    locale: es
+    name: Dorada
+    gender: f
+    is_primary: true
+
+  - id: sparus-aurata-en
+    species_id: sparus-aurata
+    locale: en
+    name: Gilthead seabream
+    is_primary: true
+
+  - id: trisopterus-luscus-gl
+    species_id: trisopterus-luscus
+    locale: gl
+    name: Faneca
+    gender: f
+    is_primary: true
+
+  - id: trisopterus-luscus-es
+    species_id: trisopterus-luscus
+    locale: es
+    name: Faneca
+    gender: f
+    is_primary: true
+
+  - id: trisopterus-luscus-en
+    species_id: trisopterus-luscus
+    locale: en
+    name: Pouting
+    is_primary: true
+
+  - id: solea-solea-gl
+    species_id: solea-solea
+    locale: gl
+    name: Linguado
+    gender: m
+    is_primary: true
+
+  - id: solea-solea-es
+    species_id: solea-solea
+    locale: es
+    name: Lenguado
+    gender: m
+    is_primary: true
+
+  - id: solea-solea-en
+    species_id: solea-solea
+    locale: en
+    name: Common sole
+    is_primary: true
+
+  - id: labrus-bergylta-gl
+    species_id: labrus-bergylta
+    locale: gl
+    name: Maragota
+    gender: f
+    is_primary: true
+
+  - id: labrus-bergylta-es
+    species_id: labrus-bergylta
+    locale: es
+    name: Maragota
+    gender: f
+    is_primary: true
+
+  - id: labrus-bergylta-en
+    species_id: labrus-bergylta
+    locale: en
+    name: Ballan wrasse
+    is_primary: true
+
+  - id: scyliorhinus-canicula-gl
+    species_id: scyliorhinus-canicula
+    locale: gl
+    name: Melgacho
+    gender: m
+    is_primary: true
+
+  - id: scyliorhinus-canicula-es
+    species_id: scyliorhinus-canicula
+    locale: es
+    name: Pintarroja
+    gender: f
+    is_primary: true
+
+  - id: scyliorhinus-canicula-en
+    species_id: scyliorhinus-canicula
+    locale: en
+    name: Small-spotted catshark
+    is_primary: true
+
+  - id: merlangius-merlangus-gl
+    species_id: merlangius-merlangus
+    locale: gl
+    name: Merlán
+    gender: m
+    is_primary: true
+
+  - id: merlangius-merlangus-es
+    species_id: merlangius-merlangus
+    locale: es
+    name: Merlán
+    gender: m
+    is_primary: true
+
+  - id: merlangius-merlangus-en
+    species_id: merlangius-merlangus
+    locale: en
+    name: Whiting
+    is_primary: true
+
+  - id: epinephelus-marginatus-gl
+    species_id: epinephelus-marginatus
+    locale: gl
+    name: Mero
+    gender: m
+    is_primary: true
+
+  - id: epinephelus-marginatus-es
+    species_id: epinephelus-marginatus
+    locale: es
+    name: Mero
+    gender: m
+    is_primary: true
+
+  - id: epinephelus-marginatus-en
+    species_id: epinephelus-marginatus
+    locale: en
+    name: Dusky grouper
+    is_primary: true
+
+  - id: merluccius-merluccius-gl
+    species_id: merluccius-merluccius
+    locale: gl
+    name: Pescada
+    gender: f
+    is_primary: true
+
+  - id: merluccius-merluccius-es
+    species_id: merluccius-merluccius
+    locale: es
+    name: Merluza
+    gender: f
+    is_primary: true
+
+  - id: merluccius-merluccius-en
+    species_id: merluccius-merluccius
+    locale: en
+    name: European hake
+    is_primary: true
+
+  - id: pagrus-pagrus-gl
+    species_id: pagrus-pagrus
+    locale: gl
+    name: Pargo
+    gender: m
+    is_primary: true
+
+  - id: pagrus-pagrus-es
+    species_id: pagrus-pagrus
+    locale: es
+    name: Pargo
+    gender: m
+    is_primary: true
+
+  - id: pagrus-pagrus-en
+    species_id: pagrus-pagrus
+    locale: en
+    name: Red porgy
+    is_primary: true
+
+  - id: dicentrarchus-labrax-gl
+    species_id: dicentrarchus-labrax
+    locale: gl
+    name: Robaliza
+    gender: f
+    is_primary: true
+
+  - id: dicentrarchus-labrax-es
+    species_id: dicentrarchus-labrax
+    locale: es
+    name: Lubina
+    gender: f
+    is_primary: true
+
+  - id: dicentrarchus-labrax-en
+    species_id: dicentrarchus-labrax
+    locale: en
+    name: European seabass
+    is_primary: true
+
+  - id: psetta-maxima-gl
+    species_id: psetta-maxima
+    locale: gl
+    name: Rodaballo
+    gender: m
+    is_primary: true
+
+  - id: psetta-maxima-es
+    species_id: psetta-maxima
+    locale: es
+    name: Rodaballo
+    gender: m
+    is_primary: true
+
+  - id: psetta-maxima-en
+    species_id: psetta-maxima
+    locale: en
+    name: Turbot
+    is_primary: true
+
+  - id: sarpa-salpa-gl
+    species_id: sarpa-salpa
+    locale: gl
+    name: Saboga
+    gender: f
+    is_primary: true
+
+  - id: sarpa-salpa-es
+    species_id: sarpa-salpa
+    locale: es
+    name: Salema
+    gender: f
+    is_primary: true
+
+  - id: sarpa-salpa-en
+    species_id: sarpa-salpa
+    locale: en
+    name: Salema
+    is_primary: true
+
+  - id: mullus-surmuletus-gl
+    species_id: mullus-surmuletus
+    locale: gl
+    name: Salmonete
+    gender: m
+    is_primary: true
+
+  - id: mullus-surmuletus-es
+    species_id: mullus-surmuletus
+    locale: es
+    name: Salmonete
+    gender: m
+    is_primary: true
+
+  - id: mullus-surmuletus-en
+    species_id: mullus-surmuletus
+    locale: en
+    name: Striped red mullet
+    is_primary: true
+
+  - id: scophthalmus-rhombus-gl
+    species_id: scophthalmus-rhombus
+    locale: gl
+    name: Ciruxo
+    gender: m
+    is_primary: true
+
+  - id: scophthalmus-rhombus-es
+    species_id: scophthalmus-rhombus
+    locale: es
+    name: Rémol
+    gender: m
+    is_primary: true
+
+  - id: scophthalmus-rhombus-en
+    species_id: scophthalmus-rhombus
+    locale: en
+    name: Brill
+    is_primary: true

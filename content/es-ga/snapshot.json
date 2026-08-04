@@ -1,7 +1,16 @@
 {
   "jurisdiction": "es-ga",
-  "content_version": "2026.08.1",
+  "content_version": "2026.08.2",
   "rows": {
+    "citations/es-ga-orde-2012-07-27-art5": {
+      "article": "Art. 5",
+      "instrument": "Orde do 27 de xullo de 2012",
+      "instrument_type_key": "instrument.orde",
+      "jurisdiction": "ES-GA",
+      "published_on": "2012-11-27",
+      "retrieved_on": "2026-08-03",
+      "source_url": "https://www.xunta.gal/dog/Publicados/2012/20121127/AnuncioG0165-191112-0006_gl.html"
+    },
     "citations/es-ga-orde-2012-07-27-art6": {
       "article": "Art. 6",
       "instrument": "Orde do 27 de xullo de 2012",
@@ -24,6 +33,186 @@
       "measurement_method_id": "SHL",
       "min_size_mm": 38,
       "species_id": "venerupis-corrugata",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-belone-belone-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 250,
+      "species_id": "belone-belone",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-boops-boops-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 110,
+      "species_id": "boops-boops",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-conger-conger-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 580,
+      "species_id": "conger-conger",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-dicentrarchus-labrax-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 360,
+      "species_id": "dicentrarchus-labrax",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-epinephelus-marginatus-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 500,
+      "species_id": "epinephelus-marginatus",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-labrus-bergylta-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 200,
+      "species_id": "labrus-bergylta",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-merlangius-merlangus-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 270,
+      "species_id": "merlangius-merlangus",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-merluccius-merluccius-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 270,
+      "species_id": "merluccius-merluccius",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-mullus-surmuletus-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 150,
+      "species_id": "mullus-surmuletus",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-pagellus-erythrinus-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 250,
+      "species_id": "pagellus-erythrinus",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-pagrus-pagrus-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 150,
+      "species_id": "pagrus-pagrus",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-pollachius-pollachius-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 300,
+      "species_id": "pollachius-pollachius",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-psetta-maxima-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 300,
+      "species_id": "psetta-maxima",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-sarpa-salpa-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 150,
+      "species_id": "sarpa-salpa",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-scophthalmus-rhombus-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 300,
+      "species_id": "scophthalmus-rhombus",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-scyliorhinus-canicula-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 400,
+      "species_id": "scyliorhinus-canicula",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-solea-solea-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 240,
+      "species_id": "solea-solea",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-sparus-aurata-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 190,
+      "species_id": "sparus-aurata",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-spondyliosoma-cantharus-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 230,
+      "species_id": "spondyliosoma-cantharus",
+      "valid_from": "2012-11-27",
+      "water_type": "salt"
+    },
+    "rules/es-ga-trisopterus-luscus-min": {
+      "citation_id": "es-ga-orde-2012-07-27-art5",
+      "jurisdiction_id": "ES-GA",
+      "measurement_method_id": "TL",
+      "min_size_mm": 150,
+      "species_id": "trisopterus-luscus",
       "valid_from": "2012-11-27",
       "water_type": "salt"
     },

@@ -1,0 +1,66 @@
+<!--
+  Scyliorhinus canicula (small-spotted catshark; Galician: Melgacho).
+  Originated schematic line art drawn for CatchLaw.
+  Not traced, copied or derived from any copyrighted illustration.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- dorsal profile: blunt rounded snout, slender trunk, two small dorsals set far back, into upper caudal lobe -->
+    <path d="M14 48
+             C18 40 26 35 36 34
+             C56 32 80 33 100 36
+             L118 39
+             L126 30 L138 39
+             L146 41
+             L152 34 L162 42
+             L172 45
+             L192 26"/>
+
+    <!-- ventral profile: mouth underslung at head, long belly, caudal peduncle, lower caudal lobe -->
+    <path d="M14 48
+             C15 54 20 58 28 60
+             C48 66 78 66 102 62
+             L124 58
+             L146 55
+             L170 51
+             L186 60
+             C190 62 191 60 192 26"/>
+
+    <!-- lower caudal lobe notch / terminal fork: asymmetric, upper lobe dominant -->
+    <path d="M186 60 L176 56"/>
+
+    <!-- gill slits, set on the head just ahead of the pectoral -->
+    <path d="M40 39 L38 52"/>
+    <path d="M46 38 L44 53"/>
+    <path d="M52 38 L50 54"/>
+
+    <!-- eye: small oval, cat-like, high on the head -->
+    <ellipse cx="28" cy="44" rx="4" ry="2.6"/>
+
+    <!-- mouth line, underslung -->
+    <path d="M15 52 C21 56 27 57 34 56"/>
+
+    <!-- pectoral fin, broad and low, just behind the gills -->
+    <path d="M56 57 C60 68 68 76 80 78 C74 70 70 64 68 58"/>
+
+    <!-- pelvic fin, small, mid-belly -->
+    <path d="M100 63 C102 71 108 75 116 75 C112 69 110 66 109 62"/>
+
+    <!-- anal fin: small and low, deliberately understated -->
+    <path d="M138 56 C140 61 145 63 150 63 C147 59 146 57 145 55"/>
+
+    <!-- lateral line running the length of the flank -->
+    <path d="M46 47 C80 50 130 50 170 48" stroke-width="1"/>
+
+    <!-- small dark spots, the diagnostic marking, drawn as open rings -->
+    <ellipse cx="66" cy="43" rx="2" ry="2" stroke-width="1"/>
+    <ellipse cx="82" cy="53" rx="2" ry="2" stroke-width="1"/>
+    <ellipse cx="96" cy="44" rx="2" ry="2" stroke-width="1"/>
+    <ellipse cx="112" cy="52" rx="2" ry="2" stroke-width="1"/>
+    <ellipse cx="126" cy="45" rx="2" ry="2" stroke-width="1"/>
+    <ellipse cx="142" cy="49" rx="2" ry="2" stroke-width="1"/>
+    <ellipse cx="158" cy="46" rx="2" ry="2" stroke-width="1"/>
+
+  </g>
+</svg>

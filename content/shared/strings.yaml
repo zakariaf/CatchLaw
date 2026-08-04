@@ -57,3 +57,129 @@ strings:
       es: Ninguna norma publicada nombra esta especie en este idioma.
       gl: Ningunha norma publicada nomea esta especie neste idioma.
       pt_BR: Nenhuma norma publicada nomeia esta espécie neste idioma.
+
+  - key: family.belonidae
+    values:
+      ar: أسماك الإبرة
+      ca: Agulles
+      en: Needlefishes
+      es: Agujas
+      gl: Agullas
+      pt_BR: Agulhas
+
+  - key: family.congridae
+    values:
+      ar: أسماك المرينة
+      ca: Congres
+      en: Congers
+      es: Congrios
+      gl: Congros
+      pt_BR: Congros
+
+  - key: family.gadidae
+    values:
+      ar: أسماك القد
+      ca: Bacallans
+      en: Cods
+      es: Bacalaos
+      gl: Bacallaus
+      pt_BR: Bacalhaus
+
+  - key: family.labridae
+    values:
+      ar: أسماك الحسون
+      ca: Làbrids
+      en: Wrasses
+      es: Lábridos
+      gl: Lábridos
+      pt_BR: Bodiões
+
+  - key: family.merlucciidae
+    values:
+      ar: أسماك النازلي
+      ca: Lluços
+      en: Hakes
+      es: Merluzas
+      gl: Pescadas
+      pt_BR: Pescadas
+
+  - key: family.moronidae
+    values:
+      ar: القاروص
+      ca: Llobarros
+      en: Temperate basses
+      es: Lubinas
+      gl: Robalizas
+      pt_BR: Robalos
+
+  - key: family.mullidae
+    values:
+      ar: السلطان إبراهيم
+      ca: Molls
+      en: Goatfishes
+      es: Salmonetes
+      gl: Salmonetes
+      pt_BR: Salmonetes
+
+  - key: family.scophthalmidae
+    values:
+      ar: أسماك الترس
+      ca: Rèmols
+      en: Turbots
+      es: Rodaballos
+      gl: Rodaballos
+      pt_BR: Pregados
+
+  - key: family.scyliorhinidae
+    values:
+      ar: قروش القط
+      ca: Gats
+      en: Catsharks
+      es: Pintarrojas
+      gl: Melgachos
+      pt_BR: Gatas
+
+  - key: family.serranidae
+    values:
+      ar: الهامور
+      ca: Anfossos
+      en: Groupers
+      es: Meros
+      gl: Meros
+      pt_BR: Garoupas
+
+  - key: family.soleidae
+    values:
+      ar: أسماك موسى
+      ca: Llenguados
+      en: Soles
+      es: Lenguados
+      gl: Linguados
+      pt_BR: Linguados
+
+  - key: family.sparidae
+    values:
+      ar: أسماك الدنيس
+      ca: Espàrids
+      en: Seabreams
+      es: Espáridos
+      gl: Espáridos
+      pt_BR: Espáridos
+
+  - key: measurement.tl.name
+    values:
+      ar: الطول الكلي
+      ca: Longitud total
+      en: Total length
+      es: Longitud total
+      gl: Lonxitude total
+      pt_BR: Comprimento total
+
+  - key: measurement.tl.definition
+    values:
+      ar: من طرف الرأس إلى نهاية الزعنفة الذيلية.
+      ca: De la punta del cap fins a l'extrem de l'aleta caudal.
+      en: From the tip of the head to the end of the caudal fin.
+      es: Desde la punta de la cabeza hasta el extremo de la aleta caudal.
+      gl: Desde a punta da cabeza ata o extremo da aleta caudal.
+      pt_BR: Da ponta da cabeça até a extremidade da nadadeira caudal.

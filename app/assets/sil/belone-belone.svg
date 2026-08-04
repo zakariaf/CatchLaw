@@ -1,0 +1,47 @@
+<!--
+  Belone belone (garfish / Galician: Agulla) — schematic side-view silhouette.
+  Originated line art drawn for CatchLaw. Not traced from, derived from, or
+  copied from any copyrighted illustration or photograph.
+  Diagnostic shape: extremely elongate body, both jaws produced into a long
+  slender beak, single dorsal fin set far back opposite the anal fin, forked tail.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- Upper jaw: long thin beak running from the extreme left to the head -->
+  <path d="M6 46 L44 50"/>
+  <!-- Lower jaw, very slightly shorter, closing the beak at the gape -->
+  <path d="M8 52 L44 54"/>
+  <!-- Beak tip -->
+  <path d="M6 46 L8 52"/>
+
+  <!-- Dorsal profile: head, then a very long shallow body to the caudal peduncle -->
+  <path d="M44 50 C 54 45, 70 42, 92 42 C 118 42, 140 44, 152 47 L 166 51"/>
+
+  <!-- Ventral profile -->
+  <path d="M44 54 C 54 58, 70 61, 92 61 C 118 61, 140 59, 152 56 L 166 53"/>
+
+  <!-- Gill cover line, just behind the gape -->
+  <path d="M50 47 C 54 52, 54 54, 51 58"/>
+
+  <!-- Eye, set high and well forward on the head -->
+  <ellipse cx="47" cy="49" rx="2.6" ry="2.6"/>
+
+  <!-- Lateral line, running low along the flank -->
+  <path d="M56 57 C 84 59, 122 57, 152 54" stroke-width="1"/>
+
+  <!-- Dorsal fin: single, small, set far back near the tail -->
+  <path d="M130 43 L 144 30 L 150 45"/>
+
+  <!-- Anal fin: mirroring the dorsal, opposite it -->
+  <path d="M130 60 L 144 73 L 150 58"/>
+
+  <!-- Pectoral fin, high on the flank behind the gill cover -->
+  <path d="M58 55 L 76 64 L 62 58"/>
+
+  <!-- Pelvic fin, small, mid-body low -->
+  <path d="M96 61 L 106 68 L 100 61"/>
+
+  <!-- Caudal peduncle to the forked tail -->
+  <path d="M166 51 L 190 36 L 183 50 L 190 65 L 166 53"/>
+
+</svg>

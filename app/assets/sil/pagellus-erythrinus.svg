@@ -1,0 +1,45 @@
+<!--
+  Pagellus erythrinus (common pandora; Galician: Breca).
+  Originated schematic line art drawn for CatchLaw from morphological
+  description alone. Not traced, copied or derived from any copyrighted
+  illustration, photograph or field-guide plate.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- body: deep bream profile, steep forehead, narrow caudal peduncle -->
+    <path d="M14 54
+             C22 40 40 26 60 20
+             C85 14 112 18 132 28
+             C142 33 148 40 152 46
+             L152 58
+             C146 64 138 70 124 76
+             C104 86 78 88 56 78
+             C38 71 22 63 14 54 Z"/>
+
+    <!-- small terminal mouth -->
+    <path d="M14 54 C20 57 25 59 32 59"/>
+
+    <!-- gill cover -->
+    <path d="M43 26 C48 40 47 54 40 66"/>
+
+    <!-- eye -->
+    <ellipse cx="33" cy="46" rx="4.5" ry="4"/>
+
+    <!-- lateral line -->
+    <path d="M47 39 C80 36 116 41 147 49"/>
+
+    <!-- single long dorsal fin: spiny front, soft rear, one continuous base -->
+    <path d="M61 20 L72 5 L100 6 L124 14 L132 27"/>
+
+    <!-- pectoral fin, long and pointed -->
+    <path d="M50 55 C66 63 76 70 85 76 C71 71 60 66 51 62"/>
+
+    <!-- anal fin -->
+    <path d="M112 81 L118 93 L136 84 L140 69"/>
+
+    <!-- deeply forked caudal fin -->
+    <path d="M152 46 L186 26 C178 40 175 46 173 52 C175 58 178 66 186 78 L152 58"/>
+
+  </g>
+</svg>

@@ -1,0 +1,50 @@
+<!-- Trisopterus luscus (pouting; Galician: faneca). Originated schematic line art
+     drawn for CatchLaw from published morphology. Not traced from, derived
+     from, or copied from any copyrighted illustration or photograph. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- dorsal profile: steep gadoid forehead, deep body, tapering peduncle -->
+    <path d="M22,51 C25,41 33,31 48,27.5 C58,25 66,24.8 78,25.8 C95,27.5 108,30 120,33 C135,36.5 150,41 163,46"/>
+
+    <!-- ventral profile: blunt chin, deep belly -->
+    <path d="M22,51 C26,55 30,58 34,60.5 C44,66 54,71 64,73.5 C80,76 100,75 118,70.5 C136,66 152,61 163,57.5"/>
+
+    <!-- caudal peduncle and truncate tail -->
+    <path d="M163,46 L188,33 C183,46 183,58 188,71 L163,57.5"/>
+
+    <!-- first dorsal fin -->
+    <path d="M52,27.2 C55,15 58,11 61,10.5 C64,14 68,21 72,25.2"/>
+    <!-- second dorsal fin -->
+    <path d="M78,25.8 C84,15 92,12 96,12.5 C102,17 110,25 114,31"/>
+    <!-- third dorsal fin -->
+    <path d="M120,33 C126,23 133,19.5 138,20 C144,26 151,35 156,42.5"/>
+
+    <!-- first anal fin -->
+    <path d="M78,75.8 C84,86 90,89 95,88.5 C102,84 107,79 110,75.4"/>
+    <!-- second anal fin -->
+    <path d="M116,71.5 C122,80 128,83 133,82 C139,78 145,73 150,67"/>
+
+    <!-- pectoral fin -->
+    <path d="M56,53 C66,55 73,60 76,66 C67,64 60,59 56,57"/>
+    <!-- jugular pelvic fin -->
+    <path d="M49,64 C53,71 56,75 58,78 C56,72 54,68 52,64.5"/>
+
+    <!-- gill cover -->
+    <path d="M46,28.5 C53,40 52,52 44,63"/>
+
+    <!-- inferior mouth, upper jaw projecting -->
+    <path d="M22.5,51.5 C27,53 32,54.5 36,55.5"/>
+
+    <!-- chin barbel -->
+    <path d="M35,60.5 C33,65 33,70 35,74"/>
+
+    <!-- lateral line -->
+    <path d="M47,44 C70,47 100,49 140,50.5 C148,51 155,51.5 160,52"/>
+
+    <!-- eye -->
+    <ellipse cx="34" cy="43" rx="4.2" ry="3.6"/>
+    <ellipse cx="34" cy="43" rx="1.2" ry="1.2"/>
+
+  </g>
+</svg>
