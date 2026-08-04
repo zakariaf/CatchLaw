@@ -55,19 +55,28 @@ class TodayScreen extends ConsumerWidget {
               ),
               const SizedBox(height: LonjaSpace.s5),
               Expanded(
-                child: tally.when(
-                  // The heading is already drawn above, so a stalled stream
-                  // shows a page with a date on it rather than a blank screen.
-                  loading: () => const SizedBox.shrink(),
-                  error: (Object e, StackTrace _) => Text('$e', style: type.legal),
-                  data: (List<SpeciesTallyEntry> rows) => rows.isEmpty
-                      ? _TodayEmptyState(hasPlace: hasPlace)
-                      : ListView.separated(
-                          itemCount: rows.length,
-                          separatorBuilder: (BuildContext _, int _) => const LonjaRule.row(),
-                          itemBuilder: (BuildContext context, int i) => _TallyLine(entry: rows[i]),
-                        ),
-                ),
+                // `.value`, not `.when`. A reload keeps the last rows on screen
+                // instead of replacing them with a loading state: this provider
+                // is rebuilt whenever the place stream re-emits, and `.when`
+                // turned every one of those into a blank page — which is exactly
+                // what a fisher saw after recording a fish that WAS written.
+                child: switch (tally) {
+                  AsyncError<List<SpeciesTallyEntry>>(:final Object error) when !tally.hasValue =>
+                    Text('$error', style: type.legal),
+                  AsyncValue<List<SpeciesTallyEntry>>(:final List<SpeciesTallyEntry>? value)
+                      when value != null && value.isNotEmpty =>
+                    ListView.separated(
+                      itemCount: value.length,
+                      separatorBuilder: (BuildContext _, int _) => const LonjaRule.row(),
+                      itemBuilder: (BuildContext context, int i) => _TallyLine(entry: value[i]),
+                    ),
+                  AsyncValue<List<SpeciesTallyEntry>>(hasValue: true) => _TodayEmptyState(
+                    hasPlace: hasPlace,
+                  ),
+                  // Before the first event only. The heading and date are already
+                  // drawn above, so this is never a wholly blank screen.
+                  _ => const SizedBox.shrink(),
+                },
               ),
             ],
           ),
