@@ -117,7 +117,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{{count} match} other{{count} matches}}'**
   String searchResultCount(int count);
 
-  /// S14's label for the language control. Its value differs per locale, which is what lets a test prove the ar bundle loaded rather than silently falling back to this template.
+  /// Settings label: settingsLanguage.
   ///
   /// In en, this message translates to:
   /// **'Language'**
@@ -811,6 +811,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This version answers one question: whether a fish meets the rules in the place it was landed. This part is not built yet.'**
   String get destinationNotBuiltYet;
+
+  /// Settings label: settingsLanguageDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow the device'**
+  String get settingsLanguageDevice;
+
+  /// Settings label: settingsDigits.
+  ///
+  /// In en, this message translates to:
+  /// **'Digits'**
+  String get settingsDigits;
+
+  /// Settings label: settingsDigitsAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get settingsDigitsAuto;
+
+  /// Settings label: settingsDigitsLatn.
+  ///
+  /// In en, this message translates to:
+  /// **'0123'**
+  String get settingsDigitsLatn;
+
+  /// Settings label: settingsDigitsArab.
+  ///
+  /// In en, this message translates to:
+  /// **'٠١٢٣'**
+  String get settingsDigitsArab;
+
+  /// A length unit abbreviation on the Settings unit control, written in the reader's own script. Arabic abbreviates in Arabic letters rather than borrowing the Latin form.
+  ///
+  /// In en, this message translates to:
+  /// **'cm'**
+  String get settingsUnitCm;
+
+  /// A length unit abbreviation on the Settings unit control, written in the reader's own script. Arabic abbreviates in Arabic letters rather than borrowing the Latin form.
+  ///
+  /// In en, this message translates to:
+  /// **'mm'**
+  String get settingsUnitMm;
+
+  /// A length unit abbreviation on the Settings unit control, written in the reader's own script. Arabic abbreviates in Arabic letters rather than borrowing the Latin form.
+  ///
+  /// In en, this message translates to:
+  /// **'in'**
+  String get settingsUnitIn;
+
+  /// Settings label: settingsLengthUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Length shown in'**
+  String get settingsLengthUnit;
+
+  /// Settings label: settingsSunlightMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunlight mode'**
+  String get settingsSunlightMode;
+
+  /// Settings label: settingsSunlightNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum contrast, for a wet screen in glare.'**
+  String get settingsSunlightNote;
+
+  /// Settings label: settingsGloveMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Glove mode'**
+  String get settingsGloveMode;
+
+  /// Settings label: settingsGloveNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Larger targets and wider spacing.'**
+  String get settingsGloveNote;
+
+  /// Settings label: settingsRuler.
+  ///
+  /// In en, this message translates to:
+  /// **'Ruler'**
+  String get settingsRuler;
+
+  /// Settings label: settingsRulerUncalibrated.
+  ///
+  /// In en, this message translates to:
+  /// **'Not calibrated'**
+  String get settingsRulerUncalibrated;
+
+  /// The ruler's state on Settings. A STATEMENT OF FACT with the date calibration happened; it does not tell the reader to recalibrate.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibrated {on}'**
+  String settingsRulerCalibrated(String on);
+
+  /// Settings label: settingsAboutPack.
+  ///
+  /// In en, this message translates to:
+  /// **'Rule book'**
+  String get settingsAboutPack;
+
+  /// The offline note at the foot of Settings. A STATEMENT OF FACT about what the app contains, in the reader's own interest — it makes no promise about the law and gives no instruction.
+  ///
+  /// In en, this message translates to:
+  /// **'CatchLaw holds everything it needs on this phone. It has no account and no network code.'**
+  String get settingsOfflineNote;
 
   /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
   ///

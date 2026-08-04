@@ -505,6 +505,63 @@ class AppLocalizationsCa extends AppLocalizations {
       'Aquesta versió respon una sola pregunta: si un peix compleix les normes al lloc on es va desembarcar. Aquesta part encara no està construïda.';
 
   @override
+  String get settingsLanguageDevice => 'Segueix el dispositiu';
+
+  @override
+  String get settingsDigits => 'Dígits';
+
+  @override
+  String get settingsDigitsAuto => 'Automàtic';
+
+  @override
+  String get settingsDigitsLatn => '0123';
+
+  @override
+  String get settingsDigitsArab => '٠١٢٣';
+
+  @override
+  String get settingsUnitCm => 'cm';
+
+  @override
+  String get settingsUnitMm => 'mm';
+
+  @override
+  String get settingsUnitIn => 'polz';
+
+  @override
+  String get settingsLengthUnit => 'Longitud en';
+
+  @override
+  String get settingsSunlightMode => 'Mode sol';
+
+  @override
+  String get settingsSunlightNote => 'Contrast màxim, per a una pantalla mullada sota el sol.';
+
+  @override
+  String get settingsGloveMode => 'Mode guants';
+
+  @override
+  String get settingsGloveNote => 'Objectius més grans i més espaiats.';
+
+  @override
+  String get settingsRuler => 'Regla';
+
+  @override
+  String get settingsRulerUncalibrated => 'Sense calibrar';
+
+  @override
+  String settingsRulerCalibrated(String on) {
+    return 'Calibrada el $on';
+  }
+
+  @override
+  String get settingsAboutPack => 'Llibre de normes';
+
+  @override
+  String get settingsOfflineNote =>
+      'CatchLaw guarda en aquest telèfon tot el que necessita. No té compte ni codi de xarxa.';
+
+  @override
   String get navToday => 'Avui';
 
   @override

@@ -497,6 +497,63 @@ class AppLocalizationsGl extends AppLocalizations {
       'Esta versión responde a unha soa pregunta: se un peixe cumpre as normas no lugar onde foi desembarcado. Esta parte aínda non está construída.';
 
   @override
+  String get settingsLanguageDevice => 'Seguir o dispositivo';
+
+  @override
+  String get settingsDigits => 'Díxitos';
+
+  @override
+  String get settingsDigitsAuto => 'Automático';
+
+  @override
+  String get settingsDigitsLatn => '0123';
+
+  @override
+  String get settingsDigitsArab => '٠١٢٣';
+
+  @override
+  String get settingsUnitCm => 'cm';
+
+  @override
+  String get settingsUnitMm => 'mm';
+
+  @override
+  String get settingsUnitIn => 'pol';
+
+  @override
+  String get settingsLengthUnit => 'Lonxitude en';
+
+  @override
+  String get settingsSunlightMode => 'Modo sol';
+
+  @override
+  String get settingsSunlightNote => 'Contraste máximo, para unha pantalla mollada baixo o sol.';
+
+  @override
+  String get settingsGloveMode => 'Modo luvas';
+
+  @override
+  String get settingsGloveNote => 'Obxectivos máis grandes e máis espazados.';
+
+  @override
+  String get settingsRuler => 'Regra';
+
+  @override
+  String get settingsRulerUncalibrated => 'Sen calibrar';
+
+  @override
+  String settingsRulerCalibrated(String on) {
+    return 'Calibrada o $on';
+  }
+
+  @override
+  String get settingsAboutPack => 'Libro de normas';
+
+  @override
+  String get settingsOfflineNote =>
+      'CatchLaw garda neste teléfono todo o que precisa. Non ten conta nin código de rede.';
+
+  @override
   String get navToday => 'Hoxe';
 
   @override

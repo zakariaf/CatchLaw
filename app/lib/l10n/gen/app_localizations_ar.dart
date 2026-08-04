@@ -500,6 +500,63 @@ class AppLocalizationsAr extends AppLocalizations {
       'هذا الإصدار يجيب عن سؤال واحد: هل تستوفي السمكة القواعد في المكان الذي جرى إنزالها فيه. هذا الجزء لم يُبنَ بعد.';
 
   @override
+  String get settingsLanguageDevice => 'اتّباع الجهاز';
+
+  @override
+  String get settingsDigits => 'الأرقام';
+
+  @override
+  String get settingsDigitsAuto => 'تلقائي';
+
+  @override
+  String get settingsDigitsLatn => '0123';
+
+  @override
+  String get settingsDigitsArab => '٠١٢٣';
+
+  @override
+  String get settingsUnitCm => 'سم';
+
+  @override
+  String get settingsUnitMm => 'مم';
+
+  @override
+  String get settingsUnitIn => 'بوصة';
+
+  @override
+  String get settingsLengthUnit => 'وحدة الطول';
+
+  @override
+  String get settingsSunlightMode => 'وضع الشمس';
+
+  @override
+  String get settingsSunlightNote => 'أقصى تباين، لشاشة مبللة تحت وهج الشمس.';
+
+  @override
+  String get settingsGloveMode => 'وضع القفازات';
+
+  @override
+  String get settingsGloveNote => 'أهداف أكبر وتباعد أوسع.';
+
+  @override
+  String get settingsRuler => 'المسطرة';
+
+  @override
+  String get settingsRulerUncalibrated => 'غير معايَرة';
+
+  @override
+  String settingsRulerCalibrated(String on) {
+    return 'معايَرة في $on';
+  }
+
+  @override
+  String get settingsAboutPack => 'كتاب القواعد';
+
+  @override
+  String get settingsOfflineNote =>
+      'يحتفظ CatchLaw بكل ما يحتاجه على هذا الهاتف. لا حساب فيه ولا شيفرة شبكة.';
+
+  @override
   String get navToday => 'اليوم';
 
   @override

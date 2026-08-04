@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 /// branch would put him back at the top of a list he had already scrolled.
 class AppShell extends StatefulWidget {
   /// Opens on Check, with [check] as its root and [reference] behind S6.
-  const AppShell({required this.check, required this.reference, super.key});
+  const AppShell({required this.check, required this.reference, required this.settings, super.key});
 
   /// The Check branch's root screen — S1.
   final Widget check;
@@ -30,6 +30,9 @@ class AppShell extends StatefulWidget {
   /// none of which needs a database — so the branches arrive from outside and
   /// the shell stays testable with two `SizedBox`es.
   final Widget reference;
+
+  /// The Settings branch's root screen — S16. Injected for the same reason.
+  final Widget settings;
 
   @override
   State<AppShell> createState() => _AppShellState();
@@ -73,6 +76,7 @@ class _AppShellState extends State<AppShell> {
                 // this branch rendered a placeholder because nothing routed to
                 // it, not because the screen did not exist.
                 LonjaDestination.reference => widget.reference,
+                LonjaDestination.settings => widget.settings,
                 _ => DestinationPlaceholder(destination: destination),
               },
             ),

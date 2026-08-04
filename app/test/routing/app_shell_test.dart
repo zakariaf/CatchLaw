@@ -28,7 +28,7 @@ class _CheckRoot extends StatelessWidget {
 
 Future<void> _pumpShell(WidgetTester tester, {Locale locale = const Locale('en')}) => pumpLonja(
   tester,
-  const AppShell(check: _CheckRoot(), reference: _ReferenceRoot()),
+  const AppShell(check: _CheckRoot(), reference: _ReferenceRoot(), settings: _SettingsRoot()),
   locale: locale,
 );
 
@@ -174,4 +174,12 @@ class _ReferenceRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const Text('reference root');
+}
+
+/// Stands in for Settings, for the same reason the other two stand in.
+class _SettingsRoot extends StatelessWidget {
+  const _SettingsRoot();
+
+  @override
+  Widget build(BuildContext context) => const Text('settings root');
 }

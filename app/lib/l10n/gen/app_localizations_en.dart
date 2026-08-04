@@ -497,6 +497,63 @@ class AppLocalizationsEn extends AppLocalizations {
       'This version answers one question: whether a fish meets the rules in the place it was landed. This part is not built yet.';
 
   @override
+  String get settingsLanguageDevice => 'Follow the device';
+
+  @override
+  String get settingsDigits => 'Digits';
+
+  @override
+  String get settingsDigitsAuto => 'Automatic';
+
+  @override
+  String get settingsDigitsLatn => '0123';
+
+  @override
+  String get settingsDigitsArab => '٠١٢٣';
+
+  @override
+  String get settingsUnitCm => 'cm';
+
+  @override
+  String get settingsUnitMm => 'mm';
+
+  @override
+  String get settingsUnitIn => 'in';
+
+  @override
+  String get settingsLengthUnit => 'Length shown in';
+
+  @override
+  String get settingsSunlightMode => 'Sunlight mode';
+
+  @override
+  String get settingsSunlightNote => 'Maximum contrast, for a wet screen in glare.';
+
+  @override
+  String get settingsGloveMode => 'Glove mode';
+
+  @override
+  String get settingsGloveNote => 'Larger targets and wider spacing.';
+
+  @override
+  String get settingsRuler => 'Ruler';
+
+  @override
+  String get settingsRulerUncalibrated => 'Not calibrated';
+
+  @override
+  String settingsRulerCalibrated(String on) {
+    return 'Calibrated $on';
+  }
+
+  @override
+  String get settingsAboutPack => 'Rule book';
+
+  @override
+  String get settingsOfflineNote =>
+      'CatchLaw holds everything it needs on this phone. It has no account and no network code.';
+
+  @override
   String get navToday => 'Today';
 
   @override

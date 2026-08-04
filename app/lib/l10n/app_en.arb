@@ -794,6 +794,85 @@
   "@destinationNotBuiltYet": {
     "description": "Shown on the four navigation branches this release does not build. A STATEMENT OF FACT about what this version contains — it does not apologise, does not promise a date, and does not tell the reader to do anything. A branch that renders only its own name reads as a broken screen rather than as one that is not built."
   },
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "Settings label: settingsLanguage."
+  },
+  "settingsLanguageDevice": "Follow the device",
+  "@settingsLanguageDevice": {
+    "description": "Settings label: settingsLanguageDevice."
+  },
+  "settingsDigits": "Digits",
+  "@settingsDigits": {
+    "description": "Settings label: settingsDigits."
+  },
+  "settingsDigitsAuto": "Automatic",
+  "@settingsDigitsAuto": {
+    "description": "Settings label: settingsDigitsAuto."
+  },
+  "settingsDigitsLatn": "0123",
+  "@settingsDigitsLatn": {
+    "description": "Settings label: settingsDigitsLatn."
+  },
+  "settingsDigitsArab": "٠١٢٣",
+  "@settingsDigitsArab": {
+    "description": "Settings label: settingsDigitsArab."
+  },
+  "settingsUnitCm": "cm",
+  "@settingsUnitCm": {
+    "description": "A length unit abbreviation on the Settings unit control, written in the reader's own script. Arabic abbreviates in Arabic letters rather than borrowing the Latin form."
+  },
+  "settingsUnitMm": "mm",
+  "@settingsUnitMm": {
+    "description": "A length unit abbreviation on the Settings unit control, written in the reader's own script. Arabic abbreviates in Arabic letters rather than borrowing the Latin form."
+  },
+  "settingsUnitIn": "in",
+  "@settingsUnitIn": {
+    "description": "A length unit abbreviation on the Settings unit control, written in the reader's own script. Arabic abbreviates in Arabic letters rather than borrowing the Latin form."
+  },
+  "settingsLengthUnit": "Length shown in",
+  "@settingsLengthUnit": {
+    "description": "Settings label: settingsLengthUnit."
+  },
+  "settingsSunlightMode": "Sunlight mode",
+  "@settingsSunlightMode": {
+    "description": "Settings label: settingsSunlightMode."
+  },
+  "settingsSunlightNote": "Maximum contrast, for a wet screen in glare.",
+  "@settingsSunlightNote": {
+    "description": "Settings label: settingsSunlightNote."
+  },
+  "settingsGloveMode": "Glove mode",
+  "@settingsGloveMode": {
+    "description": "Settings label: settingsGloveMode."
+  },
+  "settingsGloveNote": "Larger targets and wider spacing.",
+  "@settingsGloveNote": {
+    "description": "Settings label: settingsGloveNote."
+  },
+  "settingsRuler": "Ruler",
+  "@settingsRuler": {
+    "description": "Settings label: settingsRuler."
+  },
+  "settingsRulerUncalibrated": "Not calibrated",
+  "@settingsRulerUncalibrated": {
+    "description": "Settings label: settingsRulerUncalibrated."
+  },
+  "settingsRulerCalibrated": "Calibrated {on}",
+  "@settingsRulerCalibrated": {
+    "description": "The ruler's state on Settings. A STATEMENT OF FACT with the date calibration happened; it does not tell the reader to recalibrate.",
+    "placeholders": {
+      "on": { "type": "String" }
+    }
+  },
+  "settingsAboutPack": "Rule book",
+  "@settingsAboutPack": {
+    "description": "Settings label: settingsAboutPack."
+  },
+  "settingsOfflineNote": "CatchLaw holds everything it needs on this phone. It has no account and no network code.",
+  "@settingsOfflineNote": {
+    "description": "The offline note at the foot of Settings. A STATEMENT OF FACT about what the app contains, in the reader's own interest \u2014 it makes no promise about the law and gives no instruction."
+  },
   "navToday": "Today",
   "@navToday": {
     "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."

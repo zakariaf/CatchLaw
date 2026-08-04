@@ -499,6 +499,63 @@ class AppLocalizationsPt extends AppLocalizations {
       'Esta versão responde a uma única pergunta: se um peixe cumpre as regras no local onde foi desembarcado. Esta parte ainda não foi construída.';
 
   @override
+  String get settingsLanguageDevice => 'Seguir o aparelho';
+
+  @override
+  String get settingsDigits => 'Dígitos';
+
+  @override
+  String get settingsDigitsAuto => 'Automático';
+
+  @override
+  String get settingsDigitsLatn => '0123';
+
+  @override
+  String get settingsDigitsArab => '٠١٢٣';
+
+  @override
+  String get settingsUnitCm => 'cm';
+
+  @override
+  String get settingsUnitMm => 'mm';
+
+  @override
+  String get settingsUnitIn => 'pol';
+
+  @override
+  String get settingsLengthUnit => 'Comprimento em';
+
+  @override
+  String get settingsSunlightMode => 'Modo sol';
+
+  @override
+  String get settingsSunlightNote => 'Contraste máximo, para um ecrã molhado ao sol.';
+
+  @override
+  String get settingsGloveMode => 'Modo luvas';
+
+  @override
+  String get settingsGloveNote => 'Alvos maiores e mais espaçados.';
+
+  @override
+  String get settingsRuler => 'Régua';
+
+  @override
+  String get settingsRulerUncalibrated => 'Não calibrada';
+
+  @override
+  String settingsRulerCalibrated(String on) {
+    return 'Calibrada em $on';
+  }
+
+  @override
+  String get settingsAboutPack => 'Livro de regras';
+
+  @override
+  String get settingsOfflineNote =>
+      'A CatchLaw guarda neste telemóvel tudo o que precisa. Não tem conta nem código de rede.';
+
+  @override
   String get navToday => 'Hoje';
 
   @override
@@ -1025,6 +1082,63 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get destinationNotBuiltYet =>
       'Esta versão responde a uma única pergunta: se um peixe cumpre as regras no local onde foi desembarcado. Esta parte ainda não foi construída.';
+
+  @override
+  String get settingsLanguageDevice => 'Seguir o aparelho';
+
+  @override
+  String get settingsDigits => 'Dígitos';
+
+  @override
+  String get settingsDigitsAuto => 'Automático';
+
+  @override
+  String get settingsDigitsLatn => '0123';
+
+  @override
+  String get settingsDigitsArab => '٠١٢٣';
+
+  @override
+  String get settingsUnitCm => 'cm';
+
+  @override
+  String get settingsUnitMm => 'mm';
+
+  @override
+  String get settingsUnitIn => 'pol';
+
+  @override
+  String get settingsLengthUnit => 'Comprimento em';
+
+  @override
+  String get settingsSunlightMode => 'Modo sol';
+
+  @override
+  String get settingsSunlightNote => 'Contraste máximo, para uma tela molhada no sol.';
+
+  @override
+  String get settingsGloveMode => 'Modo luvas';
+
+  @override
+  String get settingsGloveNote => 'Alvos maiores e mais espaçados.';
+
+  @override
+  String get settingsRuler => 'Régua';
+
+  @override
+  String get settingsRulerUncalibrated => 'Não calibrada';
+
+  @override
+  String settingsRulerCalibrated(String on) {
+    return 'Calibrada em $on';
+  }
+
+  @override
+  String get settingsAboutPack => 'Livro de regras';
+
+  @override
+  String get settingsOfflineNote =>
+      'O CatchLaw guarda neste celular tudo o que precisa. Não tem conta nem código de rede.';
 
   @override
   String get navToday => 'Hoje';
