@@ -14,9 +14,11 @@ library;
 import 'package:catchlaw/data/repositories/calibration_repository.dart';
 import 'package:catchlaw/data/repositories/catch_log_repository.dart';
 import 'package:catchlaw/data/repositories/content_string_repository.dart';
+import 'package:catchlaw/data/repositories/identification_key_repository.dart';
 import 'package:catchlaw/data/repositories/legal_text_repository.dart';
 import 'package:catchlaw/data/repositories/look_alike_repository.dart';
 import 'package:catchlaw/data/repositories/measurement_repository.dart';
+import 'package:catchlaw/data/repositories/penalty_repository.dart';
 import 'package:catchlaw/data/repositories/reference_repository.dart';
 import 'package:catchlaw/data/repositories/rule_flag_repository.dart';
 import 'package:catchlaw/data/repositories/settings_repository.dart';
@@ -87,6 +89,12 @@ final Provider<LookAlikeRepository> lookAlikeRepositoryProvider = Provider<LookA
   (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
 );
 
+/// S7's dichotomous key, walked one couplet at a time.
+final Provider<IdentificationKeyRepository> identificationKeyRepositoryProvider =
+    Provider<IdentificationKeyRepository>(
+      (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
+    );
+
 /// What this place has seen recently — the one seam that spans both databases.
 final Provider<SpeciesRecentRepository> speciesRecentRepositoryProvider =
     Provider<SpeciesRecentRepository>(
@@ -111,6 +119,11 @@ final Provider<ContentStringRepository> contentStringRepositoryProvider =
 
 /// The verbatim law behind a citation.
 final Provider<LegalTextRepository> legalTextRepositoryProvider = Provider<LegalTextRepository>(
+  (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
+);
+
+/// S20's ledger: what a breach of the recorded rules carries.
+final Provider<PenaltyRepository> penaltyRepositoryProvider = Provider<PenaltyRepository>(
   (Ref ref) => throw UnimplementedError('override with dataOverrides() in main()'),
 );
 
@@ -140,10 +153,12 @@ final List<ProviderBase<Object?>> kDataSeams = <ProviderBase<Object?>>[
   speciesBrowseRepositoryProvider,
   speciesAccountRepositoryProvider,
   lookAlikeRepositoryProvider,
+  identificationKeyRepositoryProvider,
   speciesRecentRepositoryProvider,
   calibrationRepositoryProvider,
   contentStringRepositoryProvider,
   legalTextRepositoryProvider,
+  penaltyRepositoryProvider,
   ruleFlagRepositoryProvider,
   catchLogRepositoryProvider,
 ];

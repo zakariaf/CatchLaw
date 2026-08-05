@@ -52,7 +52,7 @@ class SpeciesVerdictSlot extends StatelessWidget {
 
   /// Opens the verbatim article. E12 owns the route; until then the caller
   /// supplies the destination and this widget holds no navigation knowledge.
-  final void Function(int citationId)? onOpenRuleText;
+  final void Function(int citationId, CitationDisplay citation)? onOpenRuleText;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class SpeciesVerdictSlot extends StatelessWidget {
       jurisdiction: jurisdiction,
       citationIds: citationIds,
       sourceUrls: sourceUrls,
-      onOpenRuleText: onOpenRuleText ?? (int _) {},
+      onOpenRuleText: onOpenRuleText ?? (int _, CitationDisplay _) {},
     );
   }
 }

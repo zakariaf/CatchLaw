@@ -92,6 +92,101 @@ class AppLocalizationsAr extends AppLocalizations {
   String get identifyThisFish => 'تحديد هذه السمكة';
 
   @override
+  String identifyKeyStamp(int couplet) {
+    return 'المفتاح · الخطوة $couplet';
+  }
+
+  @override
+  String get identifyAnswersSoFar => 'الإجابات حتى الآن';
+
+  @override
+  String identifyCoupletLabel(int couplet) {
+    return 'الخطوة $couplet';
+  }
+
+  @override
+  String identifySpeciesRemain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'يبقى $count نوع',
+      many: 'يبقى $count نوعًا',
+      few: 'تبقى $count أنواع',
+      two: 'يبقى نوعان',
+      one: 'يبقى نوع واحد',
+      zero: 'يبقى $count نوع',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String identifyLeadMark(int couplet, int lead) {
+    return '$couplet · $lead';
+  }
+
+  @override
+  String identifyLeadConsequence(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'يؤدي إلى $count نوع · $names',
+      many: 'يؤدي إلى $count نوعًا · $names',
+      few: 'يؤدي إلى $count أنواع · $names',
+      two: 'يؤدي إلى نوعين · $names',
+      one: 'يؤدي إلى نوع واحد · $names',
+      zero: 'يؤدي إلى $count نوع · $names',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get identifyLeadNoSpecies => 'لا توجد أنواع مُدوَّنة بعد هذه الإجابة.';
+
+  @override
+  String get identifyBackOneStep => 'الرجوع خطوة واحدة';
+
+  @override
+  String get identifyDamagedHeading => 'إذا تعذَّرت رؤية الصفة';
+
+  @override
+  String get identifyDamagedNote =>
+      'الصفة التالفة أو الغائبة لا يمكن الإجابة عنها. تُدرج بدلًا من ذلك كل الأنواع التي ما زالت هذه الخطوة تسمح بها، مرسومةً ومسمّاة.';
+
+  @override
+  String get identifyListWhatRemains => 'إدراج ما تبقّى';
+
+  @override
+  String get identifyProvenanceNote =>
+      'لا تُلتقط أي صورة ولا يغادر الجهازَ أي شيء. المفتاح هو المفتاح المطبوع من قسم المراجع، يُسار فيه خطوةً خطوة.';
+
+  @override
+  String get identifyRemainingHeading => 'الأنواع التي ما زال المفتاح يسمح بها';
+
+  @override
+  String get identifyNoKeyHeadline => 'لا يوجد مفتاح في هذه الحزمة';
+
+  @override
+  String get identifyNoKeyBody =>
+      'لم يُدوَّن أي مفتاح تعريف لهذه الولاية. الأنواع التي تحملها هذه الحزمة تُبلغ بالاسم.';
+
+  @override
+  String get identifyNoCandidatesHeadline => 'لا توجد أنواع مُدوَّنة هنا';
+
+  @override
+  String get identifyNoCandidatesBody =>
+      'لا يبلغ المفتاح أي نوع بالإجابات المعطاة. لم يُدوَّن شيء بعد هذه النقطة في هذه الحزمة.';
+
+  @override
+  String get identifyKeyUnreadableHeadline => 'تعذَّرت قراءة المفتاح';
+
+  @override
+  String get identifyKeyUnreadableBody =>
+      'لم يُفتح مفتاح الحزمة المرفقة على هذا الجهاز. الأنواع التي تحملها تُبلغ بالاسم.';
+
+  @override
+  String get identifySearchByName => 'البحث بالاسم';
+
+  @override
   String get browseByShape => 'التصفح حسب الشكل';
 
   @override
@@ -474,6 +569,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get verdictAmbiguous => 'تنطبق هنا قاعدتان متساويتان في المرتبة.';
 
   @override
+  String get ambiguityEyebrow => 'تعارض بين النصّين';
+
+  @override
+  String get ambiguityBothInForce =>
+      'كلا النصّين ساريان في هذا الموقع. يطبع CatchLaw نصّ كلٍّ منهما بتاريخ التحقّق الخاص به، ولا يقدّم أحدهما على الآخر.';
+
+  @override
   String get findingFactMeasured => 'المقاس';
 
   @override
@@ -481,6 +583,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get findingFactMaximum => 'الحد الأقصى';
+
+  @override
+  String get findingFactShortfall => 'الفارق عن الحد';
 
   @override
   String get findingFactDates => 'التواريخ';
@@ -542,6 +647,94 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get flagRuleEmptyNote => 'الملاحظة فارغة.';
+
+  @override
+  String get penaltiesTitle => 'العقوبات';
+
+  @override
+  String get penaltiesEntryNote => 'ما يترتب على مخالفة القواعد المسجَّلة.';
+
+  @override
+  String penaltiesLede(String jurisdiction) {
+    return 'ما يترتب على مخالفة قواعد الحجم أو الموسم أو الحماية أو أدوات الصيد في $jurisdiction.';
+  }
+
+  @override
+  String get penaltiesColumnOffence => 'المخالفة';
+
+  @override
+  String get penaltiesColumnFine => 'الغرامة';
+
+  @override
+  String get penaltiesColumnLicence => 'الرخصة';
+
+  @override
+  String get penaltiesOccurrenceFirst => 'المخالفة الأولى';
+
+  @override
+  String get penaltiesOccurrenceSecond => 'المخالفة الثانية';
+
+  @override
+  String get penaltiesOccurrenceSubsequent => 'المخالفة اللاحقة';
+
+  @override
+  String get penaltiesOffenceListLabel => 'المخالفات المسجَّلة';
+
+  @override
+  String penaltiesFineAmount(String currency, String amount) {
+    return '$currency $amount';
+  }
+
+  @override
+  String penaltiesFineRange(String currency, String lower, String upper) {
+    return '$currency $lower–$upper';
+  }
+
+  @override
+  String get penaltiesFineNotRecorded => 'لا مبلغ مسجَّل';
+
+  @override
+  String get penaltiesConsequenceNotRecorded => 'لا أثر مسجَّل على الرخصة';
+
+  @override
+  String get penaltiesWorkedExampleLabel => 'مثال محسوب';
+
+  @override
+  String penaltiesWorkedExampleFirst(String offence, String jurisdiction, String fine) {
+    return 'المخالفة الأولى من $offence مسجَّلة في $jurisdiction بمبلغ $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleSecond(String offence, String jurisdiction, String fine) {
+    return 'المخالفة الثانية من $offence مسجَّلة في $jurisdiction بمبلغ $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleSubsequent(String offence, String jurisdiction, String fine) {
+    return 'المخالفة اللاحقة من $offence مسجَّلة في $jurisdiction بمبلغ $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleConsequence(String consequence) {
+    return 'الأثر المسجَّل على الرخصة هو $consequence.';
+  }
+
+  @override
+  String get penaltiesNoneRecordedHeadline => 'لا عقوبة مسجَّلة';
+
+  @override
+  String penaltiesNoneRecordedBody(String jurisdiction) {
+    return 'حزمة القواعد المرفقة لا تحمل أي عقوبة منسوخة عن $jurisdiction. هذا غياب في النسخ، وليس تقريرًا بأن النصوص لا تحمل عقوبة.';
+  }
+
+  @override
+  String get penaltiesPackCaveat =>
+      'المبالغ هي المسجَّلة في حزمة القواعد المرفقة. وقد تطبّق المحاكم وجهات التفتيش أحكامًا أخرى.';
+
+  @override
+  String penaltiesCitationDates(String published, String checked) {
+    return 'نُشر $published · روجع $checked';
+  }
 
   @override
   String get disclaimerNotDismissable => 'لا يمكن إخفاء هذا التنبيه.';
@@ -745,6 +938,34 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String todayTripOpenSince(String started) {
+    return 'رحلة مفتوحة منذ $started';
+  }
+
+  @override
+  String get todayNoTripOpen => 'لا توجد رحلة مفتوحة';
+
+  @override
+  String get todaySummaryRecorded => 'أسماك مسجَّلة';
+
+  @override
+  String get todaySummaryKept => 'محتفَظ به';
+
+  @override
+  String get todaySummarySpecies => 'الأنواع';
+
+  @override
+  String todayKeptOfCount(String kept, String count) {
+    return '$kept من $count';
+  }
+
+  @override
+  String get todayBySpeciesLabel => 'حسب النوع';
+
+  @override
+  String get todayLoadFailed => 'تعذّرت قراءة حصيلة اليوم المحفوظة على هذا الجهاز.';
+
+  @override
   String get tripsHeadline => 'الرحلات';
 
   @override
@@ -931,6 +1152,111 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navReference => 'المرجع';
 
   @override
+  String get referenceContentsLabel => 'المحتويات';
+
+  @override
+  String get referenceHubLede =>
+      'كل ما يُستند إليه الحكم، محفوظ بالكامل على هذا الجهاز ويُقرأ دون شبكة.';
+
+  @override
+  String get referenceEntryRuleText => 'نص القرار';
+
+  @override
+  String get referenceEntryRuleTextNote => 'النصوص كما نُشرت، مادة بمادة، بلغة النشر';
+
+  @override
+  String get ruleTextSearchHint => 'البحث في النص الكامل';
+
+  @override
+  String get ruleTextAllArticles => 'كل المواد';
+
+  @override
+  String get ruleTextPublishedLabel => 'نُشر في';
+
+  @override
+  String get ruleTextCheckedLabel => 'روجع في';
+
+  @override
+  String get ruleTextCompleteNote => 'هذا النص محفوظ بالكامل على هذا الجهاز وغير مختصر.';
+
+  @override
+  String get ruleTextNoneRecordedHeadline => 'لا يوجد نص منسوخ';
+
+  @override
+  String ruleTextNoneRecordedBody(String instrument) {
+    return 'لا تحمل هذه النسخة نص مواد $instrument. والاستشهاد أعلاه يذكر الصك وتاريخ نشره وتاريخ آخر مراجعة له.';
+  }
+
+  @override
+  String get ruleTextNoMatchHeadline => 'لا تطابق أي مادة';
+
+  @override
+  String get ruleTextNoMatchBody => 'لا تحمل أي مادة من هذا الصك تلك الصيغة.';
+
+  @override
+  String get referenceEntryProtected => 'الأنواع المحمية';
+
+  @override
+  String get referenceEntryProtectedNote => 'اللوحات والعلامات المميِّزة ونطاق الحماية';
+
+  @override
+  String get referenceEntryGear => 'المعدات وطرق الصيد';
+
+  @override
+  String get referenceEntryGearNote => 'فتحة الشبكة، الخيط اليدوي، طول الشبكة، الطرق المحظورة';
+
+  @override
+  String get referenceEntryPenalties => 'العقوبات';
+
+  @override
+  String get referenceEntryPenaltiesNote => 'الغرامات وأثرها في الرخصة، حسب المخالفة';
+
+  @override
+  String get referenceEntryLicences => 'الرخص';
+
+  @override
+  String get referenceEntryLicencesNote => 'رخص السفينة والصياد والمعدات، ونطاق كل منها';
+
+  @override
+  String get referenceEntryGlossary => 'المسرد';
+
+  @override
+  String get referenceEntryGlossaryNote => 'TL · FL · SL · CW · SHL · ML والمصطلحات المحلية';
+
+  @override
+  String get referenceEntryChangelog => 'سجل التغييرات';
+
+  @override
+  String get referenceEntryChangelogNote => 'ما الذي تغيّر في كل حزمة، ومتى جرى التحقق منها';
+
+  @override
+  String get referenceEntryPlates => 'لوحات الأنواع';
+
+  @override
+  String get referenceEntryPlatesNote => 'ظلال مجمّعة حسب الفصيلة، لسمكة تُعرف بشكلها';
+
+  @override
+  String get referenceEntryNotPrinted => 'غير مطبوع';
+
+  @override
+  String get referenceSectionNotPrinted =>
+      'هذا القسم غير مطبوع في هذه النسخة. تجيب هذه النسخة عمّا إذا كانت السمكة تستوفي القواعد في المكان الذي أُنزلت فيه، وتذكر النص الذي قرأته.';
+
+  @override
+  String get referenceHeldLabel => 'محفوظ على هذا الجهاز';
+
+  @override
+  String referenceHeldPack(String version, String checkedOn) {
+    return 'حزمة $version · روجعت $checkedOn';
+  }
+
+  @override
+  String get referenceHeldNote => 'يقتبس هذا الكتاب النصوص التي يحفظها، ولا يلخّصها.';
+
+  @override
+  String get referenceHeldEmpty => 'لا تحفظ هذه النسخة أي ولاية قضائية.';
+
+  @override
   String get navSettings => 'الإعدادات';
 
   @override
@@ -953,6 +1279,75 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get checkNoRecentsBody =>
       'الأنواع التي تبحث عنها في هذا المكان تظهر هنا، فيصبح التالي بلمسة واحدة.';
+
+  @override
+  String get firstRunOfflineBadge => 'لا إشارة · بلا شبكة بحكم التصميم';
+
+  @override
+  String get firstRunTagline => 'هل هذا قانوني؟';
+
+  @override
+  String get firstRunMetaFirstRun => 'التشغيل الأول';
+
+  @override
+  String get firstRunMetaOnceOnly => 'مرة واحدة فقط';
+
+  @override
+  String get firstRunHeadline => 'ترتيب كتاب الأحكام';
+
+  @override
+  String get firstRunLede =>
+      'يجري فك حزمة الأحكام المرفقة واللوحات والنص القانوني، ليفتح كل شيء فورًا من الآن فصاعدًا.';
+
+  @override
+  String get firstRunSilhouetteLabel => 'ظل محفور لسمكة هامور';
+
+  @override
+  String firstRunProgressBytes(String written, String total) {
+    return '$written من $total ك.ب';
+  }
+
+  @override
+  String firstRunProgressPercent(String percent) {
+    return '$percent٪';
+  }
+
+  @override
+  String get firstRunSectionInstalling => 'قيد التثبيت';
+
+  @override
+  String get firstRunStageRulePack => 'حزمة الأحكام';
+
+  @override
+  String get firstRunStageLegalText => 'النص القانوني';
+
+  @override
+  String get firstRunStagePlates => 'لوحات الأنواع';
+
+  @override
+  String get firstRunStageGlossary => 'المسرد والمفتاح';
+
+  @override
+  String get firstRunStageDone => '· تم';
+
+  @override
+  String get firstRunStageInProgress => 'قيد التنفيذ…';
+
+  @override
+  String get firstRunStagePending => 'لم تُفك بعد';
+
+  @override
+  String firstRunTimeRemaining(String seconds) {
+    return 'يتبقى نحو $seconds ث';
+  }
+
+  @override
+  String get firstRunNoDownload =>
+      'يحدث هذا مرة واحدة. لا يجري تنزيل أي شيء — كان كل ذلك داخل التطبيق منذ تثبيته، ولا يوجد طلب شبكة يمكن أن يفشل.';
+
+  @override
+  String get firstRunFooterNote =>
+      'بلا حساب. بلا تسجيل دخول. بلا مزامنة. حين ينتهي هذا، لا ينتظر CatchLaw شيئًا بعده أبدًا.';
 
   @override
   String measureManualReading(String mm) {

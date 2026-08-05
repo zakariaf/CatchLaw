@@ -88,6 +88,93 @@ class AppLocalizationsEn extends AppLocalizations {
   String get identifyThisFish => 'Identify this fish';
 
   @override
+  String identifyKeyStamp(int couplet) {
+    return 'Key · couplet $couplet';
+  }
+
+  @override
+  String get identifyAnswersSoFar => 'Answers so far';
+
+  @override
+  String identifyCoupletLabel(int couplet) {
+    return 'Couplet $couplet';
+  }
+
+  @override
+  String identifySpeciesRemain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count species remain',
+      one: '$count species remains',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String identifyLeadMark(int couplet, int lead) {
+    return '$couplet · $lead';
+  }
+
+  @override
+  String identifyLeadConsequence(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Leads to $count species · $names',
+      one: 'Leads to $count species · $names',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get identifyLeadNoSpecies => 'No species are recorded beyond this answer.';
+
+  @override
+  String get identifyBackOneStep => 'Back one step';
+
+  @override
+  String get identifyDamagedHeading => 'If the character cannot be seen';
+
+  @override
+  String get identifyDamagedNote =>
+      'A damaged or missing character cannot be answered. Every species this couplet still allows is listed instead, drawn and named.';
+
+  @override
+  String get identifyListWhatRemains => 'List what remains';
+
+  @override
+  String get identifyProvenanceNote =>
+      'No photograph is taken and nothing leaves the device. The key is the printed one from the reference section, walked one couplet at a time.';
+
+  @override
+  String get identifyRemainingHeading => 'Species the key still allows';
+
+  @override
+  String get identifyNoKeyHeadline => 'No key in this pack';
+
+  @override
+  String get identifyNoKeyBody =>
+      'No identification key is transcribed for this jurisdiction. The species this pack carries are reachable by name.';
+
+  @override
+  String get identifyNoCandidatesHeadline => 'No species recorded here';
+
+  @override
+  String get identifyNoCandidatesBody =>
+      'The key reaches no species along the answers given. Nothing beyond this point is transcribed in this pack.';
+
+  @override
+  String get identifyKeyUnreadableHeadline => 'The key could not be read';
+
+  @override
+  String get identifyKeyUnreadableBody =>
+      'The bundled pack\'s key did not open on this device. The species it carries are reachable by name.';
+
+  @override
+  String get identifySearchByName => 'Search by name';
+
+  @override
   String get browseByShape => 'Browse by shape';
 
   @override
@@ -462,6 +549,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verdictAmbiguous => 'Two rules of equal standing apply here.';
 
   @override
+  String get ambiguityEyebrow => 'Conflict of instruments';
+
+  @override
+  String get ambiguityBothInForce =>
+      'Both instruments are in force at this point. CatchLaw prints the text of each with its own check date, and ranks neither above the other.';
+
+  @override
   String get findingFactMeasured => 'Measured';
 
   @override
@@ -469,6 +563,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get findingFactMaximum => 'Maximum';
+
+  @override
+  String get findingFactShortfall => 'Shortfall';
 
   @override
   String get findingFactDates => 'Dates';
@@ -530,6 +627,94 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get flagRuleEmptyNote => 'The note is empty.';
+
+  @override
+  String get penaltiesTitle => 'Penalties';
+
+  @override
+  String get penaltiesEntryNote => 'What a breach of the recorded rules carries.';
+
+  @override
+  String penaltiesLede(String jurisdiction) {
+    return 'What a breach of the size, season, protection or gear rules carries in $jurisdiction.';
+  }
+
+  @override
+  String get penaltiesColumnOffence => 'Offence';
+
+  @override
+  String get penaltiesColumnFine => 'Fine';
+
+  @override
+  String get penaltiesColumnLicence => 'Licence';
+
+  @override
+  String get penaltiesOccurrenceFirst => 'First offence';
+
+  @override
+  String get penaltiesOccurrenceSecond => 'Second offence';
+
+  @override
+  String get penaltiesOccurrenceSubsequent => 'Subsequent offence';
+
+  @override
+  String get penaltiesOffenceListLabel => 'Offences recorded';
+
+  @override
+  String penaltiesFineAmount(String currency, String amount) {
+    return '$currency $amount';
+  }
+
+  @override
+  String penaltiesFineRange(String currency, String lower, String upper) {
+    return '$currency $lower–$upper';
+  }
+
+  @override
+  String get penaltiesFineNotRecorded => 'No amount recorded';
+
+  @override
+  String get penaltiesConsequenceNotRecorded => 'No licence consequence recorded';
+
+  @override
+  String get penaltiesWorkedExampleLabel => 'Worked example';
+
+  @override
+  String penaltiesWorkedExampleFirst(String offence, String jurisdiction, String fine) {
+    return 'A first offence of $offence is recorded in $jurisdiction as $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleSecond(String offence, String jurisdiction, String fine) {
+    return 'A second offence of $offence is recorded in $jurisdiction as $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleSubsequent(String offence, String jurisdiction, String fine) {
+    return 'A subsequent offence of $offence is recorded in $jurisdiction as $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleConsequence(String consequence) {
+    return 'The licence consequence recorded is $consequence.';
+  }
+
+  @override
+  String get penaltiesNoneRecordedHeadline => 'No penalty recorded';
+
+  @override
+  String penaltiesNoneRecordedBody(String jurisdiction) {
+    return 'The bundled rule pack carries no penalty transcribed for $jurisdiction. That is an absence in the transcription, not a statement that the instruments carry none.';
+  }
+
+  @override
+  String get penaltiesPackCaveat =>
+      'Amounts are those recorded in the bundled rule pack. Courts and inspectors may apply further provisions.';
+
+  @override
+  String penaltiesCitationDates(String published, String checked) {
+    return 'published $published · checked $checked';
+  }
 
   @override
   String get disclaimerNotDismissable => 'It cannot be dismissed.';
@@ -735,6 +920,34 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String todayTripOpenSince(String started) {
+    return 'Trip open since $started';
+  }
+
+  @override
+  String get todayNoTripOpen => 'No trip open';
+
+  @override
+  String get todaySummaryRecorded => 'Fish recorded';
+
+  @override
+  String get todaySummaryKept => 'Kept';
+
+  @override
+  String get todaySummarySpecies => 'Species';
+
+  @override
+  String todayKeptOfCount(String kept, String count) {
+    return '$kept of $count';
+  }
+
+  @override
+  String get todayBySpeciesLabel => 'By species';
+
+  @override
+  String get todayLoadFailed => 'The day\'s tally on this device could not be read.';
+
+  @override
   String get tripsHeadline => 'Trips';
 
   @override
@@ -923,6 +1136,115 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navReference => 'Reference';
 
   @override
+  String get referenceContentsLabel => 'Contents';
+
+  @override
+  String get referenceHubLede =>
+      'Everything a verdict is drawn from, held in full on this device and readable without a signal.';
+
+  @override
+  String get referenceEntryRuleText => 'Rule text';
+
+  @override
+  String get referenceEntryRuleTextNote =>
+      'The instruments as published, article by article, in the language they were published in';
+
+  @override
+  String get ruleTextSearchHint => 'Search the full text';
+
+  @override
+  String get ruleTextAllArticles => 'All articles';
+
+  @override
+  String get ruleTextPublishedLabel => 'Published';
+
+  @override
+  String get ruleTextCheckedLabel => 'Checked';
+
+  @override
+  String get ruleTextCompleteNote =>
+      'This text is held in full on this device and is not abridged.';
+
+  @override
+  String get ruleTextNoneRecordedHeadline => 'No text transcribed';
+
+  @override
+  String ruleTextNoneRecordedBody(String instrument) {
+    return 'This copy carries no article text for $instrument. The citation above names the instrument and the dates it was published and last checked.';
+  }
+
+  @override
+  String get ruleTextNoMatchHeadline => 'No article matches';
+
+  @override
+  String get ruleTextNoMatchBody => 'No article of this instrument carries that wording.';
+
+  @override
+  String get referenceEntryProtected => 'Protected species';
+
+  @override
+  String get referenceEntryProtectedNote =>
+      'Plates, distinguishing features, and what protection covers';
+
+  @override
+  String get referenceEntryGear => 'Gear and methods';
+
+  @override
+  String get referenceEntryGearNote => 'Mesh, hand-line, net length, prohibited methods';
+
+  @override
+  String get referenceEntryPenalties => 'Penalties';
+
+  @override
+  String get referenceEntryPenaltiesNote => 'Fines and licence consequences, by offence';
+
+  @override
+  String get referenceEntryLicences => 'Licences';
+
+  @override
+  String get referenceEntryLicencesNote => 'Vessel, fisher and gear licences, and what each covers';
+
+  @override
+  String get referenceEntryGlossary => 'Glossary';
+
+  @override
+  String get referenceEntryGlossaryNote => 'TL · FL · SL · CW · SHL · ML, and the local terms';
+
+  @override
+  String get referenceEntryChangelog => 'Changelog';
+
+  @override
+  String get referenceEntryChangelogNote => 'What changed in each pack, and when it was checked';
+
+  @override
+  String get referenceEntryPlates => 'Species plates';
+
+  @override
+  String get referenceEntryPlatesNote => 'Silhouettes grouped by family, for a fish known by shape';
+
+  @override
+  String get referenceEntryNotPrinted => 'not printed';
+
+  @override
+  String get referenceSectionNotPrinted =>
+      'This section is not printed in this copy. This version answers whether a fish meets the rules in the place it was landed, and cites the instrument it read.';
+
+  @override
+  String get referenceHeldLabel => 'Held on this device';
+
+  @override
+  String referenceHeldPack(String version, String checkedOn) {
+    return 'pack $version · checked $checkedOn';
+  }
+
+  @override
+  String get referenceHeldNote =>
+      'This book quotes the instruments it holds. It does not summarise them.';
+
+  @override
+  String get referenceHeldEmpty => 'No jurisdiction is held in this copy.';
+
+  @override
   String get navSettings => 'Settings';
 
   @override
@@ -945,6 +1267,75 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get checkNoRecentsBody =>
       'Species you look up in this place appear here, so the next one is one tap.';
+
+  @override
+  String get firstRunOfflineBadge => 'No signal · offline by design';
+
+  @override
+  String get firstRunTagline => 'Is this legal?';
+
+  @override
+  String get firstRunMetaFirstRun => 'First run';
+
+  @override
+  String get firstRunMetaOnceOnly => 'One time only';
+
+  @override
+  String get firstRunHeadline => 'Setting out the rule book';
+
+  @override
+  String get firstRunLede =>
+      'Unpacking the bundled rule pack, the plates and the legal text, so that everything opens instantly from here on.';
+
+  @override
+  String get firstRunSilhouetteLabel => 'Engraved outline of a grouper';
+
+  @override
+  String firstRunProgressBytes(String written, String total) {
+    return '$written of $total kB';
+  }
+
+  @override
+  String firstRunProgressPercent(String percent) {
+    return '$percent%';
+  }
+
+  @override
+  String get firstRunSectionInstalling => 'Being installed';
+
+  @override
+  String get firstRunStageRulePack => 'Rule pack';
+
+  @override
+  String get firstRunStageLegalText => 'Legal text';
+
+  @override
+  String get firstRunStagePlates => 'Species plates';
+
+  @override
+  String get firstRunStageGlossary => 'Glossary and key';
+
+  @override
+  String get firstRunStageDone => '· done';
+
+  @override
+  String get firstRunStageInProgress => 'In progress…';
+
+  @override
+  String get firstRunStagePending => 'Not yet unpacked';
+
+  @override
+  String firstRunTimeRemaining(String seconds) {
+    return 'About $seconds s remaining';
+  }
+
+  @override
+  String get firstRunNoDownload =>
+      'This happens once. Nothing is being downloaded — all of it was already inside the app at install, and there is no network request to fail.';
+
+  @override
+  String get firstRunFooterNote =>
+      'No account. No sign-in. No sync. Once this finishes, CatchLaw never waits for anything again.';
 
   @override
   String measureManualReading(String mm) {

@@ -8,7 +8,11 @@ import 'package:catchlaw/domain/models/species.dart';
 import 'package:catchlaw/domain/models/species_search_hit.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/theme/lonja_theme.dart';
+import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/ui/check/check_screen.dart';
+import 'package:catchlaw/ui/check/widgets/check_place_chips.dart';
+import 'package:catchlaw/ui/core/ui/lonja_button.dart';
+import 'package:catchlaw/ui/core/ui/lonja_chip.dart';
 import 'package:catchlaw/ui/core/ui/lonja_masthead.dart';
 import 'package:catchlaw/ui/core/ui/lonja_search_field.dart';
 import 'package:catchlaw/ui/zones/zone_picker_screen.dart';
@@ -52,6 +56,7 @@ Future<void> _pumpCheck(
   String? jurisdictionCode,
   StoreEnv env = StoreEnv.healthy,
   List<RecentSpeciesEntry> recents = const <RecentSpeciesEntry>[],
+  bool gloved = false,
 }) async {
   final settings = FakeSettingsRepository();
   if (jurisdictionCode != null) {
@@ -77,7 +82,7 @@ Future<void> _pumpCheck(
         ),
       ],
       child: MaterialApp(
-        theme: resolveLonjaTheme(skin: LonjaSkin.paper, gloved: false),
+        theme: resolveLonjaTheme(skin: LonjaSkin.paper, gloved: gloved),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: const CheckScreen(),
@@ -157,6 +162,133 @@ void main() {
       // until it resolves to a display name, so the meta block leaves its own
       // code line empty rather than printing the same fact twice.
       expect(find.text('rias-baixas'), findsOneWidget);
+    });
+
+    testWidgets('sets the chips band between the masthead and the entry line', (
+      WidgetTester tester,
+    ) async {
+      await _pumpCheck(tester, jurisdictionCode: 'ES-GA');
+
+      // The mockup's order, and the band it puts there: which printing this is,
+      // and the way to another place. Both used to hang off the mast — the date
+      // as a third stacked line under the place, the way out as a TextButton
+      // wedged into the mast row.
+      final Finder chips = find.byType(CheckPlaceChips);
+      expect(chips, findsOneWidget);
+      expect(
+        tester.getBottomLeft(find.byType(LonjaMasthead)).dy,
+        lessThanOrEqualTo(tester.getTopLeft(chips).dy),
+      );
+      expect(
+        tester.getBottomLeft(chips).dy,
+        lessThanOrEqualTo(tester.getTopLeft(find.byType(LonjaSearchField)).dy),
+      );
+    });
+
+    testWidgets('stamps the checked date on the chips band and never in the masthead', (
+      WidgetTester tester,
+    ) async {
+      await _pumpCheck(tester, jurisdictionCode: 'ES-GA');
+
+      // One stamp, on the band, in the mono step — not a subtitle of the place.
+      final Finder checked = find.textContaining('2026-08-12');
+      expect(checked, findsOneWidget);
+      expect(find.descendant(of: find.byType(CheckPlaceChips), matching: checked), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(LonjaMasthead),
+          matching: find.textContaining('2026-08-12'),
+        ),
+        findsNothing,
+      );
+    });
+
+    testWidgets('offers the way to another place as a chip and never as a mast control', (
+      WidgetTester tester,
+    ) async {
+      await _pumpCheck(tester, jurisdictionCode: 'ES-GA');
+
+      expect(
+        find.descendant(of: find.byType(CheckPlaceChips), matching: find.text('Change place')),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(of: find.byType(LonjaMasthead), matching: find.text('Change place')),
+        findsNothing,
+      );
+    });
+
+    testWidgets('stands the shape grid and the key under the recents strip', (
+      WidgetTester tester,
+    ) async {
+      await _pumpCheck(
+        tester,
+        jurisdictionCode: 'ES-GA',
+        recents: const <RecentSpeciesEntry>[
+          RecentSpeciesEntry(
+            speciesId: 7,
+            useCount: 3,
+            lastUsedAt: '2026-08-12',
+            displayName: 'Ameixa babosa',
+            silhouetteAsset: 'sil/venerupis.svg',
+          ),
+        ],
+      );
+
+      // §4.3 wants three ways to a species. Both of these existed only inside
+      // the search results' empty state, which is reached by typing a name that
+      // matches nothing — so the two ways out of "I cannot name this fish" were
+      // behind naming the fish.
+      expect(find.text('Browse by shape'), findsOneWidget);
+      expect(find.text('Identify this fish'), findsOneWidget);
+      expect(
+        tester.getBottomLeft(find.text('Recent here')).dy,
+        lessThan(tester.getTopLeft(find.text('Browse by shape')).dy),
+      );
+      expect(
+        tester.getBottomLeft(find.text('Browse by shape')).dy,
+        lessThanOrEqualTo(tester.getTopLeft(find.text('Identify this fish')).dy),
+      );
+    });
+
+    testWidgets('glove - sizes the entry line and the two rungs at their own target class', (
+      WidgetTester tester,
+    ) async {
+      await _pumpCheck(tester, jurisdictionCode: 'ES-GA', gloved: true);
+
+      // Glove mode is a DENSITY and the mockup's §13 grows each class
+      // separately: the entry line is 72 where a full-width action is 66 and a
+      // chip sits on the 56 floor. One flat tapMin flattens all three.
+      expect(
+        tester.getSize(find.byType(LonjaSearchField)).height,
+        greaterThanOrEqualTo(LonjaDensity.glove.entryHeight),
+      );
+      for (final label in <String>['Browse by shape', 'Identify this fish']) {
+        expect(
+          tester.getSize(find.widgetWithText(LonjaButton, label)).height,
+          greaterThanOrEqualTo(LonjaDensity.glove.actionHeight),
+          reason: label,
+        );
+      }
+      expect(
+        tester.getSize(find.widgetWithText(LonjaChip, 'Change place')).height,
+        greaterThanOrEqualTo(LonjaDensity.glove.tapMin),
+      );
+    });
+
+    testWidgets('glove - separates the two rungs by the glove separation', (
+      WidgetTester tester,
+    ) async {
+      await _pumpCheck(tester, jurisdictionCode: 'ES-GA', gloved: true);
+
+      // 12 dp, against a floor of 8: separation is what prevents the
+      // adjacent-target mis-tap, and two full-width boxes are the pair most
+      // likely to be mis-hit with a wet glove.
+      expect(
+        tester.getTopLeft(find.widgetWithText(LonjaButton, 'Identify this fish')).dy -
+            tester.getBottomLeft(find.widgetWithText(LonjaButton, 'Browse by shape')).dy,
+        greaterThanOrEqualTo(LonjaDensity.glove.tapGap),
+      );
     });
 
     testWidgets('stands on one scaffold', (WidgetTester tester) async {

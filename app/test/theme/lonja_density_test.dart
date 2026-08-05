@@ -20,10 +20,51 @@ void main() {
     expect(LonjaDensity.glove.tapMin, 56);
   });
 
-  test('LonjaDensity.glove raises the separation to 8 dp', () {
+  test('LonjaDensity.glove raises the separation to 12 dp', () {
     // Separation is what prevents the adjacent-target mis-tap. §4.9 states it
     // beside the size, and it is the half people drop.
-    expect(LonjaDensity.glove.tapGap, LonjaSpace.s2);
+    //
+    // 12 and not 8: the mockup's glove screen names both numbers in one
+    // sentence — "no two free-standing targets sit closer than 12 dp, against
+    // a floor of 8" — and its `.chips`, `.strip` and `.btn-row` all take 12. A
+    // density authored on the floor meets §4.9 and misses the drawing.
+    expect(LonjaDensity.glove.tapGap, LonjaSpace.s3);
+    expect(LonjaDensity.glove.tapGap, 12);
+  });
+
+  test('LonjaDensity.glove sizes each target class separately', () {
+    // §13 of the mockup grows five classes, not one number: a chip and a
+    // navigation cell are hit with different intent, and a single tapMin
+    // flattens all five onto the smallest of them. These are its figures.
+    expect(LonjaDensity.glove.tapMin, 56, reason: 'chips sit on the floor');
+    expect(LonjaDensity.glove.actionHeight, 66);
+    expect(LonjaDensity.glove.entryHeight, 72);
+    expect(LonjaDensity.glove.navHeight, 84);
+    expect(LonjaDensity.glove.tileWidth, 126);
+    expect(LonjaDensity.glove.tileHeight, 118);
+  });
+
+  test('LonjaDensity.glove raises every target class above its standard size', () {
+    // The direction of the whole axis, asserted over the set rather than one
+    // class at a time: glove mode is a DENSITY, so a class that failed to grow
+    // is a class somebody forgot, not a design decision.
+    expect(LonjaDensity.glove.tapMin, greaterThan(LonjaDensity.standard.tapMin));
+    expect(LonjaDensity.glove.tapGap, greaterThan(LonjaDensity.standard.tapGap));
+    expect(LonjaDensity.glove.actionHeight, greaterThan(LonjaDensity.standard.actionHeight));
+    expect(LonjaDensity.glove.entryHeight, greaterThan(LonjaDensity.standard.entryHeight));
+    expect(LonjaDensity.glove.navHeight, greaterThan(LonjaDensity.standard.navHeight));
+    expect(LonjaDensity.glove.tileWidth, greaterThan(LonjaDensity.standard.tileWidth));
+    expect(LonjaDensity.glove.tileHeight, greaterThan(LonjaDensity.standard.tileHeight));
+  });
+
+  test('LonjaDensity.glove orders the target classes chip, action, entry, navigation', () {
+    // The ladder the mockup draws, and the reason there are five numbers: a
+    // chip is read and confirmed, an action is aimed at, the entry line is
+    // written in, and the navigation strip is hit blind with the phone already
+    // moving. Sizes follow intent, in that order.
+    expect(LonjaDensity.glove.actionHeight, greaterThan(LonjaDensity.glove.tapMin));
+    expect(LonjaDensity.glove.entryHeight, greaterThan(LonjaDensity.glove.actionHeight));
+    expect(LonjaDensity.glove.navHeight, greaterThan(LonjaDensity.glove.entryHeight));
   });
 
   test('LonjaDensity.glove raises the row height to 72 dp', () {
@@ -49,10 +90,15 @@ void main() {
   });
 
   test('glove - every target in the glove set is at least 56 dp and every gap at least 8 dp', () {
-    // §4.9 as one assertion over the whole set, so a future sixth field cannot
+    // §4.9 as one assertion over the whole set, so a field added later cannot
     // quietly land below the floor.
     expect(LonjaDensity.glove.tapMin, greaterThanOrEqualTo(56));
     expect(LonjaDensity.glove.rowHeight, greaterThanOrEqualTo(56));
+    expect(LonjaDensity.glove.actionHeight, greaterThanOrEqualTo(56));
+    expect(LonjaDensity.glove.entryHeight, greaterThanOrEqualTo(56));
+    expect(LonjaDensity.glove.navHeight, greaterThanOrEqualTo(56));
+    expect(LonjaDensity.glove.tileWidth, greaterThanOrEqualTo(56));
+    expect(LonjaDensity.glove.tileHeight, greaterThanOrEqualTo(56));
     expect(LonjaDensity.glove.tapGap, greaterThanOrEqualTo(8));
     expect(LonjaDensity.glove.gutter, greaterThanOrEqualTo(8));
   });

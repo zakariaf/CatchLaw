@@ -62,7 +62,7 @@ abstract final class LonjaButtonStyles {
       shape: const WidgetStatePropertyAll<OutlinedBorder>(
         RoundedRectangleBorder(borderRadius: LonjaRadii.none),
       ),
-      minimumSize: WidgetStatePropertyAll<Size>(Size.fromHeight(tokens.density.tapMin)),
+      minimumSize: WidgetStatePropertyAll<Size>(Size.fromHeight(tokens.density.actionHeight)),
       padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
         EdgeInsetsDirectional.symmetric(horizontal: LonjaSpace.s4),
       ),

@@ -32,7 +32,7 @@ const ResultDisplay _noRule = ResultDisplay(
   ),
 );
 
-void _ignore(int citationId) {}
+void _ignore(int citationId, CitationDisplay citation) {}
 
 void main() {
   final calls = <String>[];

@@ -69,11 +69,44 @@ void main() {
     expect(LonjaDensity.standard.gutter, LonjaSpace.s4);
   });
 
+  test('LonjaDensity.standard sizes each target class at the mockup\'s ungloved figure', () {
+    // The five classes §13 grows separately, at the size they are drawn before
+    // glove mode touches them. They are here so the glove row is a comparison
+    // against something rather than five numbers standing alone.
+    expect(LonjaDensity.standard.actionHeight, 56);
+    expect(LonjaDensity.standard.entryHeight, 60);
+    expect(LonjaDensity.standard.navHeight, 62);
+    expect(LonjaDensity.standard.tileWidth, 96);
+    expect(LonjaDensity.standard.tileHeight, 96);
+  });
+
   test('LonjaDensity == returns false when tapMin alone differs', () {
     // Density is a field inside LonjaTokens.==. If LonjaDensity.== were
     // identity, a glove switch would never repaint a painter.
-    const a = LonjaDensity(tapMin: 48, tapGap: 4, rowHeight: 56, hitSlop: 0, gutter: 16);
-    const b = LonjaDensity(tapMin: 56, tapGap: 4, rowHeight: 56, hitSlop: 0, gutter: 16);
+    const a = LonjaDensity(
+      tapMin: 48,
+      tapGap: 4,
+      rowHeight: 56,
+      hitSlop: 0,
+      gutter: 16,
+      actionHeight: 56,
+      entryHeight: 60,
+      navHeight: 62,
+      tileWidth: 96,
+      tileHeight: 96,
+    );
+    const b = LonjaDensity(
+      tapMin: 56,
+      tapGap: 4,
+      rowHeight: 56,
+      hitSlop: 0,
+      gutter: 16,
+      actionHeight: 56,
+      entryHeight: 60,
+      navHeight: 62,
+      tileWidth: 96,
+      tileHeight: 96,
+    );
     expect(a, isNot(b));
     expect(a, LonjaDensity.standard);
   });

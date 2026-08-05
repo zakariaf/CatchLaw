@@ -89,6 +89,96 @@ class AppLocalizationsCa extends AppLocalizations {
   String get identifyThisFish => 'Identificar aquest peix';
 
   @override
+  String identifyKeyStamp(int couplet) {
+    return 'Clau · pas $couplet';
+  }
+
+  @override
+  String get identifyAnswersSoFar => 'Respostes fins ara';
+
+  @override
+  String identifyCoupletLabel(int couplet) {
+    return 'Pas $couplet';
+  }
+
+  @override
+  String identifySpeciesRemain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'queden $count espècies',
+      many: 'queden $count espècies',
+      one: 'queda $count espècie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String identifyLeadMark(int couplet, int lead) {
+    return '$couplet · $lead';
+  }
+
+  @override
+  String identifyLeadConsequence(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Porta a $count espècies · $names',
+      many: 'Porta a $count espècies · $names',
+      one: 'Porta a $count espècie · $names',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get identifyLeadNoSpecies =>
+      'No hi ha espècies registrades més enllà d\'aquesta resposta.';
+
+  @override
+  String get identifyBackOneStep => 'Retrocedir un pas';
+
+  @override
+  String get identifyDamagedHeading => 'Si el caràcter no es veu';
+
+  @override
+  String get identifyDamagedNote =>
+      'Un caràcter malmès o absent no es pot respondre. En el seu lloc s\'enumeren, dibuixades i anomenades, totes les espècies que aquest pas encara permet.';
+
+  @override
+  String get identifyListWhatRemains => 'Enumerar el que queda';
+
+  @override
+  String get identifyProvenanceNote =>
+      'No es pren cap fotografia i res no surt del dispositiu. La clau és la impresa de la secció de referència, recorreguda pas a pas.';
+
+  @override
+  String get identifyRemainingHeading => 'Espècies que la clau encara permet';
+
+  @override
+  String get identifyNoKeyHeadline => 'Cap clau en aquest paquet';
+
+  @override
+  String get identifyNoKeyBody =>
+      'Aquesta jurisdicció no té cap clau d\'identificació transcrita. Les espècies que porta aquest paquet s\'assoleixen pel seu nom.';
+
+  @override
+  String get identifyNoCandidatesHeadline => 'Cap espècie registrada aquí';
+
+  @override
+  String get identifyNoCandidatesBody =>
+      'La clau no assoleix cap espècie amb les respostes donades. Més enllà d\'aquest punt no hi ha res transcrit en aquest paquet.';
+
+  @override
+  String get identifyKeyUnreadableHeadline => 'No s\'ha pogut llegir la clau';
+
+  @override
+  String get identifyKeyUnreadableBody =>
+      'La clau del paquet inclòs no s\'ha obert en aquest dispositiu. Les espècies que porta s\'assoleixen pel seu nom.';
+
+  @override
+  String get identifySearchByName => 'Cercar pel nom';
+
+  @override
   String get browseByShape => 'Explorar per forma';
 
   @override
@@ -472,6 +562,13 @@ class AppLocalizationsCa extends AppLocalizations {
   String get verdictAmbiguous => 'Aquí s\'apliquen dues normes del mateix rang.';
 
   @override
+  String get ambiguityEyebrow => 'Conflicte d\'instruments';
+
+  @override
+  String get ambiguityBothInForce =>
+      'Tots dos instruments són en vigor en aquest punt. CatchLaw imprimeix el text de cadascun amb la seva pròpia data de comprovació i no situa cap per damunt de l\'altre.';
+
+  @override
   String get findingFactMeasured => 'Mesurat';
 
   @override
@@ -479,6 +576,9 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get findingFactMaximum => 'Màxim';
+
+  @override
+  String get findingFactShortfall => 'Diferència';
 
   @override
   String get findingFactDates => 'Dates';
@@ -540,6 +640,94 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get flagRuleEmptyNote => 'La nota és buida.';
+
+  @override
+  String get penaltiesTitle => 'Sancions';
+
+  @override
+  String get penaltiesEntryNote => 'El que comporta l\'incompliment de les regles registrades.';
+
+  @override
+  String penaltiesLede(String jurisdiction) {
+    return 'El que comporta l\'incompliment de les regles de talla, veda, protecció o art a $jurisdiction.';
+  }
+
+  @override
+  String get penaltiesColumnOffence => 'Infracció';
+
+  @override
+  String get penaltiesColumnFine => 'Multa';
+
+  @override
+  String get penaltiesColumnLicence => 'Llicència';
+
+  @override
+  String get penaltiesOccurrenceFirst => 'Primera infracció';
+
+  @override
+  String get penaltiesOccurrenceSecond => 'Segona infracció';
+
+  @override
+  String get penaltiesOccurrenceSubsequent => 'Infracció posterior';
+
+  @override
+  String get penaltiesOffenceListLabel => 'Infraccions registrades';
+
+  @override
+  String penaltiesFineAmount(String currency, String amount) {
+    return '$amount $currency';
+  }
+
+  @override
+  String penaltiesFineRange(String currency, String lower, String upper) {
+    return '$lower–$upper $currency';
+  }
+
+  @override
+  String get penaltiesFineNotRecorded => 'Sense import registrat';
+
+  @override
+  String get penaltiesConsequenceNotRecorded => 'Sense conseqüència registrada per a la llicència';
+
+  @override
+  String get penaltiesWorkedExampleLabel => 'Exemple resolt';
+
+  @override
+  String penaltiesWorkedExampleFirst(String offence, String jurisdiction, String fine) {
+    return 'La primera infracció de $offence consta a $jurisdiction com a $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleSecond(String offence, String jurisdiction, String fine) {
+    return 'La segona infracció de $offence consta a $jurisdiction com a $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleSubsequent(String offence, String jurisdiction, String fine) {
+    return 'La infracció posterior de $offence consta a $jurisdiction com a $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleConsequence(String consequence) {
+    return 'La conseqüència registrada per a la llicència és $consequence.';
+  }
+
+  @override
+  String get penaltiesNoneRecordedHeadline => 'Sense sanció registrada';
+
+  @override
+  String penaltiesNoneRecordedBody(String jurisdiction) {
+    return 'El paquet de regles inclòs no conté cap sanció transcrita per a $jurisdiction. És una absència en la transcripció, no una afirmació que els instruments no en continguin cap.';
+  }
+
+  @override
+  String get penaltiesPackCaveat =>
+      'Els imports són els registrats al paquet de regles inclòs. Els tribunals i els inspectors poden aplicar altres disposicions.';
+
+  @override
+  String penaltiesCitationDates(String published, String checked) {
+    return 'publicat $published · revisat $checked';
+  }
 
   @override
   String get disclaimerNotDismissable => 'No es pot descartar.';
@@ -745,6 +933,34 @@ class AppLocalizationsCa extends AppLocalizations {
   }
 
   @override
+  String todayTripOpenSince(String started) {
+    return 'Sortida en curs des de les $started';
+  }
+
+  @override
+  String get todayNoTripOpen => 'Cap sortida en curs';
+
+  @override
+  String get todaySummaryRecorded => 'Peixos registrats';
+
+  @override
+  String get todaySummaryKept => 'Conservats';
+
+  @override
+  String get todaySummarySpecies => 'Espècies';
+
+  @override
+  String todayKeptOfCount(String kept, String count) {
+    return '$kept de $count';
+  }
+
+  @override
+  String get todayBySpeciesLabel => 'Per espècie';
+
+  @override
+  String get todayLoadFailed => 'No s\'ha pogut llegir el recompte d\'avui d\'aquest dispositiu.';
+
+  @override
   String get tripsHeadline => 'Sortides';
 
   @override
@@ -933,6 +1149,116 @@ class AppLocalizationsCa extends AppLocalizations {
   String get navReference => 'Referència';
 
   @override
+  String get referenceContentsLabel => 'Índex';
+
+  @override
+  String get referenceHubLede =>
+      'Tot allò d\'on s\'extreu un dictamen, desat íntegre en aquest dispositiu i llegible sense cobertura.';
+
+  @override
+  String get referenceEntryRuleText => 'Text normatiu';
+
+  @override
+  String get referenceEntryRuleTextNote =>
+      'Els instruments tal com es van publicar, article per article, en la llengua de publicació';
+
+  @override
+  String get ruleTextSearchHint => 'Cerca al text complet';
+
+  @override
+  String get ruleTextAllArticles => 'Tots els articles';
+
+  @override
+  String get ruleTextPublishedLabel => 'Publicat';
+
+  @override
+  String get ruleTextCheckedLabel => 'Comprovat';
+
+  @override
+  String get ruleTextCompleteNote =>
+      'Aquest text es conserva íntegre en aquest dispositiu i no està abreujat.';
+
+  @override
+  String get ruleTextNoneRecordedHeadline => 'Sense text transcrit';
+
+  @override
+  String ruleTextNoneRecordedBody(String instrument) {
+    return 'Aquesta còpia no conté el text dels articles de $instrument. La citació anterior anomena l’instrument i les dates de publicació i de la darrera comprovació.';
+  }
+
+  @override
+  String get ruleTextNoMatchHeadline => 'Cap article coincideix';
+
+  @override
+  String get ruleTextNoMatchBody => 'Cap article d’aquest instrument conté aquesta redacció.';
+
+  @override
+  String get referenceEntryProtected => 'Espècies protegides';
+
+  @override
+  String get referenceEntryProtectedNote => 'Làmines, trets distintius i què abasta la protecció';
+
+  @override
+  String get referenceEntryGear => 'Arts i mètodes';
+
+  @override
+  String get referenceEntryGearNote => 'Malla, línia de mà, llargada de xarxa, mètodes prohibits';
+
+  @override
+  String get referenceEntryPenalties => 'Sancions';
+
+  @override
+  String get referenceEntryPenaltiesNote =>
+      'Multes i conseqüències sobre la llicència, per infracció';
+
+  @override
+  String get referenceEntryLicences => 'Llicències';
+
+  @override
+  String get referenceEntryLicencesNote =>
+      'Llicències d\'embarcació, de pescador i d\'art, i què abasta cadascuna';
+
+  @override
+  String get referenceEntryGlossary => 'Glossari';
+
+  @override
+  String get referenceEntryGlossaryNote => 'TL · FL · SL · CW · SHL · ML i els termes locals';
+
+  @override
+  String get referenceEntryChangelog => 'Registre de canvis';
+
+  @override
+  String get referenceEntryChangelogNote => 'Què va canviar en cada paquet i quan es va verificar';
+
+  @override
+  String get referenceEntryPlates => 'Làmines d\'espècies';
+
+  @override
+  String get referenceEntryPlatesNote =>
+      'Siluetes agrupades per família, per a un peix conegut per la forma';
+
+  @override
+  String get referenceEntryNotPrinted => 'no imprès';
+
+  @override
+  String get referenceSectionNotPrinted =>
+      'Aquesta secció no està impresa en aquest exemplar. Aquesta versió respon si un peix compleix les normes al lloc on es va desembarcar, i cita l\'instrument llegit.';
+
+  @override
+  String get referenceHeldLabel => 'Desat en aquest dispositiu';
+
+  @override
+  String referenceHeldPack(String version, String checkedOn) {
+    return 'paquet $version · verificat $checkedOn';
+  }
+
+  @override
+  String get referenceHeldNote => 'Aquest llibre cita els instruments que desa. No els resumeix.';
+
+  @override
+  String get referenceHeldEmpty => 'Aquest exemplar no desa cap jurisdicció.';
+
+  @override
   String get navSettings => 'Configuració';
 
   @override
@@ -955,6 +1281,75 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get checkNoRecentsBody =>
       'Les espècies que cerquis en aquest lloc apareixen aquí, així el següent és un sol toc.';
+
+  @override
+  String get firstRunOfflineBadge => 'Sense senyal · sense xarxa per disseny';
+
+  @override
+  String get firstRunTagline => 'Això és legal?';
+
+  @override
+  String get firstRunMetaFirstRun => 'Primera arrencada';
+
+  @override
+  String get firstRunMetaOnceOnly => 'Una sola vegada';
+
+  @override
+  String get firstRunHeadline => 'Component el llibre de regles';
+
+  @override
+  String get firstRunLede =>
+      'Es desempaqueta el paquet de regles inclòs, les làmines i el text legal, perquè a partir d’ara tot s’obri a l’instant.';
+
+  @override
+  String get firstRunSilhouetteLabel => 'Silueta gravada d’un anfós';
+
+  @override
+  String firstRunProgressBytes(String written, String total) {
+    return '$written de $total kB';
+  }
+
+  @override
+  String firstRunProgressPercent(String percent) {
+    return '$percent %';
+  }
+
+  @override
+  String get firstRunSectionInstalling => 'En instal·lació';
+
+  @override
+  String get firstRunStageRulePack => 'Paquet de regles';
+
+  @override
+  String get firstRunStageLegalText => 'Text legal';
+
+  @override
+  String get firstRunStagePlates => 'Làmines d’espècies';
+
+  @override
+  String get firstRunStageGlossary => 'Glossari i clau';
+
+  @override
+  String get firstRunStageDone => '· fet';
+
+  @override
+  String get firstRunStageInProgress => 'En curs…';
+
+  @override
+  String get firstRunStagePending => 'Encara sense desempaquetar';
+
+  @override
+  String firstRunTimeRemaining(String seconds) {
+    return 'Queden uns $seconds s';
+  }
+
+  @override
+  String get firstRunNoDownload =>
+      'Això passa una sola vegada. No es descarrega res: tot ja era dins de l’aplicació en instal·lar-la, i no hi ha cap petició de xarxa que pugui fallar.';
+
+  @override
+  String get firstRunFooterNote =>
+      'Sense compte. Sense inici de sessió. Sense sincronització. Quan això acabi, CatchLaw no torna a esperar res.';
 
   @override
   String measureManualReading(String mm) {

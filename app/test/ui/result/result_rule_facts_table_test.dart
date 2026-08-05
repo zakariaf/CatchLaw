@@ -28,7 +28,13 @@ Future<void> _pumpTable(
   WidgetTester tester,
   List<RuleFact> facts, {
   Locale locale = const Locale('en'),
-}) => pumpLonja(tester, ResultRuleFactsTable(facts: facts), locale: locale);
+  LonjaSkin skin = LonjaSkin.paper,
+}) => pumpLonja(
+  tester,
+  ResultRuleFactsTable(facts: facts),
+  locale: locale,
+  skin: skin,
+);
 
 void main() {
   group('ResultRuleFactsTable', () {
@@ -82,6 +88,24 @@ void main() {
       final Color? label = tester.widget<Text>(find.text('STATUS')).style?.color;
       expect(outcome, isNot(plain));
       expect(label, muted);
+    });
+
+    testWidgets('sunlight - keeps the outcome legible without leaning on the pigment', (
+      WidgetTester tester,
+    ) async {
+      // The mockup prints `.phone.sun .rt td` in plain black, spending the one
+      // remaining colour on the stamp alone — but the palette is what deletes
+      // a colour, and no widget outside the stamp may branch on the skin
+      // (D-20). Until a token carries it, what this asserts is the part that
+      // does not depend on hue: the weight is a second, independent signal, so
+      // the row survives greyscale either way (invariant 4).
+      await _pumpTable(tester, _protectedFacts, skin: LonjaSkin.sunlight);
+
+      final Text outcome = tester.widget<Text>(find.text('Fully protected'));
+      final Text plain = tester.widget<Text>(find.text('Not applicable').first);
+      expect(outcome.style?.fontWeight, FontWeight.w600);
+      expect(plain.style?.fontWeight, isNot(FontWeight.w600));
+      expect(outcome.style?.color, LonjaPalettes.sunlight.verdictFail);
     });
 
     testWidgets('uses tabular figures in every value cell', (WidgetTester tester) async {

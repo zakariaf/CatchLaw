@@ -103,7 +103,11 @@ class _LonjaSearchFieldState extends State<LonjaSearchField> {
       textField: true,
       label: widget.semanticLabel,
       child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: tokens.density.tapMin),
+        // The ENTRY class. The box a fisher writes in is the tallest thing on
+        // S1 after the navigation strip — 72 dp in glove mode against the
+        // generic 56 — because it is aimed at with a wet thumb while the other
+        // hand is still holding the fish.
+        constraints: BoxConstraints(minHeight: tokens.density.entryHeight),
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: tokens.surfaceSunk,

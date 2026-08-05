@@ -100,6 +100,11 @@ class LonjaDensity {
     required this.rowHeight,
     required this.hitSlop,
     required this.gutter,
+    required this.actionHeight,
+    required this.entryHeight,
+    required this.navHeight,
+    required this.tileWidth,
+    required this.tileHeight,
   });
 
   /// Ungloved. `SPEC.md` §13's floor is ≥ 48 dp; this sits on it.
@@ -109,6 +114,11 @@ class LonjaDensity {
     rowHeight: 56,
     hitSlop: 0,
     gutter: LonjaSpace.s4,
+    actionHeight: 56,
+    entryHeight: 60,
+    navHeight: 62,
+    tileWidth: 96,
+    tileHeight: 96,
   );
 
   /// Gloved, or wet, or both.
@@ -117,15 +127,33 @@ class LonjaDensity {
   /// gloved or wet thumb loses roughly 8 dp of precision, and separation is
   /// what prevents the adjacent-target mis-tap — which is the half people drop
   /// when they read the size and stop.
+  ///
+  /// **The 8 is the floor, not the value.** The mockup's glove screen states
+  /// both numbers in the same sentence — "no two free-standing targets sit
+  /// closer than 12 dp, against a floor of 8" — and the `.chips`, `.strip` and
+  /// `.btn-row` bands it draws all take 12. A density authored on the floor is
+  /// a density that meets the spec and misses the drawing.
+  ///
+  /// **And a target class is not one number.** §13 of the mockup grows each
+  /// class separately — chips 56, buttons 66, search 72, species tiles
+  /// 126 × 118, navigation 84 — because a chip and a navigation cell are hit
+  /// with different intent and a single [tapMin] flattens all five onto the
+  /// smallest of them.
   static const LonjaDensity glove = LonjaDensity(
     tapMin: 56,
-    tapGap: LonjaSpace.s2,
+    tapGap: LonjaSpace.s3,
     rowHeight: 72,
     hitSlop: 4,
     gutter: LonjaSpace.s5,
+    actionHeight: 66,
+    entryHeight: 72,
+    navHeight: 84,
+    tileWidth: 126,
+    tileHeight: 118,
   );
 
-  /// The smallest side of a primary target.
+  /// The smallest side of a primary target, and the floor every other class
+  /// clears — a chip sits exactly on it.
   final double tapMin;
 
   /// The separation between two adjacent targets — what prevents the
@@ -141,6 +169,26 @@ class LonjaDensity {
   /// The screen gutter.
   final double gutter;
 
+  /// A full-width action box — the two square buttons standing under the
+  /// recents strip. Taller than [tapMin], because these are aimed at without
+  /// looking.
+  final double actionHeight;
+
+  /// The entry line, which is the one place on the page a fisher writes and the
+  /// tallest target on it after the navigation strip.
+  final double entryHeight;
+
+  /// One navigation cell, the largest target the app draws: it is hit last,
+  /// blind, with the phone already moving.
+  final double navHeight;
+
+  /// A recents tile's width.
+  final double tileWidth;
+
+  /// A recents tile's height. Taller than it is wide is wrong; the tile carries
+  /// the art over the name, so it is wider than it is tall by a little.
+  final double tileHeight;
+
   @override
   bool operator ==(Object other) =>
       other is LonjaDensity &&
@@ -148,10 +196,26 @@ class LonjaDensity {
       other.tapGap == tapGap &&
       other.rowHeight == rowHeight &&
       other.hitSlop == hitSlop &&
-      other.gutter == gutter;
+      other.gutter == gutter &&
+      other.actionHeight == actionHeight &&
+      other.entryHeight == entryHeight &&
+      other.navHeight == navHeight &&
+      other.tileWidth == tileWidth &&
+      other.tileHeight == tileHeight;
 
   @override
-  int get hashCode => Object.hash(tapMin, tapGap, rowHeight, hitSlop, gutter);
+  int get hashCode => Object.hash(
+    tapMin,
+    tapGap,
+    rowHeight,
+    hitSlop,
+    gutter,
+    actionHeight,
+    entryHeight,
+    navHeight,
+    tileWidth,
+    tileHeight,
+  );
 
   @override
   String toString() => 'LonjaDensity(tapMin: $tapMin, tapGap: $tapGap)';

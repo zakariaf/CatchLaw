@@ -1,12 +1,18 @@
 import 'package:catchlaw/data/providers.dart';
+import 'package:catchlaw/data/services/reference_install_progress.dart';
 import 'package:catchlaw/domain/models/evaluation_scope.dart';
 import 'package:catchlaw/domain/models/species_search_state.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
+import 'package:catchlaw/ui/bootstrap/first_run_screen.dart';
+import 'package:catchlaw/ui/check/widgets/check_actions.dart';
 import 'package:catchlaw/ui/check/widgets/check_empty_state.dart';
+import 'package:catchlaw/ui/check/widgets/check_place_chips.dart';
 import 'package:catchlaw/ui/check/widgets/recents_strip.dart';
 import 'package:catchlaw/ui/core/ui/lonja_masthead.dart';
 import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
+import 'package:catchlaw/ui/identify/widgets/identify_screen.dart';
 import 'package:catchlaw/ui/species/view_models/species_search_view_model.dart';
+import 'package:catchlaw/ui/species/widgets/species_browse_screen.dart';
 import 'package:catchlaw/ui/species/widgets/species_detail_screen.dart';
 import 'package:catchlaw/ui/species/widgets/species_search_field.dart';
 import 'package:catchlaw/ui/species/widgets/species_search_results.dart';
@@ -34,7 +40,7 @@ class CheckScreen extends ConsumerWidget {
     final AsyncValue<EvaluationScope?> scope = ref.watch(evaluationScopeProvider);
 
     return scope.when(
-      loading: () => const Scaffold(body: SizedBox.shrink()),
+      loading: () => const _WhileThePlaceResolves(),
       // A place that could not be read is not a place that was never chosen,
       // and the picker states the difference.
       error: (Object error, StackTrace _) => const ZonePickerScreen(),
@@ -44,12 +50,42 @@ class CheckScreen extends ConsumerWidget {
   }
 }
 
+/// What the Check branch draws before its stream has answered.
+///
+/// **The first-run takeover is keyed on bytes, not on `loading`.** The place
+/// stream is unresolved for a moment on EVERY launch, and a screen reading
+/// *Setting out the rule book* on the second one would be a sentence about an
+/// extraction that is not happening. `ReferenceInstaller` reports nothing at all
+/// when the marker already names this build, so this stays blank until the first
+/// chunk lands — which is also the frame at which the wait becomes long enough
+/// to be worth explaining.
+///
+/// The listenable is subscribed here rather than read: the extraction reports
+/// once per 64 KiB and the place stream emits once at the end, so a widget that
+/// only rebuilt with the stream would show whichever figure happened to be
+/// current on the frame it mounted.
+class _WhileThePlaceResolves extends ConsumerWidget {
+  const _WhileThePlaceResolves();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ReferenceInstallReporter reporter = ref.watch(referenceInstallReporterProvider);
+    return ValueListenableBuilder<ReferenceInstallProgress>(
+      valueListenable: reporter.listenable,
+      builder: (BuildContext context, ReferenceInstallProgress progress, Widget? _) =>
+          progress.isInstalling ? const FirstRunScreen() : const Scaffold(body: SizedBox.shrink()),
+    );
+  }
+}
+
 /// Check, once the app knows where he is.
 ///
-/// **The order is the mockup's, top to bottom:** masthead, then the entry
-/// line, then what he opened here before. It ran the other way round — the
-/// strip above the box — and a fisher who had never been to this place saw an
-/// empty state where the one control on the screen belongs.
+/// **The order is the mockup's, top to bottom:** the mast, the chips band that
+/// stamps which printing this is and offers another place, the entry line, what
+/// he opened here before, and the two other ways in. It ran short and out of
+/// order — the strip above the box, the checked date hanging off the mast, and
+/// the shape grid and the key reachable only by first typing a name that
+/// matched nothing.
 class _Check extends ConsumerWidget {
   const _Check({required this.place});
 
@@ -90,6 +126,18 @@ class _Check extends ConsumerWidget {
       );
     }
 
+    void identify() => Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => IdentifyScreen(onSpeciesChosen: open),
+      ),
+    );
+
+    void browseByShape() => Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => SpeciesBrowseScreen(onSpeciesChosen: open),
+      ),
+    );
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -97,13 +145,6 @@ class _Check extends ConsumerWidget {
           children: <Widget>[
             LonjaMasthead(
               place: place.zoneCode,
-              checkedOn: place.checkedOn,
-              onChangePlace: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) =>
-                      ZonePickerScreen(onConfirmed: () => Navigator.of(context).pop()),
-                ),
-              ),
               // The mast's own hand at the trailing margin: WHICH PRINTING of
               // the rules this device is holding. Two devices held side by side
               // at the quay differ in exactly this line.
@@ -118,29 +159,51 @@ class _Check extends ConsumerWidget {
             // invariant 5 evaluates and shows an expired pack anyway, and the
             // bar says so rather than standing in front of the answer.
             if (isPackExpired) LonjaStaleBar(message: l10n.rulePackExpired),
+            CheckPlaceChips(
+              checkedOn: place.checkedOn,
+              onChangePlace: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) =>
+                      ZonePickerScreen(onConfirmed: () => Navigator.of(context).pop()),
+                ),
+              ),
+            ),
             const SpeciesSearchField(),
             Expanded(
               child: isSearching
                   ? SpeciesSearchResults(
                       onSpeciesChosen: open,
-                      // S7's key is E14's and S6's shapes are E08's. Both entry
-                      // points exist so the layout is the one that ships; the
-                      // one that is built is reachable.
-                      onIdentify: () {},
-                      onBrowseByShape: () {},
+                      // S7's key, reachable at last. It was a no-op for a
+                      // release — the entry point existed so the layout was
+                      // the one that ships, and it led nowhere, which is
+                      // exactly the dead end §4.3 wants three ways out of.
+                      onIdentify: identify,
+                      onBrowseByShape: browseByShape,
                     )
-                  : Align(
-                      // The strip is two rows tall and the band under the field
-                      // is the rest of the page: it sits at the top of that
-                      // band rather than floating in the middle of it.
-                      alignment: AlignmentDirectional.topStart,
-                      child: RecentsStrip(
-                        place: place,
-                        onSpeciesChosen: open,
-                        // Absent when he has recents, authored when he does
-                        // not: a first launch that showed a blank band would
-                        // read as a strip that failed to load.
-                        whenEmpty: const CheckEmptyState(),
+                  : SingleChildScrollView(
+                      // The strip and the two rungs under it are the whole
+                      // band while nothing is typed. Scrollable rather than
+                      // clipped: at a large textScaler, in a locale whose
+                      // labels run long, the second rung would otherwise fall
+                      // off the bottom of the glass.
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          RecentsStrip(
+                            place: place,
+                            onSpeciesChosen: open,
+                            // Absent when he has recents, authored when he does
+                            // not: a first launch that showed a blank band would
+                            // read as a strip that failed to load.
+                            whenEmpty: const CheckEmptyState(),
+                          ),
+                          // Standing, and not behind a search that found
+                          // nothing: a fisher who cannot name the fish cannot
+                          // type it either, and both of these were reachable
+                          // only by typing.
+                          CheckActions(onBrowseByShape: browseByShape, onIdentify: identify),
+                        ],
                       ),
                     ),
             ),

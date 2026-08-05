@@ -141,7 +141,9 @@ class LonjaButton extends StatelessWidget {
       enabled: enabled,
       hint: enabled ? null : disabledReason,
       child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: tokens.density.tapMin),
+        // The ACTION class, not the generic floor: a full-width box aimed at
+        // without looking is 66 dp in glove mode, where a chip is 56.
+        constraints: BoxConstraints(minHeight: tokens.density.actionHeight),
         child: TextButton(
           onPressed: enabled ? (onPressed ?? () => onConfirmed!()) : null,
           style: LonjaButtonStyles.resolve(tokens: tokens, type: type, variant: variant),

@@ -532,6 +532,20 @@ class VerdictPresenter {
         value: _length(finding.thresholdMm, finding.method),
       ),
     );
+    // The arithmetic, printed rather than left to be done. The stamp's margin
+    // line states it in words at the top of the page; the table states it as a
+    // figure in the column the reader is already checking against a ruler, and
+    // a fisher who has to subtract two numbers in his head at 05:40 subtracts
+    // them wrong. Written only where both numbers exist and only through
+    // [_length], so it cannot reach the sheet without its method beside it.
+    if (measured != null && measured != finding.thresholdMm) {
+      rows.add(
+        RuleFact(
+          label: l10n.findingFactShortfall,
+          value: _length((finding.thresholdMm - measured).abs(), finding.method),
+        ),
+      );
+    }
     return rows;
   }
 

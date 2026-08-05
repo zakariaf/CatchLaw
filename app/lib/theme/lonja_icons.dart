@@ -151,6 +151,19 @@ abstract final class LonjaIcons {
   /// Its own mark rather than a faded tick: an open question rendered as a pale
   /// pass is a rule reported as checked when nothing was checked.
   static const LonjaGlyph openQuestion = LonjaGlyph('openQuestion', _openQuestion);
+
+  /// The standing notice at the foot of the sheet.
+  ///
+  /// A ringed lower-case *i* and never a filled Material badge: the disclaimer
+  /// is printed apparatus, and a solid roundel beside it reads as an alert the
+  /// reader may dismiss — which is the one thing this notice is not.
+  static const LonjaGlyph info = LonjaGlyph('info', _info);
+
+  /// One more row goes into the private log.
+  ///
+  /// A bare cross of two strokes, on the same 24 grid as the rest: it marks an
+  /// addition to a ledger the fisher keeps, not a floating action.
+  static const LonjaGlyph plus = LonjaGlyph('plus', _plus);
 }
 
 Path _tick() => Path()
@@ -188,6 +201,19 @@ Path _openQuestion() => Path()
   ..lineTo(15, 9.5)
   ..moveTo(15, 9.5)
   ..lineTo(12, 13.5);
+
+Path _info() => Path()
+  ..addOval(Rect.fromCircle(center: const Offset(12, 12), radius: 9))
+  ..moveTo(12, 11)
+  ..lineTo(12, 17)
+  ..moveTo(12, 7.5)
+  ..lineTo(12, 8.2);
+
+Path _plus() => Path()
+  ..moveTo(12, 4.5)
+  ..lineTo(12, 19.5)
+  ..moveTo(4.5, 12)
+  ..lineTo(19.5, 12);
 
 Path _back() => Path()
   ..moveTo(15, 4)

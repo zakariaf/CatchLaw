@@ -51,8 +51,9 @@ class ResultSection extends StatefulWidget {
   /// The `source_url` of each footnote, in the same order. Nullable per §7.1.
   final List<String?> sourceUrls;
 
-  /// Opens the bundled verbatim article for a citation id.
-  final void Function(int citationId) onOpenRuleText;
+  /// Opens the bundled verbatim article for a citation id, headed by the
+  /// citation the footnote printed.
+  final void Function(int citationId, CitationDisplay citation) onOpenRuleText;
 
   @override
   State<ResultSection> createState() => _ResultSectionState();

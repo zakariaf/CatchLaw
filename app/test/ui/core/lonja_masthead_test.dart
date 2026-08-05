@@ -6,13 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../testing/theme/pump_lonja.dart';
 
-Widget _masthead({String? zoneCode, String? packVersion}) => LonjaMasthead(
-  place: 'Ras Al Khaimah',
-  checkedOn: '2026-07-14',
-  onChangePlace: () {},
-  zoneCode: zoneCode,
-  packVersion: packVersion,
-);
+Widget _masthead({String? zoneCode, String? packVersion}) =>
+    LonjaMasthead(place: 'Ras Al Khaimah', zoneCode: zoneCode, packVersion: packVersion);
 
 TextStyle _styleOf(WidgetTester tester, String text) => tester.widget<Text>(find.text(text)).style!;
 
@@ -66,7 +61,6 @@ void main() {
     await pumpLonja(tester, _masthead());
 
     expect(find.text('Ras Al Khaimah'), findsOneWidget);
-    expect(find.textContaining('2026-07-14'), findsOneWidget);
     expect(find.text('RAK-GULF'), findsNothing);
     expect(find.text('v2026.2'), findsNothing);
   });
@@ -80,13 +74,25 @@ void main() {
     expect(find.text('RAK-GULF'), findsNothing);
   });
 
-  testWidgets('LonjaMasthead keeps the place and the checked date beside the meta block', (
+  testWidgets('LonjaMasthead keeps the labelled place beside the meta block', (
     WidgetTester tester,
   ) async {
     await pumpLonja(tester, _masthead(zoneCode: 'RAK-GULF', packVersion: 'v2026.2'));
 
     expect(find.text('Ras Al Khaimah'), findsOneWidget);
-    expect(find.textContaining('2026-07-14'), findsOneWidget);
     expect(find.text('Answering for'), findsOneWidget);
+  });
+
+  testWidgets('LonjaMasthead carries no control', (WidgetTester tester) async {
+    // The mast row's whole job is to be read at a glance. The way to another
+    // place is a chip on the band below it, and the date the pack was last
+    // checked is the seal beside that chip — neither is wedged into the one row
+    // that has to stay a masthead.
+    await pumpLonja(tester, _masthead(zoneCode: 'RAK-GULF', packVersion: 'v2026.2'));
+
+    expect(find.byType(TextButton), findsNothing);
+    expect(find.byType(InkWell), findsNothing);
+    expect(find.text('Change place'), findsNothing);
+    expect(find.textContaining('2026-07-14'), findsNothing);
   });
 }

@@ -1,3 +1,4 @@
+import 'package:catchlaw/data/services/reference_install_progress.dart';
 import 'package:catchlaw/domain/models/user_profile.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/l10n/locale_notifier.dart';
@@ -100,12 +101,17 @@ class CatchlawApp extends ConsumerWidget {
       // this is the line that lets a fisher reach any of it.
       home:
           home ??
-          const AppShell(
-            check: CheckScreen(),
-            today: TodayScreen(),
-            trips: TripsScreen(),
-            reference: ReferenceScreen(),
-            settings: SettingsScreen(),
+          AppShell(
+            check: const CheckScreen(),
+            today: const TodayScreen(),
+            trips: const TripsScreen(),
+            reference: const ReferenceScreen(),
+            settings: const SettingsScreen(),
+            // The one-time extraction suppresses the strip, and this is where
+            // the container that knows about it meets the shell that does not.
+            // Every branch reads the same file, so five destinations under the
+            // takeover are five ways to reach the same wait.
+            installProgress: ref.watch(referenceInstallReporterProvider).listenable,
           ),
     );
   }

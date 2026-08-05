@@ -82,7 +82,14 @@ class ResultCitationFootnote extends StatelessWidget {
   ///
   /// A callback rather than a route, so this widget holds no knowledge of the
   /// navigation stack and can be pumped without one.
-  final void Function(int citationId) onOpenRuleText;
+  ///
+  /// **The row id AND the printed citation.** S13 heads its page with the
+  /// instrument and the two dates, and those four fields are here, on the
+  /// footnote that was tapped. A caller handed only the id would have to look
+  /// the citation up a second time — through a table the presenter deliberately
+  /// keeps out of the display type — and a second lookup is how the head of the
+  /// article page and the footnote under the verdict come to disagree.
+  final void Function(int citationId, CitationDisplay citation) onOpenRuleText;
 
   /// The exact line the footnote prints, and the exact line copy puts on the
   /// clipboard.
@@ -129,7 +136,7 @@ class ResultCitationFootnote extends StatelessWidget {
           label: printedLine,
           child: InkWell(
             key: openKey,
-            onTap: () => onOpenRuleText(citationId),
+            onTap: () => onOpenRuleText(citationId, citation),
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: tokens.density.tapMin),
               child: Row(

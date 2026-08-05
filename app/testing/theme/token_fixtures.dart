@@ -51,6 +51,11 @@ const LonjaDensity kDensityProbe = LonjaDensity(
   rowHeight: 99,
   hitSlop: 9,
   gutter: 99,
+  actionHeight: 99,
+  entryHeight: 99,
+  navHeight: 99,
+  tileWidth: 99,
+  tileHeight: 99,
 );
 
 /// The **widening** builder production is forbidden to have.

@@ -15,25 +15,18 @@ import 'package:flutter/material.dart';
 /// register down, in the gazette's own hand: the code the rows were filed
 /// under and the version of the pack they came out of, so a fisher comparing
 /// two devices at the quay can see in one glance which of them is behind.
+///
+/// **It is a masthead and carries no control.** The way to another place, and
+/// the date the pack was last checked, are chips on the band below it: the mast
+/// row is the one row on the page whose whole job is to be read at a glance,
+/// and a `TextButton` wedged into it made the place line something a thumb
+/// aimed at rather than something an eye landed on.
 class LonjaMasthead extends StatelessWidget {
-  /// Names [place], transcribed on [checkedOn].
-  const LonjaMasthead({
-    required this.place,
-    required this.checkedOn,
-    required this.onChangePlace,
-    this.zoneCode,
-    this.packVersion,
-    super.key,
-  });
+  /// Names [place].
+  const LonjaMasthead({required this.place, this.zoneCode, this.packVersion, super.key});
 
   /// The place, already localised.
   final String place;
-
-  /// When a human last verified the transcription, ISO-8601.
-  final String checkedOn;
-
-  /// Reopens S9.
-  final VoidCallback onChangePlace;
 
   /// The zone's code — the first meta line, or absent.
   ///
@@ -75,22 +68,7 @@ class LonjaMasthead extends StatelessWidget {
                       textAlign: TextAlign.start,
                     ),
                     Text(place, style: type.subtitle, textAlign: TextAlign.start),
-                    Text(
-                      // ISO and unlocalised, like every other date quoted from
-                      // an instrument: the same string in six languages, and
-                      // comparable against the gazette by eye.
-                      l10n.checkPackChecked(checkedOn),
-                      style: type.citation.copyWith(color: tokens.onSurfaceMuted),
-                      textAlign: TextAlign.start,
-                    ),
                   ],
-                ),
-              ),
-              ConstrainedBox(
-                constraints: BoxConstraints(minHeight: tokens.density.tapMin),
-                child: TextButton(
-                  onPressed: onChangePlace,
-                  child: Text(l10n.checkChangePlace, textAlign: TextAlign.center),
                 ),
               ),
               if (zoneCode != null || packVersion != null) ...<Widget>[

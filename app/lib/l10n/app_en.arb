@@ -91,6 +91,117 @@
   "@identifyThisFish": {
     "description": "The primary way onward from an empty search — S7's key. One of the three entry points §4.3 requires."
   },
+  "identifyKeyStamp": "Key · couplet {couplet}",
+  "@identifyKeyStamp": {
+    "description": "S7's bar stamp: which couplet of the key is open. Cased at the call site, never here.",
+    "placeholders": {
+      "couplet": {
+        "type": "int"
+      }
+    }
+  },
+  "identifyAnswersSoFar": "Answers so far",
+  "@identifyAnswersSoFar": {
+    "description": "S7's eyebrow over the trail of answers already given."
+  },
+  "identifyCoupletLabel": "Couplet {couplet}",
+  "@identifyCoupletLabel": {
+    "description": "S7's couplet number, set over the question. Cased at the call site.",
+    "placeholders": {
+      "couplet": {
+        "type": "int"
+      }
+    }
+  },
+  "identifySpeciesRemain": "{count, plural, one{{count} species remains} other{{count} species remain}}",
+  "@identifySpeciesRemain": {
+    "description": "S7's live count of what the answers so far still allow. A count of candidates, not a claim about any rule.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "identifyLeadMark": "{couplet} · {lead}",
+  "@identifyLeadMark": {
+    "description": "The printed mark on one answer of a couplet — the couplet number and which answer it is.",
+    "placeholders": {
+      "couplet": {
+        "type": "int"
+      },
+      "lead": {
+        "type": "int"
+      }
+    }
+  },
+  "identifyLeadConsequence": "{count, plural, one{Leads to {count} species · {names}} other{Leads to {count} species · {names}}}",
+  "@identifyLeadConsequence": {
+    "description": "What taking one answer still allows: how many species, and the first few of them by name.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "identifyLeadNoSpecies": "No species are recorded beyond this answer.",
+  "@identifyLeadNoSpecies": {
+    "description": "A transcribed answer with nothing under it — §7.1's terminal state, stated as a fact about the pack rather than as an error."
+  },
+  "identifyBackOneStep": "Back one step",
+  "@identifyBackOneStep": {
+    "description": "S7's way back up the key, one couplet at a time."
+  },
+  "identifyDamagedHeading": "If the character cannot be seen",
+  "@identifyDamagedHeading": {
+    "description": "S7's section head over the alternate route, for a fish whose tail, fin or mouth is damaged or missing."
+  },
+  "identifyDamagedNote": "A damaged or missing character cannot be answered. Every species this couplet still allows is listed instead, drawn and named.",
+  "@identifyDamagedNote": {
+    "description": "What the skip affordance does. A statement of the mechanism, never an instruction to the reader."
+  },
+  "identifyListWhatRemains": "List what remains",
+  "@identifyListWhatRemains": {
+    "description": "S7's skip affordance: it stops the key here and lists every candidate the answers so far still allow."
+  },
+  "identifyProvenanceNote": "No photograph is taken and nothing leaves the device. The key is the printed one from the reference section, walked one couplet at a time.",
+  "@identifyProvenanceNote": {
+    "description": "S7's closing note: what this screen is, and what it does not do. Invariant 1, said in words on the screen it applies to."
+  },
+  "identifyRemainingHeading": "Species the key still allows",
+  "@identifyRemainingHeading": {
+    "description": "The heading over S7's candidate list, at a leaf or after the key was stopped."
+  },
+  "identifyNoKeyHeadline": "No key in this pack",
+  "@identifyNoKeyHeadline": {
+    "description": "The pack carries no key rows at all. A fact about the transcription, and distinct from a key that could not be read."
+  },
+  "identifyNoKeyBody": "No identification key is transcribed for this jurisdiction. The species this pack carries are reachable by name.",
+  "@identifyNoKeyBody": {
+    "description": "Why S7 has nothing to walk, and what else the pack holds. A dead end is the thing being prevented."
+  },
+  "identifyNoCandidatesHeadline": "No species recorded here",
+  "@identifyNoCandidatesHeadline": {
+    "description": "The answers given reach no candidate. Nothing transcribed, and not a claim that no such fish exists."
+  },
+  "identifyNoCandidatesBody": "The key reaches no species along the answers given. Nothing beyond this point is transcribed in this pack.",
+  "@identifyNoCandidatesBody": {
+    "description": "The empty candidate list, stated as what the pack holds rather than as a failure."
+  },
+  "identifyKeyUnreadableHeadline": "The key could not be read",
+  "@identifyKeyUnreadableHeadline": {
+    "description": "A storage failure, and never merged with the pack that carries no key: one is a fact about the device, the other about the transcription."
+  },
+  "identifyKeyUnreadableBody": "The bundled pack's key did not open on this device. The species it carries are reachable by name.",
+  "@identifyKeyUnreadableBody": {
+    "description": "What failed and what still works, on the read-failed branch of S7."
+  },
+  "identifySearchByName": "Search by name",
+  "@identifySearchByName": {
+    "description": "The way onward from every S7 state that has nothing to walk — back to S5's species search."
+  },
   "browseByShape": "Browse by shape",
   "@browseByShape": {
     "description": "The secondary way onward from an empty search — S6."
@@ -788,6 +899,14 @@
   "@verdictAmbiguous": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Two instruments of equal standing disagree and the app chooses neither. It states the disagreement and ranks nothing; picking one would be advice."
   },
+  "ambiguityEyebrow": "Conflict of instruments",
+  "@ambiguityEyebrow": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The tracked eyebrow over the ambiguity notice, naming what the block is. A noun phrase, not a sentence. Cased at the call site with toUpperCase(), never authored uppercase — the transform is a silent no-op on Arabic and the ARB holds one wording per key."
+  },
+  "ambiguityBothInForce": "Both instruments are in force at this point. CatchLaw prints the text of each with its own check date, and ranks neither above the other.",
+  "@ambiguityBothInForce": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The closing note under the two instrument blocks. It says what the app did — printed both, dated both, ranked neither — and it may not be softened into a suggestion about which one to follow."
+  },
   "findingFactMeasured": "Measured",
   "@findingFactMeasured": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence."
@@ -799,6 +918,10 @@
   "findingFactMaximum": "Maximum",
   "@findingFactMaximum": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table. A noun, not a sentence."
+  },
+  "findingFactShortfall": "Shortfall",
+  "@findingFactShortfall": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Row label in the rule table: the arithmetic distance between the measured length and the threshold, stated as a number rather than as a consequence. A noun, not a sentence."
   },
   "findingFactDates": "Dates",
   "@findingFactDates": {
@@ -901,6 +1024,192 @@
   "flagRuleEmptyNote": "The note is empty.",
   "@flagRuleEmptyNote": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. States why nothing was written."
+  },
+  "penaltiesTitle": "Penalties",
+  "@penaltiesTitle": {
+    "description": "S20's screen heading, reached from the Reference branch. The name of a printed schedule, not a warning."
+  },
+  "penaltiesEntryNote": "What a breach of the recorded rules carries.",
+  "@penaltiesEntryNote": {
+    "description": "STATEMENT OF FACT. The line under the Penalties entry on the Reference branch. No imperative mood, no second person, no permission verb."
+  },
+  "penaltiesLede": "What a breach of the size, season, protection or gear rules carries in {jurisdiction}.",
+  "@penaltiesLede": {
+    "description": "STATEMENT OF FACT opening S20. Names the four rule kinds the pack records and the jurisdiction they belong to. No imperative mood, no second person, no permission verb.",
+    "placeholders": {
+      "jurisdiction": {
+        "type": "String",
+        "example": "Galicia"
+      }
+    }
+  },
+  "penaltiesColumnOffence": "Offence",
+  "@penaltiesColumnOffence": {
+    "description": "First column head of the penalties ledger. Cased at the call site with toUpperCase(), never authored upper here: casing is a silent no-op on Arabic."
+  },
+  "penaltiesColumnFine": "Fine",
+  "@penaltiesColumnFine": {
+    "description": "Second column head of the penalties ledger — the monetary amount the instrument states. Cased at the call site."
+  },
+  "penaltiesColumnLicence": "Licence",
+  "@penaltiesColumnLicence": {
+    "description": "Third column head of the penalties ledger — the secondary consequence, a suspension or a revocation. Cased at the call site."
+  },
+  "penaltiesOccurrenceFirst": "First offence",
+  "@penaltiesOccurrenceFirst": {
+    "description": "The instrument's own scale, occurrence 1. A label for a row of the schedule, never a claim about the reader."
+  },
+  "penaltiesOccurrenceSecond": "Second offence",
+  "@penaltiesOccurrenceSecond": {
+    "description": "The instrument's own scale, occurrence 2."
+  },
+  "penaltiesOccurrenceSubsequent": "Subsequent offence",
+  "@penaltiesOccurrenceSubsequent": {
+    "description": "The instrument's own scale, occurrence 3 and beyond. One label rather than an ordinal per row: instruments stop counting after the second."
+  },
+  "penaltiesOffenceListLabel": "Offences recorded",
+  "@penaltiesOffenceListLabel": {
+    "description": "Section eyebrow over the list of offences the pack records a penalty against, each with the instrument that records it. It names what was transcribed and never reasons about what would qualify. Cased at the call site."
+  },
+  "penaltiesFineAmount": "{currency} {amount}",
+  "@penaltiesFineAmount": {
+    "description": "One recorded amount and the currency the instrument itself states. NEVER converted: an instrument states a figure in one currency, and a converted figure is one no inspector will recognise.",
+    "placeholders": {
+      "currency": {
+        "type": "String",
+        "example": "AED"
+      },
+      "amount": {
+        "type": "String",
+        "example": "3,000"
+      }
+    }
+  },
+  "penaltiesFineRange": "{currency} {lower}–{upper}",
+  "@penaltiesFineRange": {
+    "description": "A band rather than a figure, where the instrument states a range. Both bounds are printed: quoting only one of them is a fine this app invented.",
+    "placeholders": {
+      "currency": {
+        "type": "String",
+        "example": "AED"
+      },
+      "lower": {
+        "type": "String",
+        "example": "3,000"
+      },
+      "upper": {
+        "type": "String",
+        "example": "5,000"
+      }
+    }
+  },
+  "penaltiesFineNotRecorded": "No amount recorded",
+  "@penaltiesFineNotRecorded": {
+    "description": "STATEMENT OF FACT. The transcription carries no figure for this row. Never a zero, never a dash and never a figure borrowed from a neighbouring row: an invented fine is the worst sentence this product could print."
+  },
+  "penaltiesConsequenceNotRecorded": "No licence consequence recorded",
+  "@penaltiesConsequenceNotRecorded": {
+    "description": "STATEMENT OF FACT. The transcription carries no secondary consequence for this row. It is not a statement that the licence is unaffected."
+  },
+  "penaltiesWorkedExampleLabel": "Worked example",
+  "@penaltiesWorkedExampleLabel": {
+    "description": "Label of the panel that restates the first row of the ledger as one sentence, so the figure in the table is read as a fact about a case. Cased at the call site."
+  },
+  "penaltiesWorkedExampleFirst": "A first offence of {offence} is recorded in {jurisdiction} as {fine}.",
+  "@penaltiesWorkedExampleFirst": {
+    "description": "STATEMENT OF FACT. Every value comes from the bundled pack; nothing here is computed. No imperative mood, no second person, no permission verb.",
+    "placeholders": {
+      "offence": {
+        "type": "String",
+        "example": "Landing below the minimum size"
+      },
+      "jurisdiction": {
+        "type": "String",
+        "example": "Galicia"
+      },
+      "fine": {
+        "type": "String",
+        "example": "AED 3,000"
+      }
+    }
+  },
+  "penaltiesWorkedExampleSecond": "A second offence of {offence} is recorded in {jurisdiction} as {fine}.",
+  "@penaltiesWorkedExampleSecond": {
+    "description": "STATEMENT OF FACT, occurrence 2. Every value comes from the bundled pack.",
+    "placeholders": {
+      "offence": {
+        "type": "String",
+        "example": "Landing below the minimum size"
+      },
+      "jurisdiction": {
+        "type": "String",
+        "example": "Galicia"
+      },
+      "fine": {
+        "type": "String",
+        "example": "AED 5,000"
+      }
+    }
+  },
+  "penaltiesWorkedExampleSubsequent": "A subsequent offence of {offence} is recorded in {jurisdiction} as {fine}.",
+  "@penaltiesWorkedExampleSubsequent": {
+    "description": "STATEMENT OF FACT, occurrence 3 and beyond. Every value comes from the bundled pack.",
+    "placeholders": {
+      "offence": {
+        "type": "String",
+        "example": "Landing below the minimum size"
+      },
+      "jurisdiction": {
+        "type": "String",
+        "example": "Galicia"
+      },
+      "fine": {
+        "type": "String",
+        "example": "AED 5,000"
+      }
+    }
+  },
+  "penaltiesWorkedExampleConsequence": "The licence consequence recorded is {consequence}.",
+  "@penaltiesWorkedExampleConsequence": {
+    "description": "STATEMENT OF FACT. The second sentence of the worked example, present only when the pack records a secondary consequence.",
+    "placeholders": {
+      "consequence": {
+        "type": "String",
+        "example": "Suspension for six months"
+      }
+    }
+  },
+  "penaltiesNoneRecordedHeadline": "No penalty recorded",
+  "@penaltiesNoneRecordedHeadline": {
+    "description": "STATEMENT OF FACT, and the state every shipped pack is in today. It is the 'no rule recorded' wording applied to the penalty schedule: nothing was transcribed, and that is not a permission."
+  },
+  "penaltiesNoneRecordedBody": "The bundled rule pack carries no penalty transcribed for {jurisdiction}. That is an absence in the transcription, not a statement that the instruments carry none.",
+  "@penaltiesNoneRecordedBody": {
+    "description": "STATEMENT OF FACT. Separates 'nothing transcribed' from 'no penalty exists', which are different facts and may never be merged. No imperative mood, no second person, no permission verb.",
+    "placeholders": {
+      "jurisdiction": {
+        "type": "String",
+        "example": "Galicia"
+      }
+    }
+  },
+  "penaltiesPackCaveat": "Amounts are those recorded in the bundled rule pack. Courts and inspectors may apply further provisions.",
+  "@penaltiesPackCaveat": {
+    "description": "STATEMENT OF FACT, the second footnote of S20. Says what the schedule is and what it does not exhaust. No imperative mood, no second person, no permission verb."
+  },
+  "penaltiesCitationDates": "published {published} · checked {checked}",
+  "@penaltiesCitationDates": {
+    "description": "The apparatus line under the instrument in S20's footnote. The dates are ISO-8601 and unlocalised, so they can be compared against the printed gazette by eye.",
+    "placeholders": {
+      "published": {
+        "type": "String",
+        "example": "2015-11-03"
+      },
+      "checked": {
+        "type": "String",
+        "example": "2026-07-14"
+      }
+    }
   },
   "disclaimerNotDismissable": "It cannot be dismissed.",
   "@disclaimerNotDismissable": {
@@ -1194,6 +1503,51 @@
       }
     }
   },
+  "todayTripOpenSince": "Trip open since {started}",
+  "@todayTripOpenSince": {
+    "description": "The sub-line under the Today wordmark when an outing is running. A STATEMENT OF FACT about the log's own state, with the start time on the reader's wall clock; it gives no instruction about the trip.",
+    "placeholders": {
+      "started": {
+        "type": "String"
+      }
+    }
+  },
+  "todayNoTripOpen": "No trip open",
+  "@todayNoTripOpen": {
+    "description": "The same sub-line when no outing is running. A fact about the log and not about the law, and not a prompt to start one."
+  },
+  "todaySummaryRecorded": "Fish recorded",
+  "@todaySummaryRecorded": {
+    "description": "Label of the first line of the day's ruled summary sheet on S8. Cased at the call site with toUpperCase() by the ruled table, never authored uppercase here: the transform is a silent no-op on Arabic and the ARB holds one wording per key."
+  },
+  "todaySummaryKept": "Kept",
+  "@todaySummaryKept": {
+    "description": "Label of the second line of the day's summary sheet on S8. Kept is authored by the fisher and never inferred from a verdict."
+  },
+  "todaySummarySpecies": "Species",
+  "@todaySummarySpecies": {
+    "description": "Label of the third line of the day's summary sheet on S8 — how many distinct species the day's tally holds."
+  },
+  "todayKeptOfCount": "{kept} of {count}",
+  "@todayKeptOfCount": {
+    "description": "The value beside todaySummaryKept: how many of the day's records were kept. Both figures arrive already formatted in the reader's numeral system, which is why they are strings.",
+    "placeholders": {
+      "kept": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "todayBySpeciesLabel": "By species",
+  "@todayBySpeciesLabel": {
+    "description": "The tracked rubric over the day's entries on S8, which are grouped by species rather than listed in the order they were landed. Cased at the call site with toUpperCase()."
+  },
+  "todayLoadFailed": "The day's tally on this device could not be read.",
+  "@todayLoadFailed": {
+    "description": "Shown when the day's tally cannot be read from user.db. States what happened to the read; it makes no claim about the law and never says the day is empty, because a failed read and an empty day are different facts."
+  },
   "tripsHeadline": "Trips",
   "@tripsHeadline": {
     "description": "Catch log copy: tripsHeadline."
@@ -1467,6 +1821,151 @@
   "@navReference": {
     "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
   },
+  "referenceContentsLabel": "Contents",
+  "@referenceContentsLabel": {
+    "description": "S12. The italic sub-line under the Reference wordmark, and the rubric over the contents list. One key for both, because they are the same word naming the same list."
+  },
+  "referenceHubLede": "Everything a verdict is drawn from, held in full on this device and readable without a signal.",
+  "@referenceHubLede": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. S12's opening line: what this branch contains and where it lives."
+  },
+  "referenceEntryRuleText": "Rule text",
+  "@referenceEntryRuleText": {
+    "description": "S12 contents entry I. A noun phrase naming a section of the book, never a verb."
+  },
+  "referenceEntryRuleTextNote": "The instruments as published, article by article, in the language they were published in",
+  "@referenceEntryRuleTextNote": {
+    "description": "STATEMENT OF FACT. The sub-line under contents entry I, naming what that section holds."
+  },
+  "ruleTextSearchHint": "Search the full text",
+  "@ruleTextSearchHint": {
+    "description": "Placeholder in S13's full-text search box. Names what the box reads over; never an instruction about a fish."
+  },
+  "ruleTextAllArticles": "All articles",
+  "@ruleTextAllArticles": {
+    "description": "S13's first article chip, which narrows the reader to nothing and shows the instrument whole. A noun phrase."
+  },
+  "ruleTextPublishedLabel": "Published",
+  "@ruleTextPublishedLabel": {
+    "description": "STATEMENT OF FACT. The word before the publication date in S13's masthead. The date itself is set in mono beside it and is never translated."
+  },
+  "ruleTextCheckedLabel": "Checked",
+  "@ruleTextCheckedLabel": {
+    "description": "STATEMENT OF FACT. The word before the date a human last verified the transcription, in S13's masthead. The date itself is set in mono beside it."
+  },
+  "ruleTextCompleteNote": "This text is held in full on this device and is not abridged.",
+  "@ruleTextCompleteNote": {
+    "description": "STATEMENT OF FACT about the data, in S13's closing footnote. It says what the app holds; it never tells the reader to do anything."
+  },
+  "ruleTextNoneRecordedHeadline": "No text transcribed",
+  "@ruleTextNoneRecordedHeadline": {
+    "description": "STATEMENT OF FACT. S13's empty state when this copy carries no article text for the instrument. Not a statement that the instrument does not exist, and never permission."
+  },
+  "ruleTextNoneRecordedBody": "This copy carries no article text for {instrument}. The citation above names the instrument and the dates it was published and last checked.",
+  "@ruleTextNoneRecordedBody": {
+    "description": "STATEMENT OF FACT. The body of S13's empty state. It states what was not transcribed and points at the citation that is printed regardless.",
+    "placeholders": {
+      "instrument": {
+        "type": "String"
+      }
+    }
+  },
+  "ruleTextNoMatchHeadline": "No article matches",
+  "@ruleTextNoMatchHeadline": {
+    "description": "STATEMENT OF FACT. S13's state when the search or the article chip leaves no article on the page."
+  },
+  "ruleTextNoMatchBody": "No article of this instrument carries that wording.",
+  "@ruleTextNoMatchBody": {
+    "description": "STATEMENT OF FACT. The body under ruleTextNoMatchHeadline. It states the result of the search and never suggests a different one."
+  },
+  "referenceEntryProtected": "Protected species",
+  "@referenceEntryProtected": {
+    "description": "S12 contents entry II. A noun phrase naming a section of the book."
+  },
+  "referenceEntryProtectedNote": "Plates, distinguishing features, and what protection covers",
+  "@referenceEntryProtectedNote": {
+    "description": "STATEMENT OF FACT. The sub-line under contents entry II."
+  },
+  "referenceEntryGear": "Gear and methods",
+  "@referenceEntryGear": {
+    "description": "S12 contents entry III. A noun phrase naming a section of the book."
+  },
+  "referenceEntryGearNote": "Mesh, hand-line, net length, prohibited methods",
+  "@referenceEntryGearNote": {
+    "description": "STATEMENT OF FACT. The sub-line under contents entry III."
+  },
+  "referenceEntryPenalties": "Penalties",
+  "@referenceEntryPenalties": {
+    "description": "S12 contents entry IV. A noun phrase naming a section of the book."
+  },
+  "referenceEntryPenaltiesNote": "Fines and licence consequences, by offence",
+  "@referenceEntryPenaltiesNote": {
+    "description": "STATEMENT OF FACT. The sub-line under contents entry IV."
+  },
+  "referenceEntryLicences": "Licences",
+  "@referenceEntryLicences": {
+    "description": "S12 contents entry V. A noun phrase naming a section of the book."
+  },
+  "referenceEntryLicencesNote": "Vessel, fisher and gear licences, and what each covers",
+  "@referenceEntryLicencesNote": {
+    "description": "STATEMENT OF FACT. The sub-line under contents entry V. 'Covers' rather than 'permits': a section note describes the section, and this app never conjugates a permission."
+  },
+  "referenceEntryGlossary": "Glossary",
+  "@referenceEntryGlossary": {
+    "description": "S12 contents entry VI. A noun phrase naming a section of the book."
+  },
+  "referenceEntryGlossaryNote": "TL · FL · SL · CW · SHL · ML, and the local terms",
+  "@referenceEntryGlossaryNote": {
+    "description": "STATEMENT OF FACT. The sub-line under contents entry VI. The six measurement-method codes are identifiers and stay in Latin letters in every locale."
+  },
+  "referenceEntryChangelog": "Changelog",
+  "@referenceEntryChangelog": {
+    "description": "S12 contents entry VII. A noun phrase naming a section of the book."
+  },
+  "referenceEntryChangelogNote": "What changed in each pack, and when it was checked",
+  "@referenceEntryChangelogNote": {
+    "description": "STATEMENT OF FACT. The sub-line under contents entry VII."
+  },
+  "referenceEntryPlates": "Species plates",
+  "@referenceEntryPlates": {
+    "description": "S12 contents entry VIII — the one entry this release prints, and the way into S6."
+  },
+  "referenceEntryPlatesNote": "Silhouettes grouped by family, for a fish known by shape",
+  "@referenceEntryPlatesNote": {
+    "description": "STATEMENT OF FACT. The sub-line under contents entry VIII."
+  },
+  "referenceEntryNotPrinted": "not printed",
+  "@referenceEntryNotPrinted": {
+    "description": "STATEMENT OF FACT about this COPY, never about the law: the count slot of a contents entry whose section this release does not print. It says the section is absent from the book, not that a rule is absent from the instrument."
+  },
+  "referenceSectionNotPrinted": "This section is not printed in this copy. This version answers whether a fish meets the rules in the place it was landed, and cites the instrument it read.",
+  "@referenceSectionNotPrinted": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. Shown when a contents entry this release does not build is opened — it states what this version contains rather than failing, and it promises no date."
+  },
+  "referenceHeldLabel": "Held on this device",
+  "@referenceHeldLabel": {
+    "description": "S12 rubric over the blocks naming each bundled pack. 'Held', not 'sources': an instrument is the decision itself and nothing in this app is a link."
+  },
+  "referenceHeldPack": "pack {version} · checked {checkedOn}",
+  "@referenceHeldPack": {
+    "description": "STATEMENT OF FACT. Which printing of a jurisdiction's rules this device holds, and the day a human last read the published text. ISO and unlocalised, so it can be compared against the gazette by eye.",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "checkedOn": {
+        "type": "String"
+      }
+    }
+  },
+  "referenceHeldNote": "This book quotes the instruments it holds. It does not summarise them.",
+  "@referenceHeldNote": {
+    "description": "STATEMENT OF FACT about the app's own behaviour, closing the held-packs section."
+  },
+  "referenceHeldEmpty": "No jurisdiction is held in this copy.",
+  "@referenceHeldEmpty": {
+    "description": "STATEMENT OF FACT. The empty state of the held-packs list. It states what this copy carries and never that a place is unregulated."
+  },
   "navSettings": "Settings",
   "@navSettings": {
     "description": "Bottom navigation label. A noun, and the same word §6 uses for that screen."
@@ -1499,6 +1998,104 @@
   "checkNoRecentsBody": "Species you look up in this place appear here, so the next one is one tap.",
   "@checkNoRecentsBody": {
     "description": "What the strip will hold once it holds anything. It explains the mechanism rather than instructing: the fisher is not being asked to look anything up, he is being told what happens when he does."
+  },
+  "firstRunOfflineBadge": "No signal · offline by design",
+  "@firstRunOfflineBadge": {
+    "description": "STATEMENT OF FACT. The boxed badge at the head of the first-launch screen. Two facts in one line: there is no signal, and that is the product rather than a fault. It is the only screen that carries it, because it is the only screen a reader could mistake for a download."
+  },
+  "firstRunTagline": "Is this legal?",
+  "@firstRunTagline": {
+    "description": "The strapline set under the wordmark on the first-launch mast, in serif italic. The product's own question about a catch, never a question put to the reader about what to do."
+  },
+  "firstRunMetaFirstRun": "First run",
+  "@firstRunMetaFirstRun": {
+    "description": "First line of the mono meta block at the trailing edge of the first-launch mast. Cased at the call site with toUpperCase(), never authored uppercase — the transform is a silent no-op on Arabic and the ARB holds one wording per key."
+  },
+  "firstRunMetaOnceOnly": "One time only",
+  "@firstRunMetaOnceOnly": {
+    "description": "Second line of the same meta block. It states how often the extraction happens, which is the fact that makes a six-second wait tolerable."
+  },
+  "firstRunHeadline": "Setting out the rule book",
+  "@firstRunHeadline": {
+    "description": "STATEMENT OF FACT. The first-launch headline, sentence case. It names what the device is doing to a printed object it already holds — not what the reader should do, and not a word about a network."
+  },
+  "firstRunLede": "Unpacking the bundled rule pack, the plates and the legal text, so that everything opens instantly from here on.",
+  "@firstRunLede": {
+    "description": "STATEMENT OF FACT. The serif lede under the headline. `Unpacking` and never `downloading`: the payload shipped inside the binary, and the wrong verb here would be a claim about a network this app does not have."
+  },
+  "firstRunSilhouetteLabel": "Engraved outline of a grouper",
+  "@firstRunSilhouetteLabel": {
+    "description": "What a screen reader says instead of the line art at the head of the first-launch screen. It describes the drawing, not a species the reader has caught."
+  },
+  "firstRunProgressBytes": "{written} of {total} kB",
+  "@firstRunProgressBytes": {
+    "description": "The count under the determinate bar, in mono tabular figures. Kilobytes and not a percentage alone, because the denominator is the real uncompressed byte count the payload declares — a bar with no absolute number cannot be told from one that is stuck.",
+    "placeholders": {
+      "written": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "firstRunProgressPercent": "{percent}%",
+  "@firstRunProgressPercent": {
+    "description": "The percentage at the trailing end of the same line. The per-cent sign is authored per locale rather than glued on in Dart, because its glyph and its side both change — Arabic sets U+066A after the figure.",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "firstRunSectionInstalling": "Being installed",
+  "@firstRunSectionInstalling": {
+    "description": "The tracked section label over the manifest of what the extraction is writing. Cased at the call site with toUpperCase()."
+  },
+  "firstRunStageRulePack": "Rule pack",
+  "@firstRunStageRulePack": {
+    "description": "Manifest label for the first quarter of the extracted file. `pack` is the vocabulary word for a bundled jurisdiction's content — never dataset, feed or content."
+  },
+  "firstRunStageLegalText": "Legal text",
+  "@firstRunStageLegalText": {
+    "description": "Manifest label for the second quarter: the verbatim articles as published."
+  },
+  "firstRunStagePlates": "Species plates",
+  "@firstRunStagePlates": {
+    "description": "Manifest label for the third quarter: the line art shipped one file per species."
+  },
+  "firstRunStageGlossary": "Glossary and key",
+  "@firstRunStageGlossary": {
+    "description": "Manifest label for the last quarter: the glossary and the identification key."
+  },
+  "firstRunStageDone": "· done",
+  "@firstRunStageDone": {
+    "description": "The italic marker beside a manifest figure whose bytes are on disk. The leading middle dot is a separator between the figure and the word, and it is authored here so a right-to-left locale can place it itself."
+  },
+  "firstRunStageInProgress": "In progress…",
+  "@firstRunStageInProgress": {
+    "description": "The manifest state of the quarter currently being written. Text alone: no colour, no spinner and no tick, so the distinction from a finished line survives greyscale and glare."
+  },
+  "firstRunStagePending": "Not yet unpacked",
+  "@firstRunStagePending": {
+    "description": "The manifest state of a quarter the stream has not reached. Distinct from `In progress…` because a list that showed both the same would be claiming work that has not begun."
+  },
+  "firstRunTimeRemaining": "About {seconds} s remaining",
+  "@firstRunTimeRemaining": {
+    "description": "The estimate under the manifest, measured from the rate the stream has actually run at and absent until there is a rate to divide by. The unit is a symbol rather than a word so the line needs no plural.",
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "firstRunNoDownload": "This happens once. Nothing is being downloaded — all of it was already inside the app at install, and there is no network request to fail.",
+  "@firstRunNoDownload": {
+    "description": "STATEMENT OF FACT. The reassurance note under the manifest. It states the offline guarantee at the one moment a wait could be mistaken for a transfer, and it names the failure that cannot occur rather than promising one that will not."
+  },
+  "firstRunFooterNote": "No account. No sign-in. No sync. Once this finishes, CatchLaw never waits for anything again.",
+  "@firstRunFooterNote": {
+    "description": "STATEMENT OF FACT. The footer pinned to the foot of the first-launch screen, under a hairline. Three refusals from SPEC.md §5 stated as facts about the product, not as promises to the reader."
   },
   "measureManualReading": "{mm} millimetres",
   "@measureManualReading": {

@@ -1,9 +1,8 @@
 import 'package:catchlaw/theme/lonja_tokens.dart';
-import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/core/ui/lonja_button.dart';
-import 'package:catchlaw/ui/core/ui/lonja_panel.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/widgets/result_ambiguity_block.dart';
+import 'package:catchlaw/ui/result/widgets/result_disclaimer.dart';
 import 'package:flutter/material.dart';
 
 /// What the READER did about two instruments the app refused to rank.
@@ -60,6 +59,7 @@ Future<AmbiguityChoice> showResultAmbiguityDialog(
   BuildContext context, {
   required AmbiguityDisplay ambiguity,
   required String deferLabel,
+  required String authority,
 }) async {
   // Captured before the route opens and restored after it pops, so a keyboard
   // or switch user lands back where they were.
@@ -69,7 +69,7 @@ Future<AmbiguityChoice> showResultAmbiguityDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) =>
-        ResultAmbiguityDialog(ambiguity: ambiguity, deferLabel: deferLabel),
+        ResultAmbiguityDialog(ambiguity: ambiguity, deferLabel: deferLabel, authority: authority),
   );
 
   restoreTo?.requestFocus();
@@ -79,9 +79,24 @@ Future<AmbiguityChoice> showResultAmbiguityDialog(
 }
 
 /// The dialog body, exposed so a test can pump it without a route.
+///
+/// **One ruled sheet, in one order, top to bottom:** the notice — eyebrow,
+/// headline, masthead rule, both instruments, the closing note — then the
+/// standing disclaimer, then the actions. Nothing is printed twice: the refusal
+/// sentence is the headline and appears once, and the actions sit at the foot
+/// under everything they act on rather than above the last block of text.
+///
+/// The frame is the dialog's own. A `LonjaPanel` inside it would read as a
+/// panel inside a sheet — two borders, two paddings and two grounds where a
+/// printed notice has one of each.
 class ResultAmbiguityDialog extends StatelessWidget {
   /// Prints [ambiguity] and one action per rule, plus [deferLabel].
-  const ResultAmbiguityDialog({required this.ambiguity, required this.deferLabel, super.key});
+  const ResultAmbiguityDialog({
+    required this.ambiguity,
+    required this.deferLabel,
+    required this.authority,
+    super.key,
+  });
 
   /// The conflicting rules, in source order.
   final AmbiguityDisplay ambiguity;
@@ -89,38 +104,48 @@ class ResultAmbiguityDialog extends StatelessWidget {
   /// The wording of the defer action, already localised.
   final String deferLabel;
 
+  /// The authority the disclaimer names, already localised.
+  ///
+  /// Required, and with no default: the disclaimer is unconditional on the
+  /// result surface and a modal that covers the result surface is the one place
+  /// it must not quietly go missing.
+  final String authority;
+
   @override
   Widget build(BuildContext context) {
-    final LonjaTypeScale type = LonjaType.of(context);
-
     return AlertDialog(
+      // One padding system. The gutter is the sheet's, and every block inside
+      // sets its own vertical rhythm from LonjaSpace.
+      contentPadding: const EdgeInsetsDirectional.all(LonjaSpace.s4),
+      // Kept, and not a divergence to fix: the notice runs to two instruments,
+      // a note and a disclaimer, and at 200% text scale it is taller than any
+      // phone. Legal prose wraps and the sheet scrolls; it never truncates.
       content: SingleChildScrollView(
-        child: LonjaPanel(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              ResultAmbiguityBlock(ambiguity: ambiguity),
-              // One action per rule and one to defer, all on the same rung:
-              // N + 1 equal-weight actions, because a primary among them would
-              // rank the instruments the sentence above refuses to rank.
-              for (final AmbiguousRuleDisplay rule in ambiguity.rules) ...<Widget>[
-                LonjaButton.secondary(
-                  key: Key('ambiguity-choice-${rule.instrumentId}'),
-                  label: rule.citation.instrument,
-                  onPressed: () => Navigator.of(context).pop(AppliedInstrument(rule.instrumentId)),
-                ),
-                const SizedBox(height: LonjaSpace.s2),
-              ],
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ResultAmbiguityBlock(ambiguity: ambiguity),
+            const SizedBox(height: LonjaSpace.s5),
+            ResultDisclaimer(authority: authority),
+            const SizedBox(height: LonjaSpace.s5),
+            // One action per rule and one to defer, all on the same rung:
+            // N + 1 equal-weight actions, because a primary among them would
+            // rank the instruments the headline above refuses to rank.
+            for (final AmbiguousRuleDisplay rule in ambiguity.rules) ...<Widget>[
               LonjaButton.secondary(
-                key: const Key('ambiguity-defer'),
-                label: deferLabel,
-                onPressed: () => Navigator.of(context).pop(const DeferredToBoth()),
+                key: Key('ambiguity-choice-${rule.instrumentId}'),
+                label: rule.citation.instrument,
+                onPressed: () => Navigator.of(context).pop(AppliedInstrument(rule.instrumentId)),
               ),
               const SizedBox(height: LonjaSpace.s2),
-              Text(ambiguity.sentence, style: type.uiSmall, textAlign: TextAlign.start),
             ],
-          ),
+            LonjaButton.secondary(
+              key: const Key('ambiguity-defer'),
+              label: deferLabel,
+              onPressed: () => Navigator.of(context).pop(const DeferredToBoth()),
+            ),
+          ],
         ),
       ),
     );

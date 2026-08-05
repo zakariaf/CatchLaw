@@ -129,9 +129,12 @@ class _VerdictStamp extends StatelessWidget {
       label: <String>[headline, ?detail, ?meta].join('. '),
       excludeSemantics: true,
       child: Padding(
+        // `.stamp{margin:var(--s6) var(--s4) 0}`. The top gap was s7 — 48 dp of
+        // nothing between the plate caption and the answer, on the screen whose
+        // whole claim is that the answer is readable in five seconds.
         padding: const EdgeInsetsDirectional.fromSTEB(
           LonjaSpace.s4,
-          LonjaSpace.s7,
+          LonjaSpace.s6,
           LonjaSpace.s4,
           0,
         ),
@@ -150,7 +153,12 @@ class _VerdictStamp extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const _DoubleRule(),
+                  // `.phone.sun .stamp{border:0}`. Once the block reverses out,
+                  // the double rules are what the reversal already did: a solid
+                  // field of ink IS the frame, and a white rule riding inside
+                  // it is a hairline drawn across a stamp — the exact mark that
+                  // at 100 000 lux is absent rather than dim.
+                  if (ground == null) const _DoubleRule(),
                   Padding(
                     padding: const EdgeInsetsDirectional.only(top: LonjaSpace.s3),
                     child: Row(
@@ -214,8 +222,10 @@ class _VerdictStamp extends StatelessWidget {
                         textAlign: TextAlign.start,
                       ),
                     ),
-                  const SizedBox(height: LonjaSpace.s3),
-                  const _DoubleRule(),
+                  if (ground == null) ...<Widget>[
+                    const SizedBox(height: LonjaSpace.s3),
+                    const _DoubleRule(),
+                  ],
                 ],
               ),
             ),
@@ -244,7 +254,17 @@ class _Ground extends StatelessWidget {
     if (ground == null) return child;
     return ColoredBox(
       color: ground,
-      child: Padding(padding: const EdgeInsetsDirectional.all(LonjaSpace.s3), child: child),
+      // `.phone.sun .stamp{padding:var(--s5) var(--s4)}`. A flat s3 all round
+      // set the words hard against the edge of the field: a reversed-out block
+      // needs the ink around the letters to read as struck rather than as
+      // clipped, and the vertical inset is the one that does that work.
+      child: Padding(
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: LonjaSpace.s4,
+          vertical: LonjaSpace.s5,
+        ),
+        child: child,
+      ),
     );
   }
 }

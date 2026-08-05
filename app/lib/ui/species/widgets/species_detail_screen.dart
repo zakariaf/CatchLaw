@@ -9,6 +9,8 @@ import 'package:catchlaw/domain/use_cases/evaluate_catch_use_case.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/l10n/locale_codec.dart';
 import 'package:catchlaw/l10n/numeral_system.dart';
+import 'package:catchlaw/theme/lonja_icon.dart';
+import 'package:catchlaw/theme/lonja_icons.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/core/ui/lonja_button.dart';
@@ -17,6 +19,7 @@ import 'package:catchlaw/ui/core/ui/lonja_screen_bar.dart';
 import 'package:catchlaw/ui/core/ui/lonja_silhouette.dart';
 import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
 import 'package:catchlaw/ui/log/view_models/catch_log_providers.dart';
+import 'package:catchlaw/ui/reference/widgets/rule_text_screen.dart';
 import 'package:catchlaw/ui/result/view_models/result_context.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/view_models/result_providers.dart';
@@ -305,7 +308,21 @@ class SpeciesVerdict extends ConsumerWidget {
       data: (ResultDisplay value) => SpeciesVerdictSlot(
         display: value,
         jurisdiction: value.authority,
-        onOpenRuleText: (int _) {},
+        // S13, at last. `SPEC.md` §14's device checklist requires tapping a
+        // citation to reach the bundled text, and every caller passed a
+        // no-op — a footnote announced to TalkBack as a button and wired to
+        // nothing. Pushed onto the navigator this screen already sits in, so
+        // the article page keeps the ledger strip and has somewhere to pop to.
+        onOpenRuleText: (int citationId, CitationDisplay citation) =>
+            Navigator.of(context).push<void>(
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => RuleTextRoute(
+                  citationId: citationId,
+                  citation: citation,
+                  authority: value.authority,
+                ),
+              ),
+            ),
       ),
     );
   }
@@ -355,8 +372,16 @@ class _RecordCatchActionState extends ConsumerState<_RecordCatchAction> {
     final EvaluationScope? scope = ref.watch(evaluationScopeProvider).value;
     if (scope == null) return const SizedBox.shrink();
 
-    return LonjaButton.secondary(
+    // THE primary of this screen, and the only one — `.btn.pri` in the
+    // mockup's terminal `.btn-row`. It was an outlined box indistinguishable
+    // from the ruler beside it, on a page that ends in exactly one thing the
+    // reader does. The measure slot above stays secondary, so the ladder still
+    // has one filled box (`lonja-buttons` rule 1).
+    return LonjaButton.primary(
       label: _recorded ? l10n.catchRecorded : l10n.catchRecord,
+      // Excluded rather than labelled: the button's own label already names
+      // exactly what happens, and a second node reads the action twice.
+      leading: const ExcludeSemantics(child: LonjaIcon(LonjaIcons.plus, size: LonjaIconSize.ui)),
       onPressed: _recorded ? null : () => _record(scope),
     );
   }

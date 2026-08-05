@@ -1,4 +1,6 @@
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
+import 'package:catchlaw/theme/lonja_icon.dart';
+import 'package:catchlaw/theme/lonja_icons.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
@@ -45,23 +47,43 @@ class ResultDisclaimer extends StatelessWidget {
               horizontal: LonjaSpace.s3,
               vertical: LonjaSpace.s3,
             ),
-            child: Column(
+            // `.disc{display:flex;gap:9px;align-items:flex-start}` — the mark
+            // and the sentence on one line, not the sentence alone. The glyph
+            // is what makes the block legible AS a standing notice at a glance,
+            // on the page where every other block is a finding.
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(
-                  l10n.disclaimerVerdict(authority),
-                  style: type.legalSmall.copyWith(color: tokens.onSurfaceMuted),
-                  textAlign: TextAlign.start,
+                // Excluded rather than labelled: it names the block the
+                // sentence beside it already names in full, and two nodes read
+                // the notice twice.
+                const ExcludeSemantics(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(end: LonjaSpace.s2),
+                    child: LonjaIcon(LonjaIcons.info, size: LonjaIconSize.caption),
+                  ),
                 ),
-                const SizedBox(height: LonjaSpace.s2),
-                Text(
-                  // Printed rather than implied: it makes the disclaimer's
-                  // absence legible in a screenshot, which is the form this
-                  // screen travels in when it is quoted back at the publisher.
-                  l10n.disclaimerNotDismissable,
-                  style: type.articleNumber.copyWith(color: tokens.onSurfaceFaint),
-                  textAlign: TextAlign.start,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        l10n.disclaimerVerdict(authority),
+                        style: type.legalSmall.copyWith(color: tokens.onSurfaceMuted),
+                        textAlign: TextAlign.start,
+                      ),
+                      const SizedBox(height: LonjaSpace.s2),
+                      Text(
+                        // Printed rather than implied: it makes the disclaimer's
+                        // absence legible in a screenshot, which is the form this
+                        // screen travels in when it is quoted back at the publisher.
+                        l10n.disclaimerNotDismissable,
+                        style: type.articleNumber.copyWith(color: tokens.onSurfaceFaint),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

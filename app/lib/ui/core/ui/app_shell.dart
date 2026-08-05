@@ -1,5 +1,7 @@
+import 'package:catchlaw/data/services/reference_install_progress.dart';
 import 'package:catchlaw/ui/core/ui/lonja_destination.dart';
 import 'package:catchlaw/ui/core/ui/lonja_nav_strip.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// The app's front door: five branches, each keeping its own history.
@@ -22,6 +24,7 @@ class AppShell extends StatefulWidget {
     required this.trips,
     required this.reference,
     required this.settings,
+    this.installProgress,
     super.key,
   });
 
@@ -45,6 +48,16 @@ class AppShell extends StatefulWidget {
 
   /// The Settings branch's root screen — S14.
   final Widget settings;
+
+  /// The one-time extraction's progress, or absent when nothing is installing.
+  ///
+  /// **Passed in, not read from a provider.** The shell's own tests are about
+  /// the strip, the stack and branch history — none of which needs a container
+  /// — and a `ref.watch` here would make `No ProviderScope found` the first
+  /// thing anybody pumping two `SizedBox`es saw. `app.dart` holds the
+  /// container and hands the listenable down, the same way the five branches
+  /// arrive from outside.
+  final ValueListenable<ReferenceInstallProgress>? installProgress;
 
   @override
   State<AppShell> createState() => _AppShellState();
@@ -100,6 +113,26 @@ class _AppShellState extends State<AppShell> {
           ),
       ],
     ),
-    bottomNavigationBar: LonjaNavStrip(current: _current, onSelected: _select),
+    // **The one-time extraction suppresses the strip.** Every one of the five
+    // branches reads the same file, so a strip drawn under the takeover offers
+    // four destinations that would each land on the same wait — and a tap that
+    // leads to a second blank screen reads as an app that has hung. The
+    // verdict takeover suppresses it for the same reason.
+    bottomNavigationBar: _strip(),
   );
+
+  Widget _strip() {
+    final Widget strip = LonjaNavStrip(current: _current, onSelected: _select);
+    final ValueListenable<ReferenceInstallProgress>? install = widget.installProgress;
+    if (install == null) return strip;
+    return ValueListenableBuilder<ReferenceInstallProgress>(
+      valueListenable: install,
+      builder: (BuildContext context, ReferenceInstallProgress progress, Widget? built) =>
+          progress.isInstalling ? const SizedBox.shrink() : built!,
+      // Built once and handed back on every report: the strip does not depend
+      // on the byte count, and rebuilding it per chunk would rebuild five
+      // destinations for a number none of them reads.
+      child: strip,
+    );
+  }
 }

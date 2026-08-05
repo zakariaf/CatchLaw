@@ -1,6 +1,7 @@
 import 'package:catchlaw/theme/lonja_icon.dart';
 import 'package:catchlaw/theme/lonja_icons.dart';
 import 'package:catchlaw/theme/lonja_theme.dart';
+import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/widgets/result_verdict_panel.dart';
@@ -169,12 +170,62 @@ void main() {
       expect(_doubleRules(), findsNWidgets(2));
     });
 
+    testWidgets('sets the block one s6 step below whatever is printed above it', (
+      WidgetTester tester,
+    ) async {
+      // `.stamp{margin:var(--s6) var(--s4) 0}`. It was s7 — 48 dp of nothing
+      // between the plate caption and the answer.
+      await _pumpPanel(tester, kStampBelowMinimum);
+      final Padding outer = tester.widget<Padding>(
+        find.descendant(of: find.byType(ResultVerdictPanel), matching: find.byType(Padding)).first,
+      );
+
+      expect(
+        outer.padding,
+        const EdgeInsetsDirectional.fromSTEB(LonjaSpace.s4, LonjaSpace.s6, LonjaSpace.s4, 0),
+      );
+    });
+
     testWidgets('sunlight - reverses the stamp out with no tilt', (WidgetTester tester) async {
       await _pumpPanel(tester, kStampBelowMinimum, skin: LonjaSkin.sunlight);
 
       final Transform transform = tester.widget<Transform>(_stampTransform());
       expect(transform.transform, Matrix4.identity());
-      expect(_doubleRules(), findsNWidgets(2));
+    });
+
+    testWidgets('sunlight - drops the double rules once the block reverses out', (
+      WidgetTester tester,
+    ) async {
+      // A solid field of ink IS the frame. Keeping the rules printed two white
+      // hairlines inside the oxblood, which at 100 000 lux is not a faint mark
+      // but a missing one — and a frame that is absent on the one skin built
+      // for glare is worse than no frame at all.
+      await _pumpPanel(tester, kStampBelowMinimum, skin: LonjaSkin.sunlight);
+
+      expect(_doubleRules(), findsNothing);
+    });
+
+    testWidgets('sunlight - insets the reversed block by a full spacing step', (
+      WidgetTester tester,
+    ) async {
+      // `.phone.sun .stamp{padding:var(--s5) var(--s4)}`. A flat s3 set the
+      // words hard against the edge of the field.
+      await _pumpPanel(tester, kStampBelowMinimum, skin: LonjaSkin.sunlight);
+      // The one ColoredBox left inside the panel once the rules are gone is
+      // the reversed ground, and the Padding directly under it is the inset.
+      final Finder ground = find.descendant(
+        of: find.byType(ResultVerdictPanel),
+        matching: find.byType(ColoredBox),
+      );
+      expect(ground, findsOneWidget);
+      final Padding inset = tester.widget<Padding>(
+        find.descendant(of: ground, matching: find.byType(Padding)).first,
+      );
+
+      expect(
+        inset.padding,
+        const EdgeInsetsDirectional.symmetric(horizontal: LonjaSpace.s4, vertical: LonjaSpace.s5),
+      );
     });
 
     testWidgets('sunlight - prints the block in the ground colour', (WidgetTester tester) async {
