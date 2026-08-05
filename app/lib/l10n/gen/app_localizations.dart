@@ -237,6 +237,18 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{{count} of {total}} other{{count} of {total}}}'**
   String speciesSearchResultCount(int count, int total);
 
+  /// The label over S5's results: how many species the typed name matched. A sentence in the eyebrow step beside a rule, not a ratio.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} matching result} other{{count} matching results}}'**
+  String speciesSearchMatchCount(int count);
+
+  /// The accessible name of the affordance that empties S5's entry line. Names exactly what taking it does.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the search'**
+  String get speciesSearchClear;
+
   /// S6's screen heading.
   ///
   /// In en, this message translates to:
@@ -254,6 +266,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This jurisdiction has no species transcribed yet.'**
   String get browseNoSpeciesBody;
+
+  /// S6's bar stamp: how many species this pack draws in the grid below. A count of what is on the page, not a claim about the jurisdiction.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} species} other{{count} species}}'**
+  String browseSpeciesCount(int count);
+
+  /// A family heading in S6's grid: the family name in the reader's own language, then how many species sit under it. A format rather than a sentence, so the separator is the same mark in every locale.
+  ///
+  /// In en, this message translates to:
+  /// **'{family} · {count}'**
+  String browseFamilyHeading(String family, int count);
+
+  /// The figure on S6's overflow cell — how many species of this family the grid is not showing yet. Set in the mono step so it reads as a count.
+  ///
+  /// In en, this message translates to:
+  /// **'+{count}'**
+  String browseMoreCount(int count);
+
+  /// The words under the overflow cell's figure, naming the family the hidden species belong to. Taking the cell opens them in place; nothing is unreachable.
+  ///
+  /// In en, this message translates to:
+  /// **'more in {family}'**
+  String browseMoreInFamily(String family);
 
   /// S2's block of names in the other shipped locales. Set small and after the reader's own name.
   ///
@@ -536,6 +572,90 @@ abstract class AppLocalizations {
   /// **'Protected species — taking prohibited.'**
   String get verdictProtected;
 
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline alone — the state, with no numbers. The figures are printed beneath it by verdictDetailMinimum, which is mandatory beside this: the headline never travels without its detail line.
+  ///
+  /// In en, this message translates to:
+  /// **'Meets the minimum'**
+  String get verdictStampMeetsMinimum;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline alone. It states what the instrument found and says nothing about what to do with the fish; the numbers are carried by verdictDetailMinimum directly beneath it.
+  ///
+  /// In en, this message translates to:
+  /// **'Below the minimum'**
+  String get verdictStampBelowMinimum;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline alone, for an individual under a maximum. The numbers are carried by verdictDetailMaximum beneath it.
+  ///
+  /// In en, this message translates to:
+  /// **'Within the maximum'**
+  String get verdictStampWithinMaximum;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline alone, for an individual over a maximum. A maximum is a legally distinct rule from a minimum and never shares its wording.
+  ///
+  /// In en, this message translates to:
+  /// **'Above the maximum'**
+  String get verdictStampAboveMaximum;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline where no reading has been taken. It is not a pass: nobody has checked, and the threshold beneath it states what would be compared.
+  ///
+  /// In en, this message translates to:
+  /// **'Not measured'**
+  String get verdictStampNotMeasured;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline where the reading was taken by one method and the instrument states another. No comparison is made, and no conversion factor is applied.
+  ///
+  /// In en, this message translates to:
+  /// **'Measured by another method'**
+  String get verdictStampMethodMismatch;
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline for a closure. The window is part of the headline because a closure with no dates is not checkable against the instrument.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed season — {starts} to {ends}'**
+  String verdictStampClosedSeason(String starts, String ends);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line struck under the stamp headline. Both numbers are mandatory and so is the method: a threshold with no method is a number the reader cannot act on, because total length and fork length differ by 6-9 cm on the same fish. The unit follows the INSTRUMENT, never the reader locale and never the ruler setting.
+  ///
+  /// In en, this message translates to:
+  /// **'{measured} {unit} measured · minimum {threshold} {unit} · {method}'**
+  String verdictDetailMinimum(String measured, String unit, String threshold, String method);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line struck under the stamp headline, for a maximum. Both numbers and the method are mandatory. The unit follows the INSTRUMENT.
+  ///
+  /// In en, this message translates to:
+  /// **'{measured} {unit} measured · maximum {threshold} {unit} · {method}'**
+  String verdictDetailMaximum(String measured, String unit, String threshold, String method);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line where no reading exists. It states the threshold and the absence of a reading; it never softens the absence into a pass.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing measured · minimum {threshold} {unit} · {method}'**
+  String verdictDetailMinimumUnmeasured(String threshold, String unit, String method);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line where no reading exists, for a maximum.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing measured · maximum {threshold} {unit} · {method}'**
+  String verdictDetailMaximumUnmeasured(String threshold, String unit, String method);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line under a closure headline. It states where today sits in the window and never how many days remain: a countdown invites planning, and this app states what the instrument says today. The size clause is stated because a closure that printed a measurement would suggest some size escapes it.
+  ///
+  /// In en, this message translates to:
+  /// **'In force today, day {day} of {total} · applies at every size'**
+  String verdictDetailClosedSeasonInForce(String day, String total);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line under a closure that exists and is not in force today. The closure is still stated rather than hidden, because the fisher is entitled to see the whole picture.
+  ///
+  /// In en, this message translates to:
+  /// **'Not in force today'**
+  String get verdictDetailClosedSeasonNotInForce;
+
+  /// The engraved plate's caption line: the scientific binomial and the family it sits in, set in one italic run under the names. Both are Latin in every locale and neither is translated; only the separator may change.
+  ///
+  /// In en, this message translates to:
+  /// **'{binomial} — {family}'**
+  String speciesBinomialFamily(String binomial, String family);
+
   /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. What has been recorded and what the instrument permits. The period is mandatory: a season quota compared against one day passes on every day of a season it has already exhausted.
   ///
   /// In en, this message translates to:
@@ -740,6 +860,54 @@ abstract class AppLocalizations {
   /// **'Region'**
   String get zoneLevelRegion;
 
+  /// The subline under the Trips heading. States where the ledger lives, as a fact about this build: nothing is uploaded, so nothing has to be claimed about a server.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on this device only'**
+  String get tripsKeptHere;
+
+  /// The stamp at the trailing edge of the Trips bar — how many outings the ledger holds. Not an ICU plural on purpose: it heads a column the way a printed ledger does, and the six shipped languages each need every CLDR category for a plural message that says nothing the figure does not.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} trips'**
+  String tripsCountStamp(int count);
+
+  /// The detail line of one closed trip row: where it was, and the clock times it ran between.
+  ///
+  /// In en, this message translates to:
+  /// **'{zone} · {started} — {ended}'**
+  String tripsRowSpan(String zone, String started, String ended);
+
+  /// The detail line of the trip still running. The open end is a word rather than a blank, because a blank reads as a time that failed to load.
+  ///
+  /// In en, this message translates to:
+  /// **'{zone} · {started} — now'**
+  String tripsRowSpanOpen(String zone, String started);
+
+  /// The quiet inline marker beside the date of the trip still running. It repeats what the stamp at the end of the row says, because the open trip is marked twice and neither mark is a colour.
+  ///
+  /// In en, this message translates to:
+  /// **'· open'**
+  String get tripsOpenMark;
+
+  /// The ruled stamp at the end of the row of the trip still running. A word inside a frame, so it survives greyscale and glare.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get tripsOpenStamp;
+
+  /// How long a closed trip ran, set in the mono step at the end of its row.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String tripsDuration(int hours, int minutes);
+
+  /// STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A read that failed, said plainly, in place of the exception object this screen used to print at the fisher.
+  ///
+  /// In en, this message translates to:
+  /// **'The trips on this device could not be read.'**
+  String get tripsLoadFailed;
+
   /// Level label. Offered only where the pack printed coordinates.
   ///
   /// In en, this message translates to:
@@ -889,6 +1057,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Larger targets and wider spacing.'**
   String get settingsGloveNote;
+
+  /// Heading over the first group of settings rows on S14 — language, digits and unit. A noun phrase naming what the rows below it govern.
+  ///
+  /// In en, this message translates to:
+  /// **'Language and figures'**
+  String get settingsGroupLanguage;
+
+  /// Heading over the second group of settings rows on S14 — zone, ruler calibration and coordinate capture.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you fish'**
+  String get settingsGroupPlace;
+
+  /// Heading over the third group of settings rows on S14 — sunlight mode and glove mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading conditions'**
+  String get settingsGroupReading;
+
+  /// The line under the Digits key on S14, naming what the two digit systems are. A STATEMENT OF FACT about what the control changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Western or Arabic-Indic digits'**
+  String get settingsDigitsNote;
+
+  /// The line under the length-unit key on S14. Storage is always millimetres; this control changes display only.
+  ///
+  /// In en, this message translates to:
+  /// **'Lengths on rules and readings'**
+  String get settingsLengthUnitNote;
+
+  /// Settings key naming the place every answer in the app is evaluated against.
+  ///
+  /// In en, this message translates to:
+  /// **'Zone'**
+  String get settingsZone;
+
+  /// The line under the Zone key on S14. A STATEMENT OF FACT about what the setting reaches — it gives no instruction and makes no claim about the law itself.
+  ///
+  /// In en, this message translates to:
+  /// **'Rules, species list and limits follow this'**
+  String get settingsZoneNote;
+
+  /// The Zone row's reading when no jurisdiction and zone have been stored yet. States the absence and nothing more.
+  ///
+  /// In en, this message translates to:
+  /// **'No place chosen'**
+  String get settingsZoneUnset;
+
+  /// The ruler row's reading on S14: the measured scale of this screen, in pixels per ten millimetres. Set in the mono figure step so it can be compared character by character against another device.
+  ///
+  /// In en, this message translates to:
+  /// **'{px} px / 10 millimetres'**
+  String settingsRulerScale(String px);
+
+  /// Settings key for the opt-in that lets a recorded catch carry the coordinates it was landed at.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinate capture'**
+  String get settingsCoordinates;
+
+  /// The line under the coordinate-capture key on S14. A STATEMENT OF FACT about where the coordinates go — the app has no network code, so nothing leaves the phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Held on this device only, never transmitted'**
+  String get settingsCoordinatesNote;
 
   /// Settings label: settingsRuler.
   ///
@@ -1100,11 +1334,161 @@ abstract class AppLocalizations {
   /// **'Remove one'**
   String get todayUndoOne;
 
+  /// The trailing stamp on the ruler screen's bar. Names the instrument the screen is, so a pushed screen read two hours from home says what it is as well as which fish it is about.
+  ///
+  /// In en, this message translates to:
+  /// **'Ruler'**
+  String get measureSup;
+
+  /// The provenance line under the tick band. A scale drawn on glass is only as good as the calibration behind it, so the ruler states when it was measured and what it measured — both figures in mono, both comparable against the same line on another device.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibrated {on} · {pxPer10mm} pixels per centimetre'**
+  String measureCalibrationProvenance(String on, String pxPer10mm);
+
+  /// The step-and-mark section heading and the primary action that adds one segment. One key for both, because they name the same act: a fish longer than the phone is measured in segments.
+  ///
+  /// In en, this message translates to:
+  /// **'Step and mark'**
+  String get measureStepAndMark;
+
+  /// The unit phrase beside the running total, set in serif next to the mono figure. It says SO FAR because the number is a running sum of the marks, not a finished measurement — and a total presented as final is one a fisher would read against a limit before he had finished measuring.
+  ///
+  /// In en, this message translates to:
+  /// **'cm so far'**
+  String get measureRunningTotalUnit;
+
+  /// The stamp beside the running total, counting the marks made. There is no total to count towards: how many segments a fish takes is not knowable before it is measured.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {count}'**
+  String measureStepPill(String count);
+
+  /// How the instrument is worked. An instruction about operating the ruler, never about the fish or a rule.
+  ///
+  /// In en, this message translates to:
+  /// **'Lay the screen edge at the snout, mark, slide the phone along the fish and mark again.'**
+  String get measureStepNote;
+
+  /// Opens manual length entry. Manual entry works before any calibration exists and is never a fallback — a fisher with a tape in his hand and no bank card in his pocket takes this path by choice.
+  ///
+  /// In en, this message translates to:
+  /// **'Type instead'**
+  String get measureTypeInstead;
+
+  /// Reopens calibration from the ruler. A calibration measured once on a cracked screen or a different device is a scale nobody can correct without this.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-calibrate with a card'**
+  String get measureRecalibrate;
+
+  /// The closing note on the ruler. States what the screen does not do: measuring is not photographing and not locating, and the one exception is named with the setting that governs it.
+  ///
+  /// In en, this message translates to:
+  /// **'Fish on the board, phone on the fish. No photograph is taken and no coordinate is read unless coordinate capture is switched on in Settings.'**
+  String get measurePrivacyNote;
+
+  /// The manual-entry screen's own title. A separate key from the label on the ruler, because a heading that opened with 'Or' would read as half a sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the length'**
+  String get measureManualTitle;
+
+  /// The trailing stamp on the calibration bar. States how often this is done, so the screen does not read as a step in the measuring loop.
+  ///
+  /// In en, this message translates to:
+  /// **'Once per device'**
+  String get calibrateSup;
+
+  /// The premise of the whole screen, stated above the drawing rather than captioned under the control: the reference object is a published physical constant, and both of its dimensions are quoted from the standard that fixes them.
+  ///
+  /// In en, this message translates to:
+  /// **'Every card of this format is identical: ISO/IEC 7810 ID-1 — {width} × {height} millimetres'**
+  String calibrateCardConstant(String width, String height);
+
+  /// One dimension label on the card drawing, in mono. A figure of the CARD, not of a fish: it carries no measurement method because the object being measured is a rectangle whose size is published.
+  ///
+  /// In en, this message translates to:
+  /// **'{mm} millimetres'**
+  String calibrateDimension(String mm);
+
+  /// Names which of the five corner marks is the control. Four are registration marks and one moves; a drawing that did not say so would be dragged from the wrong corner.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag the filled handle.'**
+  String get calibrateDragHandleNote;
+
+  /// The section heading over the table of what the current fit produced.
+  ///
+  /// In en, this message translates to:
+  /// **'Resulting scale'**
+  String get calibrateScaleLabel;
+
+  /// Table row label: the measured scale itself, quoted over a centimetre rather than a millimetre so the figure carries a digit a reader can compare.
+  ///
+  /// In en, this message translates to:
+  /// **'Pixels per centimetre'**
+  String get calibrateRowScale;
+
+  /// Table row label: what the device reports about itself. Stated beside the measured scale precisely because it does NOT produce it — no arithmetic on a density yields a millimetre.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen density'**
+  String get calibrateRowDensity;
+
+  /// Table row label: how far out a length can be if the fit was one pixel off. The screen's own honesty about its instrument.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected error'**
+  String get calibrateRowError;
+
+  /// Table row label: when the stored scale was measured, so an old calibration is visible rather than silently reused.
+  ///
+  /// In en, this message translates to:
+  /// **'Last calibrated'**
+  String get calibrateRowLastCalibrated;
+
+  /// The screen density value: logical width and the logical-to-physical ratio, both as the device reports them.
+  ///
+  /// In en, this message translates to:
+  /// **'{dp} dp · {ratio}×'**
+  String calibrateDensityValue(String dp, String ratio);
+
+  /// The expected error band and the span it applies over. Both figures belong to the SCREEN and not to a fish, so no measurement method attaches to them.
+  ///
+  /// In en, this message translates to:
+  /// **'± {mm} millimetres over 30 centimetres'**
+  String calibrateErrorValue(String mm);
+
+  /// The last-calibrated value before any calibration exists. A stated absence rather than a blank cell, which would read as a figure that failed to load.
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet calibrated'**
+  String get calibrateNotYet;
+
+  /// Returns the handle to its starting position. Names what it restores — a starting position for the drag, which is never itself a scale and never measures anything.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to screen default'**
+  String get calibrateReset;
+
+  /// The closing note on calibration. Answers the question every fisher asks before he trusts the number, and answers it with the physical reason rather than with reassurance.
+  ///
+  /// In en, this message translates to:
+  /// **'A case or a screen protector changes nothing — the card sits on the glass and the glass is what is being measured.'**
+  String get calibrateGlassNote;
+
   /// The keypad's delete key on S3. A word rather than a glyph: an arrow from an icon font is one missing family away from a tofu box on the one control that undoes a mistyped length.
   ///
   /// In en, this message translates to:
   /// **'Back'**
   String get measureBackspace;
+
+  /// The back affordance on a pushed screen's bar, read aloud by a screen reader. A direction of travel through the app, and never a word about the fish: the only thing this control does is return the reader to the screen the current one was pushed from.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get navBack;
 
   /// Bottom navigation label. A noun, and the same word §6 uses for that screen.
   ///

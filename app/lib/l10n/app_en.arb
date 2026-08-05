@@ -111,6 +111,19 @@
       }
     }
   },
+  "speciesSearchMatchCount": "{count, plural, one{{count} matching result} other{{count} matching results}}",
+  "@speciesSearchMatchCount": {
+    "description": "The label over S5's results: how many species the typed name matched. A sentence in the eyebrow step beside a rule, not a ratio.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesSearchClear": "Clear the search",
+  "@speciesSearchClear": {
+    "description": "The accessible name of the affordance that empties S5's entry line. Names exactly what taking it does."
+  },
   "browseByShapeTitle": "Browse by shape",
   "@browseByShapeTitle": {
     "description": "S6's screen heading."
@@ -122,6 +135,45 @@
   "browseNoSpeciesBody": "This jurisdiction has no species transcribed yet.",
   "@browseNoSpeciesBody": {
     "description": "Why the grid is empty. A statement about the pack, never an instruction to the reader."
+  },
+  "browseSpeciesCount": "{count, plural, one{{count} species} other{{count} species}}",
+  "@browseSpeciesCount": {
+    "description": "S6's bar stamp: how many species this pack draws in the grid below. A count of what is on the page, not a claim about the jurisdiction.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "browseFamilyHeading": "{family} · {count}",
+  "@browseFamilyHeading": {
+    "description": "A family heading in S6's grid: the family name in the reader's own language, then how many species sit under it. A format rather than a sentence, so the separator is the same mark in every locale.",
+    "placeholders": {
+      "family": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "browseMoreCount": "+{count}",
+  "@browseMoreCount": {
+    "description": "The figure on S6's overflow cell — how many species of this family the grid is not showing yet. Set in the mono step so it reads as a count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "browseMoreInFamily": "more in {family}",
+  "@browseMoreInFamily": {
+    "description": "The words under the overflow cell's figure, naming the family the hidden species belong to. Taking the cell opens them in place; nothing is unreachable.",
+    "placeholders": {
+      "family": {
+        "type": "String"
+      }
+    }
   },
   "speciesOtherNames": "Other names",
   "@speciesOtherNames": {
@@ -515,6 +567,136 @@
   "@verdictProtected": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. No measurement slot at all: a measurement beside a prohibition implies a threshold that does not exist, and a reader who sees one looks for a bigger individual of a species that may never be taken."
   },
+  "verdictStampMeetsMinimum": "Meets the minimum",
+  "@verdictStampMeetsMinimum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline alone — the state, with no numbers. The figures are printed beneath it by verdictDetailMinimum, which is mandatory beside this: the headline never travels without its detail line."
+  },
+  "verdictStampBelowMinimum": "Below the minimum",
+  "@verdictStampBelowMinimum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline alone. It states what the instrument found and says nothing about what to do with the fish; the numbers are carried by verdictDetailMinimum directly beneath it."
+  },
+  "verdictStampWithinMaximum": "Within the maximum",
+  "@verdictStampWithinMaximum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline alone, for an individual under a maximum. The numbers are carried by verdictDetailMaximum beneath it."
+  },
+  "verdictStampAboveMaximum": "Above the maximum",
+  "@verdictStampAboveMaximum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline alone, for an individual over a maximum. A maximum is a legally distinct rule from a minimum and never shares its wording."
+  },
+  "verdictStampNotMeasured": "Not measured",
+  "@verdictStampNotMeasured": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline where no reading has been taken. It is not a pass: nobody has checked, and the threshold beneath it states what would be compared."
+  },
+  "verdictStampMethodMismatch": "Measured by another method",
+  "@verdictStampMethodMismatch": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline where the reading was taken by one method and the instrument states another. No comparison is made, and no conversion factor is applied."
+  },
+  "verdictStampClosedSeason": "Closed season — {starts} to {ends}",
+  "@verdictStampClosedSeason": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The stamp headline for a closure. The window is part of the headline because a closure with no dates is not checkable against the instrument.",
+    "placeholders": {
+      "starts": {
+        "type": "String"
+      },
+      "ends": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictDetailMinimum": "{measured} {unit} measured · minimum {threshold} {unit} · {method}",
+  "@verdictDetailMinimum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line struck under the stamp headline. Both numbers are mandatory and so is the method: a threshold with no method is a number the reader cannot act on, because total length and fork length differ by 6-9 cm on the same fish. The unit follows the INSTRUMENT, never the reader locale and never the ruler setting.",
+    "placeholders": {
+      "measured": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictDetailMaximum": "{measured} {unit} measured · maximum {threshold} {unit} · {method}",
+  "@verdictDetailMaximum": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line struck under the stamp headline, for a maximum. Both numbers and the method are mandatory. The unit follows the INSTRUMENT.",
+    "placeholders": {
+      "measured": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictDetailMinimumUnmeasured": "Nothing measured · minimum {threshold} {unit} · {method}",
+  "@verdictDetailMinimumUnmeasured": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line where no reading exists. It states the threshold and the absence of a reading; it never softens the absence into a pass.",
+    "placeholders": {
+      "threshold": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictDetailMaximumUnmeasured": "Nothing measured · maximum {threshold} {unit} · {method}",
+  "@verdictDetailMaximumUnmeasured": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line where no reading exists, for a maximum.",
+    "placeholders": {
+      "threshold": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictDetailClosedSeasonInForce": "In force today, day {day} of {total} · applies at every size",
+  "@verdictDetailClosedSeasonInForce": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line under a closure headline. It states where today sits in the window and never how many days remain: a countdown invites planning, and this app states what the instrument says today. The size clause is stated because a closure that printed a measurement would suggest some size escapes it.",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "verdictDetailClosedSeasonNotInForce": "Not in force today",
+  "@verdictDetailClosedSeasonNotInForce": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. The figures line under a closure that exists and is not in force today. The closure is still stated rather than hidden, because the fisher is entitled to see the whole picture."
+  },
+  "speciesBinomialFamily": "{binomial} — {family}",
+  "@speciesBinomialFamily": {
+    "description": "The engraved plate's caption line: the scientific binomial and the family it sits in, set in one italic run under the names. Both are Latin in every locale and neither is translated; only the separator may change.",
+    "placeholders": {
+      "binomial": {
+        "type": "String"
+      },
+      "family": {
+        "type": "String"
+      }
+    }
+  },
   "verdictWithinBagLimit": "Within the bag limit — {recorded} recorded, limit {limit} per {period}",
   "@verdictWithinBagLimit": {
     "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. What has been recorded and what the instrument permits. The period is mandatory: a season quota compared against one day passes on every day of a season it has already exhausted.",
@@ -736,6 +918,70 @@
   "@zoneLevelRegion": {
     "description": "Level label. The authority that publishes, which §7.1 calls a jurisdiction and a fisher calls a region."
   },
+  "tripsKeptHere": "Kept on this device only",
+  "@tripsKeptHere": {
+    "description": "The subline under the Trips heading. States where the ledger lives, as a fact about this build: nothing is uploaded, so nothing has to be claimed about a server."
+  },
+  "tripsCountStamp": "{count} trips",
+  "@tripsCountStamp": {
+    "description": "The stamp at the trailing edge of the Trips bar — how many outings the ledger holds. Not an ICU plural on purpose: it heads a column the way a printed ledger does, and the six shipped languages each need every CLDR category for a plural message that says nothing the figure does not.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsRowSpan": "{zone} · {started} — {ended}",
+  "@tripsRowSpan": {
+    "description": "The detail line of one closed trip row: where it was, and the clock times it ran between.",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      },
+      "started": {
+        "type": "String"
+      },
+      "ended": {
+        "type": "String"
+      }
+    }
+  },
+  "tripsRowSpanOpen": "{zone} · {started} — now",
+  "@tripsRowSpanOpen": {
+    "description": "The detail line of the trip still running. The open end is a word rather than a blank, because a blank reads as a time that failed to load.",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      },
+      "started": {
+        "type": "String"
+      }
+    }
+  },
+  "tripsOpenMark": "· open",
+  "@tripsOpenMark": {
+    "description": "The quiet inline marker beside the date of the trip still running. It repeats what the stamp at the end of the row says, because the open trip is marked twice and neither mark is a colour."
+  },
+  "tripsOpenStamp": "Open",
+  "@tripsOpenStamp": {
+    "description": "The ruled stamp at the end of the row of the trip still running. A word inside a frame, so it survives greyscale and glare."
+  },
+  "tripsDuration": "{hours}h {minutes}m",
+  "@tripsDuration": {
+    "description": "How long a closed trip ran, set in the mono step at the end of its row.",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "tripsLoadFailed": "The trips on this device could not be read.",
+  "@tripsLoadFailed": {
+    "description": "STATEMENT OF FACT. No imperative mood, no second person, no permission verb. A read that failed, said plainly, in place of the exception object this screen used to print at the fisher."
+  },
   "zoneLevelSubZone": "Sub-zone",
   "@zoneLevelSubZone": {
     "description": "Level label. Offered only where the pack printed coordinates."
@@ -845,6 +1091,55 @@
   "settingsGloveNote": "Larger targets and wider spacing.",
   "@settingsGloveNote": {
     "description": "Settings label: settingsGloveNote."
+  },
+  "settingsGroupLanguage": "Language and figures",
+  "@settingsGroupLanguage": {
+    "description": "Heading over the first group of settings rows on S14 — language, digits and unit. A noun phrase naming what the rows below it govern."
+  },
+  "settingsGroupPlace": "Where you fish",
+  "@settingsGroupPlace": {
+    "description": "Heading over the second group of settings rows on S14 — zone, ruler calibration and coordinate capture."
+  },
+  "settingsGroupReading": "Reading conditions",
+  "@settingsGroupReading": {
+    "description": "Heading over the third group of settings rows on S14 — sunlight mode and glove mode."
+  },
+  "settingsDigitsNote": "Western or Arabic-Indic digits",
+  "@settingsDigitsNote": {
+    "description": "The line under the Digits key on S14, naming what the two digit systems are. A STATEMENT OF FACT about what the control changes."
+  },
+  "settingsLengthUnitNote": "Lengths on rules and readings",
+  "@settingsLengthUnitNote": {
+    "description": "The line under the length-unit key on S14. Storage is always millimetres; this control changes display only."
+  },
+  "settingsZone": "Zone",
+  "@settingsZone": {
+    "description": "Settings key naming the place every answer in the app is evaluated against."
+  },
+  "settingsZoneNote": "Rules, species list and limits follow this",
+  "@settingsZoneNote": {
+    "description": "The line under the Zone key on S14. A STATEMENT OF FACT about what the setting reaches — it gives no instruction and makes no claim about the law itself."
+  },
+  "settingsZoneUnset": "No place chosen",
+  "@settingsZoneUnset": {
+    "description": "The Zone row's reading when no jurisdiction and zone have been stored yet. States the absence and nothing more."
+  },
+  "settingsRulerScale": "{px} px / 10 millimetres",
+  "@settingsRulerScale": {
+    "description": "The ruler row's reading on S14: the measured scale of this screen, in pixels per ten millimetres. Set in the mono figure step so it can be compared character by character against another device.",
+    "placeholders": {
+      "px": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsCoordinates": "Coordinate capture",
+  "@settingsCoordinates": {
+    "description": "Settings key for the opt-in that lets a recorded catch carry the coordinates it was landed at."
+  },
+  "settingsCoordinatesNote": "Held on this device only, never transmitted",
+  "@settingsCoordinatesNote": {
+    "description": "The line under the coordinate-capture key on S14. A STATEMENT OF FACT about where the coordinates go — the app has no network code, so nothing leaves the phone."
   },
   "settingsRuler": "Ruler",
   "@settingsRuler": {
@@ -1017,9 +1312,148 @@
   "@todayUndoOne": {
     "description": "A per-species action on the day tally. Kept is authored by the fisher and never inferred from a verdict: a legal fish put back is still a legal fish."
   },
+  "measureSup": "Ruler",
+  "@measureSup": {
+    "description": "The trailing stamp on the ruler screen's bar. Names the instrument the screen is, so a pushed screen read two hours from home says what it is as well as which fish it is about."
+  },
+  "measureCalibrationProvenance": "Calibrated {on} · {pxPer10mm} pixels per centimetre",
+  "@measureCalibrationProvenance": {
+    "description": "The provenance line under the tick band. A scale drawn on glass is only as good as the calibration behind it, so the ruler states when it was measured and what it measured — both figures in mono, both comparable against the same line on another device.",
+    "placeholders": {
+      "on": {
+        "type": "String"
+      },
+      "pxPer10mm": {
+        "type": "String"
+      }
+    }
+  },
+  "measureStepAndMark": "Step and mark",
+  "@measureStepAndMark": {
+    "description": "The step-and-mark section heading and the primary action that adds one segment. One key for both, because they name the same act: a fish longer than the phone is measured in segments."
+  },
+  "measureRunningTotalUnit": "cm so far",
+  "@measureRunningTotalUnit": {
+    "description": "The unit phrase beside the running total, set in serif next to the mono figure. It says SO FAR because the number is a running sum of the marks, not a finished measurement — and a total presented as final is one a fisher would read against a limit before he had finished measuring."
+  },
+  "measureStepPill": "Step {count}",
+  "@measureStepPill": {
+    "description": "The stamp beside the running total, counting the marks made. There is no total to count towards: how many segments a fish takes is not knowable before it is measured.",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "measureStepNote": "Lay the screen edge at the snout, mark, slide the phone along the fish and mark again.",
+  "@measureStepNote": {
+    "description": "How the instrument is worked. An instruction about operating the ruler, never about the fish or a rule."
+  },
+  "measureTypeInstead": "Type instead",
+  "@measureTypeInstead": {
+    "description": "Opens manual length entry. Manual entry works before any calibration exists and is never a fallback — a fisher with a tape in his hand and no bank card in his pocket takes this path by choice."
+  },
+  "measureRecalibrate": "Re-calibrate with a card",
+  "@measureRecalibrate": {
+    "description": "Reopens calibration from the ruler. A calibration measured once on a cracked screen or a different device is a scale nobody can correct without this."
+  },
+  "measurePrivacyNote": "Fish on the board, phone on the fish. No photograph is taken and no coordinate is read unless coordinate capture is switched on in Settings.",
+  "@measurePrivacyNote": {
+    "description": "The closing note on the ruler. States what the screen does not do: measuring is not photographing and not locating, and the one exception is named with the setting that governs it."
+  },
+  "measureManualTitle": "Type the length",
+  "@measureManualTitle": {
+    "description": "The manual-entry screen's own title. A separate key from the label on the ruler, because a heading that opened with 'Or' would read as half a sentence."
+  },
+  "calibrateSup": "Once per device",
+  "@calibrateSup": {
+    "description": "The trailing stamp on the calibration bar. States how often this is done, so the screen does not read as a step in the measuring loop."
+  },
+  "calibrateCardConstant": "Every card of this format is identical: ISO/IEC 7810 ID-1 — {width} × {height} millimetres",
+  "@calibrateCardConstant": {
+    "description": "The premise of the whole screen, stated above the drawing rather than captioned under the control: the reference object is a published physical constant, and both of its dimensions are quoted from the standard that fixes them.",
+    "placeholders": {
+      "width": {
+        "type": "String"
+      },
+      "height": {
+        "type": "String"
+      }
+    }
+  },
+  "calibrateDimension": "{mm} millimetres",
+  "@calibrateDimension": {
+    "description": "One dimension label on the card drawing, in mono. A figure of the CARD, not of a fish: it carries no measurement method because the object being measured is a rectangle whose size is published.",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
+  "calibrateDragHandleNote": "Drag the filled handle.",
+  "@calibrateDragHandleNote": {
+    "description": "Names which of the five corner marks is the control. Four are registration marks and one moves; a drawing that did not say so would be dragged from the wrong corner."
+  },
+  "calibrateScaleLabel": "Resulting scale",
+  "@calibrateScaleLabel": {
+    "description": "The section heading over the table of what the current fit produced."
+  },
+  "calibrateRowScale": "Pixels per centimetre",
+  "@calibrateRowScale": {
+    "description": "Table row label: the measured scale itself, quoted over a centimetre rather than a millimetre so the figure carries a digit a reader can compare."
+  },
+  "calibrateRowDensity": "Screen density",
+  "@calibrateRowDensity": {
+    "description": "Table row label: what the device reports about itself. Stated beside the measured scale precisely because it does NOT produce it — no arithmetic on a density yields a millimetre."
+  },
+  "calibrateRowError": "Expected error",
+  "@calibrateRowError": {
+    "description": "Table row label: how far out a length can be if the fit was one pixel off. The screen's own honesty about its instrument."
+  },
+  "calibrateRowLastCalibrated": "Last calibrated",
+  "@calibrateRowLastCalibrated": {
+    "description": "Table row label: when the stored scale was measured, so an old calibration is visible rather than silently reused."
+  },
+  "calibrateDensityValue": "{dp} dp · {ratio}×",
+  "@calibrateDensityValue": {
+    "description": "The screen density value: logical width and the logical-to-physical ratio, both as the device reports them.",
+    "placeholders": {
+      "dp": {
+        "type": "String"
+      },
+      "ratio": {
+        "type": "String"
+      }
+    }
+  },
+  "calibrateErrorValue": "± {mm} millimetres over 30 centimetres",
+  "@calibrateErrorValue": {
+    "description": "The expected error band and the span it applies over. Both figures belong to the SCREEN and not to a fish, so no measurement method attaches to them.",
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      }
+    }
+  },
+  "calibrateNotYet": "Not yet calibrated",
+  "@calibrateNotYet": {
+    "description": "The last-calibrated value before any calibration exists. A stated absence rather than a blank cell, which would read as a figure that failed to load."
+  },
+  "calibrateReset": "Reset to screen default",
+  "@calibrateReset": {
+    "description": "Returns the handle to its starting position. Names what it restores — a starting position for the drag, which is never itself a scale and never measures anything."
+  },
+  "calibrateGlassNote": "A case or a screen protector changes nothing — the card sits on the glass and the glass is what is being measured.",
+  "@calibrateGlassNote": {
+    "description": "The closing note on calibration. Answers the question every fisher asks before he trusts the number, and answers it with the physical reason rather than with reassurance."
+  },
   "measureBackspace": "Back",
   "@measureBackspace": {
     "description": "The keypad's delete key on S3. A word rather than a glyph: an arrow from an icon font is one missing family away from a tofu box on the one control that undoes a mistyped length."
+  },
+  "navBack": "Back",
+  "@navBack": {
+    "description": "The back affordance on a pushed screen's bar, read aloud by a screen reader. A direction of travel through the app, and never a word about the fish: the only thing this control does is return the reader to the screen the current one was pushed from."
   },
   "navToday": "Today",
   "@navToday": {

@@ -11,6 +11,7 @@ RulerScene _scene({
   Color mark = const Color(0xFF7A2320),
   double hairlinePx = 1,
   double tickPx = 1,
+  double cmTickPx = 1,
   double cursorPx = 2,
 }) => RulerScene(
   pxPerMm: pxPerMm,
@@ -22,6 +23,7 @@ RulerScene _scene({
   mark: mark,
   hairlinePx: hairlinePx,
   tickPx: tickPx,
+  cmTickPx: cmTickPx,
   cursorPx: cursorPx,
 );
 
@@ -38,6 +40,7 @@ void main() {
     'mark': _scene(mark: const Color(0xFF000000)),
     'hairlinePx': _scene(hairlinePx: 2),
     'tickPx': _scene(tickPx: 2),
+    'cmTickPx': _scene(cmTickPx: 2),
     'cursorPx': _scene(cursorPx: 3),
   };
   mutations.forEach((String field, RulerScene changed) {

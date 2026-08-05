@@ -186,7 +186,15 @@ class FindingDisplay {
       Object.hash(sentence, kind, outcome, citation, citationIndex, Object.hashAll(facts));
 }
 
-/// The one thing at the top of the screen.
+/// The one thing at the top of the screen, in three registers.
+///
+/// **Three fields and not one sentence.** The stamp used to carry the whole
+/// finding — *Below the minimum — 38 cm measured, minimum 45 cm (total
+/// length)* — set in one 42 pt step, where it wrapped to four lines and pushed
+/// the numbers behind it off the screen. It is read in one glance at 05:40, and
+/// a glance takes the state first, the figures second and the margin third. The
+/// three are separate fields so the surface can set them in three registers
+/// without parsing its own output for the seams.
 @immutable
 class VerdictStampDisplay {
   /// The headline finding, dressed for the stamp.
@@ -195,10 +203,15 @@ class VerdictStampDisplay {
     required this.category,
     required this.kind,
     required this.citation,
-    this.subLine,
+    this.detail,
+    this.meta,
   });
 
-  /// The whole sentence, already localised: state, both numbers, the method.
+  /// The state alone, already localised, and as short as the rule allows.
+  ///
+  /// *Below the minimum*. No numbers: they are [detail]'s, one register down,
+  /// and a headline that carried them could not be set large enough to read at
+  /// arm's length in sunlight.
   final String headline;
 
   /// Which signal set the surface spends.
@@ -214,14 +227,26 @@ class VerdictStampDisplay {
   /// The instrument the headline rests on.
   final CitationDisplay citation;
 
+  /// The figures the headline rests on, or `null` where there are none.
+  ///
+  /// *38 cm measured · minimum 45 cm · total length*. Every number the reader
+  /// would otherwise have to scroll for, on one line, in the mono face — and
+  /// never without the method beside it, because total length and fork length
+  /// differ by 6–9 cm on the same fish.
+  ///
+  /// Null for [VerdictCategory.protected]: a measurement printed beside a
+  /// prohibition implies a threshold that does not exist, and a reader who sees
+  /// one goes looking for a bigger individual of a species that may never be
+  /// taken.
+  final String? detail;
+
   /// The numeric margin, or `null` where a measurement does not apply.
   ///
-  /// Null for [VerdictCategory.protected] and [VerdictCategory.closedSeason],
-  /// and that is a rule rather than a coincidence: a measurement printed beside
-  /// a prohibition implies a threshold that does not exist, and a reader who
-  /// sees one goes looking for a bigger individual of a species that may never
-  /// be taken.
-  final String? subLine;
+  /// *Short of the minimum by 7 cm*. Null for [VerdictCategory.protected] and
+  /// [VerdictCategory.closedSeason], and that is a rule rather than a
+  /// coincidence: a closure applies at every size, so a margin beside it would
+  /// suggest that some size escapes it.
+  final String? meta;
 
   @override
   bool operator ==(Object other) =>
@@ -231,10 +256,11 @@ class VerdictStampDisplay {
           other.category == category &&
           other.kind == kind &&
           other.citation == citation &&
-          other.subLine == subLine;
+          other.detail == detail &&
+          other.meta == meta;
 
   @override
-  int get hashCode => Object.hash(headline, category, kind, citation, subLine);
+  int get hashCode => Object.hash(headline, category, kind, citation, detail, meta);
 }
 
 /// The serif note that stands where a stamp would, and never beside one.

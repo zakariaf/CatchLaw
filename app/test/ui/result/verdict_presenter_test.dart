@@ -22,37 +22,55 @@ void main() {
     test('.present states the shortfall with both numbers and the method', () {
       final ResultDisplay display = en.present(kResolutionHamourBelowMinimum, kContextRasAlKhaimah);
 
+      // Three registers, and every fact the one sentence used to carry is still
+      // on the stamp: the state, then both numbers with the method beside them.
+      expect(display.stamp!.headline, 'Below the minimum');
+      expect(display.stamp!.detail, '38 cm measured · minimum 45 cm · Total length');
+      expect(display.stamp!.meta, 'Short of the minimum by 7 cm');
+      // The whole sentence survives on the finding the table and the screen
+      // reader read from — the split is a change to the STAMP, not to the law.
       expect(
-        display.stamp!.headline,
+        display.findings.first.sentence,
         'Below the minimum — 38 cm measured, minimum 45 cm (Total length)',
       );
+    });
+
+    test('.present keeps the numbers off the stamp headline', () {
+      final ResultDisplay display = en.present(kResolutionHamourBelowMinimum, kContextRasAlKhaimah);
+
+      // A headline carrying two numbers and a method cannot be set at a size
+      // that reads at arm's length; it wrapped to four lines and pushed the
+      // facts table off the screen.
+      expect(display.stamp!.headline, isNot(contains('38')));
+      expect(display.stamp!.headline, isNot(contains('45')));
+      expect(display.stamp!.headline, isNot(contains('Total length')));
     });
 
     test('.present names the method for a fork-length rule', () {
       final ResultDisplay display = en.present(kResolutionKanaadMeetsMinimum, kContextRasAlKhaimah);
 
-      expect(display.stamp!.headline, contains('(Fork length)'));
-      expect(display.stamp!.headline, isNot(contains('Total length')));
+      expect(display.stamp!.detail, contains('Fork length'));
+      expect(display.stamp!.detail, isNot(contains('Total length')));
     });
 
     test('.present keeps the instrument unit with a millimetre rule', () {
       final ResultDisplay display = en.present(kResolutionAmeixaBelowMinimum, kContextCambados);
 
-      expect(display.stamp!.headline, contains('34 mm measured, minimum 38 mm'));
-      expect(display.stamp!.headline, contains('(Shell length)'));
+      expect(display.stamp!.detail, contains('34 mm measured · minimum 38 mm'));
+      expect(display.stamp!.detail, contains('Shell length'));
     });
 
     test('.present echoes the measured value unchanged', () {
       final ResultDisplay display = en.present(kResolutionHamourMeasured386, kContextRasAlKhaimah);
 
-      expect(display.stamp!.headline, contains('38.6 cm'));
-      expect(display.stamp!.headline, isNot(contains('39 cm')));
+      expect(display.stamp!.detail, contains('38.6 cm'));
+      expect(display.stamp!.detail, isNot(contains('39 cm')));
     });
 
     test('.present states the maximum for a maxSize failure', () {
       final ResultDisplay display = en.present(kResolutionAboveMaximum, kContextRasAlKhaimah);
 
-      expect(display.stamp!.headline, startsWith('Above the maximum'));
+      expect(display.stamp!.headline, 'Above the maximum');
       expect(display.stamp!.kind, FindingKind.maxSize);
       expect(display.stamp!.category, VerdictCategory.belowMinimum);
     });
@@ -61,15 +79,18 @@ void main() {
       final ResultDisplay display = en.present(kResolutionSawfishProtected, kContextRasAlKhaimah);
 
       expect(display.stamp!.category, VerdictCategory.protected);
-      expect(display.stamp!.subLine, isNull);
+      expect(display.stamp!.detail, isNull);
+      expect(display.stamp!.meta, isNull);
     });
 
     test('.present prints no measurement sub-line when the category is closedSeason', () {
       final ResultDisplay display = en.present(kResolutionShariClosedSeason, kContextRasAlKhaimah);
 
       expect(display.stamp!.category, VerdictCategory.closedSeason);
-      expect(display.stamp!.subLine, isNull);
-      expect(display.stamp!.headline, contains('day 14 of 61'));
+      expect(display.stamp!.meta, isNull);
+      // The closure keeps its OWN figures — which day of the window today is —
+      // and drops only the measurement margin.
+      expect(display.stamp!.detail, contains('day 14 of 61'));
     });
 
     test('.present headlines the protected finding when a size rule also fails', () {
@@ -165,6 +186,7 @@ void main() {
       expect(display.stamp!.headline, contains('1 March'));
       expect(display.stamp!.headline, contains('30 April'));
       expect(display.stamp!.headline, isNot(contains('2026-03-01')));
+      expect(display.stamp!.headline, 'Closed season — 1 March to 30 April');
     });
 
     test('.present resolves the method name through content_string', () {
@@ -176,7 +198,7 @@ void main() {
         }),
       ).present(kResolutionHamourBelowMinimum, kContextRasAlKhaimah);
 
-      expect(display.stamp!.headline, contains('(Longitud total)'));
+      expect(display.stamp!.detail, contains('Longitud total'));
     });
 
     test('.present names the authority from the active jurisdiction', () {
@@ -192,7 +214,7 @@ void main() {
         kContentAr,
       ).present(kResolutionHamourBelowMinimum, kContextRasAlKhaimah).stamp!.headline;
 
-      expect(headline, startsWith('دون الحد الأدنى'));
+      expect(headline, 'أقل من الحد الأدنى');
       for (final banned in const <String>['احتفظ', 'أعِدْه', 'يمكنك']) {
         expect(headline.contains(banned), isFalse, reason: 'imperative in an ar verdict');
       }

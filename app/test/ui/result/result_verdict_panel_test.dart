@@ -1,6 +1,7 @@
 import 'package:catchlaw/theme/lonja_icon.dart';
 import 'package:catchlaw/theme/lonja_icons.dart';
 import 'package:catchlaw/theme/lonja_theme.dart';
+import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/widgets/result_verdict_panel.dart';
 import 'package:flutter/material.dart';
@@ -40,14 +41,60 @@ Future<void> _pumpPanel(
 
 void main() {
   group('ResultVerdictPanel', () {
-    testWidgets('renders the glyph and the headline for a met minimum', (
+    testWidgets('renders the glyph and three registers for a met minimum', (
       WidgetTester tester,
     ) async {
       await _pumpPanel(tester, kStampMeets);
 
       expect(_glyphIn(tester), LonjaIcons.tick);
-      expect(find.textContaining('Meets the minimum'), findsOneWidget);
-      expect(find.textContaining('Over the minimum by'), findsOneWidget);
+      // The state alone in the headline, cased at the call site; the figures
+      // and the margin in their own registers beneath it.
+      expect(find.text('MEETS THE MINIMUM'), findsOneWidget);
+      expect(find.text('70\u00A0cm measured · minimum 65\u00A0cm · Fork length'), findsOneWidget);
+      expect(find.text('OVER THE MINIMUM BY 5\u00A0CM'), findsOneWidget);
+    });
+
+    testWidgets('sets the headline, the figures and the margin in three ramp steps', (
+      WidgetTester tester,
+    ) async {
+      await _pumpPanel(tester, kStampBelowMinimum);
+      final type = LonjaTypeScale.latin();
+
+      final BuildContext context = tester.element(find.text('BELOW THE MINIMUM'));
+      TextStyle resolved(Finder finder) => DefaultTextStyle.of(
+        tester.element(finder),
+      ).style.merge(tester.widget<Text>(finder).style);
+
+      expect(resolved(find.text('BELOW THE MINIMUM')).fontSize, type.title.fontSize);
+      expect(
+        resolved(find.text('38\u00A0cm measured · minimum 45\u00A0cm · Total length')).fontSize,
+        type.datum.fontSize,
+        reason: 'the figures are mono and one register down, never the 42 pt verdict step',
+      );
+      expect(
+        resolved(find.text('SHORT OF THE MINIMUM BY 7\u00A0CM')).fontSize,
+        type.microLabel.fontSize,
+      );
+      expect(LonjaType.of(context).verdict.fontSize, isNot(type.title.fontSize));
+    });
+
+    testWidgets('draws the figures for a closure and the margin for none', (
+      WidgetTester tester,
+    ) async {
+      await _pumpPanel(tester, kStampClosedSeason);
+
+      expect(find.text('In force today, day 14 of 61 · applies at every size'), findsOneWidget);
+      expect(find.textContaining('SHORT OF THE MINIMUM'), findsNothing);
+    });
+
+    testWidgets('draws neither figures nor margin for a protected species', (
+      WidgetTester tester,
+    ) async {
+      // Both are supplied on the fixture on purpose: the CATEGORY drops them.
+      await _pumpPanel(tester, kStampProtected);
+
+      expect(find.textContaining('measured'), findsNothing);
+      expect(find.textContaining('SHORT OF THE MINIMUM'), findsNothing);
     });
 
     testWidgets('renders the ban glyph for a protected species', (WidgetTester tester) async {
@@ -57,34 +104,34 @@ void main() {
       expect(_glyphIn(tester), isNot(LonjaIcons.cross));
     });
 
-    testWidgets('omits the measurement sub-line for a protected species', (
-      WidgetTester tester,
-    ) async {
+    testWidgets('omits the margin for a protected species', (WidgetTester tester) async {
       await _pumpPanel(tester, kStampProtected);
 
-      expect(find.textContaining('Short of the minimum'), findsNothing);
+      expect(find.textContaining('SHORT OF THE MINIMUM'), findsNothing);
     });
 
-    testWidgets('omits the measurement sub-line for a closure', (WidgetTester tester) async {
+    testWidgets('omits the margin for a closure and keeps its own figures', (
+      WidgetTester tester,
+    ) async {
       await _pumpPanel(tester, kStampClosedSeason);
 
-      expect(find.textContaining('Short of the minimum'), findsNothing);
+      expect(find.textContaining('SHORT OF THE MINIMUM'), findsNothing);
       expect(find.textContaining('day 14 of 61'), findsOneWidget);
     });
 
-    testWidgets('renders the measurement sub-line below a minimum', (WidgetTester tester) async {
+    testWidgets('renders the margin below a minimum', (WidgetTester tester) async {
       await _pumpPanel(tester, kStampBelowMinimum);
 
-      expect(find.textContaining('Short of the minimum by'), findsOneWidget);
+      expect(find.textContaining('SHORT OF THE MINIMUM BY'), findsOneWidget);
     });
 
-    testWidgets('distinguishes a prohibition from a short fish by glyph and sub-line', (
+    testWidgets('distinguishes a prohibition from a short fish by glyph and margin', (
       WidgetTester tester,
     ) async {
       await _pumpPanel(tester, kStampProtected);
       final LonjaGlyph protectedGlyph = _glyphIn(tester);
-      final bool protectedHasSubLine = find
-          .textContaining('Short of the minimum')
+      final bool protectedHasMargin = find
+          .textContaining('SHORT OF THE MINIMUM')
           .evaluate()
           .isNotEmpty;
 
@@ -92,8 +139,8 @@ void main() {
 
       expect(protectedGlyph, isNot(_glyphIn(tester)));
       expect(
-        protectedHasSubLine,
-        isNot(find.textContaining('Short of the minimum').evaluate().isNotEmpty),
+        protectedHasMargin,
+        isNot(find.textContaining('SHORT OF THE MINIMUM').evaluate().isNotEmpty),
       );
     });
 
@@ -133,9 +180,9 @@ void main() {
     testWidgets('sunlight - prints the block in the ground colour', (WidgetTester tester) async {
       await _pumpPanel(tester, kStampBelowMinimum, skin: LonjaSkin.sunlight);
 
-      final Text headline = tester.widget<Text>(find.textContaining('Below the minimum'));
+      final Text headline = tester.widget<Text>(find.text('BELOW THE MINIMUM'));
       final DefaultTextStyle inherited = DefaultTextStyle.of(
-        tester.element(find.textContaining('Below the minimum')),
+        tester.element(find.text('BELOW THE MINIMUM')),
       );
       expect(headline.style?.color, isNull, reason: 'the ink is inherited, never set per text');
       expect(inherited.style.color, LonjaPalettes.sunlight.surface);
@@ -145,7 +192,7 @@ void main() {
       await _pumpPanel(tester, kStampBelowMinimum, locale: const Locale('ar'));
 
       final double glyphStart = tester.getTopRight(find.byType(LonjaIcon)).dx;
-      final double headlineStart = tester.getTopRight(find.textContaining('Below the minimum')).dx;
+      final double headlineStart = tester.getTopRight(find.text('BELOW THE MINIMUM')).dx;
       expect(glyphStart, greaterThan(headlineStart), reason: 'start is the right edge under RTL');
     });
 

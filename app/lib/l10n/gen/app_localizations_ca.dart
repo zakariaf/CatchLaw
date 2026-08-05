@@ -108,6 +108,21 @@ class AppLocalizationsCa extends AppLocalizations {
   }
 
   @override
+  String speciesSearchMatchCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count coincidències',
+      many: '$count coincidències',
+      one: '$count coincidència',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get speciesSearchClear => 'Esborrar la cerca';
+
+  @override
   String get browseByShapeTitle => 'Explorar per forma';
 
   @override
@@ -115,6 +130,33 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get browseNoSpeciesBody => 'Aquesta jurisdicció encara no té espècies transcrites.';
+
+  @override
+  String browseSpeciesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count espècies',
+      many: '$count espècies',
+      one: '$count espècie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String browseFamilyHeading(String family, int count) {
+    return '$family · $count';
+  }
+
+  @override
+  String browseMoreCount(int count) {
+    return '+$count';
+  }
+
+  @override
+  String browseMoreInFamily(String family) {
+    return 'més a $family';
+  }
 
   @override
   String get speciesOtherNames => 'Altres noms';
@@ -329,6 +371,62 @@ class AppLocalizationsCa extends AppLocalizations {
   String get verdictProtected => 'Espècie protegida — captura prohibida.';
 
   @override
+  String get verdictStampMeetsMinimum => 'Compleix el mínim';
+
+  @override
+  String get verdictStampBelowMinimum => 'Per sota del mínim';
+
+  @override
+  String get verdictStampWithinMaximum => 'Dins del màxim';
+
+  @override
+  String get verdictStampAboveMaximum => 'Per sobre del màxim';
+
+  @override
+  String get verdictStampNotMeasured => 'Sense mesurar';
+
+  @override
+  String get verdictStampMethodMismatch => 'Mesurat amb un altre mètode';
+
+  @override
+  String verdictStampClosedSeason(String starts, String ends) {
+    return 'Veda — del $starts al $ends';
+  }
+
+  @override
+  String verdictDetailMinimum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit mesurats · mínim $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit mesurats · màxim $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMinimumUnmeasured(String threshold, String unit, String method) {
+    return 'Sense mesura · mínim $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximumUnmeasured(String threshold, String unit, String method) {
+    return 'Sense mesura · màxim $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailClosedSeasonInForce(String day, String total) {
+    return 'Vigent avui, dia $day de $total · s\'aplica a totes les talles';
+  }
+
+  @override
+  String get verdictDetailClosedSeasonNotInForce => 'Avui no és vigent';
+
+  @override
+  String speciesBinomialFamily(String binomial, String family) {
+    return '$binomial — $family';
+  }
+
+  @override
   String verdictWithinBagLimit(String recorded, String limit, String period) {
     return 'Dins de la quota — $recorded registrats, límit $limit per $period';
   }
@@ -456,6 +554,38 @@ class AppLocalizationsCa extends AppLocalizations {
   String get zoneLevelRegion => 'Regió';
 
   @override
+  String get tripsKeptHere => 'Es desa només en aquest dispositiu';
+
+  @override
+  String tripsCountStamp(int count) {
+    return '$count sortides';
+  }
+
+  @override
+  String tripsRowSpan(String zone, String started, String ended) {
+    return '$zone · $started — $ended';
+  }
+
+  @override
+  String tripsRowSpanOpen(String zone, String started) {
+    return '$zone · $started — ara';
+  }
+
+  @override
+  String get tripsOpenMark => '· en curs';
+
+  @override
+  String get tripsOpenStamp => 'En curs';
+
+  @override
+  String tripsDuration(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String get tripsLoadFailed => 'No s\'han pogut llegir les sortides d\'aquest dispositiu.';
+
+  @override
   String get zoneLevelSubZone => 'Subzona';
 
   @override
@@ -542,6 +672,41 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get settingsGloveNote => 'Objectius més grans i més espaiats.';
+
+  @override
+  String get settingsGroupLanguage => 'Idioma i xifres';
+
+  @override
+  String get settingsGroupPlace => 'On pesques';
+
+  @override
+  String get settingsGroupReading => 'Condicions de lectura';
+
+  @override
+  String get settingsDigitsNote => 'Xifres occidentals o aràbigues índies';
+
+  @override
+  String get settingsLengthUnitNote => 'Longituds en normes i lectures';
+
+  @override
+  String get settingsZone => 'Zona';
+
+  @override
+  String get settingsZoneNote => 'Les normes, la llista d’espècies i els límits segueixen això';
+
+  @override
+  String get settingsZoneUnset => 'Cap lloc triat';
+
+  @override
+  String settingsRulerScale(String px) {
+    return '$px px / 10 mil·límetres';
+  }
+
+  @override
+  String get settingsCoordinates => 'Captura de coordenades';
+
+  @override
+  String get settingsCoordinatesNote => 'Es guarden només en aquest telèfon, mai no es transmeten';
 
   @override
   String get settingsRuler => 'Regla';
@@ -666,7 +831,97 @@ class AppLocalizationsCa extends AppLocalizations {
   String get todayUndoOne => 'N\'elimina un';
 
   @override
+  String get measureSup => 'Regle';
+
+  @override
+  String measureCalibrationProvenance(String on, String pxPer10mm) {
+    return 'Calibrat el $on · $pxPer10mm píxels per centímetre';
+  }
+
+  @override
+  String get measureStepAndMark => 'Marcar per trams';
+
+  @override
+  String get measureRunningTotalUnit => 'cm fins ara';
+
+  @override
+  String measureStepPill(String count) {
+    return 'Tram $count';
+  }
+
+  @override
+  String get measureStepNote =>
+      'Recolza la vora de la pantalla al morro, marca, llisca el telèfon al llarg del peix i torna a marcar.';
+
+  @override
+  String get measureTypeInstead => 'Escriure la mesura';
+
+  @override
+  String get measureRecalibrate => 'Recalibrar amb una targeta';
+
+  @override
+  String get measurePrivacyNote =>
+      'El peix a la taula, el telèfon sobre el peix. No es pren cap fotografia ni es llegeix cap coordenada llevat que la captura de coordenades estigui activada a Configuració.';
+
+  @override
+  String get measureManualTitle => 'Escriure la longitud';
+
+  @override
+  String get calibrateSup => 'Una vegada per dispositiu';
+
+  @override
+  String calibrateCardConstant(String width, String height) {
+    return 'Tota targeta d\'aquest format és idèntica: ISO/IEC 7810 ID-1 — $width × $height mil·límetres';
+  }
+
+  @override
+  String calibrateDimension(String mm) {
+    return '$mm mil·límetres';
+  }
+
+  @override
+  String get calibrateDragHandleNote => 'Arrossega la nansa plena.';
+
+  @override
+  String get calibrateScaleLabel => 'Escala resultant';
+
+  @override
+  String get calibrateRowScale => 'Píxels per centímetre';
+
+  @override
+  String get calibrateRowDensity => 'Densitat de pantalla';
+
+  @override
+  String get calibrateRowError => 'Error esperat';
+
+  @override
+  String get calibrateRowLastCalibrated => 'Última calibració';
+
+  @override
+  String calibrateDensityValue(String dp, String ratio) {
+    return '$dp dp · $ratio×';
+  }
+
+  @override
+  String calibrateErrorValue(String mm) {
+    return '± $mm mil·límetres en 30 centímetres';
+  }
+
+  @override
+  String get calibrateNotYet => 'Encara sense calibrar';
+
+  @override
+  String get calibrateReset => 'Restablir el valor de pantalla';
+
+  @override
+  String get calibrateGlassNote =>
+      'Una funda o un protector de pantalla no canvien res: la targeta es recolza sobre el vidre i el vidre és el que es mesura.';
+
+  @override
   String get measureBackspace => 'Esborra';
+
+  @override
+  String get navBack => 'Enrere';
 
   @override
   String get navToday => 'Avui';

@@ -59,7 +59,19 @@ class RecentsStrip extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        LonjaSectionLabel(text: l10n.checkRecentsLabel),
+        // The label and its rule stop at the gutter, like every other ruled
+        // label on the page — it was running to the bare edge of the glass.
+        // The air above it is what separates the strip from the entry line now
+        // sitting over it.
+        Padding(
+          padding: EdgeInsetsDirectional.only(
+            start: tokens.density.gutter,
+            end: tokens.density.gutter,
+            top: LonjaSpace.s5,
+            bottom: LonjaSpace.s3,
+          ),
+          child: LonjaSectionLabel(text: l10n.checkRecentsLabel),
+        ),
         SizedBox(
           height: tokens.density.rowHeight,
           child: ListView.builder(

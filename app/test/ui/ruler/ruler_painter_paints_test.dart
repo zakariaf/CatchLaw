@@ -16,6 +16,7 @@ RulerScene _scene({double pxPerMm = 10, double spanPx = 300}) => RulerScene(
   mark: _mark,
   hairlinePx: 1,
   tickPx: 1,
+  cmTickPx: 1,
   cursorPx: 2,
 );
 

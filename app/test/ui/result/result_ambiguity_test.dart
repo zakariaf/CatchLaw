@@ -109,6 +109,13 @@ void main() {
     testWidgets('returns the instrument the reader says they applied', (WidgetTester tester) async {
       final Future<AmbiguityChoice> answer = await open(tester);
 
+      // Scrolled to first, for the reason the sibling test above records: the
+      // dialog's content scrolls, the second instrument's action sits below the
+      // fold at the shipped type sizes, and a bare tap on an off-screen widget
+      // does not fail fast — it misses, the dialog never pops, and `await
+      // answer` hangs to the ten-minute timeout as an unrelated-looking flake.
+      await tester.ensureVisible(find.byKey(const Key('ambiguity-choice-es-ga-orde-2012-07-27')));
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const Key('ambiguity-choice-es-ga-orde-2012-07-27')));
       await tester.pumpAndSettle();
 

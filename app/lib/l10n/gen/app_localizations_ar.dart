@@ -113,6 +113,24 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String speciesSearchMatchCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count نتيجة مطابقة',
+      many: '$count نتيجة مطابقة',
+      few: '$count نتائج مطابقة',
+      two: 'نتيجتان مطابقتان',
+      one: 'نتيجة واحدة مطابقة',
+      zero: '$count نتيجة مطابقة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get speciesSearchClear => 'مسح البحث';
+
+  @override
   String get browseByShapeTitle => 'التصفح حسب الشكل';
 
   @override
@@ -120,6 +138,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get browseNoSpeciesBody => 'لم تُدوَّن أنواع لهذه الولاية بعد.';
+
+  @override
+  String browseSpeciesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count نوع',
+      many: '$count نوعًا',
+      few: '$count أنواع',
+      two: 'نوعان',
+      one: 'نوع واحد',
+      zero: '$count نوع',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String browseFamilyHeading(String family, int count) {
+    return '$family · $count';
+  }
+
+  @override
+  String browseMoreCount(int count) {
+    return '+$count';
+  }
+
+  @override
+  String browseMoreInFamily(String family) {
+    return 'المزيد في $family';
+  }
 
   @override
   String get speciesOtherNames => 'أسماء أخرى';
@@ -327,6 +375,62 @@ class AppLocalizationsAr extends AppLocalizations {
   String get verdictProtected => 'نوع محمي — الصيد محظور.';
 
   @override
+  String get verdictStampMeetsMinimum => 'يستوفي الحد الأدنى';
+
+  @override
+  String get verdictStampBelowMinimum => 'أقل من الحد الأدنى';
+
+  @override
+  String get verdictStampWithinMaximum => 'ضمن الحد الأقصى';
+
+  @override
+  String get verdictStampAboveMaximum => 'أعلى من الحد الأقصى';
+
+  @override
+  String get verdictStampNotMeasured => 'غير مُقاس';
+
+  @override
+  String get verdictStampMethodMismatch => 'مُقاس بطريقة أخرى';
+
+  @override
+  String verdictStampClosedSeason(String starts, String ends) {
+    return 'موسم إغلاق — من $starts إلى $ends';
+  }
+
+  @override
+  String verdictDetailMinimum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit مُقاسة · الحد الأدنى $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit مُقاسة · الحد الأقصى $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMinimumUnmeasured(String threshold, String unit, String method) {
+    return 'لا يوجد قياس · الحد الأدنى $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximumUnmeasured(String threshold, String unit, String method) {
+    return 'لا يوجد قياس · الحد الأقصى $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailClosedSeasonInForce(String day, String total) {
+    return 'ساري اليوم، اليوم $day من $total · ينطبق على جميع الأحجام';
+  }
+
+  @override
+  String get verdictDetailClosedSeasonNotInForce => 'غير ساري اليوم';
+
+  @override
+  String speciesBinomialFamily(String binomial, String family) {
+    return '$binomial — $family';
+  }
+
+  @override
   String verdictWithinBagLimit(String recorded, String limit, String period) {
     return 'ضمن حد الحصة — $recorded مسجّلة، الحد $limit لكل $period';
   }
@@ -452,6 +556,38 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zoneLevelRegion => 'المنطقة';
 
   @override
+  String get tripsKeptHere => 'محفوظة على هذا الجهاز وحده';
+
+  @override
+  String tripsCountStamp(int count) {
+    return '$count رحلة';
+  }
+
+  @override
+  String tripsRowSpan(String zone, String started, String ended) {
+    return '$zone · $started — $ended';
+  }
+
+  @override
+  String tripsRowSpanOpen(String zone, String started) {
+    return '$zone · $started — الآن';
+  }
+
+  @override
+  String get tripsOpenMark => '· جارية';
+
+  @override
+  String get tripsOpenStamp => 'جارية';
+
+  @override
+  String tripsDuration(int hours, int minutes) {
+    return '$hours س $minutes د';
+  }
+
+  @override
+  String get tripsLoadFailed => 'تعذّرت قراءة الرحلات المحفوظة على هذا الجهاز.';
+
+  @override
   String get zoneLevelSubZone => 'المنطقة الفرعية';
 
   @override
@@ -537,6 +673,41 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsGloveNote => 'أهداف أكبر وتباعد أوسع.';
+
+  @override
+  String get settingsGroupLanguage => 'اللغة والأرقام';
+
+  @override
+  String get settingsGroupPlace => 'مكان الصيد';
+
+  @override
+  String get settingsGroupReading => 'ظروف القراءة';
+
+  @override
+  String get settingsDigitsNote => 'أرقام غربية أو عربية-هندية';
+
+  @override
+  String get settingsLengthUnitNote => 'الأطوال في القواعد والقياسات';
+
+  @override
+  String get settingsZone => 'المنطقة';
+
+  @override
+  String get settingsZoneNote => 'القواعد وقائمة الأنواع والحدود تتبع هذا';
+
+  @override
+  String get settingsZoneUnset => 'لم يُختَر مكان';
+
+  @override
+  String settingsRulerScale(String px) {
+    return '$px بكسل / 10 مليمترات';
+  }
+
+  @override
+  String get settingsCoordinates => 'التقاط الإحداثيات';
+
+  @override
+  String get settingsCoordinatesNote => 'تُحفظ على هذا الهاتف وحده، ولا تُرسل أبدًا';
 
   @override
   String get settingsRuler => 'المسطرة';
@@ -658,7 +829,97 @@ class AppLocalizationsAr extends AppLocalizations {
   String get todayUndoOne => 'أزل واحدًا';
 
   @override
+  String get measureSup => 'المسطرة';
+
+  @override
+  String measureCalibrationProvenance(String on, String pxPer10mm) {
+    return 'معايَرة في $on · $pxPer10mm بكسل لكل سنتيمتر';
+  }
+
+  @override
+  String get measureStepAndMark => 'خطوة وعلامة';
+
+  @override
+  String get measureRunningTotalUnit => 'سم حتى الآن';
+
+  @override
+  String measureStepPill(String count) {
+    return 'الخطوة $count';
+  }
+
+  @override
+  String get measureStepNote =>
+      'توضع حافة الشاشة عند مقدمة السمكة، ثم تُعلَّم، ثم يُزلَق الهاتف بمحاذاة السمكة وتُعلَّم مرة أخرى.';
+
+  @override
+  String get measureTypeInstead => 'كتابة الطول بدلاً من ذلك';
+
+  @override
+  String get measureRecalibrate => 'إعادة المعايرة ببطاقة';
+
+  @override
+  String get measurePrivacyNote =>
+      'السمكة على اللوح، والهاتف على السمكة. لا تُلتقط أي صورة ولا تُقرأ أي إحداثية ما لم يكن التقاط الإحداثيات مفعّلاً في الإعدادات.';
+
+  @override
+  String get measureManualTitle => 'كتابة الطول';
+
+  @override
+  String get calibrateSup => 'مرة واحدة لكل جهاز';
+
+  @override
+  String calibrateCardConstant(String width, String height) {
+    return 'كل بطاقة بهذا المقاس متطابقة: ISO/IEC 7810 ID-1 — $width × $height مليمتر';
+  }
+
+  @override
+  String calibrateDimension(String mm) {
+    return '$mm مليمتر';
+  }
+
+  @override
+  String get calibrateDragHandleNote => 'يُسحب المقبض المصمت.';
+
+  @override
+  String get calibrateScaleLabel => 'المقياس الناتج';
+
+  @override
+  String get calibrateRowScale => 'بكسل لكل سنتيمتر';
+
+  @override
+  String get calibrateRowDensity => 'كثافة الشاشة';
+
+  @override
+  String get calibrateRowError => 'الخطأ المتوقع';
+
+  @override
+  String get calibrateRowLastCalibrated => 'آخر معايرة';
+
+  @override
+  String calibrateDensityValue(String dp, String ratio) {
+    return '$dp dp · $ratio×';
+  }
+
+  @override
+  String calibrateErrorValue(String mm) {
+    return '± $mm مليمتر على 30 سنتيمترًا';
+  }
+
+  @override
+  String get calibrateNotYet => 'لم تُعايَر بعد';
+
+  @override
+  String get calibrateReset => 'استعادة القيمة الافتراضية للشاشة';
+
+  @override
+  String get calibrateGlassNote =>
+      'الغلاف أو واقي الشاشة لا يغيّر شيئاً — البطاقة تستقر على الزجاج، والزجاج هو ما يُقاس.';
+
+  @override
   String get measureBackspace => 'حذف';
+
+  @override
+  String get navBack => 'رجوع';
 
   @override
   String get navToday => 'اليوم';

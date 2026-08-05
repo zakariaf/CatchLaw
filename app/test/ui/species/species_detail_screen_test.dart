@@ -5,6 +5,8 @@ import 'package:catchlaw/domain/models/species.dart';
 import 'package:catchlaw/domain/models/species_account.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/theme/lonja_theme.dart';
+import 'package:catchlaw/ui/core/ui/lonja_plate.dart';
+import 'package:catchlaw/ui/core/ui/lonja_screen_bar.dart';
 import 'package:catchlaw/ui/species/widgets/species_detail_placeholders.dart';
 import 'package:catchlaw/ui/species/widgets/species_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rule_engine/rule_engine.dart' show TaxonGroup;
 
 import '../../../testing/fakes/fake_species_account_repository.dart';
+
+/// The caption's copy of [text], never the app bar's.
+///
+/// The name is printed twice on purpose — once in the band that says which
+/// screen this is, once under the art that identifies the fish — so every
+/// assertion about the page body has to say which one it means.
+Finder _caption(String text) =>
+    find.descendant(of: find.byType(SingleChildScrollView), matching: find.text(text));
 
 SpeciesAccount _account({bool protectedAnywhere = false, List<SpeciesName>? others}) =>
     SpeciesAccount(
@@ -62,27 +72,56 @@ Future<void> _pump(
 }
 
 void main() {
-  testWidgets('SpeciesDetailScreen sets the local name above the binomial', (
+  testWidgets('SpeciesDetailScreen captions the plate with the local name above the binomial', (
     WidgetTester tester,
   ) async {
-    // The whole design. Khalid does not read Latin: a header leading with
-    // Epinephelus coioides puts the one string he cannot check at the top of a
+    // The whole design. Khalid does not read Latin: a caption leading with
+    // Epinephelus coioides puts the one string he cannot check first on a
     // screen he has ten seconds for.
     await _pump(tester, account: _account());
     expect(
-      tester.getTopLeft(find.text('هامور')).dy,
-      lessThan(tester.getTopLeft(find.text('Epinephelus coioides')).dy),
+      tester.getTopLeft(_caption('هامور')).dy,
+      lessThan(tester.getTopLeft(find.textContaining('Epinephelus coioides')).dy),
     );
   });
 
-  testWidgets('SpeciesDetailScreen names the family in the reader’s language', (
+  testWidgets('SpeciesDetailScreen heads the route with the species name and the zone', (
     WidgetTester tester,
   ) async {
+    // A pushed route with no band is a screen the fisher is stuck on, and a
+    // verdict read without knowing which zone produced it is about nowhere.
     await _pump(tester, account: _account());
-    expect(find.textContaining('Meros'), findsOneWidget);
+
+    expect(find.byType(LonjaScreenBar), findsOneWidget);
+    expect(
+      find.descendant(of: find.byType(LonjaScreenBar), matching: find.text('هامور')),
+      findsOneWidget,
+    );
   });
 
-  testWidgets('SpeciesDetailScreen lists other-locale names under the header', (
+  testWidgets('SpeciesDetailScreen captions the plate below the art, never above it', (
+    WidgetTester tester,
+  ) async {
+    // A name printed above a picture is a title; a name printed under one is an
+    // identification, which is what this page is for.
+    await _pump(tester, account: _account());
+
+    expect(
+      tester.getBottomLeft(find.byType(LonjaPlateSurface)).dy,
+      lessThanOrEqualTo(tester.getTopLeft(_caption('هامور')).dy),
+    );
+  });
+
+  testWidgets('SpeciesDetailScreen names the family beside the binomial', (
+    WidgetTester tester,
+  ) async {
+    // One caption line, the way a plate carries it — not a labelled row of its
+    // own two blocks away from the fish.
+    await _pump(tester, account: _account());
+    expect(find.text('Epinephelus coioides — Meros'), findsOneWidget);
+  });
+
+  testWidgets('SpeciesDetailScreen runs the other-locale names on in the caption', (
     WidgetTester tester,
   ) async {
     // A fisher working a Spanish market off a Galician boat needs both words.
@@ -101,9 +140,11 @@ void main() {
       ),
     );
     expect(find.text('Mero moteado'), findsOneWidget);
+    // On the caption's own baseline, after the local name — the same fact in a
+    // second language, not a footnote to it.
     expect(
-      tester.getTopLeft(find.text('هامور')).dy,
-      lessThan(tester.getTopLeft(find.text('Mero moteado')).dy),
+      tester.getTopLeft(_caption('هامور')).dx,
+      lessThan(tester.getTopLeft(find.text('Mero moteado')).dx),
     );
   });
 
@@ -167,6 +208,6 @@ void main() {
     WidgetTester tester,
   ) async {
     await _pump(tester, account: _account(), locale: const Locale('ar'));
-    expect(Directionality.of(tester.element(find.text('هامور'))), TextDirection.rtl);
+    expect(Directionality.of(tester.element(_caption('هامور'))), TextDirection.rtl);
   });
 }

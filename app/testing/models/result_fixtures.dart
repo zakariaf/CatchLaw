@@ -282,41 +282,47 @@ const ContentStrings kContentAr = ContentStrings(<String, String>{
 
 /// A below-minimum stamp, already localised, as the panel receives it.
 const VerdictStampDisplay kStampBelowMinimum = VerdictStampDisplay(
-  headline: 'Below the minimum — 38\u00A0cm measured, minimum 45\u00A0cm (Total length)',
+  headline: 'Below the minimum',
   category: VerdictCategory.belowMinimum,
   kind: FindingKind.minSize,
   citation: kCitationDisplayMd580,
-  subLine: 'Short of the minimum by 7\u00A0cm',
+  detail: '38\u00A0cm measured · minimum 45\u00A0cm · Total length',
+  meta: 'Short of the minimum by 7\u00A0cm',
 );
 
 /// A meets stamp, with its margin.
 const VerdictStampDisplay kStampMeets = VerdictStampDisplay(
-  headline: 'Meets the minimum — 70\u00A0cm measured, minimum 65\u00A0cm (Fork length)',
+  headline: 'Meets the minimum',
   category: VerdictCategory.meets,
   kind: FindingKind.minSize,
   citation: kCitationDisplayMd580,
-  subLine: 'Over the minimum by 5\u00A0cm',
+  detail: '70\u00A0cm measured · minimum 65\u00A0cm · Fork length',
+  meta: 'Over the minimum by 5\u00A0cm',
 );
 
-/// A protected stamp, carrying a sub-line the panel must refuse to draw.
+/// A protected stamp, carrying both lower registers the panel must refuse to
+/// draw.
 ///
-/// The sub-line is supplied ON PURPOSE: the rule is that the CATEGORY drops it,
-/// not that the caller happened to leave it null.
+/// They are supplied ON PURPOSE: the rule is that the CATEGORY drops them, not
+/// that the caller happened to leave them null.
 const VerdictStampDisplay kStampProtected = VerdictStampDisplay(
   headline: 'Protected species — taking prohibited.',
   category: VerdictCategory.protected,
   kind: FindingKind.protected,
   citation: kCitationDisplayMd580,
-  subLine: 'Short of the minimum by 7\u00A0cm',
+  detail: '38\u00A0cm measured · minimum 45\u00A0cm · Total length',
+  meta: 'Short of the minimum by 7\u00A0cm',
 );
 
-/// A closed-season stamp, likewise carrying a sub-line it must not draw.
+/// A closed-season stamp: its own figures ARE drawn, and the margin beside
+/// them is not.
 const VerdictStampDisplay kStampClosedSeason = VerdictStampDisplay(
-  headline: 'Closed season — 1 March to 30 April. In force today, day 14 of 61.',
+  headline: 'Closed season — 1 March to 30 April',
   category: VerdictCategory.closedSeason,
   kind: FindingKind.closedSeason,
   citation: kCitationDisplayMd580,
-  subLine: 'Short of the minimum by 7\u00A0cm',
+  detail: 'In force today, day 14 of 61 · applies at every size',
+  meta: 'Short of the minimum by 7\u00A0cm',
 );
 
 /// The Gulf instrument, as the footnote prints it.

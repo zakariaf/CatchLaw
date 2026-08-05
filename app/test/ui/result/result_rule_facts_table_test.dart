@@ -1,5 +1,7 @@
 import 'package:catchlaw/theme/lonja_theme.dart';
+import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
+import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/widgets/result_rule_facts_table.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,8 @@ void main() {
       await _pumpTable(tester, _protectedFacts);
 
       for (final RuleFact fact in _protectedFacts) {
-        expect(find.text(fact.label), findsOneWidget);
+        // Cased at the call site, the way the ruled sheet sets its stub column.
+        expect(find.text(fact.label.toUpperCase()), findsOneWidget);
       }
       // Two of the three share a value on purpose — a protected table states
       // "Not applicable" twice, and a line that de-duplicated them would drop
@@ -76,7 +79,7 @@ void main() {
       // evidence.
       final Color? outcome = tester.widget<Text>(find.text('Fully protected')).style?.color;
       final Color? plain = tester.widget<Text>(find.text('Not applicable').first).style?.color;
-      final Color? label = tester.widget<Text>(find.text('Status')).style?.color;
+      final Color? label = tester.widget<Text>(find.text('STATUS')).style?.color;
       expect(outcome, isNot(plain));
       expect(label, muted);
     });
@@ -94,18 +97,29 @@ void main() {
       }
     });
 
-    testWidgets('separates the lines with a rule', (WidgetTester tester) async {
+    testWidgets('opens on a heavier rule and separates the lines with hairlines', (
+      WidgetTester tester,
+    ) async {
       await _pumpTable(tester, _protectedFacts);
 
-      // Three facts: a rule above the first, and one between each pair.
-      expect(find.byType(Divider), findsNWidgets(3));
+      // Three facts: the sheet's opening rule, then one under each row. The
+      // opening rule is heavier, so the first row does not read as a
+      // continuation of the verdict struck above it.
+      final Iterable<LonjaRule> rules = tester.widgetList<LonjaRule>(find.byType(LonjaRule));
+      expect(rules, hasLength(4));
+      expect(rules.first.weight, LonjaRules.strong);
+      for (final LonjaRule rule in rules.skip(1)) {
+        expect(rule.weight, LonjaRules.hair);
+      }
+      // Never Material's: it brings 16 dp of physical, non-directional padding.
+      expect(find.byType(Divider), findsNothing);
     });
 
     testWidgets('renders nothing when there are no facts', (WidgetTester tester) async {
       await _pumpTable(tester, const <RuleFact>[]);
 
       expect(find.byType(Text), findsNothing);
-      expect(find.byType(Divider), findsNothing);
+      expect(find.byType(LonjaRule), findsNothing);
     });
 
     testWidgets('RTL - starts the label and ends the value', (WidgetTester tester) async {
@@ -114,7 +128,7 @@ void main() {
       // Under RTL the start edge is the right one; a physical `left` compiles
       // and silently breaks in the one locale that is the moat.
       expect(
-        tester.getTopRight(find.text('Minimum')).dx,
+        tester.getTopRight(find.text('MINIMUM')).dx,
         greaterThan(tester.getTopRight(find.text('38 mm (Shell length)')).dx),
       );
     });

@@ -110,19 +110,29 @@ class _ResultSectionState extends State<ResultSection> {
         if (display.note case final NoteDisplay note) ResultNote(note: note),
         if (display.ambiguity case final AmbiguityDisplay ambiguity)
           ResultAmbiguityBlock(ambiguity: ambiguity),
-        if (display.secondary.isNotEmpty) const SizedBox(height: LonjaSpace.s5),
-        ResultFindingsList(findings: display.secondary),
+        // The table is struck DIRECTLY under the stamp, with nothing between.
+        // It carries the numbers the stamp's own detail line abbreviates, and a
+        // reader checking a threshold against a ruler reads the two together —
+        // the secondary findings are what he reads next, not what he reads
+        // through.
         if (headlineFacts.isNotEmpty) ...<Widget>[
           const SizedBox(height: LonjaSpace.s5),
           ResultRuleFactsTable(facts: headlineFacts),
         ],
+        if (display.secondary.isNotEmpty) const SizedBox(height: LonjaSpace.s5),
+        ResultFindingsList(findings: display.secondary),
         // The citation is the LAST block and is never behind a tap: printed
         // unconditionally, and additionally a button onto the verbatim text.
         for (final (int index, CitationDisplay citation) in _footnotes(
           display,
         ).indexed) ...<Widget>[
-          const SizedBox(height: LonjaSpace.s5),
+          SizedBox(height: index == 0 ? LonjaSpace.s5 : LonjaSpace.s2),
           ResultCitationFootnote(
+            // One rule opens the apparatus block and the instruments stack
+            // under it. Two rules read as two blocks, and two blocks say two
+            // documents were consulted rather than one answer resting on two
+            // articles.
+            showRule: index == 0,
             citation: citation,
             citationId: index < widget.citationIds.length ? widget.citationIds[index] : 0,
             jurisdiction: widget.jurisdiction,

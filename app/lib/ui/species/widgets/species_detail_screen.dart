@@ -13,8 +13,7 @@ import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/core/ui/lonja_button.dart';
 import 'package:catchlaw/ui/core/ui/lonja_plate.dart';
-import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
-import 'package:catchlaw/ui/core/ui/lonja_section_label.dart';
+import 'package:catchlaw/ui/core/ui/lonja_screen_bar.dart';
 import 'package:catchlaw/ui/core/ui/lonja_silhouette.dart';
 import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
 import 'package:catchlaw/ui/log/view_models/catch_log_providers.dart';
@@ -29,17 +28,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rule_engine/rule_engine.dart' show Ok, Result;
 
-/// S2 — the species account, static half.
+/// S2 — the species account and the verdict struck under it.
 ///
-/// **The local name is large and the binomial is last**, and the ordering is
-/// the whole design. Khalid does not read Latin: a header that led with
-/// *Epinephelus coioides* would put the one string he cannot check at the top
-/// of a screen he has ten seconds for. The other-locale names sit under it,
-/// small, because a fisher working a Spanish market off a Galician boat needs
-/// both words.
+/// **The page is a plate with a caption, then a stamp, then the numbers.** It
+/// used to be a heading, a picture, a list of names, a button and a verdict
+/// somewhere below the fold. The order is the argument the screen makes: the
+/// engraving identifies the fish, the caption names it in every word the reader
+/// might know it by, the stamp answers, and the ruled table states what the
+/// answer rests on. A screen that reorders that is a different argument.
 ///
-/// E09 fills the measurement slot and E10 the verdict; both are named, empty
-/// slots here rather than absent, so the page's shape is the one that ships.
+/// **The names caption the art rather than heading it.** Khalid does not read
+/// Latin, so the local name is first and the binomial last — but a name printed
+/// above a picture is a title, and a name printed under one is an
+/// identification, which is what this page is for. The other-locale names run
+/// on the same baseline, because a fisher working a Spanish market off a
+/// Galician boat needs both words and neither is a footnote to the other.
 class SpeciesDetailScreen extends ConsumerStatefulWidget {
   /// Opens the account for [speciesId].
   const SpeciesDetailScreen({required this.speciesId, super.key});
@@ -63,10 +66,27 @@ class _SpeciesDetailScreenState extends ConsumerState<SpeciesDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final AsyncValue<SpeciesAccount> account = ref.watch(speciesAccountProvider(widget.speciesId));
+    final AppLocalizations l10n = AppLocalizations.of(context);
     final LonjaTokens tokens = LonjaTokens.of(context);
+    final EvaluationScope? scope = ref.watch(evaluationScopeProvider).value;
+    final NavigatorState navigator = Navigator.of(context);
 
     return Scaffold(
+      // The band a pushed route carries, and the second half of the question a
+      // verdict turns on: the species name answers "which fish", and the zone
+      // stamped beside it answers "checked against what". Without it this page
+      // was a full-screen takeover with no way back but the system gesture.
+      appBar: LonjaScreenBar(
+        // The name, once it has been read. The page label stands in until then
+        // rather than an empty band, which reads as chrome that failed to draw.
+        title: account.value?.primaryName ?? l10n.speciesSearchLabel,
+        sup: scope?.zoneCode,
+        // Absent on a route with nothing under it: a dead chevron reads as a
+        // broken control.
+        onBack: navigator.canPop() ? navigator.pop : null,
+      ),
       body: SafeArea(
+        top: false,
         child: account.when(
           loading: () => const LonjaListSkeleton(rows: 3),
           error: (Object error, StackTrace _) => Padding(
@@ -83,22 +103,24 @@ class _SpeciesDetailScreenState extends ConsumerState<SpeciesDetailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                _SpeciesHeader(account: value),
-                const SizedBox(height: LonjaSpace.s4),
                 _SpeciesArtPanel(account: value),
-                const SizedBox(height: LonjaSpace.s5),
-                if (value.otherNames.isNotEmpty) _OtherNamesBlock(names: value.otherNames),
-                const SizedBox(height: LonjaSpace.s5),
+                const SizedBox(height: LonjaSpace.s3),
+                _PlateCaption(account: value),
+                // Fed, at last. The slot has been on this page since E08 and
+                // empty since E08: E12/T08 is the seam that gives it something
+                // to draw. Struck DIRECTLY under the caption, with nothing
+                // between it and the fish it is about.
+                SpeciesVerdict(speciesId: widget.speciesId, lengthMm: _measuredMm),
+                const SizedBox(height: LonjaSpace.s6),
+                // Both actions in one row at the foot, the way the mockup ends
+                // its pages. The ruler stays reachable from here because this
+                // is the only route to it in the app — the mockup's S2 arrives
+                // already measured, and this one does not.
                 _MeasureSlot(
                   measuredMm: _measuredMm,
                   onMeasured: (int mm) => setState(() => _measuredMm = mm),
                 ),
-                const SizedBox(height: LonjaSpace.s4),
-                // Fed, at last. The slot has been on this page since E08 and
-                // empty since E08: E12/T08 is the seam that gives it something
-                // to draw.
-                SpeciesVerdict(speciesId: widget.speciesId, lengthMm: _measuredMm),
-                const SizedBox(height: LonjaSpace.s5),
+                const SizedBox(height: LonjaSpace.s3),
                 _RecordCatchAction(
                   speciesId: widget.speciesId,
                   scientificName: value.scientificName,
@@ -112,9 +134,19 @@ class _SpeciesDetailScreenState extends ConsumerState<SpeciesDetailScreen> {
   }
 }
 
-/// The local name large, the family, then the binomial.
-class _SpeciesHeader extends StatelessWidget {
-  const _SpeciesHeader({required this.account});
+/// The engraved plate's caption: every name this fish answers to, under it.
+///
+/// **One baseline, not a heading and a list.** The local name, then every other
+/// name the pack carries, run on together the way a plate caption runs on —
+/// `هامور · Hamour · Orange-spotted grouper` — because they are the same fact
+/// stated in the reader's several languages, and a separate *Other names*
+/// section printed them as an afterthought two blocks away from the fish.
+///
+/// The binomial and the family close it on their own line, in the app's only
+/// italic: they are the one pair of names that is the same everywhere and the
+/// one pair a reader cannot check.
+class _PlateCaption extends StatelessWidget {
+  const _PlateCaption({required this.account});
 
   final SpeciesAccount account;
 
@@ -128,18 +160,30 @@ class _SpeciesHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text(account.primaryName, style: type.display, textAlign: TextAlign.start),
-        const SizedBox(height: LonjaSpace.s1),
-        Text(
-          '${l10n.speciesFamilyLabel} ${account.familyName}',
-          style: type.uiSmall.copyWith(color: tokens.onSurfaceMuted),
-          textAlign: TextAlign.start,
+        // A `Wrap` and not a `Row`: six names on one line overflow a phone, and
+        // a caption that clipped would drop exactly the word the reader who
+        // needed it was looking for.
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.end,
+          spacing: LonjaSpace.s2,
+          runSpacing: LonjaSpace.s1,
+          children: <Widget>[
+            Text(account.primaryName, style: type.subtitle, textAlign: TextAlign.start),
+            for (final SpeciesName name in account.otherNames)
+              Text(
+                name.regionHint == null ? name.name : '${name.name} (${name.regionHint})',
+                style: type.legalSmall.copyWith(color: tokens.onSurfaceMuted),
+                textAlign: TextAlign.start,
+              ),
+          ],
         ),
         const SizedBox(height: LonjaSpace.s1),
-        // Last, and in the app's only italic. The binomial is the one name that
-        // is the same everywhere and the one a reader cannot check.
+        // Last, and in the app's only italic. The binomial is the one name
+        // that is the same everywhere and the one a reader cannot check; the
+        // family rides on the same line rather than taking a labelled one of
+        // its own.
         Text(
-          account.scientificName,
+          l10n.speciesBinomialFamily(account.scientificName, account.familyName),
           style: type.binomial.copyWith(color: tokens.onSurfaceMuted),
           textAlign: TextAlign.start,
         ),
@@ -194,38 +238,6 @@ class _SpeciesArtPanel extends StatelessWidget {
           height: 160,
         ),
       ),
-    );
-  }
-}
-
-/// Every other name the pack carries.
-class _OtherNamesBlock extends StatelessWidget {
-  const _OtherNamesBlock({required this.names});
-
-  final List<SpeciesName> names;
-
-  @override
-  Widget build(BuildContext context) {
-    final LonjaTokens tokens = LonjaTokens.of(context);
-    final LonjaTypeScale type = LonjaType.of(context);
-    final AppLocalizations l10n = AppLocalizations.of(context);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        LonjaSectionLabel(text: l10n.speciesOtherNames),
-        const SizedBox(height: LonjaSpace.s2),
-        for (final SpeciesName name in names) ...<Widget>[
-          Text(
-            name.regionHint == null ? name.name : '${name.name} (${name.regionHint})',
-            style: type.legal.copyWith(color: tokens.onSurfaceMuted),
-            textAlign: TextAlign.start,
-          ),
-          const SizedBox(height: LonjaSpace.s1),
-        ],
-        const LonjaRule.row(),
-      ],
     );
   }
 }

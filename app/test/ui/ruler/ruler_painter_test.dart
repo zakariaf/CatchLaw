@@ -14,6 +14,7 @@ RulerScene _scene({double pxPerMm = 6.299, Color ink = const Color(0xFF16201C)})
   mark: const Color(0xFF7A2320),
   hairlinePx: 1,
   tickPx: 1,
+  cmTickPx: 1,
   cursorPx: 2,
 );
 

@@ -179,11 +179,16 @@ class VerdictPresenter {
       authority: authority,
       stale: stale,
       stamp: VerdictStampDisplay(
-        headline: head.sentence,
+        // The state alone, and the figures one register down. The whole
+        // sentence is still built — it is what `findings.first` carries and
+        // what the screen reader announces — but the stamp is read in a glance,
+        // and a glance takes the state first.
+        headline: _stampHeadlineFor(headline),
         category: _categoryFor(headline),
         kind: headline.kind,
         citation: head.citation,
-        subLine: _marginFor(headline),
+        detail: _stampDetailFor(headline),
+        meta: _marginFor(headline),
       ),
     );
   }
@@ -233,6 +238,98 @@ class VerdictPresenter {
     BagLimitFinding() => _bagLimitSentence(finding),
     VesselLimitFinding() => _vesselLimitSentence(finding),
   };
+
+  /// The state alone, for the stamp's top register.
+  ///
+  /// **Chosen by the finding's type and never by its category**, the same way
+  /// [_sentenceFor] is and for the same reason: four categories cannot hold six
+  /// kinds, and mapping `maxSize` onto the below-minimum wording would print
+  /// *Below the minimum* over a 122 cm fish that failed a slot rule.
+  ///
+  /// A bag or vessel limit keeps its whole sentence here. It has no short form
+  /// in the corpus — *Within the bag limit* alone states neither the tally nor
+  /// the period, and a season quota compared against one day passes on every
+  /// day of a season it has already exhausted.
+  String _stampHeadlineFor(Finding finding) => switch (finding) {
+    ProtectedFinding() => l10n.verdictProtected,
+    ClosedSeasonFinding() => l10n.verdictStampClosedSeason(
+      _dayAndMonth(finding.startsOn),
+      _dayAndMonth(finding.endsOn),
+    ),
+    SizeFinding() => _sizeStampHeadline(finding),
+    BagLimitFinding() => _bagLimitSentence(finding),
+    VesselLimitFinding() => _vesselLimitSentence(finding),
+  };
+
+  String _sizeStampHeadline(SizeFinding finding) {
+    if (finding.methodMismatch && finding.measuredMethod != null) {
+      return l10n.verdictStampMethodMismatch;
+    }
+    if (finding.measuredMm == null) return l10n.verdictStampNotMeasured;
+
+    final fails = finding.outcome == FindingOutcome.fails;
+    return switch (finding) {
+      MinimumSizeFinding() => fails ? l10n.verdictStampBelowMinimum : l10n.verdictStampMeetsMinimum,
+      MaximumSizeFinding() =>
+        fails ? l10n.verdictStampAboveMaximum : l10n.verdictStampWithinMaximum,
+    };
+  }
+
+  /// The figures line under the headline, or `null` where there are none.
+  ///
+  /// Null for a prohibition, and that is the category's rule rather than an
+  /// omission — see [VerdictStampDisplay.detail]. A bag or vessel limit is null
+  /// too: its whole sentence is already the headline, and repeating it here
+  /// would read as two separate rules biting.
+  String? _stampDetailFor(Finding finding) => switch (finding) {
+    ProtectedFinding() => null,
+    BagLimitFinding() || VesselLimitFinding() => null,
+    ClosedSeasonFinding() =>
+      finding.inForce
+          ? l10n.verdictDetailClosedSeasonInForce(
+              _numbers.format(finding.dayOfClosure),
+              _numbers.format(finding.lengthInDays),
+            )
+          : l10n.verdictDetailClosedSeasonNotInForce,
+    SizeFinding() => _sizeStampDetail(finding),
+  };
+
+  String _sizeStampDetail(SizeFinding finding) {
+    final ({LengthUnit unit, String word}) unit = _instrumentUnit(finding.method);
+    final String threshold = formatLengthValue(
+      finding.thresholdMm,
+      unit: unit.unit,
+      numbers: _numbers,
+    );
+    final String method = _methodName(finding.method);
+
+    // Two methods, two facts, no comparison — the same refusal the sentence
+    // makes. A conversion factor bridging total length and fork length would
+    // manufacture a pass at the centimetre that costs AED 3,000.
+    final MeasurementMethod? measuredMethod = finding.measuredMethod;
+    if (finding.methodMismatch && measuredMethod != null) {
+      return l10n.verdictSizeMethodMismatch(
+        _methodName(measuredMethod),
+        threshold,
+        unit.word,
+        method,
+      );
+    }
+
+    final int? measured = finding.measuredMm;
+    if (measured == null) {
+      return switch (finding) {
+        MinimumSizeFinding() => l10n.verdictDetailMinimumUnmeasured(threshold, unit.word, method),
+        MaximumSizeFinding() => l10n.verdictDetailMaximumUnmeasured(threshold, unit.word, method),
+      };
+    }
+
+    final String reading = formatLengthValue(measured, unit: unit.unit, numbers: _numbers);
+    return switch (finding) {
+      MinimumSizeFinding() => l10n.verdictDetailMinimum(reading, unit.word, threshold, method),
+      MaximumSizeFinding() => l10n.verdictDetailMaximum(reading, unit.word, threshold, method),
+    };
+  }
 
   /// The numeric margin under the stamp, or `null` where none applies.
   ///

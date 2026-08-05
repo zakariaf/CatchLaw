@@ -8,6 +8,7 @@ import 'package:catchlaw/domain/models/recent_species_entry.dart';
 import 'package:catchlaw/domain/models/species.dart' as domain;
 import 'package:catchlaw/domain/models/species_account.dart';
 import 'package:catchlaw/domain/models/species_search_hit.dart';
+import 'package:catchlaw/ui/core/ui/lonja_search_field.dart';
 import 'package:catchlaw/ui/result/widgets/result_verdict_panel.dart';
 import 'package:catchlaw/ui/species/widgets/species_detail_screen.dart';
 import 'package:catchlaw/ui/zones/zone_picker_screen.dart';
@@ -166,15 +167,18 @@ void main() {
     await tester.pumpAndSettle();
 
     // Straight to the search: no confirmation screen, no "you're all set".
+    // The entry line itself and not a label over it — the mockup's box carries
+    // no heading, and the field is what he lands on.
     expect(find.byType(ZonePickerScreen), findsNothing);
-    expect(find.text('Species'), findsWidgets);
+    expect(find.byType(LonjaSearchField), findsOneWidget);
   });
 
   testWidgets('a cold launch with a place opens on the search', (WidgetTester tester) async {
     await _launch(tester, place: 'ES-GA');
 
-    // No splash, no login, no onboarding, no what's-new.
-    expect(find.text('Species'), findsWidgets);
+    // No splash, no login, no onboarding, no what's-new — and the entry line
+    // is the first thing under the mast, with nothing standing over it.
+    expect(find.byType(LonjaSearchField), findsOneWidget);
     expect(find.byType(ZonePickerScreen), findsNothing);
   });
 

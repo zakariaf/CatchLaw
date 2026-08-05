@@ -61,9 +61,15 @@ class LonjaSwitch extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
+                      // The serif key step, the same one every other line of
+                      // the settings ledger sets its key in: a sans label
+                      // between two serif ones reads as a control borrowed
+                      // from somewhere else.
                       Text(
                         label,
-                        style: value ? type.ui.copyWith(fontWeight: FontWeight.w700) : type.ui,
+                        style: value
+                            ? type.legalSmall.copyWith(fontWeight: FontWeight.w700)
+                            : type.legalSmall,
                       ),
                       if (note != null) ...<Widget>[
                         const SizedBox(height: LonjaSpace.s1),

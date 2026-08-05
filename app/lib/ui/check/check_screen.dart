@@ -1,10 +1,15 @@
 import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/domain/models/evaluation_scope.dart';
+import 'package:catchlaw/domain/models/species_search_state.dart';
+import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/ui/check/widgets/check_empty_state.dart';
 import 'package:catchlaw/ui/check/widgets/recents_strip.dart';
 import 'package:catchlaw/ui/core/ui/lonja_masthead.dart';
+import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
+import 'package:catchlaw/ui/species/view_models/species_search_view_model.dart';
 import 'package:catchlaw/ui/species/widgets/species_detail_screen.dart';
-import 'package:catchlaw/ui/species/widgets/species_search_screen.dart';
+import 'package:catchlaw/ui/species/widgets/species_search_field.dart';
+import 'package:catchlaw/ui/species/widgets/species_search_results.dart';
 import 'package:catchlaw/ui/zones/view_models/zone_providers.dart';
 import 'package:catchlaw/ui/zones/zone_picker_screen.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +45,11 @@ class CheckScreen extends ConsumerWidget {
 }
 
 /// Check, once the app knows where he is.
+///
+/// **The order is the mockup's, top to bottom:** masthead, then the entry
+/// line, then what he opened here before. It ran the other way round — the
+/// strip above the box — and a fisher who had never been to this place saw an
+/// empty state where the one control on the screen belongs.
 class _Check extends ConsumerWidget {
   const _Check({required this.place});
 
@@ -47,6 +57,18 @@ class _Check extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final AppLocalizations l10n = AppLocalizations.of(context);
+    // Two selectors and not the whole state: the band below the field swaps
+    // between the strip and the results on the FIRST keystroke and on no
+    // other, and a screen that watched the list itself would rebuild the
+    // masthead on every one of them.
+    final bool isPackExpired = ref.watch(
+      speciesSearchViewModelProvider.select((SpeciesSearchState state) => state.isPackExpired),
+    );
+    final bool isSearching = ref.watch(
+      speciesSearchViewModelProvider.select((SpeciesSearchState state) => state.query.isNotEmpty),
+    );
+
     void open(int speciesId) {
       // Recorded before the push, so the strip the fisher comes back to
       // already has the fish he just opened. Fire-and-forget on purpose: a
@@ -71,6 +93,7 @@ class _Check extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             LonjaMasthead(
               place: place.zoneCode,
@@ -81,24 +104,45 @@ class _Check extends ConsumerWidget {
                       ZonePickerScreen(onConfirmed: () => Navigator.of(context).pop()),
                 ),
               ),
+              // The mast's own hand at the trailing margin: WHICH PRINTING of
+              // the rules this device is holding. Two devices held side by side
+              // at the quay differ in exactly this line.
+              //
+              // The block's other line is the zone code, and it is left empty
+              // on purpose: until the place above resolves to a display name,
+              // the code IS the place line, and a mast that printed
+              // `rias-baixas` twice would read as two different facts.
+              packVersion: place.packVersion,
             ),
-            RecentsStrip(
-              place: place,
-              onSpeciesChosen: open,
-              // Absent when he has recents, authored when he does not: a first
-              // launch that showed a blank band would read as a strip that
-              // failed to load.
-              whenEmpty: const CheckEmptyState(),
-            ),
+            // Under the mast and above everything it qualifies. Non-blocking:
+            // invariant 5 evaluates and shows an expired pack anyway, and the
+            // bar says so rather than standing in front of the answer.
+            if (isPackExpired) LonjaStaleBar(message: l10n.rulePackExpired),
+            const SpeciesSearchField(),
             Expanded(
-              child: SpeciesSearchScreen(
-                onSpeciesChosen: open,
-                // S7's key is E14's and S6's shapes are E08's. Both entry
-                // points exist so the layout is the one that ships; the one
-                // that is built is reachable.
-                onIdentify: () {},
-                onBrowseByShape: () {},
-              ),
+              child: isSearching
+                  ? SpeciesSearchResults(
+                      onSpeciesChosen: open,
+                      // S7's key is E14's and S6's shapes are E08's. Both entry
+                      // points exist so the layout is the one that ships; the
+                      // one that is built is reachable.
+                      onIdentify: () {},
+                      onBrowseByShape: () {},
+                    )
+                  : Align(
+                      // The strip is two rows tall and the band under the field
+                      // is the rest of the page: it sits at the top of that
+                      // band rather than floating in the middle of it.
+                      alignment: AlignmentDirectional.topStart,
+                      child: RecentsStrip(
+                        place: place,
+                        onSpeciesChosen: open,
+                        // Absent when he has recents, authored when he does
+                        // not: a first launch that showed a blank band would
+                        // read as a strip that failed to load.
+                        whenEmpty: const CheckEmptyState(),
+                      ),
+                    ),
             ),
           ],
         ),

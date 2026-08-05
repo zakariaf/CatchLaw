@@ -108,6 +108,21 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String speciesSearchMatchCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count correspondências',
+      many: '$count correspondências',
+      one: '$count correspondência',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get speciesSearchClear => 'Limpar a pesquisa';
+
+  @override
   String get browseByShapeTitle => 'Explorar por forma';
 
   @override
@@ -115,6 +130,33 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get browseNoSpeciesBody => 'Esta jurisdição ainda não tem espécies transcritas.';
+
+  @override
+  String browseSpeciesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count espécies',
+      many: '$count espécies',
+      one: '$count espécie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String browseFamilyHeading(String family, int count) {
+    return '$family · $count';
+  }
+
+  @override
+  String browseMoreCount(int count) {
+    return '+$count';
+  }
+
+  @override
+  String browseMoreInFamily(String family) {
+    return 'mais em $family';
+  }
 
   @override
   String get speciesOtherNames => 'Outros nomes';
@@ -323,6 +365,62 @@ class AppLocalizationsPt extends AppLocalizations {
   String get verdictProtected => 'Espécie protegida — captura proibida.';
 
   @override
+  String get verdictStampMeetsMinimum => 'Atende ao mínimo';
+
+  @override
+  String get verdictStampBelowMinimum => 'Abaixo do mínimo';
+
+  @override
+  String get verdictStampWithinMaximum => 'Dentro do máximo';
+
+  @override
+  String get verdictStampAboveMaximum => 'Acima do máximo';
+
+  @override
+  String get verdictStampNotMeasured => 'Sem medição';
+
+  @override
+  String get verdictStampMethodMismatch => 'Medido por outro método';
+
+  @override
+  String verdictStampClosedSeason(String starts, String ends) {
+    return 'Defeso — de $starts a $ends';
+  }
+
+  @override
+  String verdictDetailMinimum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit medidos · mínimo $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit medidos · máximo $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMinimumUnmeasured(String threshold, String unit, String method) {
+    return 'Nada medido · mínimo $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximumUnmeasured(String threshold, String unit, String method) {
+    return 'Nada medido · máximo $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailClosedSeasonInForce(String day, String total) {
+    return 'Em vigor hoje, dia $day de $total · aplica-se a todos os tamanhos';
+  }
+
+  @override
+  String get verdictDetailClosedSeasonNotInForce => 'Hoje não está em vigor';
+
+  @override
+  String speciesBinomialFamily(String binomial, String family) {
+    return '$binomial — $family';
+  }
+
+  @override
   String verdictWithinBagLimit(String recorded, String limit, String period) {
     return 'Dentro da cota — $recorded registrados, limite $limit por $period';
   }
@@ -450,6 +548,38 @@ class AppLocalizationsPt extends AppLocalizations {
   String get zoneLevelRegion => 'Região';
 
   @override
+  String get tripsKeptHere => 'Guardado apenas neste dispositivo';
+
+  @override
+  String tripsCountStamp(int count) {
+    return '$count saídas';
+  }
+
+  @override
+  String tripsRowSpan(String zone, String started, String ended) {
+    return '$zone · $started — $ended';
+  }
+
+  @override
+  String tripsRowSpanOpen(String zone, String started) {
+    return '$zone · $started — agora';
+  }
+
+  @override
+  String get tripsOpenMark => '· em curso';
+
+  @override
+  String get tripsOpenStamp => 'Em curso';
+
+  @override
+  String tripsDuration(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String get tripsLoadFailed => 'Não foi possível ler as saídas deste dispositivo.';
+
+  @override
   String get zoneLevelSubZone => 'Sub-zona';
 
   @override
@@ -536,6 +666,41 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get settingsGloveNote => 'Alvos maiores e mais espaçados.';
+
+  @override
+  String get settingsGroupLanguage => 'Idioma e algarismos';
+
+  @override
+  String get settingsGroupPlace => 'Onde pescas';
+
+  @override
+  String get settingsGroupReading => 'Condições de leitura';
+
+  @override
+  String get settingsDigitsNote => 'Algarismos ocidentais ou árabe-índicos';
+
+  @override
+  String get settingsLengthUnitNote => 'Comprimentos nas normas e nas leituras';
+
+  @override
+  String get settingsZone => 'Zona';
+
+  @override
+  String get settingsZoneNote => 'As normas, a lista de espécies e os limites seguem isto';
+
+  @override
+  String get settingsZoneUnset => 'Nenhum lugar escolhido';
+
+  @override
+  String settingsRulerScale(String px) {
+    return '$px px / 10 milímetros';
+  }
+
+  @override
+  String get settingsCoordinates => 'Captura de coordenadas';
+
+  @override
+  String get settingsCoordinatesNote => 'Guardadas só neste telemóvel, nunca transmitidas';
 
   @override
   String get settingsRuler => 'Régua';
@@ -660,7 +825,97 @@ class AppLocalizationsPt extends AppLocalizations {
   String get todayUndoOne => 'Remover um';
 
   @override
+  String get measureSup => 'Régua';
+
+  @override
+  String measureCalibrationProvenance(String on, String pxPer10mm) {
+    return 'Calibrado em $on · $pxPer10mm píxeis por centímetro';
+  }
+
+  @override
+  String get measureStepAndMark => 'Marcar por troços';
+
+  @override
+  String get measureRunningTotalUnit => 'cm até agora';
+
+  @override
+  String measureStepPill(String count) {
+    return 'Troço $count';
+  }
+
+  @override
+  String get measureStepNote =>
+      'Encosta a borda do ecrã ao focinho, marca, desliza o telemóvel ao longo do peixe e marca outra vez.';
+
+  @override
+  String get measureTypeInstead => 'Escrever a medida';
+
+  @override
+  String get measureRecalibrate => 'Recalibrar com um cartão';
+
+  @override
+  String get measurePrivacyNote =>
+      'O peixe na tábua, o telemóvel sobre o peixe. Não é tirada nenhuma fotografia nem é lida nenhuma coordenada a não ser que a captura de coordenadas esteja ligada nas Definições.';
+
+  @override
+  String get measureManualTitle => 'Escrever o comprimento';
+
+  @override
+  String get calibrateSup => 'Uma vez por dispositivo';
+
+  @override
+  String calibrateCardConstant(String width, String height) {
+    return 'Todos os cartões deste formato são idênticos: ISO/IEC 7810 ID-1 — $width × $height milímetros';
+  }
+
+  @override
+  String calibrateDimension(String mm) {
+    return '$mm milímetros';
+  }
+
+  @override
+  String get calibrateDragHandleNote => 'Arrasta a pega preenchida.';
+
+  @override
+  String get calibrateScaleLabel => 'Escala resultante';
+
+  @override
+  String get calibrateRowScale => 'Píxeis por centímetro';
+
+  @override
+  String get calibrateRowDensity => 'Densidade do ecrã';
+
+  @override
+  String get calibrateRowError => 'Erro esperado';
+
+  @override
+  String get calibrateRowLastCalibrated => 'Última calibração';
+
+  @override
+  String calibrateDensityValue(String dp, String ratio) {
+    return '$dp dp · $ratio×';
+  }
+
+  @override
+  String calibrateErrorValue(String mm) {
+    return '± $mm milímetros em 30 centímetros';
+  }
+
+  @override
+  String get calibrateNotYet => 'Ainda sem calibração';
+
+  @override
+  String get calibrateReset => 'Repor o valor do ecrã';
+
+  @override
+  String get calibrateGlassNote =>
+      'Uma capa ou uma película não mudam nada: o cartão assenta no vidro e o vidro é o que está a ser medido.';
+
+  @override
   String get measureBackspace => 'Apagar';
+
+  @override
+  String get navBack => 'Voltar';
 
   @override
   String get navToday => 'Hoje';
@@ -805,6 +1060,21 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   }
 
   @override
+  String speciesSearchMatchCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count correspondências',
+      many: '$count correspondências',
+      one: '$count correspondência',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get speciesSearchClear => 'Limpar a busca';
+
+  @override
   String get browseByShapeTitle => 'Explorar por forma';
 
   @override
@@ -812,6 +1082,33 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get browseNoSpeciesBody => 'Esta jurisdição ainda não tem espécies transcritas.';
+
+  @override
+  String browseSpeciesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count espécies',
+      many: '$count espécies',
+      one: '$count espécie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String browseFamilyHeading(String family, int count) {
+    return '$family · $count';
+  }
+
+  @override
+  String browseMoreCount(int count) {
+    return '+$count';
+  }
+
+  @override
+  String browseMoreInFamily(String family) {
+    return 'mais em $family';
+  }
 
   @override
   String get speciesOtherNames => 'Outros nomes';
@@ -1020,6 +1317,62 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get verdictProtected => 'Espécie protegida — captura proibida.';
 
   @override
+  String get verdictStampMeetsMinimum => 'Atende ao mínimo';
+
+  @override
+  String get verdictStampBelowMinimum => 'Abaixo do mínimo';
+
+  @override
+  String get verdictStampWithinMaximum => 'Dentro do máximo';
+
+  @override
+  String get verdictStampAboveMaximum => 'Acima do máximo';
+
+  @override
+  String get verdictStampNotMeasured => 'Sem medição';
+
+  @override
+  String get verdictStampMethodMismatch => 'Medido por outro método';
+
+  @override
+  String verdictStampClosedSeason(String starts, String ends) {
+    return 'Defeso — de $starts a $ends';
+  }
+
+  @override
+  String verdictDetailMinimum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit medidos · mínimo $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit medidos · máximo $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMinimumUnmeasured(String threshold, String unit, String method) {
+    return 'Nada medido · mínimo $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximumUnmeasured(String threshold, String unit, String method) {
+    return 'Nada medido · máximo $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailClosedSeasonInForce(String day, String total) {
+    return 'Em vigor hoje, dia $day de $total · aplica-se a todos os tamanhos';
+  }
+
+  @override
+  String get verdictDetailClosedSeasonNotInForce => 'Hoje não está em vigor';
+
+  @override
+  String speciesBinomialFamily(String binomial, String family) {
+    return '$binomial — $family';
+  }
+
+  @override
   String verdictWithinBagLimit(String recorded, String limit, String period) {
     return 'Dentro da cota — $recorded registrados, limite $limit por $period';
   }
@@ -1147,6 +1500,38 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get zoneLevelRegion => 'Região';
 
   @override
+  String get tripsKeptHere => 'Guardado apenas neste aparelho';
+
+  @override
+  String tripsCountStamp(int count) {
+    return '$count saídas';
+  }
+
+  @override
+  String tripsRowSpan(String zone, String started, String ended) {
+    return '$zone · $started — $ended';
+  }
+
+  @override
+  String tripsRowSpanOpen(String zone, String started) {
+    return '$zone · $started — agora';
+  }
+
+  @override
+  String get tripsOpenMark => '· em andamento';
+
+  @override
+  String get tripsOpenStamp => 'Em andamento';
+
+  @override
+  String tripsDuration(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String get tripsLoadFailed => 'Não foi possível ler as saídas deste aparelho.';
+
+  @override
   String get zoneLevelSubZone => 'Sub-zona';
 
   @override
@@ -1233,6 +1618,41 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get settingsGloveNote => 'Alvos maiores e mais espaçados.';
+
+  @override
+  String get settingsGroupLanguage => 'Idioma e algarismos';
+
+  @override
+  String get settingsGroupPlace => 'Onde você pesca';
+
+  @override
+  String get settingsGroupReading => 'Condições de leitura';
+
+  @override
+  String get settingsDigitsNote => 'Algarismos ocidentais ou árabe-índicos';
+
+  @override
+  String get settingsLengthUnitNote => 'Comprimentos nas normas e nas leituras';
+
+  @override
+  String get settingsZone => 'Zona';
+
+  @override
+  String get settingsZoneNote => 'As normas, a lista de espécies e os limites seguem isto';
+
+  @override
+  String get settingsZoneUnset => 'Nenhum lugar escolhido';
+
+  @override
+  String settingsRulerScale(String px) {
+    return '$px px / 10 milímetros';
+  }
+
+  @override
+  String get settingsCoordinates => 'Captura de coordenadas';
+
+  @override
+  String get settingsCoordinatesNote => 'Guardadas só neste celular, nunca transmitidas';
 
   @override
   String get settingsRuler => 'Régua';
@@ -1357,7 +1777,97 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get todayUndoOne => 'Remover um';
 
   @override
+  String get measureSup => 'Régua';
+
+  @override
+  String measureCalibrationProvenance(String on, String pxPer10mm) {
+    return 'Calibrado em $on · $pxPer10mm pixels por centímetro';
+  }
+
+  @override
+  String get measureStepAndMark => 'Marcar por trechos';
+
+  @override
+  String get measureRunningTotalUnit => 'cm até agora';
+
+  @override
+  String measureStepPill(String count) {
+    return 'Trecho $count';
+  }
+
+  @override
+  String get measureStepNote =>
+      'Encoste a borda da tela no focinho, marque, deslize o celular ao longo do peixe e marque de novo.';
+
+  @override
+  String get measureTypeInstead => 'Digitar a medida';
+
+  @override
+  String get measureRecalibrate => 'Recalibrar com um cartão';
+
+  @override
+  String get measurePrivacyNote =>
+      'O peixe na tábua, o celular sobre o peixe. Nenhuma fotografia é tirada e nenhuma coordenada é lida a menos que a captura de coordenadas esteja ligada nas Configurações.';
+
+  @override
+  String get measureManualTitle => 'Digitar o comprimento';
+
+  @override
+  String get calibrateSup => 'Uma vez por aparelho';
+
+  @override
+  String calibrateCardConstant(String width, String height) {
+    return 'Todos os cartões deste formato são idênticos: ISO/IEC 7810 ID-1 — $width × $height milímetros';
+  }
+
+  @override
+  String calibrateDimension(String mm) {
+    return '$mm milímetros';
+  }
+
+  @override
+  String get calibrateDragHandleNote => 'Arraste a alça preenchida.';
+
+  @override
+  String get calibrateScaleLabel => 'Escala resultante';
+
+  @override
+  String get calibrateRowScale => 'Pixels por centímetro';
+
+  @override
+  String get calibrateRowDensity => 'Densidade da tela';
+
+  @override
+  String get calibrateRowError => 'Erro esperado';
+
+  @override
+  String get calibrateRowLastCalibrated => 'Última calibração';
+
+  @override
+  String calibrateDensityValue(String dp, String ratio) {
+    return '$dp dp · $ratio×';
+  }
+
+  @override
+  String calibrateErrorValue(String mm) {
+    return '± $mm milímetros em 30 centímetros';
+  }
+
+  @override
+  String get calibrateNotYet => 'Ainda sem calibração';
+
+  @override
+  String get calibrateReset => 'Restaurar o valor da tela';
+
+  @override
+  String get calibrateGlassNote =>
+      'Uma capa ou uma película não mudam nada: o cartão fica sobre o vidro e o vidro é o que está sendo medido.';
+
+  @override
   String get measureBackspace => 'Apagar';
+
+  @override
+  String get navBack => 'Voltar';
 
   @override
   String get navToday => 'Hoje';
