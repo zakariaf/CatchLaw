@@ -66,18 +66,25 @@ abstract interface class CatchLogRepository {
     required String zoneCode,
   });
 
-  /// Sets `was_kept` on the most recent catch of [speciesId] on [isoDay] here.
+  /// Marks ONE more catch of [speciesId] on [isoDay] here as kept.
+  ///
+  /// **The most recent one that is not kept already**, which is what makes the
+  /// action countable. Marking simply "the most recent" targets the same row
+  /// every time, so a fisher with six in the tally could never get past one
+  /// kept however often he tapped — the first version did exactly that.
+  ///
+  /// Returns the number of rows changed, so a caller can tell "marked one" from
+  /// "they are all marked already" without re-reading the tally.
   ///
   /// Kept is authored by the fisher and is never inferred from a verdict: a
   /// legal fish put back is still a legal fish, and a record that decided this
   /// for him would be a record about the rules rather than about his morning.
   @useResult
-  Future<Result<int>> setLatestKept({
+  Future<Result<int>> markOneKept({
     required int speciesId,
     required String isoDay,
     required String jurisdictionCode,
     required String zoneCode,
-    required bool kept,
   });
 
   /// Closes [tripId] at [endedAt].

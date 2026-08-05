@@ -64,6 +64,19 @@ void main() {
     });
   });
 
+  /// Marks one more kept, returning the number of rows changed.
+  Future<int> markKept() async {
+    final Result<int> marked = await container
+        .read(catchLogRepositoryProvider)
+        .markOneKept(
+          speciesId: 1,
+          isoDay: kDay,
+          jurisdictionCode: 'ES-GA',
+          zoneCode: 'rias-baixas',
+        );
+    return (marked as Ok<int>).value;
+  }
+
   Future<void> record(String scientific, int speciesId) async {
     final Result<int> written = await container
         .read(catchLogRepositoryProvider)
@@ -113,24 +126,34 @@ void main() {
     expect(seen.last.single.count, 1);
   });
 
-  test('dayTallyProvider counts kept separately from recorded', () async {
-    await record('Belone belone', 1);
-    await record('Belone belone', 1);
-    final Result<int> marked = await container
-        .read(catchLogRepositoryProvider)
-        .setLatestKept(
-          speciesId: 1,
-          isoDay: kDay,
-          jurisdictionCode: 'ES-GA',
-          zoneCode: 'rias-baixas',
-          kept: true,
-        );
-    expect(marked, isA<Ok<int>>());
+  test('markOneKept marks one more each time it is called', () async {
+    // The defect this replaces: the first version updated "the most recent"
+    // row, so every tap after the first re-marked a row that was already kept.
+    // Six in the tally, tap Kept ten times, still one kept — the action looked
+    // broken while doing exactly what it had been told.
+    for (var i = 0; i < 4; i++) {
+      await record('Belone belone', 1);
+    }
 
-    final List<SpeciesTallyEntry> rows = await tally();
+    await markKept();
+    expect((await tally()).single.kept, 1);
 
-    expect(rows.single.count, 2);
-    expect(rows.single.kept, 1, reason: 'kept is authored, and only one was marked');
+    await markKept();
+    expect((await tally()).single.kept, 2);
+
+    await markKept();
+    expect((await tally()).single.kept, 3);
+
+    // And the recorded count never moves: marking is not removing.
+    expect((await tally()).single.count, 4);
+  });
+
+  test('markOneKept stops when every catch is already kept', () async {
+    await record('Belone belone', 1);
+
+    expect(await markKept(), 1, reason: 'one row changed');
+    expect(await markKept(), 0, reason: 'nothing left to mark, and that is not an error');
+    expect((await tally()).single.kept, 1);
   });
 
   test('removeLatest takes one row and leaves the rest', () async {

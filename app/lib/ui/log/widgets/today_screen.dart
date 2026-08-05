@@ -134,12 +134,11 @@ class _TallyLine extends ConsumerWidget {
                       label: l10n.todayMarkKept,
                       onPressed: () => ref
                           .read(catchLogRepositoryProvider)
-                          .setLatestKept(
+                          .markOneKept(
                             speciesId: entry.speciesId,
                             isoDay: isoDay,
                             jurisdictionCode: place.jurisdiction,
                             zoneCode: place.zone,
-                            kept: true,
                           ),
                     ),
                   ),

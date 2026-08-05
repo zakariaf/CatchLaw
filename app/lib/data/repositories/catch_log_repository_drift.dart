@@ -117,24 +117,25 @@ final class DriftCatchLogRepository implements CatchLogRepository {
   );
 
   @override
-  Future<Result<int>> setLatestKept({
+  Future<Result<int>> markOneKept({
     required int speciesId,
     required String isoDay,
     required String jurisdictionCode,
     required String zoneCode,
-    required bool kept,
   }) => boundary.guard(
     () => db.customUpdate(
-      'UPDATE catch SET was_kept = ?5, updated_at = created_at WHERE id = '
+      // `AND was_kept = 0` is the whole difference. Without it the subquery
+      // returns the same newest row on every call, so the count stops at one
+      // and the action looks broken while doing exactly what it was told.
+      'UPDATE catch SET was_kept = 1, updated_at = created_at WHERE id = '
       '(SELECT id FROM catch WHERE species_id = ?1 AND jurisdiction_code = ?2 '
-      'AND zone_code = ?3 AND created_at LIKE ?4 '
+      'AND zone_code = ?3 AND created_at LIKE ?4 AND was_kept = 0 '
       'ORDER BY created_at DESC, id DESC LIMIT 1)',
       variables: <Variable<Object>>[
         Variable<int>(speciesId),
         Variable<String>(jurisdictionCode),
         Variable<String>(zoneCode),
         Variable<String>('$isoDay%'),
-        Variable<int>(kept ? 1 : 0),
       ],
       updates: <TableInfo<Table, Object>>{db.catches},
     ),
