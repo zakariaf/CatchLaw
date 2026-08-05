@@ -47,7 +47,7 @@ void main() {
       expect(find.text('open a species'), findsOneWidget);
     });
 
-    testWidgets('shows five destinations, each with a glyph and a word', (
+    testWidgets('shows every shipped destination with a glyph and a word', (
       WidgetTester tester,
     ) async {
       await _pumpShell(tester);
@@ -55,10 +55,22 @@ void main() {
       // A strip whose destinations differ only by icon is unreadable to a
       // reader who does not know the icons yet — which is every reader on the
       // first launch.
-      for (final label in const <String>['Check', 'Today', 'Trips', 'Reference', 'Settings']) {
+      for (final label in const <String>['Check', 'Trips', 'Reference', 'Settings']) {
         expect(find.text(label), findsOneWidget);
       }
       expect(find.byType(LonjaNavStrip), findsOneWidget);
+    });
+
+    testWidgets('shows no cell for a destination this release holds back', (
+      WidgetTester tester,
+    ) async {
+      await _pumpShell(tester);
+
+      // Today is BUILT and deliberately not shown. Asserted rather than left
+      // implicit, because the strip's index is the stack's index: a cell hidden
+      // from one and not the other selects the wrong branch, silently.
+      expect(find.text('Today'), findsNothing);
+      expect(LonjaDestination.shipped, isNot(contains(LonjaDestination.today)));
     });
 
     testWidgets('switches branch when a destination is tapped', (WidgetTester tester) async {

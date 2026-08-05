@@ -53,7 +53,7 @@ class AppShell extends StatefulWidget {
 class _AppShellState extends State<AppShell> {
   final Map<LonjaDestination, GlobalKey<NavigatorState>> _navigators =
       <LonjaDestination, GlobalKey<NavigatorState>>{
-        for (final LonjaDestination d in LonjaDestination.values)
+        for (final LonjaDestination d in LonjaDestination.shipped)
           d: GlobalKey<NavigatorState>(debugLabel: d.name),
       };
 
@@ -75,9 +75,9 @@ class _AppShellState extends State<AppShell> {
   @override
   Widget build(BuildContext context) => Scaffold(
     body: IndexedStack(
-      index: LonjaDestination.values.indexOf(_current),
+      index: LonjaDestination.shipped.indexOf(_current),
       children: <Widget>[
-        for (final LonjaDestination destination in LonjaDestination.values)
+        for (final LonjaDestination destination in LonjaDestination.shipped)
           Navigator(
             key: _navigators[destination],
             onGenerateRoute: (RouteSettings settings) => MaterialPageRoute<void>(

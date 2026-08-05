@@ -23,6 +23,24 @@ enum LonjaDestination {
   /// S14 — the settings.
   settings;
 
+  /// The branches this release puts in the strip.
+  ///
+  /// **`today` is built and deliberately not shown.** S8 works — it tallies,
+  /// counts kept and removes one — and it is held back to v2 rather than
+  /// deleted, so restoring it is this list and nothing else. The enum keeps its
+  /// member, its label, its glyph and its route, which means none of that can
+  /// rot while it is out of sight.
+  ///
+  /// Iterated by the strip and by the shell's `IndexedStack` TOGETHER, because
+  /// the strip's index is the stack's index: hiding a cell from one and not the
+  /// other selects the wrong branch, silently.
+  static const List<LonjaDestination> shipped = <LonjaDestination>[
+    check,
+    trips,
+    reference,
+    settings,
+  ];
+
   /// The label, already localised.
   ///
   /// Exhaustive, with no `default:`: the same word §6 uses for that screen, and

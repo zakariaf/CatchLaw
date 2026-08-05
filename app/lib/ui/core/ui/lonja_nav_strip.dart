@@ -43,7 +43,7 @@ class LonjaNavStrip extends StatelessWidget {
         top: false,
         child: Row(
           children: <Widget>[
-            for (final LonjaDestination destination in LonjaDestination.values)
+            for (final LonjaDestination destination in LonjaDestination.shipped)
               Expanded(
                 child: _NavCell(
                   destination: destination,
