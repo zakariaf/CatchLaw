@@ -29,6 +29,14 @@ class RulerView extends StatelessWidget {
     super.key,
   });
 
+  /// How tall the band is: the tick strip, then the row of centimetre numerals
+  /// under it.
+  ///
+  /// Named here rather than left to a `SizedBox` on the screen, because the
+  /// number is the painter's geometry and a screen that guessed it would clip
+  /// the numerals or leave a strip of blank paper under the scale.
+  static const double bandHeight = RulerPainter.labelTop + LonjaSpace.s4;
+
   /// The measured scale.
   final RulerCalibration calibration;
 
@@ -68,6 +76,9 @@ class RulerView extends StatelessWidget {
       mark: tokens.accent,
       hairlinePx: hairline,
       tickPx: hairline,
+      // The one tick class a fisher counts, at the rule weight the design
+      // system names for a bearing line rather than for ornament.
+      cmTickPx: LonjaRules.rule,
       cursorPx: LonjaRules.strong,
     );
 
@@ -79,7 +90,7 @@ class RulerView extends StatelessWidget {
         child: RepaintBoundary(
           child: LtrInstrument(
             child: CustomPaint(
-              size: Size(spanPx, 64),
+              size: Size(spanPx, bandHeight),
               painter: RulerPainter(scene: scene, cursorMm: cursorMm),
             ),
           ),

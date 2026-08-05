@@ -1,0 +1,54 @@
+<!--
+  Sparus aurata (gilthead seabream / Galician: Dourada).
+  Originated schematic line art drawn for CatchLaw.
+  Not traced, copied or derived from any copyrighted illustration.
+  Distinguishing shape: deep oval body, steep blunt forehead, single
+  continuous dorsal fin, deeply forked tail, gold brow band between the eyes.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Body outline: deep oval, steep blunt head at left, narrow caudal peduncle at right -->
+    <path d="M18 52
+             C 22 38, 34 24, 54 20
+             C 82 14, 112 22, 134 38
+             C 144 45, 152 50, 158 52" />
+    <path d="M18 52
+             C 22 64, 32 78, 52 83
+             C 80 90, 112 82, 134 66
+             C 144 59, 152 57, 158 58" />
+
+    <!-- Head / gill cover line, following the steep forehead -->
+    <path d="M40 25 C 40 44, 42 62, 50 79" />
+
+    <!-- Mouth: small terminal mouth at the blunt snout -->
+    <path d="M18 52 L 32 50" />
+
+    <!-- Gold brow band, the species mark, between the eyes -->
+    <path d="M27 36 L 34 41" />
+
+    <!-- Eye: large, set high and well forward -->
+    <ellipse cx="32" cy="45" rx="4" ry="4" />
+
+    <!-- Single continuous dorsal fin, spiny front, running the length of the back -->
+    <path d="M54 20 L 62 8 L 78 15 L 92 9 L 108 17 L 122 14 L 134 38" />
+
+    <!-- Pectoral fin: long and pointed, low on the flank -->
+    <path d="M55 57 C 68 62, 78 70, 84 79" />
+    <path d="M55 57 C 64 66, 70 74, 72 82" />
+
+    <!-- Pelvic fin -->
+    <path d="M60 79 L 66 90 L 74 84" />
+
+    <!-- Anal fin, mirroring the rear dorsal -->
+    <path d="M96 83 L 104 94 L 122 88 L 134 66" />
+
+    <!-- Deeply forked caudal fin -->
+    <path d="M158 52 L 188 36 L 176 55 L 188 76 L 158 58" />
+    <path d="M176 55 L 158 55" />
+
+    <!-- Lateral line, arching parallel to the back -->
+    <path d="M46 45 C 74 33, 104 36, 132 50" />
+
+  </g>
+</svg>

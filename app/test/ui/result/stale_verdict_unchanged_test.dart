@@ -26,7 +26,8 @@ void main() {
     final ResultDisplay stale = en.present(kResolutionAmeixaExpired, cambados);
 
     expect(stale.stamp!.headline, fresh.stamp!.headline);
-    expect(stale.stamp!.subLine, fresh.stamp!.subLine);
+    expect(stale.stamp!.detail, fresh.stamp!.detail);
+    expect(stale.stamp!.meta, fresh.stamp!.meta);
     expect(stale.stamp!.category, fresh.stamp!.category);
   });
 

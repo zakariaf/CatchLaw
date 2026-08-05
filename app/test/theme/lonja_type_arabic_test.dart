@@ -33,10 +33,10 @@ void main() {
   }
 
   test('ar - LonjaTypeScale.arabic legal gains headroom to 1.80', () {
-    // Ascenders, descenders and dot stacks need the vertical room. 17.9px on
+    // Ascenders, descenders and dot stacks need the vertical room. 21.3px on
     // the Naskh stack at 1.80.
     expect(arabic.legal.height, 1.80);
-    expect(arabic.legal.fontSize, closeTo(17.92, 0.01));
+    expect(arabic.legal.fontSize, closeTo(21.28, 0.01));
   });
 
   test('ar - LonjaTypeScale.arabic measure sits at 1.10 rather than the Latin 1.00', () {

@@ -46,3 +46,12 @@ strings:
       es: Primera norma registrada de Galicia — la talla mínima de las almejas de la Orden del 27 de julio de 2012
       gl: Primeira norma rexistrada de Galicia — a talla mínima das ameixas da Orde do 27 de xullo de 2012
       pt_BR: Primeira norma registrada da Galiza — o tamanho mínimo dos vôngoles da Ordem de 27 de julho de 2012
+
+  - key: change.es_ga.anexo_i_a_finfish
+    values:
+      ar: أضيفت أحجام الحد الأدنى لعشرين نوعًا من الأسماك من الملحق I-A.
+      ca: S'han afegit les mides mínimes de vint peixos de l'annex I-A.
+      en: Minimum sizes for twenty finfish of Annex I-A added.
+      es: Añadidas las tallas mínimas de veinte peces del anexo I-A.
+      gl: Engadidos os tamaños mínimos de vinte peixes do anexo I-A.
+      pt_BR: Adicionados os tamanhos mínimos de vinte peixes do anexo I-A.

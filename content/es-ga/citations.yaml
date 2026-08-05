@@ -19,3 +19,20 @@ citations:
     source_url: https://www.xunta.gal/dog/Publicados/2012/20121127/AnuncioG0165-191112-0006_gl.html
     sha256: 6452365e422a9f3146c3220afd5b658843a4197b902bae1dc3c7ee8581c3344b
     lineage_id: es-ga-orde-2012-07-27
+
+  # Article 5 governs FINFISH: minimum sizes in Anexo I-A, and article 5.4 states
+  # the method verbatim — "O tamaño medirase ... desde a punta da cabeza ata o
+  # extremo da aleta caudal", tip of head to end of the caudal fin. That is TOTAL
+  # LENGTH, transcribed from the instrument rather than assumed from the species.
+  # Article 6 (molluscs) is a separate citation because it states a different
+  # method, which is exactly why the two are not merged.
+  - id: es-ga-orde-2012-07-27-art5
+    jurisdiction: ES-GA
+    instrument_type_key: instrument.orde
+    instrument: Orde do 27 de xullo de 2012
+    article: Art. 5
+    published_on: 2012-11-27
+    retrieved_on: 2026-08-03
+    source_url: https://www.xunta.gal/dog/Publicados/2012/20121127/AnuncioG0165-191112-0006_gl.html
+    sha256: 6452365e422a9f3146c3220afd5b658843a4197b902bae1dc3c7ee8581c3344b
+    lineage_id: es-ga-orde-2012-07-27

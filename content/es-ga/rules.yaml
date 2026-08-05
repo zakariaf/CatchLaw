@@ -20,3 +20,203 @@ rules:
     citation_id: es-ga-orde-2012-07-27-art6
     valid_from: 2012-11-27
     specificity: 0
+
+  - id: es-ga-pollachius-pollachius-min
+    jurisdiction_id: ES-GA
+    species_id: pollachius-pollachius
+    water_type: salt
+    min_size_mm: 300
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-belone-belone-min
+    jurisdiction_id: ES-GA
+    species_id: belone-belone
+    water_type: salt
+    min_size_mm: 250
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-boops-boops-min
+    jurisdiction_id: ES-GA
+    species_id: boops-boops
+    water_type: salt
+    min_size_mm: 110
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-pagellus-erythrinus-min
+    jurisdiction_id: ES-GA
+    species_id: pagellus-erythrinus
+    water_type: salt
+    min_size_mm: 250
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-conger-conger-min
+    jurisdiction_id: ES-GA
+    species_id: conger-conger
+    water_type: salt
+    min_size_mm: 580
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-spondyliosoma-cantharus-min
+    jurisdiction_id: ES-GA
+    species_id: spondyliosoma-cantharus
+    water_type: salt
+    min_size_mm: 230
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-sparus-aurata-min
+    jurisdiction_id: ES-GA
+    species_id: sparus-aurata
+    water_type: salt
+    min_size_mm: 190
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-trisopterus-luscus-min
+    jurisdiction_id: ES-GA
+    species_id: trisopterus-luscus
+    water_type: salt
+    min_size_mm: 150
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-solea-solea-min
+    jurisdiction_id: ES-GA
+    species_id: solea-solea
+    water_type: salt
+    min_size_mm: 240
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-labrus-bergylta-min
+    jurisdiction_id: ES-GA
+    species_id: labrus-bergylta
+    water_type: salt
+    min_size_mm: 200
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-scyliorhinus-canicula-min
+    jurisdiction_id: ES-GA
+    species_id: scyliorhinus-canicula
+    water_type: salt
+    min_size_mm: 400
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-merlangius-merlangus-min
+    jurisdiction_id: ES-GA
+    species_id: merlangius-merlangus
+    water_type: salt
+    min_size_mm: 270
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-epinephelus-marginatus-min
+    jurisdiction_id: ES-GA
+    species_id: epinephelus-marginatus
+    water_type: salt
+    min_size_mm: 500
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-merluccius-merluccius-min
+    jurisdiction_id: ES-GA
+    species_id: merluccius-merluccius
+    water_type: salt
+    min_size_mm: 270
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-pagrus-pagrus-min
+    jurisdiction_id: ES-GA
+    species_id: pagrus-pagrus
+    water_type: salt
+    min_size_mm: 150
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-dicentrarchus-labrax-min
+    jurisdiction_id: ES-GA
+    species_id: dicentrarchus-labrax
+    water_type: salt
+    min_size_mm: 360
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-psetta-maxima-min
+    jurisdiction_id: ES-GA
+    species_id: psetta-maxima
+    water_type: salt
+    min_size_mm: 300
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-sarpa-salpa-min
+    jurisdiction_id: ES-GA
+    species_id: sarpa-salpa
+    water_type: salt
+    min_size_mm: 150
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-mullus-surmuletus-min
+    jurisdiction_id: ES-GA
+    species_id: mullus-surmuletus
+    water_type: salt
+    min_size_mm: 150
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0
+
+  - id: es-ga-scophthalmus-rhombus-min
+    jurisdiction_id: ES-GA
+    species_id: scophthalmus-rhombus
+    water_type: salt
+    min_size_mm: 300
+    measurement_method_id: TL
+    citation_id: es-ga-orde-2012-07-27-art5
+    valid_from: 2012-11-27
+    specificity: 0

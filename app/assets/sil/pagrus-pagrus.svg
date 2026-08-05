@@ -1,0 +1,38 @@
+<!--
+  Pagrus pagrus (common seabream; Galician: Pargo).
+  Originated schematic line art drawn for CatchLaw. Not traced from, derived
+  from, or copied out of any copyrighted illustration, photograph or plate.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- body outline: deep seabream body, steep blunt forehead, narrow peduncle -->
+  <path fill="none" d="M16 52 C20 40 28 27 46 21 C74 13 110 19 132 31 C141 36 146 41 150 45 L150 56 C146 62 138 69 126 74 C104 84 74 88 48 80 C31 74 20 61 16 52 Z"/>
+
+  <!-- forked caudal fin -->
+  <path fill="none" d="M150 45 C163 40 176 32 189 23 C181 37 174 45 170 50 C174 55 181 64 189 78 C176 69 163 61 150 56"/>
+
+  <!-- single continuous dorsal fin along the back -->
+  <path fill="none" d="M52 19 L60 9 L72 13 L84 8 L98 12 L112 12 L124 19 L134 31"/>
+
+  <!-- anal fin -->
+  <path fill="none" d="M100 81 L106 92 L122 87 L133 74"/>
+
+  <!-- pelvic fin -->
+  <path fill="none" d="M68 83 L72 93 L83 85"/>
+
+  <!-- pectoral fin -->
+  <path fill="none" d="M57 55 C67 60 77 66 86 73 C74 71 62 64 57 55"/>
+
+  <!-- gill cover -->
+  <path fill="none" d="M45 23 C41 40 42 58 49 74"/>
+
+  <!-- mouth line on the blunt snout -->
+  <path fill="none" d="M17 50 C24 53 30 54 35 53"/>
+
+  <!-- lateral line -->
+  <path fill="none" d="M51 44 C78 34 110 36 139 45"/>
+
+  <!-- eye -->
+  <ellipse fill="none" cx="32" cy="41" rx="4.5" ry="4.5"/>
+
+</svg>

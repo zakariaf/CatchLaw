@@ -13,3 +13,16 @@ measurement_methods:
     name_key: measurement.shl.name
     definition_key: measurement.shl.definition
     diagram_asset: method/shl.svg
+
+  # Total length, for every finfish in Anexo I-A. Article 5.4 of the Orde states
+  # it in the instrument's own words — "desde a punta da cabeza ata o extremo da
+  # aleta caudal" — so this is transcribed, not inferred from the species.
+  #
+  # The diagram is required by the schema, so it is drawn rather than omitted:
+  # a method the app can name but not show is a method a fisher has to take on
+  # trust, and total length is the one every finfish rule in this pack states.
+  - id: TL
+    code: TL
+    name_key: measurement.tl.name
+    definition_key: measurement.tl.definition
+    diagram_asset: method/tl.svg

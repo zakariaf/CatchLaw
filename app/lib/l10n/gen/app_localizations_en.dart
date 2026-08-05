@@ -88,6 +88,93 @@ class AppLocalizationsEn extends AppLocalizations {
   String get identifyThisFish => 'Identify this fish';
 
   @override
+  String identifyKeyStamp(int couplet) {
+    return 'Key · couplet $couplet';
+  }
+
+  @override
+  String get identifyAnswersSoFar => 'Answers so far';
+
+  @override
+  String identifyCoupletLabel(int couplet) {
+    return 'Couplet $couplet';
+  }
+
+  @override
+  String identifySpeciesRemain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count species remain',
+      one: '$count species remains',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String identifyLeadMark(int couplet, int lead) {
+    return '$couplet · $lead';
+  }
+
+  @override
+  String identifyLeadConsequence(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Leads to $count species · $names',
+      one: 'Leads to $count species · $names',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get identifyLeadNoSpecies => 'No species are recorded beyond this answer.';
+
+  @override
+  String get identifyBackOneStep => 'Back one step';
+
+  @override
+  String get identifyDamagedHeading => 'If the character cannot be seen';
+
+  @override
+  String get identifyDamagedNote =>
+      'A damaged or missing character cannot be answered. Every species this couplet still allows is listed instead, drawn and named.';
+
+  @override
+  String get identifyListWhatRemains => 'List what remains';
+
+  @override
+  String get identifyProvenanceNote =>
+      'No photograph is taken and nothing leaves the device. The key is the printed one from the reference section, walked one couplet at a time.';
+
+  @override
+  String get identifyRemainingHeading => 'Species the key still allows';
+
+  @override
+  String get identifyNoKeyHeadline => 'No key in this pack';
+
+  @override
+  String get identifyNoKeyBody =>
+      'No identification key is transcribed for this jurisdiction. The species this pack carries are reachable by name.';
+
+  @override
+  String get identifyNoCandidatesHeadline => 'No species recorded here';
+
+  @override
+  String get identifyNoCandidatesBody =>
+      'The key reaches no species along the answers given. Nothing beyond this point is transcribed in this pack.';
+
+  @override
+  String get identifyKeyUnreadableHeadline => 'The key could not be read';
+
+  @override
+  String get identifyKeyUnreadableBody =>
+      'The bundled pack\'s key did not open on this device. The species it carries are reachable by name.';
+
+  @override
+  String get identifySearchByName => 'Search by name';
+
+  @override
   String get browseByShape => 'Browse by shape';
 
   @override
@@ -106,6 +193,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String speciesSearchMatchCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count matching results',
+      one: '$count matching result',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get speciesSearchClear => 'Clear the search';
+
+  @override
   String get browseByShapeTitle => 'Browse by shape';
 
   @override
@@ -113,6 +214,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get browseNoSpeciesBody => 'This jurisdiction has no species transcribed yet.';
+
+  @override
+  String browseSpeciesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count species',
+      one: '$count species',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String browseFamilyHeading(String family, int count) {
+    return '$family · $count';
+  }
+
+  @override
+  String browseMoreCount(int count) {
+    return '+$count';
+  }
+
+  @override
+  String browseMoreInFamily(String family) {
+    return 'more in $family';
+  }
 
   @override
   String get speciesOtherNames => 'Other names';
@@ -321,6 +448,62 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verdictProtected => 'Protected species — taking prohibited.';
 
   @override
+  String get verdictStampMeetsMinimum => 'Meets the minimum';
+
+  @override
+  String get verdictStampBelowMinimum => 'Below the minimum';
+
+  @override
+  String get verdictStampWithinMaximum => 'Within the maximum';
+
+  @override
+  String get verdictStampAboveMaximum => 'Above the maximum';
+
+  @override
+  String get verdictStampNotMeasured => 'Not measured';
+
+  @override
+  String get verdictStampMethodMismatch => 'Measured by another method';
+
+  @override
+  String verdictStampClosedSeason(String starts, String ends) {
+    return 'Closed season — $starts to $ends';
+  }
+
+  @override
+  String verdictDetailMinimum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit measured · minimum $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit measured · maximum $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMinimumUnmeasured(String threshold, String unit, String method) {
+    return 'Nothing measured · minimum $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximumUnmeasured(String threshold, String unit, String method) {
+    return 'Nothing measured · maximum $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailClosedSeasonInForce(String day, String total) {
+    return 'In force today, day $day of $total · applies at every size';
+  }
+
+  @override
+  String get verdictDetailClosedSeasonNotInForce => 'Not in force today';
+
+  @override
+  String speciesBinomialFamily(String binomial, String family) {
+    return '$binomial — $family';
+  }
+
+  @override
   String verdictWithinBagLimit(String recorded, String limit, String period) {
     return 'Within the bag limit — $recorded recorded, limit $limit per $period';
   }
@@ -366,6 +549,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verdictAmbiguous => 'Two rules of equal standing apply here.';
 
   @override
+  String get ambiguityEyebrow => 'Conflict of instruments';
+
+  @override
+  String get ambiguityBothInForce =>
+      'Both instruments are in force at this point. CatchLaw prints the text of each with its own check date, and ranks neither above the other.';
+
+  @override
   String get findingFactMeasured => 'Measured';
 
   @override
@@ -373,6 +563,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get findingFactMaximum => 'Maximum';
+
+  @override
+  String get findingFactShortfall => 'Shortfall';
 
   @override
   String get findingFactDates => 'Dates';
@@ -436,6 +629,94 @@ class AppLocalizationsEn extends AppLocalizations {
   String get flagRuleEmptyNote => 'The note is empty.';
 
   @override
+  String get penaltiesTitle => 'Penalties';
+
+  @override
+  String get penaltiesEntryNote => 'What a breach of the recorded rules carries.';
+
+  @override
+  String penaltiesLede(String jurisdiction) {
+    return 'What a breach of the size, season, protection or gear rules carries in $jurisdiction.';
+  }
+
+  @override
+  String get penaltiesColumnOffence => 'Offence';
+
+  @override
+  String get penaltiesColumnFine => 'Fine';
+
+  @override
+  String get penaltiesColumnLicence => 'Licence';
+
+  @override
+  String get penaltiesOccurrenceFirst => 'First offence';
+
+  @override
+  String get penaltiesOccurrenceSecond => 'Second offence';
+
+  @override
+  String get penaltiesOccurrenceSubsequent => 'Subsequent offence';
+
+  @override
+  String get penaltiesOffenceListLabel => 'Offences recorded';
+
+  @override
+  String penaltiesFineAmount(String currency, String amount) {
+    return '$currency $amount';
+  }
+
+  @override
+  String penaltiesFineRange(String currency, String lower, String upper) {
+    return '$currency $lower–$upper';
+  }
+
+  @override
+  String get penaltiesFineNotRecorded => 'No amount recorded';
+
+  @override
+  String get penaltiesConsequenceNotRecorded => 'No licence consequence recorded';
+
+  @override
+  String get penaltiesWorkedExampleLabel => 'Worked example';
+
+  @override
+  String penaltiesWorkedExampleFirst(String offence, String jurisdiction, String fine) {
+    return 'A first offence of $offence is recorded in $jurisdiction as $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleSecond(String offence, String jurisdiction, String fine) {
+    return 'A second offence of $offence is recorded in $jurisdiction as $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleSubsequent(String offence, String jurisdiction, String fine) {
+    return 'A subsequent offence of $offence is recorded in $jurisdiction as $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleConsequence(String consequence) {
+    return 'The licence consequence recorded is $consequence.';
+  }
+
+  @override
+  String get penaltiesNoneRecordedHeadline => 'No penalty recorded';
+
+  @override
+  String penaltiesNoneRecordedBody(String jurisdiction) {
+    return 'The bundled rule pack carries no penalty transcribed for $jurisdiction. That is an absence in the transcription, not a statement that the instruments carry none.';
+  }
+
+  @override
+  String get penaltiesPackCaveat =>
+      'Amounts are those recorded in the bundled rule pack. Courts and inspectors may apply further provisions.';
+
+  @override
+  String penaltiesCitationDates(String published, String checked) {
+    return 'published $published · checked $checked';
+  }
+
+  @override
   String get disclaimerNotDismissable => 'It cannot be dismissed.';
 
   @override
@@ -446,6 +727,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zoneLevelRegion => 'Region';
+
+  @override
+  String get tripsKeptHere => 'Kept on this device only';
+
+  @override
+  String tripsCountStamp(int count) {
+    return '$count trips';
+  }
+
+  @override
+  String tripsRowSpan(String zone, String started, String ended) {
+    return '$zone · $started — $ended';
+  }
+
+  @override
+  String tripsRowSpanOpen(String zone, String started) {
+    return '$zone · $started — now';
+  }
+
+  @override
+  String get tripsOpenMark => '· open';
+
+  @override
+  String get tripsOpenStamp => 'Open';
+
+  @override
+  String tripsDuration(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String get tripsLoadFailed => 'The trips on this device could not be read.';
 
   @override
   String get zoneLevelSubZone => 'Sub-zone';
@@ -493,6 +806,327 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navCheck => 'Check';
 
   @override
+  String get destinationNotBuiltYet =>
+      'This version answers one question: whether a fish meets the rules in the place it was landed. This part is not built yet.';
+
+  @override
+  String get settingsLanguageDevice => 'Follow the device';
+
+  @override
+  String get settingsDigits => 'Digits';
+
+  @override
+  String get settingsDigitsAuto => 'Automatic';
+
+  @override
+  String get settingsDigitsLatn => '0123';
+
+  @override
+  String get settingsDigitsArab => '٠١٢٣';
+
+  @override
+  String get settingsUnitCm => 'cm';
+
+  @override
+  String get settingsUnitMm => 'mm';
+
+  @override
+  String get settingsUnitIn => 'in';
+
+  @override
+  String get settingsLengthUnit => 'Length shown in';
+
+  @override
+  String get settingsSunlightMode => 'Sunlight mode';
+
+  @override
+  String get settingsSunlightNote => 'Maximum contrast, for a wet screen in glare.';
+
+  @override
+  String get settingsGloveMode => 'Glove mode';
+
+  @override
+  String get settingsGloveNote => 'Larger targets and wider spacing.';
+
+  @override
+  String get settingsGroupLanguage => 'Language and figures';
+
+  @override
+  String get settingsGroupPlace => 'Where you fish';
+
+  @override
+  String get settingsGroupReading => 'Reading conditions';
+
+  @override
+  String get settingsDigitsNote => 'Western or Arabic-Indic digits';
+
+  @override
+  String get settingsLengthUnitNote => 'Lengths on rules and readings';
+
+  @override
+  String get settingsZone => 'Zone';
+
+  @override
+  String get settingsZoneNote => 'Rules, species list and limits follow this';
+
+  @override
+  String get settingsZoneUnset => 'No place chosen';
+
+  @override
+  String settingsRulerScale(String px) {
+    return '$px px / 10 millimetres';
+  }
+
+  @override
+  String get settingsCoordinates => 'Coordinate capture';
+
+  @override
+  String get settingsCoordinatesNote => 'Held on this device only, never transmitted';
+
+  @override
+  String get settingsRuler => 'Ruler';
+
+  @override
+  String get settingsRulerUncalibrated => 'Not calibrated';
+
+  @override
+  String settingsRulerCalibrated(String on) {
+    return 'Calibrated $on';
+  }
+
+  @override
+  String get settingsAboutPack => 'Rule book';
+
+  @override
+  String get settingsOfflineNote =>
+      'CatchLaw holds everything it needs on this phone. It has no account and no network code.';
+
+  @override
+  String get todayHeadline => 'Today';
+
+  @override
+  String get todayNothingRecorded => 'Nothing recorded today';
+
+  @override
+  String get todayNothingBody =>
+      'A species you record from its page appears here, with the count for this place.';
+
+  @override
+  String get todayNoPlace => 'No place set';
+
+  @override
+  String todayCountKept(int count, int kept) {
+    return '$count recorded · $kept kept';
+  }
+
+  @override
+  String todayTripOpenSince(String started) {
+    return 'Trip open since $started';
+  }
+
+  @override
+  String get todayNoTripOpen => 'No trip open';
+
+  @override
+  String get todaySummaryRecorded => 'Fish recorded';
+
+  @override
+  String get todaySummaryKept => 'Kept';
+
+  @override
+  String get todaySummarySpecies => 'Species';
+
+  @override
+  String todayKeptOfCount(String kept, String count) {
+    return '$kept of $count';
+  }
+
+  @override
+  String get todayBySpeciesLabel => 'By species';
+
+  @override
+  String get todayLoadFailed => 'The day\'s tally on this device could not be read.';
+
+  @override
+  String get tripsHeadline => 'Trips';
+
+  @override
+  String get tripsNone => 'No trips yet';
+
+  @override
+  String get tripsNoneBody =>
+      'Starting a trip groups what you record into one outing. Everything stays on this phone.';
+
+  @override
+  String get tripsStart => 'Start a trip';
+
+  @override
+  String get tripsEnd => 'End this trip';
+
+  @override
+  String tripsRunning(String since) {
+    return 'Running since $since';
+  }
+
+  @override
+  String tripsEnded(String started, String ended) {
+    return '$started — $ended';
+  }
+
+  @override
+  String get catchRecord => 'Record this catch';
+
+  @override
+  String get catchRecorded => 'Recorded';
+
+  @override
+  String get measureTitle => 'Measure';
+
+  @override
+  String get measureUncalibrated => 'This screen is not calibrated';
+
+  @override
+  String get measureUncalibratedBody =>
+      'A phone reports pixels, not millimetres, and the ratio differs by model. Until the screen is calibrated it cannot draw a ruler at true size. Typing a length works either way.';
+
+  @override
+  String get measureManualLabel => 'Or type the length';
+
+  @override
+  String get measureUse => 'Use this length';
+
+  @override
+  String get calibrateAction => 'Calibrate the screen';
+
+  @override
+  String get calibrateTitle => 'Calibrate';
+
+  @override
+  String get calibrateFitBody =>
+      'Lay a bank card flat on the screen, left edge against the left edge of the box, and drag the black line to its right edge.';
+
+  @override
+  String get calibrateVerifyBody =>
+      'Check the line against the card once more. If it sits on the edge, save.';
+
+  @override
+  String get calibrateVerifyAction => 'Check it';
+
+  @override
+  String get calibrateSaveAction => 'Save the calibration';
+
+  @override
+  String calibrateCardWidth(String mm) {
+    return 'A bank card is $mm millimetres wide (ISO/IEC 7810 ID-1).';
+  }
+
+  @override
+  String get calibrateImplausible =>
+      'That scale is outside the plausible range for a phone screen, so it was not saved.';
+
+  @override
+  String get todayRemove => 'Remove';
+
+  @override
+  String get todayMarkKept => 'Kept';
+
+  @override
+  String get todayUndoOne => 'Remove one';
+
+  @override
+  String get measureSup => 'Ruler';
+
+  @override
+  String measureCalibrationProvenance(String on, String pxPer10mm) {
+    return 'Calibrated $on · $pxPer10mm pixels per centimetre';
+  }
+
+  @override
+  String get measureStepAndMark => 'Step and mark';
+
+  @override
+  String get measureRunningTotalUnit => 'cm so far';
+
+  @override
+  String measureStepPill(String count) {
+    return 'Step $count';
+  }
+
+  @override
+  String get measureStepNote =>
+      'Lay the screen edge at the snout, mark, slide the phone along the fish and mark again.';
+
+  @override
+  String get measureTypeInstead => 'Type instead';
+
+  @override
+  String get measureRecalibrate => 'Re-calibrate with a card';
+
+  @override
+  String get measurePrivacyNote =>
+      'Fish on the board, phone on the fish. No photograph is taken and no coordinate is read unless coordinate capture is switched on in Settings.';
+
+  @override
+  String get measureManualTitle => 'Type the length';
+
+  @override
+  String get calibrateSup => 'Once per device';
+
+  @override
+  String calibrateCardConstant(String width, String height) {
+    return 'Every card of this format is identical: ISO/IEC 7810 ID-1 — $width × $height millimetres';
+  }
+
+  @override
+  String calibrateDimension(String mm) {
+    return '$mm millimetres';
+  }
+
+  @override
+  String get calibrateDragHandleNote => 'Drag the filled handle.';
+
+  @override
+  String get calibrateScaleLabel => 'Resulting scale';
+
+  @override
+  String get calibrateRowScale => 'Pixels per centimetre';
+
+  @override
+  String get calibrateRowDensity => 'Screen density';
+
+  @override
+  String get calibrateRowError => 'Expected error';
+
+  @override
+  String get calibrateRowLastCalibrated => 'Last calibrated';
+
+  @override
+  String calibrateDensityValue(String dp, String ratio) {
+    return '$dp dp · $ratio×';
+  }
+
+  @override
+  String calibrateErrorValue(String mm) {
+    return '± $mm millimetres over 30 centimetres';
+  }
+
+  @override
+  String get calibrateNotYet => 'Not yet calibrated';
+
+  @override
+  String get calibrateReset => 'Reset to screen default';
+
+  @override
+  String get calibrateGlassNote =>
+      'A case or a screen protector changes nothing — the card sits on the glass and the glass is what is being measured.';
+
+  @override
+  String get measureBackspace => 'Back';
+
+  @override
+  String get navBack => 'Back';
+
+  @override
   String get navToday => 'Today';
 
   @override
@@ -500,6 +1134,115 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navReference => 'Reference';
+
+  @override
+  String get referenceContentsLabel => 'Contents';
+
+  @override
+  String get referenceHubLede =>
+      'Everything a verdict is drawn from, held in full on this device and readable without a signal.';
+
+  @override
+  String get referenceEntryRuleText => 'Rule text';
+
+  @override
+  String get referenceEntryRuleTextNote =>
+      'The instruments as published, article by article, in the language they were published in';
+
+  @override
+  String get ruleTextSearchHint => 'Search the full text';
+
+  @override
+  String get ruleTextAllArticles => 'All articles';
+
+  @override
+  String get ruleTextPublishedLabel => 'Published';
+
+  @override
+  String get ruleTextCheckedLabel => 'Checked';
+
+  @override
+  String get ruleTextCompleteNote =>
+      'This text is held in full on this device and is not abridged.';
+
+  @override
+  String get ruleTextNoneRecordedHeadline => 'No text transcribed';
+
+  @override
+  String ruleTextNoneRecordedBody(String instrument) {
+    return 'This copy carries no article text for $instrument. The citation above names the instrument and the dates it was published and last checked.';
+  }
+
+  @override
+  String get ruleTextNoMatchHeadline => 'No article matches';
+
+  @override
+  String get ruleTextNoMatchBody => 'No article of this instrument carries that wording.';
+
+  @override
+  String get referenceEntryProtected => 'Protected species';
+
+  @override
+  String get referenceEntryProtectedNote =>
+      'Plates, distinguishing features, and what protection covers';
+
+  @override
+  String get referenceEntryGear => 'Gear and methods';
+
+  @override
+  String get referenceEntryGearNote => 'Mesh, hand-line, net length, prohibited methods';
+
+  @override
+  String get referenceEntryPenalties => 'Penalties';
+
+  @override
+  String get referenceEntryPenaltiesNote => 'Fines and licence consequences, by offence';
+
+  @override
+  String get referenceEntryLicences => 'Licences';
+
+  @override
+  String get referenceEntryLicencesNote => 'Vessel, fisher and gear licences, and what each covers';
+
+  @override
+  String get referenceEntryGlossary => 'Glossary';
+
+  @override
+  String get referenceEntryGlossaryNote => 'TL · FL · SL · CW · SHL · ML, and the local terms';
+
+  @override
+  String get referenceEntryChangelog => 'Changelog';
+
+  @override
+  String get referenceEntryChangelogNote => 'What changed in each pack, and when it was checked';
+
+  @override
+  String get referenceEntryPlates => 'Species plates';
+
+  @override
+  String get referenceEntryPlatesNote => 'Silhouettes grouped by family, for a fish known by shape';
+
+  @override
+  String get referenceEntryNotPrinted => 'not printed';
+
+  @override
+  String get referenceSectionNotPrinted =>
+      'This section is not printed in this copy. This version answers whether a fish meets the rules in the place it was landed, and cites the instrument it read.';
+
+  @override
+  String get referenceHeldLabel => 'Held on this device';
+
+  @override
+  String referenceHeldPack(String version, String checkedOn) {
+    return 'pack $version · checked $checkedOn';
+  }
+
+  @override
+  String get referenceHeldNote =>
+      'This book quotes the instruments it holds. It does not summarise them.';
+
+  @override
+  String get referenceHeldEmpty => 'No jurisdiction is held in this copy.';
 
   @override
   String get navSettings => 'Settings';
@@ -524,4 +1267,78 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get checkNoRecentsBody =>
       'Species you look up in this place appear here, so the next one is one tap.';
+
+  @override
+  String get firstRunOfflineBadge => 'No signal · offline by design';
+
+  @override
+  String get firstRunTagline => 'Is this legal?';
+
+  @override
+  String get firstRunMetaFirstRun => 'First run';
+
+  @override
+  String get firstRunMetaOnceOnly => 'One time only';
+
+  @override
+  String get firstRunHeadline => 'Setting out the rule book';
+
+  @override
+  String get firstRunLede =>
+      'Unpacking the bundled rule pack, the plates and the legal text, so that everything opens instantly from here on.';
+
+  @override
+  String get firstRunSilhouetteLabel => 'Engraved outline of a grouper';
+
+  @override
+  String firstRunProgressBytes(String written, String total) {
+    return '$written of $total kB';
+  }
+
+  @override
+  String firstRunProgressPercent(String percent) {
+    return '$percent%';
+  }
+
+  @override
+  String get firstRunSectionInstalling => 'Being installed';
+
+  @override
+  String get firstRunStageRulePack => 'Rule pack';
+
+  @override
+  String get firstRunStageLegalText => 'Legal text';
+
+  @override
+  String get firstRunStagePlates => 'Species plates';
+
+  @override
+  String get firstRunStageGlossary => 'Glossary and key';
+
+  @override
+  String get firstRunStageDone => '· done';
+
+  @override
+  String get firstRunStageInProgress => 'In progress…';
+
+  @override
+  String get firstRunStagePending => 'Not yet unpacked';
+
+  @override
+  String firstRunTimeRemaining(String seconds) {
+    return 'About $seconds s remaining';
+  }
+
+  @override
+  String get firstRunNoDownload =>
+      'This happens once. Nothing is being downloaded — all of it was already inside the app at install, and there is no network request to fail.';
+
+  @override
+  String get firstRunFooterNote =>
+      'No account. No sign-in. No sync. Once this finishes, CatchLaw never waits for anything again.';
+
+  @override
+  String measureManualReading(String mm) {
+    return '$mm millimetres';
+  }
 }

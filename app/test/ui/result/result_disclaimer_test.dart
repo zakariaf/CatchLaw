@@ -1,3 +1,5 @@
+import 'package:catchlaw/theme/lonja_icon.dart';
+import 'package:catchlaw/theme/lonja_icons.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/widgets/result_disclaimer.dart';
 import 'package:catchlaw/ui/result/widgets/result_section.dart';
@@ -82,7 +84,7 @@ const Map<String, ResultDisplay> _states = <String, ResultDisplay>{
   ),
 };
 
-void _ignore(int citationId) {}
+void _ignore(int citationId, CitationDisplay citation) {}
 
 void main() {
   group('ResultDisclaimer', () {
@@ -118,6 +120,24 @@ void main() {
       expect(find.byType(ButtonStyleButton), findsNothing);
       expect(find.byType(IconButton), findsNothing);
       expect(find.textContaining('Got it'), findsNothing);
+    });
+
+    testWidgets('marks the block with the standing-notice glyph', (WidgetTester tester) async {
+      // `.disc` is a mark and a sentence on one line. Without the mark the
+      // block is one more paragraph on a page of paragraphs, on the screen
+      // where every other block is a finding.
+      await pumpLonja(tester, const ResultDisclaimer(authority: _galicia));
+
+      final LonjaIcon icon = tester.widget<LonjaIcon>(
+        find.descendant(of: find.byType(ResultDisclaimer), matching: find.byType(LonjaIcon)),
+      );
+      expect(icon.glyph, LonjaIcons.info);
+      expect(icon.size, LonjaIconSize.caption);
+      expect(
+        find.descendant(of: find.byType(LonjaIcon), matching: find.byType(Semantics)),
+        findsNothing,
+        reason: 'the sentence beside it already names the block; two nodes read it twice',
+      );
     });
 
     testWidgets('prints the line saying it cannot be dismissed', (WidgetTester tester) async {

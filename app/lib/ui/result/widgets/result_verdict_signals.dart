@@ -23,7 +23,7 @@ enum VerdictInk {
 /// One record rather than a glyph map here and a colour map there. Two maps
 /// drift, and the drift is silent: the day a category gains a colour but keeps
 /// the previous glyph, the screen still renders and still looks deliberate.
-typedef VerdictSignals = ({LonjaGlyph glyph, VerdictInk ink, bool measured});
+typedef VerdictSignals = ({LonjaGlyph glyph, VerdictInk ink, bool detailed, bool measured});
 
 /// The signal set for [category].
 ///
@@ -37,16 +37,33 @@ typedef VerdictSignals = ({LonjaGlyph glyph, VerdictInk ink, bool measured});
 /// the colour otherwise reads "too small" and goes looking for a bigger one of
 /// a species that may never be taken.
 VerdictSignals signalsFor(VerdictCategory category) => switch (category) {
-  VerdictCategory.meets => (glyph: LonjaIcons.tick, ink: VerdictInk.pass, measured: true),
-  VerdictCategory.belowMinimum => (glyph: LonjaIcons.cross, ink: VerdictInk.fail, measured: true),
-  // A closure applies at every size, so a measurement beside it would suggest
-  // that some size escapes it.
+  VerdictCategory.meets => (
+    glyph: LonjaIcons.tick,
+    ink: VerdictInk.pass,
+    detailed: true,
+    measured: true,
+  ),
+  VerdictCategory.belowMinimum => (
+    glyph: LonjaIcons.cross,
+    ink: VerdictInk.fail,
+    detailed: true,
+    measured: true,
+  ),
+  // The closure prints its own figures — which day of the window today is — and
+  // no measurement: a closure applies at every size, so a margin beside it
+  // would suggest that some size escapes it.
   VerdictCategory.closedSeason => (
     glyph: LonjaIcons.closedSeason,
     ink: VerdictInk.warn,
+    detailed: true,
     measured: false,
   ),
-  // No size and no season applies. A measurement here implies a threshold that
-  // does not exist.
-  VerdictCategory.protected => (glyph: LonjaIcons.ban, ink: VerdictInk.fail, measured: false),
+  // No size and no season applies. A figure of any kind here implies a
+  // threshold that does not exist, so this category prints neither register.
+  VerdictCategory.protected => (
+    glyph: LonjaIcons.ban,
+    ink: VerdictInk.fail,
+    detailed: false,
+    measured: false,
+  ),
 };

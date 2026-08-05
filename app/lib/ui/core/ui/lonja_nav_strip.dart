@@ -32,7 +32,10 @@ class LonjaNavStrip extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: tokens.surface,
+        // Sunk stock, so the selected cell can be LIFTED out of it: the strip
+        // is a ledger foot ruled off the page, and the branch on screen is the
+        // one cell printed on the paper itself.
+        color: tokens.surfaceSunk,
         border: Border(
           top: BorderSide(color: tokens.hairlineStrong, width: LonjaRules.rule),
         ),
@@ -43,11 +46,15 @@ class LonjaNavStrip extends StatelessWidget {
         top: false,
         child: Row(
           children: <Widget>[
-            for (final LonjaDestination destination in LonjaDestination.values)
+            for (final LonjaDestination destination in LonjaDestination.shipped)
               Expanded(
                 child: _NavCell(
                   destination: destination,
                   selected: destination == current,
+                  // Ruled cells sharing one divider, as a ledger foot is ruled.
+                  // The last cell's own edge is the edge of the sheet, and a
+                  // rule drawn there would sit half off the glass.
+                  ruled: destination != LonjaDestination.shipped.last,
                   onTap: () => onSelected(destination),
                 ),
               ),
@@ -60,10 +67,19 @@ class LonjaNavStrip extends StatelessWidget {
 
 /// One destination.
 class _NavCell extends StatelessWidget {
-  const _NavCell({required this.destination, required this.selected, required this.onTap});
+  const _NavCell({
+    required this.destination,
+    required this.selected,
+    required this.ruled,
+    required this.onTap,
+  });
 
   final LonjaDestination destination;
   final bool selected;
+
+  /// Whether this cell carries the hairline that divides it from the next.
+  final bool ruled;
+
   final VoidCallback onTap;
 
   @override
@@ -73,6 +89,7 @@ class _NavCell extends StatelessWidget {
     final LonjaTypeScale type = LonjaType.of(context);
     final Color ink = selected ? tokens.onSurface : tokens.onSurfaceMuted;
     final String label = destination.label(l10n);
+    final bool gloved = tokens.density.navHeight >= LonjaDensity.glove.navHeight;
 
     return Semantics(
       selected: selected,
@@ -82,11 +99,16 @@ class _NavCell extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          // The glove floor is the density's own, so the strip grows with the
-          // setting rather than carrying a second number that drifts from it.
-          constraints: BoxConstraints(minHeight: tokens.density.tapMin),
+          // The NAVIGATION class — 84 dp in glove mode against the generic 56.
+          // This is the target hit last and blind, with the phone already
+          // moving, and the mockup makes it the largest one on the page.
+          constraints: BoxConstraints(minHeight: tokens.density.navHeight),
           padding: const EdgeInsetsDirectional.symmetric(vertical: LonjaSpace.s1),
           decoration: BoxDecoration(
+            // Lifted out of the sunk strip, which is the mockup's second
+            // signal and never the first: the rule above still carries it in
+            // greyscale and in sunlight.
+            color: selected ? tokens.surface : null,
             border: BorderDirectional(
               // The selected mark is a RULE, not a tint: in sunlight the tint
               // is the first thing to go, and the rule is still there. Absent
@@ -94,6 +116,9 @@ class _NavCell extends StatelessWidget {
               // `lib/theme/` is a second palette, even when it is invisible.
               top: selected
                   ? BorderSide(color: tokens.onSurface, width: LonjaRules.strong)
+                  : BorderSide.none,
+              end: ruled
+                  ? BorderSide(color: tokens.hairline, width: LonjaRules.hair)
                   : BorderSide.none,
             ),
           ),
@@ -104,7 +129,13 @@ class _NavCell extends StatelessWidget {
               // `excludeSemantics` three lines up: the glyph repeats the word
               // below it, and `check_lonja_icons` reads a short window.
               ExcludeSemantics(
-                child: LonjaIcon(destination.glyph, size: LonjaIconSize.ui, color: ink),
+                child: LonjaIcon(
+                  destination.glyph,
+                  // The glyph grows with the cell, as §13 grows it: a 22 dp
+                  // mark inside an 84 dp cell reads as a mis-set page.
+                  size: gloved ? LonjaIconSize.stamp : LonjaIconSize.ui,
+                  color: ink,
+                ),
               ),
               const SizedBox(height: LonjaSpace.s1),
               Text(

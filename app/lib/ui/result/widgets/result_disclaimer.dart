@@ -1,6 +1,9 @@
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
+import 'package:catchlaw/theme/lonja_icon.dart';
+import 'package:catchlaw/theme/lonja_icons.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
+import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
 import 'package:flutter/material.dart';
 
 /// What this screen is, and is not.
@@ -27,24 +30,66 @@ class ResultDisclaimer extends StatelessWidget {
     final LonjaTokens tokens = LonjaTokens.of(context);
     final LonjaTypeScale type = LonjaType.of(context);
 
+    // Ruled and sunk, not two loose paragraphs on the page ground. The heavy
+    // rule above and the change of stock are what mark it as the standing
+    // notice at the foot of the sheet rather than one more thing the finding
+    // said — and in sunlight, where the change of stock does not exist, the
+    // rules still do.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text(
-          l10n.disclaimerVerdict(authority),
-          style: type.legalSmall.copyWith(color: tokens.onSurfaceMuted),
-          textAlign: TextAlign.start,
+        const LonjaRule.section(),
+        ColoredBox(
+          color: tokens.surfaceSunk,
+          child: Padding(
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: LonjaSpace.s3,
+              vertical: LonjaSpace.s3,
+            ),
+            // `.disc{display:flex;gap:9px;align-items:flex-start}` — the mark
+            // and the sentence on one line, not the sentence alone. The glyph
+            // is what makes the block legible AS a standing notice at a glance,
+            // on the page where every other block is a finding.
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // Excluded rather than labelled: it names the block the
+                // sentence beside it already names in full, and two nodes read
+                // the notice twice.
+                const ExcludeSemantics(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(end: LonjaSpace.s2),
+                    child: LonjaIcon(LonjaIcons.info, size: LonjaIconSize.caption),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        l10n.disclaimerVerdict(authority),
+                        style: type.legalSmall.copyWith(color: tokens.onSurfaceMuted),
+                        textAlign: TextAlign.start,
+                      ),
+                      const SizedBox(height: LonjaSpace.s2),
+                      Text(
+                        // Printed rather than implied: it makes the disclaimer's
+                        // absence legible in a screenshot, which is the form this
+                        // screen travels in when it is quoted back at the publisher.
+                        l10n.disclaimerNotDismissable,
+                        style: type.articleNumber.copyWith(color: tokens.onSurfaceFaint),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-        const SizedBox(height: LonjaSpace.s1),
-        Text(
-          // Printed rather than implied: it makes the disclaimer's absence
-          // legible in a screenshot, which is the form this screen travels in
-          // when it is quoted back at the publisher.
-          l10n.disclaimerNotDismissable,
-          style: type.citation.copyWith(color: tokens.onSurfaceFaint),
-          textAlign: TextAlign.start,
-        ),
+        const LonjaRule.block(),
       ],
     );
   }

@@ -129,6 +129,12 @@ flutter:
     # line every content update has to remember, and the update that forgets it
     # ships a blank frame that no test sees, which is exactly what happened.
     - assets/sil/
+    # The measurement-method diagrams. method/shl.svg has been referenced by
+    # measurement_methods.yaml since the Galicia seed and was never on disk or
+    # in the bundle — the schema required the path and nothing asserted a file
+    # behind it. Same class as assets/sil/: a directory, so a new method cannot
+    # ship a path that resolves to nothing.
+    - assets/method/
     # The SIL OFL 1.1 text for both bundled families. An asset rather than a
     # bare repository file because S17 renders it in full (E18) — SPEC.md §8
     # makes shipping it the CONDITION under which the fonts may be bundled.

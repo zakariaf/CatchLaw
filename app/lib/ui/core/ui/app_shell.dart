@@ -1,6 +1,7 @@
-import 'package:catchlaw/routing/destination_placeholder.dart';
+import 'package:catchlaw/data/services/reference_install_progress.dart';
 import 'package:catchlaw/ui/core/ui/lonja_destination.dart';
 import 'package:catchlaw/ui/core/ui/lonja_nav_strip.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// The app's front door: five branches, each keeping its own history.
@@ -16,11 +17,47 @@ import 'package:flutter/material.dart';
 /// Reference and taps back is still looking at that species. Rebuilding the
 /// branch would put him back at the top of a list he had already scrolled.
 class AppShell extends StatefulWidget {
-  /// Opens on Check, with [check] as its root.
-  const AppShell({required this.check, super.key});
+  /// Opens on Check, with [check] as its root and [reference] behind S6.
+  const AppShell({
+    required this.check,
+    required this.today,
+    required this.trips,
+    required this.reference,
+    required this.settings,
+    this.installProgress,
+    super.key,
+  });
 
   /// The Check branch's root screen — S1.
   final Widget check;
+
+  /// The Reference branch's root screen — S6.
+  ///
+  /// Injected for the same reason [check] is: both reach providers, and a shell
+  /// that constructed them itself could not be pumped without a `ProviderScope`.
+  /// The shell's own tests are about the strip, the stack and branch history —
+  /// none of which needs a database — so the branches arrive from outside and
+  /// the shell stays testable with two `SizedBox`es.
+  final Widget reference;
+
+  /// The Today branch's root screen — S8.
+  final Widget today;
+
+  /// The Trips branch's root screen — S9.
+  final Widget trips;
+
+  /// The Settings branch's root screen — S14.
+  final Widget settings;
+
+  /// The one-time extraction's progress, or absent when nothing is installing.
+  ///
+  /// **Passed in, not read from a provider.** The shell's own tests are about
+  /// the strip, the stack and branch history — none of which needs a container
+  /// — and a `ref.watch` here would make `No ProviderScope found` the first
+  /// thing anybody pumping two `SizedBox`es saw. `app.dart` holds the
+  /// container and hands the listenable down, the same way the five branches
+  /// arrive from outside.
+  final ValueListenable<ReferenceInstallProgress>? installProgress;
 
   @override
   State<AppShell> createState() => _AppShellState();
@@ -29,7 +66,7 @@ class AppShell extends StatefulWidget {
 class _AppShellState extends State<AppShell> {
   final Map<LonjaDestination, GlobalKey<NavigatorState>> _navigators =
       <LonjaDestination, GlobalKey<NavigatorState>>{
-        for (final LonjaDestination d in LonjaDestination.values)
+        for (final LonjaDestination d in LonjaDestination.shipped)
           d: GlobalKey<NavigatorState>(debugLabel: d.name),
       };
 
@@ -51,20 +88,51 @@ class _AppShellState extends State<AppShell> {
   @override
   Widget build(BuildContext context) => Scaffold(
     body: IndexedStack(
-      index: LonjaDestination.values.indexOf(_current),
+      index: LonjaDestination.shipped.indexOf(_current),
       children: <Widget>[
-        for (final LonjaDestination destination in LonjaDestination.values)
+        for (final LonjaDestination destination in LonjaDestination.shipped)
           Navigator(
             key: _navigators[destination],
             onGenerateRoute: (RouteSettings settings) => MaterialPageRoute<void>(
               settings: settings,
-              builder: (BuildContext context) => destination == LonjaDestination.check
-                  ? widget.check
-                  : DestinationPlaceholder(destination: destination),
+              builder: (BuildContext context) => switch (destination) {
+                LonjaDestination.check => widget.check,
+                // S6, complete and tested since E08 and unreachable until now:
+                // this branch rendered a placeholder because nothing routed to
+                // it, not because the screen did not exist.
+                LonjaDestination.reference => widget.reference,
+                LonjaDestination.today => widget.today,
+                LonjaDestination.trips => widget.trips,
+                LonjaDestination.settings => widget.settings,
+                // No `_` arm and no `default:`. Every destination is built now,
+                // so an exhaustive switch is what makes ADDING one a compile
+                // error rather than a screen that silently renders a stub —
+                // which is exactly how four branches shipped empty.
+              },
             ),
           ),
       ],
     ),
-    bottomNavigationBar: LonjaNavStrip(current: _current, onSelected: _select),
+    // **The one-time extraction suppresses the strip.** Every one of the five
+    // branches reads the same file, so a strip drawn under the takeover offers
+    // four destinations that would each land on the same wait — and a tap that
+    // leads to a second blank screen reads as an app that has hung. The
+    // verdict takeover suppresses it for the same reason.
+    bottomNavigationBar: _strip(),
   );
+
+  Widget _strip() {
+    final Widget strip = LonjaNavStrip(current: _current, onSelected: _select);
+    final ValueListenable<ReferenceInstallProgress>? install = widget.installProgress;
+    if (install == null) return strip;
+    return ValueListenableBuilder<ReferenceInstallProgress>(
+      valueListenable: install,
+      builder: (BuildContext context, ReferenceInstallProgress progress, Widget? built) =>
+          progress.isInstalling ? const SizedBox.shrink() : built!,
+      // Built once and handed back on every report: the strip does not depend
+      // on the byte count, and rebuilding it per chunk would rebuild five
+      // destinations for a number none of them reads.
+      child: strip,
+    );
+  }
 }

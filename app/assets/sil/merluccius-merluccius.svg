@@ -1,0 +1,47 @@
+<!-- Merluccius merluccius (European hake; Galician: Pescada). Originated schematic
+     line art drawn for CatchLaw from morphological description; not traced from,
+     or derived from, any copyrighted illustration or photograph. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- upper outline: pointed snout, large flat head, long slender body, narrow peduncle -->
+    <path d="M14,56 C18,49 27,44 42,42 C70,39 110,45 138,51 L158,55"/>
+
+    <!-- lower outline: projecting lower jaw, shallow belly, narrow peduncle -->
+    <path d="M11,61 C16,67 26,70 42,68 C72,68 112,65 138,62 L158,63"/>
+
+    <!-- jaw front: lower jaw juts ahead of the upper -->
+    <path d="M14,56 C11,57 10,59 11,61"/>
+
+    <!-- gape of the large mouth, carried back past the eye -->
+    <path d="M12,60 C20,60 30,59 38,56"/>
+
+    <!-- eye, large and set well forward -->
+    <ellipse cx="27" cy="51" rx="3.6" ry="3.2"/>
+
+    <!-- gill cover -->
+    <path d="M38,44 C43,52 43,62 39,68"/>
+
+    <!-- lateral line, prominent and nearly straight -->
+    <path d="M42,53 C70,52 110,55 156,58"/>
+
+    <!-- first dorsal fin: short-based and high, a single triangle -->
+    <path d="M50,41 L58,27 L64,40"/>
+
+    <!-- second dorsal fin: very long and low, running to the caudal peduncle -->
+    <path d="M70,39 C86,30 100,31 118,35 C132,39 144,46 154,54"/>
+
+    <!-- anal fin: long, mirroring the second dorsal -->
+    <path d="M92,67 C108,76 128,74 154,63"/>
+
+    <!-- pectoral fin: slender and pointed -->
+    <path d="M44,58 C54,62 62,68 66,72 C58,70 48,64 44,58"/>
+
+    <!-- pelvic fin, set forward beneath the throat -->
+    <path d="M40,69 C43,75 48,79 52,78 C47,74 43,71 40,69"/>
+
+    <!-- caudal fin: square-cut, the trailing edge straight and unforked -->
+    <path d="M158,55 L184,40 L184,79 L158,63"/>
+
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+<!-- Total length (TL), as the Orde do 27 de xullo de 2012 art. 5.4 defines it:
+     "desde a punta da cabeza ata o extremo da aleta caudal" — from the tip of
+     the head to the end of the caudal fin. Originated line art for CatchLaw,
+     drawn from that sentence and traced from no copyrighted illustration.
+
+     The arrow is the instrument, not decoration: TL and FL differ by 6-9 cm on
+     the same fish, so a number without its method is a confident wrong verdict.
+     The subtree is pinned LTR by the widget — a mirrored arrow would point at
+     the snout and say the opposite thing. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none"
+     stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M38 50 C 60 28, 118 28, 146 44"/>
+  <path d="M38 50 C 60 72, 118 72, 146 56"/>
+  <path d="M146 44 L 172 30 L 166 50 L 172 70 L 146 56"/>
+  <path d="M38 50 C 44 44, 52 41, 60 40"/>
+  <circle cx="52" cy="45" r="2.5"/>
+  <path d="M78 34 C 92 24, 108 24, 120 32"/>
+  <path d="M84 66 C 94 74, 106 74, 114 68"/>
+  <path d="M76 56 C 84 64, 92 66, 96 64"/>
+  <path d="M38 86 L 172 86"/>
+  <path d="M38 80 L 38 92"/>
+  <path d="M172 80 L 172 92"/>
+  <path d="M44 82 L 38 86 L 44 90"/>
+  <path d="M166 82 L 172 86 L 166 90"/>
+</svg>

@@ -124,11 +124,46 @@ abstract final class LonjaIcons {
   /// The Settings branch — a rule with a set mark.
   static const LonjaGlyph adjust = LonjaGlyph('adjust', _adjust);
 
+  /// Back to the screen this one was pushed from.
+  ///
+  /// The one glyph in the family that mirrors, and it must: a chevron is not a
+  /// fixed-meaning mark like the tick or the ban, it points at the edge the
+  /// previous screen went out through — the leading edge in `en`, the trailing
+  /// one in `ar`.
+  static const LonjaGlyph back = LonjaGlyph('back', _back, mirrorInRtl: true);
+
+  /// Onward, to the screen this row opens.
+  ///
+  /// Mirrors for the same reason [back] does, and in the same direction: it
+  /// points at the edge the next screen comes in from — the trailing edge in
+  /// `en`, the leading one in `ar`.
+  static const LonjaGlyph forward = LonjaGlyph('forward', _forward, mirrorInRtl: true);
+
+  /// The entry line reads a name.
+  ///
+  /// A glass, not a Material magnifier: the field it heads is a ruled line on
+  /// paper, and the one mark on it has to belong to the same burin as the fish
+  /// beside it.
+  static const LonjaGlyph search = LonjaGlyph('search', _search);
+
   /// The question could not be answered from what the fisher supplied.
   ///
   /// Its own mark rather than a faded tick: an open question rendered as a pale
   /// pass is a rule reported as checked when nothing was checked.
   static const LonjaGlyph openQuestion = LonjaGlyph('openQuestion', _openQuestion);
+
+  /// The standing notice at the foot of the sheet.
+  ///
+  /// A ringed lower-case *i* and never a filled Material badge: the disclaimer
+  /// is printed apparatus, and a solid roundel beside it reads as an alert the
+  /// reader may dismiss — which is the one thing this notice is not.
+  static const LonjaGlyph info = LonjaGlyph('info', _info);
+
+  /// One more row goes into the private log.
+  ///
+  /// A bare cross of two strokes, on the same 24 grid as the rest: it marks an
+  /// addition to a ledger the fisher keeps, not a floating action.
+  static const LonjaGlyph plus = LonjaGlyph('plus', _plus);
 }
 
 Path _tick() => Path()
@@ -166,6 +201,34 @@ Path _openQuestion() => Path()
   ..lineTo(15, 9.5)
   ..moveTo(15, 9.5)
   ..lineTo(12, 13.5);
+
+Path _info() => Path()
+  ..addOval(Rect.fromCircle(center: const Offset(12, 12), radius: 9))
+  ..moveTo(12, 11)
+  ..lineTo(12, 17)
+  ..moveTo(12, 7.5)
+  ..lineTo(12, 8.2);
+
+Path _plus() => Path()
+  ..moveTo(12, 4.5)
+  ..lineTo(12, 19.5)
+  ..moveTo(4.5, 12)
+  ..lineTo(19.5, 12);
+
+Path _back() => Path()
+  ..moveTo(15, 4)
+  ..lineTo(7, 12)
+  ..lineTo(15, 20);
+
+Path _search() => Path()
+  ..addOval(Rect.fromCircle(center: const Offset(10.5, 10.5), radius: 6.5))
+  ..moveTo(15.2, 15.2)
+  ..lineTo(20.5, 20.5);
+
+Path _forward() => Path()
+  ..moveTo(9, 4)
+  ..lineTo(17, 12)
+  ..lineTo(9, 20);
 
 Path _fish() => Path()
   ..moveTo(3, 12)

@@ -1,0 +1,51 @@
+<!-- Epinephelus marginatus (dusky grouper / mero) — originated schematic line art drawn for CatchLaw. Not traced from, derived from, or copied from any copyrighted illustration or photograph. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- dorsal profile: steep head, very deep robust body, thick caudal peduncle -->
+    <path d="M16 49 C22 36 32 27 48 23 C76 16 110 21 136 32 L152 40"/>
+
+    <!-- front of the snout, lower jaw tip protruding slightly beyond the upper -->
+    <path d="M16 49 C12.5 51 12 53.5 14 55.5"/>
+
+    <!-- ventral profile: heavy jaw, deep belly -->
+    <path d="M14 55.5 C24 64 38 69.5 56 72 C86 78 116 74 140 65 L152 60"/>
+
+    <!-- the very large oblique mouth: gape running back past the eye -->
+    <path d="M16.5 50 C26 54 36 57.5 48 59"/>
+    <!-- rear edge of the maxilla, broad and squared off -->
+    <path d="M48 59 L53 52.5"/>
+
+    <!-- eye, set high and forward -->
+    <ellipse cx="31" cy="38" rx="3.4" ry="3.4"/>
+    <ellipse cx="31" cy="38" rx="0.9" ry="0.9"/>
+
+    <!-- gill cover -->
+    <path d="M52 24 C60 38 62 54 57 69"/>
+
+    <!-- long continuous dorsal: spiny zigzag forward, rounded soft lobe aft -->
+    <path d="M50 22.5 L56 12 L63 15 L70 11 L77 15 L84 11 L91 15 L98 12 L105 16 C115 8 129 10 136 22 C138 26 138.5 29 138 32"/>
+    <line x1="63" y1="15" x2="61.5" y2="21"/>
+    <line x1="77" y1="15" x2="76" y2="20"/>
+    <line x1="91" y1="15" x2="90" y2="21"/>
+
+    <!-- broad rounded pectoral fin -->
+    <path d="M58 52 C70 56 78 65 74 75 C64 72.5 58 63 56.5 53.5"/>
+
+    <!-- pelvic fin -->
+    <path d="M67 74 L71 87 L80 80"/>
+
+    <!-- anal fin, short and rounded -->
+    <path d="M112 76 L118 89 C128 90 136 84 143 66"/>
+
+    <!-- broad rounded caudal fin -->
+    <path d="M152 40 C165 31 179 28 187 31 C193 42.5 193 58.5 187 70 C178 73 164 69 152 60"/>
+    <line x1="155" y1="44" x2="184" y2="37"/>
+    <line x1="155" y1="50" x2="190" y2="49"/>
+    <line x1="155" y1="56" x2="185" y2="64"/>
+
+    <!-- lateral line -->
+    <path d="M57 42 C86 38 118 42 146 49"/>
+
+  </g>
+</svg>

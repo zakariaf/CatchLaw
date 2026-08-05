@@ -1,0 +1,72 @@
+<!--
+  Scophthalmus rhombus (brill; Galician: Ciruxo).
+  Originated schematic line art drawn for CatchLaw from morphological
+  description alone. Not traced, copied or derived from any copyrighted
+  illustration, photograph or field-guide plate.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- body: broad rhombic oval, far deeper than a sole, head at the left.
+         The outline IS the outer fin margin: the dorsal fin starts on the snout
+         above the mouth and the anal fin runs the whole belly, so fins ring the
+         entire margin. It pinches to a short peduncle before the tail. -->
+    <path d="M22 48
+             C22 40 26 34 34 30
+             C60 12 100 8 134 16
+             C152 22 159 32 160 42
+             C157 46 157 54 160 58
+             C158 68 150 74 140 78
+             C112 92 66 90 38 74
+             C26 66 21 56 22 48 Z"/>
+
+    <!-- dorsal fin base: begins on the head above the mouth, unbroken to the peduncle -->
+    <path d="M28 44 C34 32 66 22 100 19 C126 17 146 24 156 36"/>
+
+    <!-- anal fin base: mirrors the dorsal, unbroken to the peduncle -->
+    <path d="M34 62 C44 74 70 81 96 80 C124 79 146 70 155 58"/>
+
+    <!-- dorsal fin rays -->
+    <path d="M45 33 L45 24"/>
+    <path d="M60 27 L60 17"/>
+    <path d="M80 22 L80 12"/>
+    <path d="M100 19 L100 10"/>
+    <path d="M120 18.5 L120 10.5"/>
+    <path d="M140 24 L140 18.5"/>
+
+    <!-- anal fin rays -->
+    <path d="M45 70 L45 79"/>
+    <path d="M60 75.5 L60 86"/>
+    <path d="M80 79 L80 89"/>
+    <path d="M100 80 L100 88.5"/>
+    <path d="M120 78 L120 85"/>
+    <path d="M140 70 L140 77.5"/>
+
+    <!-- front dorsal rays branch and stand free of the membrane: the fringed
+         snout margin that separates brill from turbot and from sole -->
+    <path d="M27 36 L24 32"/>
+    <path d="M33 31 L30 26"/>
+    <path d="M40 27 L38 22"/>
+
+    <!-- both eyes on the left (upper) side, the lower one set forward over the jaw -->
+    <ellipse cx="34" cy="50" rx="3.8" ry="3.6"/>
+    <ellipse cx="45" cy="40" rx="3.8" ry="3.6"/>
+
+    <!-- large oblique mouth, the jaw reaching back below the lower eye -->
+    <path d="M23 51 C29 55 34 59 39 62"/>
+    <path d="M22 57 C27 61 33 63 39 62"/>
+
+    <!-- gill opening -->
+    <path d="M56 29 C51 44 51 60 55 73"/>
+
+    <!-- pectoral fin on the eyed side -->
+    <path d="M58 50 C68 46 76 50 74 57 C70 62 62 59 58 55"/>
+
+    <!-- lateral line: strongly arched over the pectoral, then straight to the tail -->
+    <path d="M60 54 C68 43 82 40 94 45 C112 51 132 52 152 51"/>
+
+    <!-- rounded caudal fin on a short, clearly pinched peduncle -->
+    <path d="M157 47 C170 40 183 42 186 50 C183 58 170 60 157 53"/>
+
+  </g>
+</svg>

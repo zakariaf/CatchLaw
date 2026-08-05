@@ -27,6 +27,10 @@ class RulerPainter extends CustomPainter {
         ..color = scene.ink
         ..strokeWidth = scene.tickPx
         ..isAntiAlias = false,
+      _cmTick = Paint()
+        ..color = scene.ink
+        ..strokeWidth = scene.cmTickPx
+        ..isAntiAlias = false,
       _mark = Paint()
         ..color = scene.mark
         ..strokeWidth = scene.cursorPx
@@ -42,12 +46,37 @@ class RulerPainter extends CustomPainter {
   /// Where the mark sits, in millimetres.
   final ValueListenable<double> cursorMm;
 
+  /// How tall each class of tick stands, in logical pixels.
+  ///
+  /// A centimetre reads at arm's length, a half-centimetre orients, and a
+  /// millimetre is only there so the eye can count between them. The three
+  /// heights and the two weights together are what let a fisher find 42 cm on
+  /// a wet screen without counting from zero.
+  static const double cmTickHeight = 30;
+
+  /// The half-centimetre tick.
+  static const double halfCmTickHeight = 18;
+
+  /// The millimetre tick.
+  static const double mmTickHeight = 10;
+
+  /// Where the centimetre numerals sit — a row of their own, under the band.
+  static const double labelTop = 36;
+
+  /// How far a numeral is inset from the tick it names.
+  static const double labelInset = 3;
+
   final Paint _ink;
   final Paint _tick;
+  final Paint _cmTick;
   final Paint _mark;
 
-  /// Tick vertices, as pairs of points. Built once.
+  /// Millimetre and half-centimetre tick vertices, as pairs of points. Built
+  /// once.
   late final Float32List _tickPoints;
+
+  /// Centimetre tick vertices, drawn with the heavier paint. Built once.
+  late final Float32List _cmTickPoints;
 
   /// Every centimetre label, laid out once.
   late final List<TextPainter> _labels = <TextPainter>[];
@@ -58,25 +87,28 @@ class RulerPainter extends CustomPainter {
   void _buildTicks() {
     final int millimetres = (scene.spanPx / scene.pxPerMm).floor();
     final points = <double>[];
+    final cmPoints = <double>[];
     for (var mm = 0; mm <= millimetres; mm++) {
       // The SAME transform the hit-tester uses, in the same direction. Deriving
       // tick positions from `size` instead is how a painter and a hit-tester
       // come to disagree by three pixels.
       final double x = mm * scene.pxPerMm;
-      // A centimetre reads at arm's length, a half-centimetre orients, and a
-      // millimetre is only there so the eye can count between them.
+      final isCentimetre = mm % 10 == 0;
       final double height = switch (mm % 10) {
-        0 => 22.0,
-        5 => 14.0,
-        _ => 8.0,
+        0 => cmTickHeight,
+        5 => halfCmTickHeight,
+        _ => mmTickHeight,
       };
-      points
+      // Two buffers rather than one, because the centimetre is stroked heavier
+      // and a canvas takes one width per call.
+      (isCentimetre ? cmPoints : points)
         ..add(x)
         ..add(0)
         ..add(x)
         ..add(height);
     }
     _tickPoints = Float32List.fromList(points);
+    _cmTickPoints = Float32List.fromList(cmPoints);
   }
 
   void _buildLabels() {
@@ -94,11 +126,14 @@ class RulerPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas
       ..drawLine(Offset.zero, Offset(scene.spanPx, 0), _ink)
-      ..drawRawPoints(PointMode.lines, _tickPoints, _tick);
+      ..drawRawPoints(PointMode.lines, _tickPoints, _tick)
+      ..drawRawPoints(PointMode.lines, _cmTickPoints, _cmTick);
 
     for (var i = 0; i < _labels.length; i++) {
       final TextPainter label = _labels[i];
-      label.paint(canvas, Offset(i * 10 * scene.pxPerMm + 2, 24));
+      // Under the band and inset from its own tick, so the numeral row reads as
+      // a row rather than as ink hanging off the scale.
+      label.paint(canvas, Offset(i * 10 * scene.pxPerMm + labelInset, labelTop));
     }
 
     final double x = cursorMm.value * scene.pxPerMm;

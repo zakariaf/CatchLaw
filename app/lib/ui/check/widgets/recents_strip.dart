@@ -5,6 +5,7 @@ import 'package:catchlaw/l10n/gen/app_localizations.dart';
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
 import 'package:catchlaw/ui/core/ui/lonja_section_label.dart';
+import 'package:catchlaw/ui/core/ui/lonja_silhouette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -42,7 +43,6 @@ class RecentsStrip extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AppLocalizations l10n = AppLocalizations.of(context);
     final LonjaTokens tokens = LonjaTokens.of(context);
-    final LonjaTypeScale type = LonjaType.of(context);
 
     final AsyncValue<List<RecentSpeciesEntry>> recents = ref.watch(
       recentsProvider((jurisdictionCode: place.jurisdictionCode, zoneCode: place.zoneCode)),
@@ -59,38 +59,100 @@ class RecentsStrip extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        LonjaSectionLabel(text: l10n.checkRecentsLabel),
+        // The label and its rule stop at the gutter, like every other ruled
+        // label on the page — it was running to the bare edge of the glass.
+        // The air above it is what separates the strip from the entry line now
+        // sitting over it.
+        Padding(
+          padding: EdgeInsetsDirectional.only(
+            start: tokens.density.gutter,
+            end: tokens.density.gutter,
+            top: LonjaSpace.s5,
+            bottom: LonjaSpace.s3,
+          ),
+          child: LonjaSectionLabel(text: l10n.checkRecentsLabel),
+        ),
         SizedBox(
-          height: tokens.density.rowHeight,
-          child: ListView.builder(
+          // The TILE class, and not a row: the mockup's `.rec` is a ruled card
+          // 126 × 118 in glove mode, drawn as a card because the art has to be
+          // recognisable at arm's length before the name under it is read.
+          height: tokens.density.tileHeight,
+          child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: LonjaSpace.s4),
+            padding: EdgeInsetsDirectional.only(
+              start: tokens.density.gutter,
+              end: tokens.density.gutter,
+            ),
             itemCount: entries.length,
-            itemBuilder: (BuildContext context, int index) {
-              final RecentSpeciesEntry entry = entries[index];
-              return Padding(
-                padding: const EdgeInsetsDirectional.only(end: LonjaSpace.s2),
-                child: ConstrainedBox(
-                  // One tap target per tile, at the density's own floor: these
-                  // are the fastest path to a verdict and the one most likely
-                  // to be taken with a wet glove.
-                  constraints: BoxConstraints(minWidth: tokens.density.tapMin),
-                  child: InkWell(
-                    onTap: () => onSpeciesChosen(entry.speciesId),
-                    child: Center(
-                      child: Text(
-                        entry.displayName,
-                        style: type.ui.copyWith(color: tokens.onSurface),
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
+            separatorBuilder: (BuildContext context, int _) =>
+                SizedBox(width: tokens.density.tapGap),
+            itemBuilder: (BuildContext context, int index) =>
+                _RecentTile(entry: entries[index], onTap: onSpeciesChosen),
           ),
         ),
       ],
+    );
+  }
+}
+
+/// One tile: the drawing over the name, framed, on sunk stock.
+///
+/// A widget class and never a `Widget _buildTile()` helper: a helper has no
+/// `BuildContext` of its own, so the `LonjaTokens.of(context)` inside it would
+/// register the STRIP's element as the dependent and rebuild every tile on a
+/// theme change, a density toggle or an RTL flip (`FLUTTER_GUIDE.md` §8.1
+/// mechanism 2).
+class _RecentTile extends StatelessWidget {
+  const _RecentTile({required this.entry, required this.onTap});
+
+  final RecentSpeciesEntry entry;
+  final void Function(int speciesId) onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final LonjaTokens tokens = LonjaTokens.of(context);
+    final LonjaTypeScale type = LonjaType.of(context);
+
+    return Semantics(
+      button: true,
+      label: entry.displayName,
+      excludeSemantics: true,
+      child: InkWell(
+        onTap: () => onTap(entry.speciesId),
+        child: SizedBox(
+          width: tokens.density.tileWidth,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: tokens.surfaceSunk,
+              border: Border.all(color: tokens.hairline, width: LonjaRules.rule),
+            ),
+            child: Padding(
+              padding: const EdgeInsetsDirectional.all(LonjaSpace.s2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // The art takes whatever the name leaves, so the tile grows
+                  // its drawing with the density instead of carrying a second
+                  // number that drifts from the tile's own height.
+                  Expanded(
+                    child: LonjaSilhouette(
+                      assetKey: entry.silhouetteAsset,
+                      semanticsLabel: entry.displayName,
+                    ),
+                  ),
+                  const SizedBox(height: LonjaSpace.s1),
+                  Text(
+                    entry.displayName,
+                    style: type.uiSmall.copyWith(color: tokens.onSurface),
+                    textAlign: TextAlign.start,
+                    maxLines: 2,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

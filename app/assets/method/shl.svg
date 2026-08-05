@@ -1,0 +1,20 @@
+<!-- Shell length (SHL): the greatest anteroposterior axis of the valve, which
+     is what the Orde do 27 de xullo de 2012 art. 6 measures a bivalve by.
+     Originated line art for CatchLaw, traced from no copyrighted illustration.
+
+     Referenced by content/shared/measurement_methods.yaml since the Galicia
+     seed, and never drawn until now — the schema required the path, and nothing
+     asserted the file behind it existed. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none"
+     stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="100" cy="46" rx="62" ry="34"/>
+  <path d="M100 12 L 88 44 M100 12 L 112 44 M100 12 L 100 46"/>
+  <path d="M44 40 C 72 32, 128 32, 156 40"/>
+  <path d="M42 52 C 72 44, 128 44, 158 52"/>
+  <path d="M46 64 C 74 58, 126 58, 154 64"/>
+  <path d="M38 90 L 162 90"/>
+  <path d="M38 84 L 38 96"/>
+  <path d="M162 84 L 162 96"/>
+  <path d="M44 86 L 38 90 L 44 94"/>
+  <path d="M156 86 L 162 90 L 156 94"/>
+</svg>

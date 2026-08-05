@@ -1,0 +1,50 @@
+<!-- Merlangius merlangus (whiting; Galician: Merlan). Originated schematic line
+     art drawn for CatchLaw from morphological description; not traced from, or
+     derived from, any copyrighted illustration or photograph. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- upper body outline: pointed snout, low nape, slim back, caudal peduncle -->
+    <path d="M18,49 C26,41 38,35 55,33 C82,30 122,35 148,43 L162,47"/>
+
+    <!-- lower body outline: short lower jaw, shallow belly, slim peduncle -->
+    <path d="M18,49 C22,53 27,56 34,58 C56,64 104,66 138,57 L162,53"/>
+
+    <!-- jaw: upper jaw projects ahead of the lower, no chin barbel -->
+    <path d="M18,49 C24,52 29,54 35,55"/>
+
+    <!-- eye, large and set well forward -->
+    <ellipse cx="30" cy="46" rx="3.4" ry="3"/>
+
+    <!-- gill cover -->
+    <path d="M40,36 C45,45 45,53 42,60"/>
+
+    <!-- dark blotch at the base of the pectoral fin -->
+    <ellipse cx="50" cy="52" rx="3" ry="2.6"/>
+
+    <!-- lateral line: gently arched, then straight to the tail -->
+    <path d="M44,44 C58,41 74,42 92,45 C114,48 140,49 158,49"/>
+
+    <!-- first dorsal fin: short, triangular, pointed -->
+    <path d="M58,32 C61,21 67,17 71,20 C73,23 74,27 76,31"/>
+    <!-- second dorsal fin: longer, lower, rounded -->
+    <path d="M82,31 C90,20 104,19 114,33"/>
+    <!-- third dorsal fin: long and low, running back to the peduncle -->
+    <path d="M120,34 C128,24 141,25 151,42"/>
+
+    <!-- first anal fin: long-based, beginning under the first dorsal -->
+    <path d="M70,63 C78,78 100,79 110,65"/>
+    <!-- second anal fin -->
+    <path d="M116,64 C124,75 138,69 147,56"/>
+
+    <!-- pectoral fin -->
+    <path d="M54,54 C64,58 70,64 69,69 C61,66 55,60 54,54"/>
+
+    <!-- pelvic fins, set forward under the throat, front ray drawn out -->
+    <path d="M44,58 C48,66 53,70 58,69 C52,65 47,61 44,58"/>
+
+    <!-- caudal fin: nearly square, only shallowly notched -->
+    <path d="M162,47 L186,33 C181,42 181,58 186,67 L162,53"/>
+
+  </g>
+</svg>

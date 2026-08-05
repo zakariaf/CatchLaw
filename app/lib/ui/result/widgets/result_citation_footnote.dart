@@ -33,6 +33,7 @@ class ResultCitationFootnote extends StatelessWidget {
     required this.onOpenRuleText,
     this.sourceUrl,
     this.provenance,
+    this.showRule = true,
     super.key,
   });
 
@@ -68,11 +69,27 @@ class ResultCitationFootnote extends StatelessWidget {
   /// beside the thing it is about.
   final String? provenance;
 
+  /// Whether this footnote opens the apparatus block with the short rule.
+  ///
+  /// **The rule belongs to the block, not to the footnote.** Drawn by every
+  /// instance, two instruments gave two rules and the page read as two separate
+  /// apparatus blocks — which says two documents were consulted rather than one
+  /// answer resting on two articles. The section passes `false` for every
+  /// footnote after the first.
+  final bool showRule;
+
   /// Opens the bundled verbatim article.
   ///
   /// A callback rather than a route, so this widget holds no knowledge of the
   /// navigation stack and can be pumped without one.
-  final void Function(int citationId) onOpenRuleText;
+  ///
+  /// **The row id AND the printed citation.** S13 heads its page with the
+  /// instrument and the two dates, and those four fields are here, on the
+  /// footnote that was tapped. A caller handed only the id would have to look
+  /// the citation up a second time — through a table the presenter deliberately
+  /// keeps out of the display type — and a second lookup is how the head of the
+  /// article page and the footnote under the verdict come to disagree.
+  final void Function(int citationId, CitationDisplay citation) onOpenRuleText;
 
   /// The exact line the footnote prints, and the exact line copy puts on the
   /// clipboard.
@@ -96,25 +113,30 @@ class ResultCitationFootnote extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         // The short rule that says "what follows is apparatus, not argument".
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: FractionallySizedBox(
+        // Struck in ink and not in the hairline slot: a footnote rule that
+        // cannot be seen on a wet screen in sunlight is a page with no seam
+        // between the finding and the apparatus under it.
+        if (showRule) ...<Widget>[
+          Align(
             alignment: AlignmentDirectional.centerStart,
-            widthFactor: 0.44,
-            child: SizedBox(
-              key: footnoteRuleKey,
-              height: LonjaRules.rule,
-              child: ColoredBox(color: tokens.hairline),
+            child: FractionallySizedBox(
+              alignment: AlignmentDirectional.centerStart,
+              widthFactor: 0.44,
+              child: SizedBox(
+                key: footnoteRuleKey,
+                height: LonjaRules.rule,
+                child: ColoredBox(color: tokens.onSurface),
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: LonjaSpace.s2),
+          const SizedBox(height: LonjaSpace.s2),
+        ],
         Semantics(
           button: true,
           label: printedLine,
           child: InkWell(
             key: openKey,
-            onTap: () => onOpenRuleText(citationId),
+            onTap: () => onOpenRuleText(citationId, citation),
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: tokens.density.tapMin),
               child: Row(

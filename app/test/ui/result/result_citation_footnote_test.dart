@@ -1,3 +1,6 @@
+import 'package:catchlaw/theme/lonja_theme.dart';
+import 'package:catchlaw/theme/lonja_tokens.dart';
+import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:catchlaw/ui/result/widgets/result_citation_footnote.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +15,8 @@ Future<void> _pumpRow(
   String jurisdiction = 'United Arab Emirates',
   Locale locale = const Locale('en'),
   bool gloved = false,
-  void Function(int citationId)? onOpen,
+  LonjaSkin skin = LonjaSkin.paper,
+  void Function(int citationId, CitationDisplay citation)? onOpen,
 }) => pumpLonja(
   tester,
   ResultCitationFootnote(
@@ -21,10 +25,11 @@ Future<void> _pumpRow(
     jurisdiction: jurisdiction,
     marker: 1,
     sourceUrl: sourceUrl,
-    onOpenRuleText: onOpen ?? (int _) {},
+    onOpenRuleText: onOpen ?? (int _, CitationDisplay _) {},
   ),
   locale: locale,
   gloved: gloved,
+  skin: skin,
 );
 
 void main() {
@@ -115,16 +120,27 @@ void main() {
       expect(copied, isNot(contains('Below')));
     });
 
-    testWidgets('invokes onOpenRuleText with the citation id when tapped', (
+    testWidgets('invokes onOpenRuleText with the citation id and the citation when tapped', (
       WidgetTester tester,
     ) async {
-      final opened = <int>[];
-      await _pumpRow(tester, onOpen: opened.add);
+      final ids = <int>[];
+      final cited = <CitationDisplay>[];
+      await _pumpRow(
+        tester,
+        onOpen: (int id, CitationDisplay citation) {
+          ids.add(id);
+          cited.add(citation);
+        },
+      );
 
       await tester.tap(find.byKey(ResultCitationFootnote.openKey));
       await tester.pump();
 
-      expect(opened, <int>[4]);
+      // The id alone would leave S13 to look the instrument up a second time,
+      // and a second lookup is how the head of the article page and the
+      // footnote under the verdict come to disagree.
+      expect(ids, <int>[4]);
+      expect(cited, <CitationDisplay>[kCitationDisplayMd580]);
     });
 
     testWidgets('renders the source url as selectable text with no gesture', (
@@ -171,6 +187,30 @@ void main() {
       expect(
         tester.getSize(find.byKey(ResultCitationFootnote.openKey)).height,
         greaterThanOrEqualTo(56),
+      );
+    });
+
+    testWidgets('sunlight - strikes the footnote rule in ink rather than the hairline slot', (
+      WidgetTester tester,
+    ) async {
+      // The mockup doubles it to 2 px at noon, but the weight is not a token
+      // any skin carries and no widget outside the verdict stamp may branch on
+      // the skin (D-20). What holds the seam up in glare today is the INK: a
+      // hairline-slot rule would be gone, and the reader would lose the mark
+      // between the finding and the apparatus under it.
+      await _pumpRow(tester, skin: LonjaSkin.sunlight);
+      final ColoredBox rule = tester.widget<ColoredBox>(
+        find.descendant(
+          of: find.byKey(ResultCitationFootnote.footnoteRuleKey),
+          matching: find.byType(ColoredBox),
+        ),
+      );
+
+      expect(rule.color, LonjaPalettes.sunlight.onSurface);
+      expect(rule.color, isNot(LonjaPalettes.sunlight.hairline.withValues(alpha: 0.5)));
+      expect(
+        tester.getSize(find.byKey(ResultCitationFootnote.footnoteRuleKey)).height,
+        LonjaRules.rule,
       );
     });
 

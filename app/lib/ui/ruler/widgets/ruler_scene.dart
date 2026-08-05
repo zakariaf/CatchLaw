@@ -26,6 +26,7 @@ class RulerScene {
     required this.mark,
     required this.hairlinePx,
     required this.tickPx,
+    required this.cmTickPx,
     required this.cursorPx,
   });
 
@@ -59,8 +60,16 @@ class RulerScene {
   /// Stroke widths, already in the terms the canvas draws in.
   final double hairlinePx;
 
-  /// The centimetre tick.
+  /// The millimetre and half-centimetre ticks.
   final double tickPx;
+
+  /// The centimetre tick, which is drawn heavier.
+  ///
+  /// **A separate weight, not a separate colour.** The centimetre is the tick a
+  /// fisher counts at arm's length in glare, and a scale whose classes differ
+  /// only in height reads as an undifferentiated comb on a wet screen. Weight
+  /// survives greyscale, sunlight and a smeared finger; hue does not.
+  final double cmTickPx;
 
   /// The cursor.
   final double cursorPx;
@@ -74,6 +83,7 @@ class RulerScene {
     mark,
     hairlinePx,
     tickPx,
+    cmTickPx,
     cursorPx,
   ];
 

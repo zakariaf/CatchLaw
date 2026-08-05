@@ -21,14 +21,20 @@ class TripDao extends DatabaseAccessor<UserDatabase> with _$TripDaoMixin {
           .watchSingleOrNull();
 
   /// Recent trips, newest first.
+  ///
+  /// `.watch()`, never `.get().asStream()`. The Future form compiles, satisfies
+  /// the `Stream<List<TripRow>>` signature and emits exactly ONCE — so the
+  /// screen renders whatever existed when it opened and never updates again.
+  /// Starting a trip wrote the row, the open-trip stream (a real `.watch()`)
+  /// flipped the button, and the list below it did not move: the one symptom
+  /// that made the feature look broken while the database was perfectly correct.
   Stream<List<TripRow>> watchRecentTrips({int limit = 20}) =>
       (select(trips)
             ..orderBy(<OrderClauseGenerator<$TripsTable>>[
               ($TripsTable t) => OrderingTerm(expression: t.startedAt, mode: OrderingMode.desc),
             ])
             ..limit(limit))
-          .get()
-          .asStream();
+          .watch();
 
   /// Starts a trip, closing any that is still open.
   ///

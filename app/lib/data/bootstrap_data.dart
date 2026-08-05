@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'package:catchlaw/data/providers.dart';
 import 'package:catchlaw/data/repositories/calibration_repository_drift.dart';
+import 'package:catchlaw/data/repositories/catch_log_repository_drift.dart';
 import 'package:catchlaw/data/repositories/content_string_repository_drift.dart';
+import 'package:catchlaw/data/repositories/identification_key_repository_drift.dart';
 import 'package:catchlaw/data/repositories/legal_text_repository_drift.dart';
 import 'package:catchlaw/data/repositories/look_alike_repository_drift.dart';
 import 'package:catchlaw/data/repositories/measurement_repository_drift.dart';
+import 'package:catchlaw/data/repositories/penalty_repository_drift.dart';
 import 'package:catchlaw/data/repositories/reference_repository_drift.dart';
 import 'package:catchlaw/data/repositories/rule_flag_repository_drift.dart';
 import 'package:catchlaw/data/repositories/settings_repository_drift.dart';
@@ -18,6 +21,7 @@ import 'package:catchlaw/data/services/app_meta_marker_store.dart';
 import 'package:catchlaw/data/services/asset_bundle_service.dart';
 import 'package:catchlaw/data/services/reference/content_build.dart';
 import 'package:catchlaw/data/services/reference_database_service.dart';
+import 'package:catchlaw/data/services/reference_install_progress.dart';
 import 'package:catchlaw/data/services/reference_installer.dart';
 import 'package:catchlaw/data/services/user_database_opener.dart';
 import 'package:catchlaw/data/services/user_database_service.dart';
@@ -45,6 +49,12 @@ List<Override> dataOverrides({
   final user = UserDatabase(
     guardedUserExecutorAt(() async => _file(await directories.user(), _kUserFile)),
   );
+  // The determinate bar's only source of numbers. Constructed here, beside the
+  // installer that feeds it, because the callback and the listener have to be
+  // two ends of ONE object: an installer wired to a reporter nobody watches is
+  // the state this app shipped in — extraction running headlessly, and a blank
+  // Check branch in front of it.
+  final reporter = ReferenceInstallReporter();
   final reference = ReferenceDatabase(
     // **Extracted before it is opened, and inside the lazy callback.** The
     // shipped asset is a `.gz` (D-6); on a first launch there is no
@@ -57,10 +67,18 @@ List<Override> dataOverrides({
     // QUERY, after the first frame, so nothing is awaited before `runApp`
     // (`catchlaw-conventions-index` rule 8). The extraction is idempotent — the
     // marker in `user.db` is what makes the second launch skip it.
-    referenceExecutorAt(() async => _installedReference(directories, user, bundle)),
+    referenceExecutorAt(() async => _installedReference(directories, user, bundle, reporter)),
   );
 
   return <Override>[
+    // Overridden with the reporter the installer above writes to, rather than
+    // left on its own default: the provider's default is a counter that has
+    // seen nothing, which is the right answer everywhere EXCEPT the one process
+    // that is doing the extracting.
+    referenceInstallReporterProvider.overrideWith((Ref ref) {
+      ref.onDispose(reporter.dispose);
+      return reporter;
+    }),
     // ref.onDispose closes each database with the root scope. Not autoDispose:
     // an app-scope singleton that tore down with its last listener would reopen
     // SQLite on the next navigation.
@@ -72,6 +90,9 @@ List<Override> dataOverrides({
       ref.onDispose(user.close);
       return user;
     }),
+    catchLogRepositoryProvider.overrideWith(
+      (Ref ref) => DriftCatchLogRepository(ref.watch(userDatabaseProvider)),
+    ),
     referenceRepositoryProvider.overrideWith(
       (Ref ref) => DriftReferenceRepository(ref.watch(referenceDatabaseProvider)),
     ),
@@ -99,6 +120,12 @@ List<Override> dataOverrides({
     ruleFlagRepositoryProvider.overrideWith(
       (Ref ref) => DriftRuleFlagRepository(ref.watch(userDatabaseProvider)),
     ),
+    penaltyRepositoryProvider.overrideWith(
+      (Ref ref) => DriftPenaltyRepository(
+        ref.watch(referenceDatabaseProvider),
+        contentStrings: ContentStringRepositoryDrift(ref.watch(referenceDatabaseProvider)),
+      ),
+    ),
     speciesRecentRepositoryProvider.overrideWith(
       (Ref ref) => DriftSpeciesRecentRepository(
         userDb: ref.watch(userDatabaseProvider),
@@ -113,6 +140,12 @@ List<Override> dataOverrides({
     ),
     speciesAccountRepositoryProvider.overrideWith(
       (Ref ref) => DriftSpeciesAccountRepository(
+        ref.watch(referenceDatabaseProvider),
+        contentStrings: ContentStringRepositoryDrift(ref.watch(referenceDatabaseProvider)),
+      ),
+    ),
+    identificationKeyRepositoryProvider.overrideWith(
+      (Ref ref) => DriftIdentificationKeyRepository(
         ref.watch(referenceDatabaseProvider),
         contentStrings: ContentStringRepositoryDrift(ref.watch(referenceDatabaseProvider)),
       ),
@@ -149,6 +182,7 @@ Future<File> _installedReference(
   AppDirectories directories,
   UserDatabase user,
   AssetBundleService bundle,
+  ReferenceInstallReporter reporter,
 ) async {
   final Result<File> installed = await ReferenceInstaller(
     bundle: bundle,
@@ -157,7 +191,10 @@ Future<File> _installedReference(
     // many, and the one that is not written last is the one that lies (D-6).
     marker: AppMetaMarkerStore(user),
     expected: kReferenceBuild,
-  ).ensureInstalled();
+    // The argument that was omitted. `ensureInstalled` has always taken it;
+    // nothing was ever on the other end, so the six seconds §13 budgets ran
+    // behind a blank screen.
+  ).ensureInstalled(onProgress: reporter.report);
 
   return switch (installed) {
     Ok<File>(:final File value) => value,

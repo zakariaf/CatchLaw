@@ -5,9 +5,12 @@ import 'package:catchlaw/domain/models/species_facts.dart';
 import 'package:catchlaw/domain/models/species_search_hit.dart';
 import 'package:catchlaw/domain/models/species_search_state.dart';
 import 'package:catchlaw/l10n/gen/app_localizations.dart';
+import 'package:catchlaw/theme/lonja_icon.dart';
+import 'package:catchlaw/theme/lonja_icons.dart';
 import 'package:catchlaw/theme/lonja_theme.dart';
 import 'package:catchlaw/ui/core/ui/lonja_button.dart';
 import 'package:catchlaw/ui/core/ui/lonja_empty_state.dart';
+import 'package:catchlaw/ui/core/ui/lonja_silhouette.dart';
 import 'package:catchlaw/ui/core/ui/lonja_species_line.dart';
 import 'package:catchlaw/ui/core/ui/lonja_stale_bar.dart';
 import 'package:catchlaw/ui/species/view_models/species_search_view_model.dart';
@@ -226,6 +229,68 @@ void main() {
       ),
     );
     expect(find.text('protected'), findsOneWidget);
+  });
+
+  testWidgets('SpeciesSearchScreen labels the results with how many the name matched', (
+    WidgetTester tester,
+  ) async {
+    // A sentence and not a ratio: `2 of 412` is a measurement, and what the
+    // reader is asking is how many rows are under his thumb. It sits above the
+    // first group, because it counts both of them.
+    await _pump(
+      tester,
+      SpeciesSearchState(
+        query: 'mero',
+        inZone: <SpeciesListing>[SpeciesListing(hit: _hit(1, 'Mero'), facts: null)],
+        elsewhere: <SpeciesListing>[SpeciesListing(hit: _hit(2, 'Meroliña'), facts: null)],
+        jurisdictionSpeciesCount: 412,
+        isPackExpired: false,
+      ),
+    );
+    expect(find.text('2 matching results'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('2 matching results')).dy,
+      lessThan(tester.getTopLeft(find.text('In your zone')).dy),
+    );
+  });
+
+  testWidgets('SpeciesSearchScreen draws the shape beside every name', (WidgetTester tester) async {
+    // A row that is only a name is a row a fisher has to read. The drawing is
+    // what he recognises before he reads it, which is the whole of S6 carried
+    // into the list S5 returns.
+    await _pump(
+      tester,
+      SpeciesSearchState(
+        query: 'mero',
+        inZone: <SpeciesListing>[
+          SpeciesListing(hit: _hit(1, 'Mero'), facts: null),
+          SpeciesListing(hit: _hit(2, 'Meroliña'), facts: null),
+        ],
+        elsewhere: const <SpeciesListing>[],
+        jurisdictionSpeciesCount: 412,
+        isPackExpired: false,
+      ),
+    );
+    expect(find.byType(LonjaSilhouette), findsNWidgets(2));
+  });
+
+  testWidgets('SpeciesSearchScreen marks every row as one that opens something', (
+    WidgetTester tester,
+  ) async {
+    await _pump(
+      tester,
+      SpeciesSearchState(
+        query: 'mero',
+        inZone: <SpeciesListing>[SpeciesListing(hit: _hit(1, 'Mero'), facts: null)],
+        elsewhere: const <SpeciesListing>[],
+        jurisdictionSpeciesCount: 412,
+        isPackExpired: false,
+      ),
+    );
+    final Iterable<LonjaGlyph> glyphs = tester
+        .widgetList<LonjaIcon>(find.byType(LonjaIcon))
+        .map((LonjaIcon icon) => icon.glyph);
+    expect(glyphs, contains(LonjaIcons.forward));
   });
 
   testWidgets('SpeciesSearchScreen gives each species row one tap target', (

@@ -1,0 +1,48 @@
+<!-- Pollachius pollachius (pollack; Galician: Abadexo). Originated schematic line
+     art drawn for CatchLaw from morphological description; not traced from, or
+     derived from, any copyrighted illustration or photograph. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <g fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- upper body outline: snout, nape, back, caudal peduncle -->
+    <path d="M23,50 C29,38 41,30 58,28 C78,26 110,30 134,38 L152,45"/>
+
+    <!-- lower body outline: protruding lower jaw, chin, belly, peduncle -->
+    <path d="M16,56 C24,64 34,69 48,72 C72,77 108,73 132,65 L152,56"/>
+
+    <!-- jaw front: lower jaw juts ahead of the upper (no chin barbel) -->
+    <path d="M23,50 L16,56"/>
+    <path d="M16,56 C24,58 30,59 35,59"/>
+
+    <!-- eye -->
+    <ellipse cx="31" cy="47" rx="3.4" ry="3"/>
+
+    <!-- gill cover -->
+    <path d="M39,34 C44,46 44,58 41,68"/>
+
+    <!-- lateral line, arched sharply over the pectoral then running straight -->
+    <path d="M42,45 C54,40 66,40 78,44 C96,50 120,52 148,51"/>
+
+    <!-- first dorsal fin -->
+    <path d="M52,29 C56,17 66,15 70,27"/>
+    <!-- second dorsal fin -->
+    <path d="M76,27 C84,14 100,14 108,30"/>
+    <!-- third dorsal fin -->
+    <path d="M114,31 C122,20 136,21 142,40"/>
+
+    <!-- first anal fin -->
+    <path d="M80,74 C88,87 104,85 112,70"/>
+    <!-- second anal fin -->
+    <path d="M118,69 C126,80 138,73 140,61"/>
+
+    <!-- pectoral fin -->
+    <path d="M46,61 C56,64 62,70 60,75 C52,72 47,67 46,61"/>
+
+    <!-- pelvic fin, set forward under the throat -->
+    <path d="M40,69 C43,76 47,79 51,77 C47,74 43,71 40,69"/>
+
+    <!-- caudal fin: broad, shallowly forked to nearly square -->
+    <path d="M152,45 L179,29 C171,42 171,59 179,71 L152,56"/>
+
+  </g>
+</svg>

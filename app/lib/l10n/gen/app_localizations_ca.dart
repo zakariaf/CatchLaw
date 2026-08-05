@@ -89,6 +89,96 @@ class AppLocalizationsCa extends AppLocalizations {
   String get identifyThisFish => 'Identificar aquest peix';
 
   @override
+  String identifyKeyStamp(int couplet) {
+    return 'Clau · pas $couplet';
+  }
+
+  @override
+  String get identifyAnswersSoFar => 'Respostes fins ara';
+
+  @override
+  String identifyCoupletLabel(int couplet) {
+    return 'Pas $couplet';
+  }
+
+  @override
+  String identifySpeciesRemain(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'queden $count espècies',
+      many: 'queden $count espècies',
+      one: 'queda $count espècie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String identifyLeadMark(int couplet, int lead) {
+    return '$couplet · $lead';
+  }
+
+  @override
+  String identifyLeadConsequence(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Porta a $count espècies · $names',
+      many: 'Porta a $count espècies · $names',
+      one: 'Porta a $count espècie · $names',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get identifyLeadNoSpecies =>
+      'No hi ha espècies registrades més enllà d\'aquesta resposta.';
+
+  @override
+  String get identifyBackOneStep => 'Retrocedir un pas';
+
+  @override
+  String get identifyDamagedHeading => 'Si el caràcter no es veu';
+
+  @override
+  String get identifyDamagedNote =>
+      'Un caràcter malmès o absent no es pot respondre. En el seu lloc s\'enumeren, dibuixades i anomenades, totes les espècies que aquest pas encara permet.';
+
+  @override
+  String get identifyListWhatRemains => 'Enumerar el que queda';
+
+  @override
+  String get identifyProvenanceNote =>
+      'No es pren cap fotografia i res no surt del dispositiu. La clau és la impresa de la secció de referència, recorreguda pas a pas.';
+
+  @override
+  String get identifyRemainingHeading => 'Espècies que la clau encara permet';
+
+  @override
+  String get identifyNoKeyHeadline => 'Cap clau en aquest paquet';
+
+  @override
+  String get identifyNoKeyBody =>
+      'Aquesta jurisdicció no té cap clau d\'identificació transcrita. Les espècies que porta aquest paquet s\'assoleixen pel seu nom.';
+
+  @override
+  String get identifyNoCandidatesHeadline => 'Cap espècie registrada aquí';
+
+  @override
+  String get identifyNoCandidatesBody =>
+      'La clau no assoleix cap espècie amb les respostes donades. Més enllà d\'aquest punt no hi ha res transcrit en aquest paquet.';
+
+  @override
+  String get identifyKeyUnreadableHeadline => 'No s\'ha pogut llegir la clau';
+
+  @override
+  String get identifyKeyUnreadableBody =>
+      'La clau del paquet inclòs no s\'ha obert en aquest dispositiu. Les espècies que porta s\'assoleixen pel seu nom.';
+
+  @override
+  String get identifySearchByName => 'Cercar pel nom';
+
+  @override
   String get browseByShape => 'Explorar per forma';
 
   @override
@@ -108,6 +198,21 @@ class AppLocalizationsCa extends AppLocalizations {
   }
 
   @override
+  String speciesSearchMatchCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count coincidències',
+      many: '$count coincidències',
+      one: '$count coincidència',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get speciesSearchClear => 'Esborrar la cerca';
+
+  @override
   String get browseByShapeTitle => 'Explorar per forma';
 
   @override
@@ -115,6 +220,33 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get browseNoSpeciesBody => 'Aquesta jurisdicció encara no té espècies transcrites.';
+
+  @override
+  String browseSpeciesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count espècies',
+      many: '$count espècies',
+      one: '$count espècie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String browseFamilyHeading(String family, int count) {
+    return '$family · $count';
+  }
+
+  @override
+  String browseMoreCount(int count) {
+    return '+$count';
+  }
+
+  @override
+  String browseMoreInFamily(String family) {
+    return 'més a $family';
+  }
 
   @override
   String get speciesOtherNames => 'Altres noms';
@@ -329,6 +461,62 @@ class AppLocalizationsCa extends AppLocalizations {
   String get verdictProtected => 'Espècie protegida — captura prohibida.';
 
   @override
+  String get verdictStampMeetsMinimum => 'Compleix el mínim';
+
+  @override
+  String get verdictStampBelowMinimum => 'Per sota del mínim';
+
+  @override
+  String get verdictStampWithinMaximum => 'Dins del màxim';
+
+  @override
+  String get verdictStampAboveMaximum => 'Per sobre del màxim';
+
+  @override
+  String get verdictStampNotMeasured => 'Sense mesurar';
+
+  @override
+  String get verdictStampMethodMismatch => 'Mesurat amb un altre mètode';
+
+  @override
+  String verdictStampClosedSeason(String starts, String ends) {
+    return 'Veda — del $starts al $ends';
+  }
+
+  @override
+  String verdictDetailMinimum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit mesurats · mínim $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximum(String measured, String unit, String threshold, String method) {
+    return '$measured $unit mesurats · màxim $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMinimumUnmeasured(String threshold, String unit, String method) {
+    return 'Sense mesura · mínim $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailMaximumUnmeasured(String threshold, String unit, String method) {
+    return 'Sense mesura · màxim $threshold $unit · $method';
+  }
+
+  @override
+  String verdictDetailClosedSeasonInForce(String day, String total) {
+    return 'Vigent avui, dia $day de $total · s\'aplica a totes les talles';
+  }
+
+  @override
+  String get verdictDetailClosedSeasonNotInForce => 'Avui no és vigent';
+
+  @override
+  String speciesBinomialFamily(String binomial, String family) {
+    return '$binomial — $family';
+  }
+
+  @override
   String verdictWithinBagLimit(String recorded, String limit, String period) {
     return 'Dins de la quota — $recorded registrats, límit $limit per $period';
   }
@@ -374,6 +562,13 @@ class AppLocalizationsCa extends AppLocalizations {
   String get verdictAmbiguous => 'Aquí s\'apliquen dues normes del mateix rang.';
 
   @override
+  String get ambiguityEyebrow => 'Conflicte d\'instruments';
+
+  @override
+  String get ambiguityBothInForce =>
+      'Tots dos instruments són en vigor en aquest punt. CatchLaw imprimeix el text de cadascun amb la seva pròpia data de comprovació i no situa cap per damunt de l\'altre.';
+
+  @override
   String get findingFactMeasured => 'Mesurat';
 
   @override
@@ -381,6 +576,9 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get findingFactMaximum => 'Màxim';
+
+  @override
+  String get findingFactShortfall => 'Diferència';
 
   @override
   String get findingFactDates => 'Dates';
@@ -444,6 +642,94 @@ class AppLocalizationsCa extends AppLocalizations {
   String get flagRuleEmptyNote => 'La nota és buida.';
 
   @override
+  String get penaltiesTitle => 'Sancions';
+
+  @override
+  String get penaltiesEntryNote => 'El que comporta l\'incompliment de les regles registrades.';
+
+  @override
+  String penaltiesLede(String jurisdiction) {
+    return 'El que comporta l\'incompliment de les regles de talla, veda, protecció o art a $jurisdiction.';
+  }
+
+  @override
+  String get penaltiesColumnOffence => 'Infracció';
+
+  @override
+  String get penaltiesColumnFine => 'Multa';
+
+  @override
+  String get penaltiesColumnLicence => 'Llicència';
+
+  @override
+  String get penaltiesOccurrenceFirst => 'Primera infracció';
+
+  @override
+  String get penaltiesOccurrenceSecond => 'Segona infracció';
+
+  @override
+  String get penaltiesOccurrenceSubsequent => 'Infracció posterior';
+
+  @override
+  String get penaltiesOffenceListLabel => 'Infraccions registrades';
+
+  @override
+  String penaltiesFineAmount(String currency, String amount) {
+    return '$amount $currency';
+  }
+
+  @override
+  String penaltiesFineRange(String currency, String lower, String upper) {
+    return '$lower–$upper $currency';
+  }
+
+  @override
+  String get penaltiesFineNotRecorded => 'Sense import registrat';
+
+  @override
+  String get penaltiesConsequenceNotRecorded => 'Sense conseqüència registrada per a la llicència';
+
+  @override
+  String get penaltiesWorkedExampleLabel => 'Exemple resolt';
+
+  @override
+  String penaltiesWorkedExampleFirst(String offence, String jurisdiction, String fine) {
+    return 'La primera infracció de $offence consta a $jurisdiction com a $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleSecond(String offence, String jurisdiction, String fine) {
+    return 'La segona infracció de $offence consta a $jurisdiction com a $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleSubsequent(String offence, String jurisdiction, String fine) {
+    return 'La infracció posterior de $offence consta a $jurisdiction com a $fine.';
+  }
+
+  @override
+  String penaltiesWorkedExampleConsequence(String consequence) {
+    return 'La conseqüència registrada per a la llicència és $consequence.';
+  }
+
+  @override
+  String get penaltiesNoneRecordedHeadline => 'Sense sanció registrada';
+
+  @override
+  String penaltiesNoneRecordedBody(String jurisdiction) {
+    return 'El paquet de regles inclòs no conté cap sanció transcrita per a $jurisdiction. És una absència en la transcripció, no una afirmació que els instruments no en continguin cap.';
+  }
+
+  @override
+  String get penaltiesPackCaveat =>
+      'Els imports són els registrats al paquet de regles inclòs. Els tribunals i els inspectors poden aplicar altres disposicions.';
+
+  @override
+  String penaltiesCitationDates(String published, String checked) {
+    return 'publicat $published · revisat $checked';
+  }
+
+  @override
   String get disclaimerNotDismissable => 'No es pot descartar.';
 
   @override
@@ -454,6 +740,38 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get zoneLevelRegion => 'Regió';
+
+  @override
+  String get tripsKeptHere => 'Es desa només en aquest dispositiu';
+
+  @override
+  String tripsCountStamp(int count) {
+    return '$count sortides';
+  }
+
+  @override
+  String tripsRowSpan(String zone, String started, String ended) {
+    return '$zone · $started — $ended';
+  }
+
+  @override
+  String tripsRowSpanOpen(String zone, String started) {
+    return '$zone · $started — ara';
+  }
+
+  @override
+  String get tripsOpenMark => '· en curs';
+
+  @override
+  String get tripsOpenStamp => 'En curs';
+
+  @override
+  String tripsDuration(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String get tripsLoadFailed => 'No s\'han pogut llegir les sortides d\'aquest dispositiu.';
 
   @override
   String get zoneLevelSubZone => 'Subzona';
@@ -501,6 +819,327 @@ class AppLocalizationsCa extends AppLocalizations {
   String get navCheck => 'Comprova';
 
   @override
+  String get destinationNotBuiltYet =>
+      'Aquesta versió respon una sola pregunta: si un peix compleix les normes al lloc on es va desembarcar. Aquesta part encara no està construïda.';
+
+  @override
+  String get settingsLanguageDevice => 'Segueix el dispositiu';
+
+  @override
+  String get settingsDigits => 'Dígits';
+
+  @override
+  String get settingsDigitsAuto => 'Automàtic';
+
+  @override
+  String get settingsDigitsLatn => '0123';
+
+  @override
+  String get settingsDigitsArab => '٠١٢٣';
+
+  @override
+  String get settingsUnitCm => 'cm';
+
+  @override
+  String get settingsUnitMm => 'mm';
+
+  @override
+  String get settingsUnitIn => 'polz';
+
+  @override
+  String get settingsLengthUnit => 'Longitud en';
+
+  @override
+  String get settingsSunlightMode => 'Mode sol';
+
+  @override
+  String get settingsSunlightNote => 'Contrast màxim, per a una pantalla mullada sota el sol.';
+
+  @override
+  String get settingsGloveMode => 'Mode guants';
+
+  @override
+  String get settingsGloveNote => 'Objectius més grans i més espaiats.';
+
+  @override
+  String get settingsGroupLanguage => 'Idioma i xifres';
+
+  @override
+  String get settingsGroupPlace => 'On pesques';
+
+  @override
+  String get settingsGroupReading => 'Condicions de lectura';
+
+  @override
+  String get settingsDigitsNote => 'Xifres occidentals o aràbigues índies';
+
+  @override
+  String get settingsLengthUnitNote => 'Longituds en normes i lectures';
+
+  @override
+  String get settingsZone => 'Zona';
+
+  @override
+  String get settingsZoneNote => 'Les normes, la llista d’espècies i els límits segueixen això';
+
+  @override
+  String get settingsZoneUnset => 'Cap lloc triat';
+
+  @override
+  String settingsRulerScale(String px) {
+    return '$px px / 10 mil·límetres';
+  }
+
+  @override
+  String get settingsCoordinates => 'Captura de coordenades';
+
+  @override
+  String get settingsCoordinatesNote => 'Es guarden només en aquest telèfon, mai no es transmeten';
+
+  @override
+  String get settingsRuler => 'Regla';
+
+  @override
+  String get settingsRulerUncalibrated => 'Sense calibrar';
+
+  @override
+  String settingsRulerCalibrated(String on) {
+    return 'Calibrada el $on';
+  }
+
+  @override
+  String get settingsAboutPack => 'Llibre de normes';
+
+  @override
+  String get settingsOfflineNote =>
+      'CatchLaw guarda en aquest telèfon tot el que necessita. No té compte ni codi de xarxa.';
+
+  @override
+  String get todayHeadline => 'Avui';
+
+  @override
+  String get todayNothingRecorded => 'Res registrat avui';
+
+  @override
+  String get todayNothingBody =>
+      'L\'espècie que registris des de la seva pàgina apareix aquí, amb el recompte d\'aquest lloc.';
+
+  @override
+  String get todayNoPlace => 'Sense lloc';
+
+  @override
+  String todayCountKept(int count, int kept) {
+    return '$count registrats · $kept conservats';
+  }
+
+  @override
+  String todayTripOpenSince(String started) {
+    return 'Sortida en curs des de les $started';
+  }
+
+  @override
+  String get todayNoTripOpen => 'Cap sortida en curs';
+
+  @override
+  String get todaySummaryRecorded => 'Peixos registrats';
+
+  @override
+  String get todaySummaryKept => 'Conservats';
+
+  @override
+  String get todaySummarySpecies => 'Espècies';
+
+  @override
+  String todayKeptOfCount(String kept, String count) {
+    return '$kept de $count';
+  }
+
+  @override
+  String get todayBySpeciesLabel => 'Per espècie';
+
+  @override
+  String get todayLoadFailed => 'No s\'ha pogut llegir el recompte d\'avui d\'aquest dispositiu.';
+
+  @override
+  String get tripsHeadline => 'Sortides';
+
+  @override
+  String get tripsNone => 'Encara no hi ha sortides';
+
+  @override
+  String get tripsNoneBody =>
+      'Iniciar una sortida agrupa el que registris en una sola jornada. Tot es queda en aquest telèfon.';
+
+  @override
+  String get tripsStart => 'Inicia sortida';
+
+  @override
+  String get tripsEnd => 'Finalitza la sortida';
+
+  @override
+  String tripsRunning(String since) {
+    return 'En curs des de $since';
+  }
+
+  @override
+  String tripsEnded(String started, String ended) {
+    return '$started — $ended';
+  }
+
+  @override
+  String get catchRecord => 'Registra aquesta captura';
+
+  @override
+  String get catchRecorded => 'Registrat';
+
+  @override
+  String get measureTitle => 'Mesura';
+
+  @override
+  String get measureUncalibrated => 'Aquesta pantalla no està calibrada';
+
+  @override
+  String get measureUncalibratedBody =>
+      'Un telèfon informa de píxels, no de mil·límetres, i la proporció varia segons el model. Fins que no es calibra, la pantalla no pot dibuixar un regle a mida real. Escriure una longitud funciona igualment.';
+
+  @override
+  String get measureManualLabel => 'O escriu la longitud';
+
+  @override
+  String get measureUse => 'Usa aquesta longitud';
+
+  @override
+  String get calibrateAction => 'Calibra la pantalla';
+
+  @override
+  String get calibrateTitle => 'Calibra';
+
+  @override
+  String get calibrateFitBody =>
+      'Posa una targeta bancària sobre la pantalla, amb la vora esquerra contra la vora esquerra del requadre, i arrossega la línia negra fins a la seva vora dreta.';
+
+  @override
+  String get calibrateVerifyBody =>
+      'Comprova la línia contra la targeta un cop més. Si coincideix amb la vora, desa.';
+
+  @override
+  String get calibrateVerifyAction => 'Comprova';
+
+  @override
+  String get calibrateSaveAction => 'Desa el calibratge';
+
+  @override
+  String calibrateCardWidth(String mm) {
+    return 'Una targeta bancària fa $mm mil·límetres d\'amplada (ISO/IEC 7810 ID-1).';
+  }
+
+  @override
+  String get calibrateImplausible =>
+      'Aquesta escala queda fora del rang plausible per a una pantalla de telèfon, així que no s\'ha desat.';
+
+  @override
+  String get todayRemove => 'Elimina';
+
+  @override
+  String get todayMarkKept => 'Conservat';
+
+  @override
+  String get todayUndoOne => 'N\'elimina un';
+
+  @override
+  String get measureSup => 'Regle';
+
+  @override
+  String measureCalibrationProvenance(String on, String pxPer10mm) {
+    return 'Calibrat el $on · $pxPer10mm píxels per centímetre';
+  }
+
+  @override
+  String get measureStepAndMark => 'Marcar per trams';
+
+  @override
+  String get measureRunningTotalUnit => 'cm fins ara';
+
+  @override
+  String measureStepPill(String count) {
+    return 'Tram $count';
+  }
+
+  @override
+  String get measureStepNote =>
+      'Recolza la vora de la pantalla al morro, marca, llisca el telèfon al llarg del peix i torna a marcar.';
+
+  @override
+  String get measureTypeInstead => 'Escriure la mesura';
+
+  @override
+  String get measureRecalibrate => 'Recalibrar amb una targeta';
+
+  @override
+  String get measurePrivacyNote =>
+      'El peix a la taula, el telèfon sobre el peix. No es pren cap fotografia ni es llegeix cap coordenada llevat que la captura de coordenades estigui activada a Configuració.';
+
+  @override
+  String get measureManualTitle => 'Escriure la longitud';
+
+  @override
+  String get calibrateSup => 'Una vegada per dispositiu';
+
+  @override
+  String calibrateCardConstant(String width, String height) {
+    return 'Tota targeta d\'aquest format és idèntica: ISO/IEC 7810 ID-1 — $width × $height mil·límetres';
+  }
+
+  @override
+  String calibrateDimension(String mm) {
+    return '$mm mil·límetres';
+  }
+
+  @override
+  String get calibrateDragHandleNote => 'Arrossega la nansa plena.';
+
+  @override
+  String get calibrateScaleLabel => 'Escala resultant';
+
+  @override
+  String get calibrateRowScale => 'Píxels per centímetre';
+
+  @override
+  String get calibrateRowDensity => 'Densitat de pantalla';
+
+  @override
+  String get calibrateRowError => 'Error esperat';
+
+  @override
+  String get calibrateRowLastCalibrated => 'Última calibració';
+
+  @override
+  String calibrateDensityValue(String dp, String ratio) {
+    return '$dp dp · $ratio×';
+  }
+
+  @override
+  String calibrateErrorValue(String mm) {
+    return '± $mm mil·límetres en 30 centímetres';
+  }
+
+  @override
+  String get calibrateNotYet => 'Encara sense calibrar';
+
+  @override
+  String get calibrateReset => 'Restablir el valor de pantalla';
+
+  @override
+  String get calibrateGlassNote =>
+      'Una funda o un protector de pantalla no canvien res: la targeta es recolza sobre el vidre i el vidre és el que es mesura.';
+
+  @override
+  String get measureBackspace => 'Esborra';
+
+  @override
+  String get navBack => 'Enrere';
+
+  @override
   String get navToday => 'Avui';
 
   @override
@@ -508,6 +1147,116 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get navReference => 'Referència';
+
+  @override
+  String get referenceContentsLabel => 'Índex';
+
+  @override
+  String get referenceHubLede =>
+      'Tot allò d\'on s\'extreu un dictamen, desat íntegre en aquest dispositiu i llegible sense cobertura.';
+
+  @override
+  String get referenceEntryRuleText => 'Text normatiu';
+
+  @override
+  String get referenceEntryRuleTextNote =>
+      'Els instruments tal com es van publicar, article per article, en la llengua de publicació';
+
+  @override
+  String get ruleTextSearchHint => 'Cerca al text complet';
+
+  @override
+  String get ruleTextAllArticles => 'Tots els articles';
+
+  @override
+  String get ruleTextPublishedLabel => 'Publicat';
+
+  @override
+  String get ruleTextCheckedLabel => 'Comprovat';
+
+  @override
+  String get ruleTextCompleteNote =>
+      'Aquest text es conserva íntegre en aquest dispositiu i no està abreujat.';
+
+  @override
+  String get ruleTextNoneRecordedHeadline => 'Sense text transcrit';
+
+  @override
+  String ruleTextNoneRecordedBody(String instrument) {
+    return 'Aquesta còpia no conté el text dels articles de $instrument. La citació anterior anomena l’instrument i les dates de publicació i de la darrera comprovació.';
+  }
+
+  @override
+  String get ruleTextNoMatchHeadline => 'Cap article coincideix';
+
+  @override
+  String get ruleTextNoMatchBody => 'Cap article d’aquest instrument conté aquesta redacció.';
+
+  @override
+  String get referenceEntryProtected => 'Espècies protegides';
+
+  @override
+  String get referenceEntryProtectedNote => 'Làmines, trets distintius i què abasta la protecció';
+
+  @override
+  String get referenceEntryGear => 'Arts i mètodes';
+
+  @override
+  String get referenceEntryGearNote => 'Malla, línia de mà, llargada de xarxa, mètodes prohibits';
+
+  @override
+  String get referenceEntryPenalties => 'Sancions';
+
+  @override
+  String get referenceEntryPenaltiesNote =>
+      'Multes i conseqüències sobre la llicència, per infracció';
+
+  @override
+  String get referenceEntryLicences => 'Llicències';
+
+  @override
+  String get referenceEntryLicencesNote =>
+      'Llicències d\'embarcació, de pescador i d\'art, i què abasta cadascuna';
+
+  @override
+  String get referenceEntryGlossary => 'Glossari';
+
+  @override
+  String get referenceEntryGlossaryNote => 'TL · FL · SL · CW · SHL · ML i els termes locals';
+
+  @override
+  String get referenceEntryChangelog => 'Registre de canvis';
+
+  @override
+  String get referenceEntryChangelogNote => 'Què va canviar en cada paquet i quan es va verificar';
+
+  @override
+  String get referenceEntryPlates => 'Làmines d\'espècies';
+
+  @override
+  String get referenceEntryPlatesNote =>
+      'Siluetes agrupades per família, per a un peix conegut per la forma';
+
+  @override
+  String get referenceEntryNotPrinted => 'no imprès';
+
+  @override
+  String get referenceSectionNotPrinted =>
+      'Aquesta secció no està impresa en aquest exemplar. Aquesta versió respon si un peix compleix les normes al lloc on es va desembarcar, i cita l\'instrument llegit.';
+
+  @override
+  String get referenceHeldLabel => 'Desat en aquest dispositiu';
+
+  @override
+  String referenceHeldPack(String version, String checkedOn) {
+    return 'paquet $version · verificat $checkedOn';
+  }
+
+  @override
+  String get referenceHeldNote => 'Aquest llibre cita els instruments que desa. No els resumeix.';
+
+  @override
+  String get referenceHeldEmpty => 'Aquest exemplar no desa cap jurisdicció.';
 
   @override
   String get navSettings => 'Configuració';
@@ -532,4 +1281,78 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get checkNoRecentsBody =>
       'Les espècies que cerquis en aquest lloc apareixen aquí, així el següent és un sol toc.';
+
+  @override
+  String get firstRunOfflineBadge => 'Sense senyal · sense xarxa per disseny';
+
+  @override
+  String get firstRunTagline => 'Això és legal?';
+
+  @override
+  String get firstRunMetaFirstRun => 'Primera arrencada';
+
+  @override
+  String get firstRunMetaOnceOnly => 'Una sola vegada';
+
+  @override
+  String get firstRunHeadline => 'Component el llibre de regles';
+
+  @override
+  String get firstRunLede =>
+      'Es desempaqueta el paquet de regles inclòs, les làmines i el text legal, perquè a partir d’ara tot s’obri a l’instant.';
+
+  @override
+  String get firstRunSilhouetteLabel => 'Silueta gravada d’un anfós';
+
+  @override
+  String firstRunProgressBytes(String written, String total) {
+    return '$written de $total kB';
+  }
+
+  @override
+  String firstRunProgressPercent(String percent) {
+    return '$percent %';
+  }
+
+  @override
+  String get firstRunSectionInstalling => 'En instal·lació';
+
+  @override
+  String get firstRunStageRulePack => 'Paquet de regles';
+
+  @override
+  String get firstRunStageLegalText => 'Text legal';
+
+  @override
+  String get firstRunStagePlates => 'Làmines d’espècies';
+
+  @override
+  String get firstRunStageGlossary => 'Glossari i clau';
+
+  @override
+  String get firstRunStageDone => '· fet';
+
+  @override
+  String get firstRunStageInProgress => 'En curs…';
+
+  @override
+  String get firstRunStagePending => 'Encara sense desempaquetar';
+
+  @override
+  String firstRunTimeRemaining(String seconds) {
+    return 'Queden uns $seconds s';
+  }
+
+  @override
+  String get firstRunNoDownload =>
+      'Això passa una sola vegada. No es descarrega res: tot ja era dins de l’aplicació en instal·lar-la, i no hi ha cap petició de xarxa que pugui fallar.';
+
+  @override
+  String get firstRunFooterNote =>
+      'Sense compte. Sense inici de sessió. Sense sincronització. Quan això acabi, CatchLaw no torna a esperar res.';
+
+  @override
+  String measureManualReading(String mm) {
+    return '$mm mil·límetres';
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:catchlaw/theme/lonja_tokens.dart';
 import 'package:catchlaw/theme/lonja_typography.dart';
+import 'package:catchlaw/ui/core/ui/lonja_rule.dart';
 import 'package:catchlaw/ui/result/view_models/result_display.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +32,14 @@ class ResultRuleFactsTable extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
+        // The sheet OPENS on a heavier rule and separates on hairlines. One
+        // uniform rule above every row made the first row look like a
+        // continuation of whatever was printed above it — and what is printed
+        // above it is the verdict.
+        const LonjaRule.section(),
         for (final RuleFact fact in facts) ...<Widget>[
-          const Divider(height: LonjaRules.rule),
           _FactLine(fact: fact),
+          const LonjaRule.row(),
         ],
       ],
     );
@@ -56,16 +62,23 @@ class _FactLine extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          // 44 against 56, the ruled sheet's own proportion. The label column
+          // is wide enough that *First offence* and *Closed until* set on one
+          // line, and narrow enough that the figures keep the outer margin.
           Expanded(
+            flex: 44,
             child: Text(
-              fact.label,
-              style: type.eyebrow.copyWith(color: tokens.onSurfaceMuted),
+              // Cased at the call site, never in the ARB: the same label is a
+              // sentence-case fact elsewhere on the screen, and the ARB holds
+              // one wording per key.
+              fact.label.toUpperCase(), // lonja-type: ok
+              style: type.microLabel.copyWith(color: tokens.onSurfaceMuted),
               textAlign: TextAlign.start,
             ),
           ),
           const SizedBox(width: LonjaSpace.s2),
           Expanded(
-            flex: 2,
+            flex: 56,
             child: Text(
               fact.value,
               // Tabular figures, from the ramp: 38 cm, 45 cm and 188 cm only

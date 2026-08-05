@@ -26,8 +26,17 @@ class _CheckRoot extends StatelessWidget {
   );
 }
 
-Future<void> _pumpShell(WidgetTester tester, {Locale locale = const Locale('en')}) =>
-    pumpLonja(tester, const AppShell(check: _CheckRoot()), locale: locale);
+Future<void> _pumpShell(WidgetTester tester, {Locale locale = const Locale('en')}) => pumpLonja(
+  tester,
+  const AppShell(
+    check: _CheckRoot(),
+    today: _TodayRoot(),
+    trips: _TripsRoot(),
+    reference: _ReferenceRoot(),
+    settings: _SettingsRoot(),
+  ),
+  locale: locale,
+);
 
 void main() {
   group('AppShell', () {
@@ -38,7 +47,7 @@ void main() {
       expect(find.text('open a species'), findsOneWidget);
     });
 
-    testWidgets('shows five destinations, each with a glyph and a word', (
+    testWidgets('shows every shipped destination with a glyph and a word', (
       WidgetTester tester,
     ) async {
       await _pumpShell(tester);
@@ -46,10 +55,22 @@ void main() {
       // A strip whose destinations differ only by icon is unreadable to a
       // reader who does not know the icons yet — which is every reader on the
       // first launch.
-      for (final label in const <String>['Check', 'Today', 'Trips', 'Reference', 'Settings']) {
+      for (final label in const <String>['Check', 'Trips', 'Reference', 'Settings']) {
         expect(find.text(label), findsOneWidget);
       }
       expect(find.byType(LonjaNavStrip), findsOneWidget);
+    });
+
+    testWidgets('shows no cell for a destination this release holds back', (
+      WidgetTester tester,
+    ) async {
+      await _pumpShell(tester);
+
+      // Today is BUILT and deliberately not shown. Asserted rather than left
+      // implicit, because the strip's index is the stack's index: a cell hidden
+      // from one and not the other selects the wrong branch, silently.
+      expect(find.text('Today'), findsNothing);
+      expect(LonjaDestination.shipped, isNot(contains(LonjaDestination.today)));
     });
 
     testWidgets('switches branch when a destination is tapped', (WidgetTester tester) async {
@@ -58,7 +79,25 @@ void main() {
       await tester.tap(find.text('Reference'));
       await tester.pumpAndSettle();
 
-      expect(find.byType(DestinationPlaceholder), findsOneWidget);
+      // Reference is a real branch now, so this asserts the injected root
+      // rather than the placeholder it used to show.
+      expect(find.text('reference root'), findsOneWidget);
+    });
+
+    testWidgets('shows the placeholder on a branch this release does not build', (
+      WidgetTester tester,
+    ) async {
+      await _pumpShell(tester);
+
+      await tester.tap(find.text('Settings'));
+      await tester.pumpAndSettle();
+
+      // Every branch is now built, so the placeholder is unreachable from the
+      // strip. The assertion is kept and inverted rather than deleted: it is
+      // what proves the last branch stopped being a stub, and it fails loudly
+      // if a future branch is added without a screen behind it.
+      expect(find.byType(DestinationPlaceholder), findsNothing);
+      expect(find.text('settings root'), findsOneWidget);
     });
 
     testWidgets('keeps the Check branch route when the reader comes back', (
@@ -144,4 +183,38 @@ void main() {
       );
     });
   });
+}
+
+/// Stands in for S6, for the same reason [_CheckRoot] stands in for S1: the
+/// shell's tests are about the strip, the stack and branch history, and none of
+/// those needs a database.
+class _ReferenceRoot extends StatelessWidget {
+  const _ReferenceRoot();
+
+  @override
+  Widget build(BuildContext context) => const Text('reference root');
+}
+
+/// Stands in for Settings, for the same reason the other two stand in.
+class _SettingsRoot extends StatelessWidget {
+  const _SettingsRoot();
+
+  @override
+  Widget build(BuildContext context) => const Text('settings root');
+}
+
+/// Stands in for Today, for the same reason the others stand in.
+class _TodayRoot extends StatelessWidget {
+  const _TodayRoot();
+
+  @override
+  Widget build(BuildContext context) => const Text('today root');
+}
+
+/// Stands in for Trips.
+class _TripsRoot extends StatelessWidget {
+  const _TripsRoot();
+
+  @override
+  Widget build(BuildContext context) => const Text('trips root');
 }

@@ -1,0 +1,56 @@
+<!--
+  Sarpa salpa (salema / Galician: Saboga) — schematic side-view silhouette.
+  Originated line art drawn for CatchLaw. Not traced from, derived from, or
+  copied out of any copyrighted illustration, photograph or field-guide plate.
+  Shape cues: elongate oval bream body, small blunt head, small terminal mouth,
+  a single continuous dorsal fin running most of the back, and a forked tail.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none" stroke="#16201C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- Body: elongate oval bream. Head at left, caudal peduncle at right. -->
+  <path d="M 20 52
+           C 26 38, 44 27, 68 25
+           C 100 22, 128 28, 146 40
+           L 152 45
+           L 152 59
+           L 146 64
+           C 128 76, 100 82, 68 79
+           C 44 77, 26 66, 20 52 Z" />
+
+  <!-- Head / opercle line: small head, set close behind the eye. -->
+  <path d="M 33 33 C 41 44, 41 60, 33 71" />
+
+  <!-- Snout and small terminal mouth. -->
+  <path d="M 20 52 L 30 51" />
+
+  <!-- Eye. -->
+  <ellipse cx="30" cy="43" rx="3.2" ry="3.2" />
+
+  <!-- Single continuous dorsal fin, low and long along the back. -->
+  <path d="M 55 27
+           L 63 15 L 71 24
+           L 79 13 L 87 21
+           L 97 12 L 105 20
+           L 116 15 L 124 24
+           L 134 21 L 139 33" />
+
+  <!-- Anal fin, short, set well back under the rear body. -->
+  <path d="M 104 80 L 110 92 L 122 90 L 133 76" />
+
+  <!-- Pectoral fin, just behind the opercle. -->
+  <path d="M 47 56 C 58 60, 68 66, 72 74" />
+
+  <!-- Pelvic fin, small, below and slightly behind the pectoral. -->
+  <path d="M 55 74 C 60 81, 64 84, 70 85" />
+
+  <!-- Deeply forked caudal tail. -->
+  <path d="M 152 45
+           L 180 27
+           L 172 52
+           L 180 77
+           L 152 59" />
+
+  <!-- Lateral line, the long horizontal cue that reads at small sizes. -->
+  <path d="M 38 46 C 70 41, 110 42, 146 47" />
+
+</svg>
